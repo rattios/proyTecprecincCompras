@@ -1,0 +1,50 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Departamento extends Model
+{
+	/**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'departamentos';
+
+    // Eloquent asume que cada tabla tiene una clave primaria con una columna llamada id.
+    // Si éste no fuera el caso entonces hay que indicar cuál es nuestra clave primaria en la tabla:
+    //protected $primaryKey = 'id';
+
+    //public $timestamps = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['nombre', 'codigo'];
+
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    //protected $hidden = [];
+
+    // Relación de departamento con usuarios:
+    public function usuarios()
+    {
+        // 1 departamento tiene muchos usuarios
+        return $this->hasMany('App\User', 'departamento_id');
+    }
+
+    // Relación de departamento con stockDepartamentos:
+    public function productos()
+    {
+        // 1 departamento tiene muchos productos en su stock
+        return $this->hasMany('App\StockDepartamento', 'departamento_id');
+    }
+
+}
