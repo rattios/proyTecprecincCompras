@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ProductosMigration extends Migration
+class RubrosMigration extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,10 @@ class ProductosMigration extends Migration
      */
     public function up()
     {
-        Schema::create('productos', function (Blueprint $table) {
+        Schema::create('rubros', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('nombre')->unique(); //Descripcion
-
-            $table->integer('categoria_id')->unsigned();
-            $table->foreign('categoria_id')->references('id')->on('categorias');
+            $table->string('nombre')->unique();
+            $table->string('codigo')->unique()->nullable();
 
             $table->timestamps();
         });
@@ -30,6 +28,6 @@ class ProductosMigration extends Migration
      */
     public function down()
     {
-        Schema::drop('productos');
+        Schema::drop('rubros');
     }
 }

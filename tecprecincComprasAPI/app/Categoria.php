@@ -24,14 +24,14 @@ class Categoria extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre', 'codigo'];
+    protected $fillable = ['nombre', 'codigo', 'tipo_id', 'rubro_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    //protected $hidden = [];
+    protected $hidden = ['created_at', 'updated_at'];
 
     // Relación de categoria con productos:
     public function productos()
@@ -52,5 +52,19 @@ class Categoria extends Model
     {
         // 1 categoria puede tener varios productos en el stock(almacen)
         return $this->hasMany('App\Stock', 'categoria_id');
+    }
+
+    // Relación de categoria con tipo:
+    public function tipo()
+    {
+        // 1 categoria pertenece a un tipo
+        return $this->belongsTo('App\Tipo', 'tipo_id');
+    }
+
+    // Relación de categoria con rubro:
+    public function rubro()
+    {
+        // 1 categoria pertenece a un rubro
+        return $this->belongsTo('App\Rubro', 'rubro_id');
     }
 }

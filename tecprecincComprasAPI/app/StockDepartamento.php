@@ -24,7 +24,7 @@ class StockDepartamento extends Model
      *
      * @var array
      */
-    protected $fillable = ['descripcion', 'codigo',
+    protected $fillable = ['nombre', 'codigo',
 		'stock', 'stock_min',
 		'categoria_id', 'proveedor_id',
 		'departamento_id'];

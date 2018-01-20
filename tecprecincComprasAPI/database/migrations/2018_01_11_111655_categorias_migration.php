@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DepartamentosMigration extends Migration
+class CategoriasMigration extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,17 @@ class DepartamentosMigration extends Migration
      */
     public function up()
     {
-        Schema::create('departamentos', function (Blueprint $table) {
+        Schema::create('categorias', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre')->unique();
             $table->string('codigo')->unique()->nullable();
+
+            $table->integer('tipo_id')->unsigned()->nullable();
+            $table->foreign('tipo_id')->references('id')->on('tipos');
+
+            $table->integer('rubro_id')->unsigned()->nullable();
+            $table->foreign('rubro_id')->references('id')->on('rubros');
+
             $table->timestamps();
         });
     }
@@ -27,6 +34,6 @@ class DepartamentosMigration extends Migration
      */
     public function down()
     {
-        Schema::drop('departamentos');
+        Schema::drop('categorias');
     }
 }

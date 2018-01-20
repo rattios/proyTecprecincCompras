@@ -15,15 +15,15 @@ class StockMigration extends Migration
         Schema::create('stock', function (Blueprint $table) {
             $table->increments('id');
             $table->text('nombre'); //descripcion
-            $table->integer('codigo')->unique()->nullable();
+            $table->string('codigo')->unique()->nullable();
             $table->float('precio');
             $table->integer('stock'); //existencias
             $table->float('peps'); // ??
             $table->float('valor_reposicion'); // ??
             $table->integer('stock_min'); //cantidad minima permitida
-            $table->string('partida_parcial');
+            $table->string('partida_parcial')->nullable();
 
-            $table->integer('categoria_id')->unsigned();
+            $table->integer('categoria_id')->unsigned()->nullable();
             $table->foreign('categoria_id')->references('id')->on('categorias');
 
             $table->integer('proveedor_id')->unsigned()->nullable();

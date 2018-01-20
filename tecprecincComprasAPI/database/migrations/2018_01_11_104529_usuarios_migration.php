@@ -19,7 +19,7 @@ class UsuariosMigration extends Migration
             $table->string('email')->unique();
             $table->string('nombre');
             $table->string('apellido');
-            $table->string('telefono');
+            $table->string('telefono')->nullable();
             $table->integer('rol'); //1=cliente interno, 2=departamento de compras, 3=supervisores y gerentes
             $table->string('codigo_verificacion')->nullable();
 

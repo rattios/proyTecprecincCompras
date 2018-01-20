@@ -46,11 +46,25 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/usuarios/{id}','UsuarioController@show');
         Route::get('/usuarios/{id}/pedidos','UsuarioController@usuarioPedidos');
 
+        //----Pruebas TipoController
+        Route::get('/tipos','TipoController@index');
+        Route::post('/tipos','TipoController@store');
+        Route::put('/tipos/{id}','TipoController@update');
+        Route::delete('/tipos/{id}','TipoController@destroy');
+        Route::get('/tipos/{id}','TipoController@show');
+
+        //----Pruebas RubroController
+        Route::get('/rubros','RubroController@index');
+        Route::post('/rubros','RubroController@store');
+        Route::put('/rubros/{id}','RubroController@update');
+        Route::delete('/rubros/{id}','RubroController@destroy');
+        Route::get('/rubros/{id}','RubroController@show');
+
         //----Pruebas CategoriaController
         Route::get('/categorias','CategoriaController@index');
         Route::get('/categorias/productos','CategoriaController@categoriasProductos');
         Route::post('/categorias','CategoriaController@store');
-        Route::put('/categorias/{id}','CategoriaController@update');
+        Route::put('/categorias','CategoriaController@update');
         Route::delete('/categorias/{id}','CategoriaController@destroy');
         Route::get('/categorias/{id}','CategoriaController@show');
         Route::get('/categorias/{id}/productos','CategoriaController@categoriaProductos');
@@ -84,6 +98,13 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::put('/stock/{id}','StockController@update');
         Route::delete('/stock/{id}','StockController@destroy');
         Route::get('/stock/{id}','StockController@show');
+
+        //----Pruebas StockController
+        Route::get('/stockDepartamento','StockDepartamentoController@index');
+        Route::post('/stockDepartamento','StockDepartamentoController@store');
+        Route::put('/stockDepartamento/{id}','StockDepartamentoController@update');
+        Route::delete('/stockDepartamento/{id}','StockDepartamentoController@destroy');
+        Route::get('/stockDepartamento/{id}','StockDepartamentoController@show');
 
 
     Route::group(['middleware' => 'jwt-auth'], function(){
