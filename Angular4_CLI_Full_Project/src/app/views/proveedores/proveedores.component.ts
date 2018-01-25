@@ -44,4 +44,7 @@ export class ProveedoresComponent {
     ver(item){
     	this.proveedor=item.razonSocial;
     }
+    setProductos(){
+      console.log('asdasd');
+    }
 }

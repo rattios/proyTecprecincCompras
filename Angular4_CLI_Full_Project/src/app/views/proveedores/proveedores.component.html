@@ -63,7 +63,7 @@
             <div class="form-group row">
               <label class="col-md-3 form-control-label" for="multiple-select">Selecciona multiples productos</label>
               <div class="col-md-9">
-                <select id="multiple-select" name="multiple-select" class="form-control" size="5" multiple>
+                <select id="multiple-select" name="multiple-select" class="form-control" size="5" (change)="setProductos()" multiple>
                   <option *ngFor="let title of productos" [value]="title.id">{{title.categoria}} {{title.descripcion}}</option>
                   
                 </select>

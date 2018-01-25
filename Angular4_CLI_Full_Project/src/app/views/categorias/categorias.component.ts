@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
+
 import 'rxjs/add/operator/toPromise';
 
 @Component({
@@ -31,7 +32,8 @@ export class CategoriasComponent {
               this.rubros=this.categoria.rubros;
               this.tipos=this.categoria.tipos;
 
-              for (var i = 0; i < this.categorias.length; ++i) {
+              for (var i = 0; i < this.categorias.length; i++) {
+                this.categorias[i].categoria_id=this.categorias[i].id;
                 this.categorias[i].habilitado=true;
               }
               console.log(this.categoria);
@@ -54,5 +56,17 @@ export class CategoriasComponent {
 
   guardarCambios(){
     console.log(this.aEditar);
+    var send = {
+      categorias: JSON.stringify(this.aEditar)
+    }
+    this.http.put('http://localhost:8000/categorias',send)
+           .toPromise()
+           .then(
+           data => {
+              console.log(data);
+            },
+           msg => { 
+             console.log(msg);
+           });
   }
 }

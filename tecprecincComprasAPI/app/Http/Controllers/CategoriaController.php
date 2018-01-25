@@ -238,6 +238,7 @@ class CategoriaController extends Controller
     public function update(Request $request)
     {
         // Primero comprobaremos si estamos recibiendo todos los campos.
+
         if ( !$request->input('categorias'))
         {
             // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
@@ -245,6 +246,10 @@ class CategoriaController extends Controller
         }
 
         $categorias = json_decode($request->input('categorias'));
+        //$categorias = json_decode('[{"categoria_id":192,"rubro_id":3,"tipo_id":3}]')
+        //$categorias = json_decode('[{ "name":"John", "age":30, "car":null }]');
+        //$categorias = $request->input('categorias');
+        //return $categorias;
         for ($i=0; $i < count($categorias) ; $i++) { 
 
             // Comprobamos si la categoria que nos están pasando existe o no.
@@ -257,7 +262,7 @@ class CategoriaController extends Controller
             }      
 
             // Listado de campos recibidos teóricamente.
-            if (property_exists($categorias[$i], 'nombre')) {
+            /*if (property_exists($categorias[$i], 'nombre')) {
                 $nombre = $categorias[$i]->nombre;
             }else{
                 $nombre = null;
@@ -267,7 +272,7 @@ class CategoriaController extends Controller
                 $codigo = $categorias[$i]->codigo;
             }else{
                 $codigo = null;
-            }
+            }*/
 
             if (property_exists($categorias[$i], 'tipo_id')) {
                 $tipo_id = $categorias[$i]->tipo_id;
@@ -286,7 +291,7 @@ class CategoriaController extends Controller
             $bandera = false;
 
             // Actualización parcial de campos.
-            if ($nombre != null && $nombre!='')
+            /*if ($nombre != null && $nombre!='')
             {
                 $aux = \App\Categoria::where('nombre', $nombre)
                 ->where('id', '<>', $categoria->id)->get();
@@ -312,7 +317,7 @@ class CategoriaController extends Controller
 
                 $categoria->codigo = $codigo;
                 $bandera=true;
-            }
+            }*/
 
             if ($tipo_id != null && $tipo_id!='')
             {
@@ -345,7 +350,8 @@ class CategoriaController extends Controller
                 // Almacenamos en la base de datos el registro.
                 if ($categoria->save()) {
 
-                    continue;
+                    //continue;
+                    return response()->json(['message'=>'Categoría(s) editada(s) con éxito.'], 200);
                     
                 }else{
                     return response()->json(['error'=>'Error al actualizar la categoría con id '.$categoria->id], 500);
@@ -355,15 +361,15 @@ class CategoriaController extends Controller
             
         } 
 
-        if ($bandera) {
+         /*if ($bandera) {
             if (Cache::has('categorias'))
             {
                 //Borrar elemento de la cache
                 Cache::forget('categorias');
             }
-        }
+        }*/
 
-        return response()->json(['message'=>'Categoría(s) editada(s) con éxito.'], 200);
+        
     }
 
     /**

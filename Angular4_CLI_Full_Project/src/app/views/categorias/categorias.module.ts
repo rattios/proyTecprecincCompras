@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 
-
 import { CategoriasComponent } from './categorias.component';
 import { CategoriasRoutingModule } from './categorias-routing.module';
 
