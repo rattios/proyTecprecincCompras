@@ -39,6 +39,25 @@ class CategoriaController extends Controller
         
     }
 
+    public function indexfull()
+    {
+        $tipos = \App\Tipo::all();
+        $rubros = \App\Rubro::all();
+        $categorias = \App\Categoria::all();
+        
+        if(count($categorias) == 0){
+            return response()->json(['error'=>'No existen categorías.'], 404);          
+        }else{
+            return response()->json(
+                [
+                    'tipos'=>$tipos,
+                    'rubros'=>$rubros,
+                    'categorias'=>$categorias
+                ], 200);
+        } 
+        
+    }
+
     public function categoriasProductos()
     {
         //cargar todas las cat con sus productos (productos en general)

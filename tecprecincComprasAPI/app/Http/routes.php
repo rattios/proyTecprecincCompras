@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    //return view('welcome');
+    return view('welcome');
     
 });
 
@@ -68,6 +68,9 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::delete('/categorias/{id}','CategoriaController@destroy');
         Route::get('/categorias/{id}','CategoriaController@show');
         Route::get('/categorias/{id}/productos','CategoriaController@categoriaProductos');
+
+        Route::get('/fullcategorias','CategoriaController@indexfull');
+        Route::get('/categs','CategController@index');
 
         //----Pruebas ProductoController
         Route::get('/productos','ProductoController@index');

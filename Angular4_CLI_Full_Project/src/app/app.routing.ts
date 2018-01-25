@@ -22,8 +22,8 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        //loadChildren: './views/dashboard/dashboard.module#DashboardModule'
-        loadChildren: './views/proveedores/proveedores.module#ProveedoresModule'
+        loadChildren: './views/dashboard/dashboard.module#DashboardModule'
+        
       },
       {
         path: 'components',
@@ -44,6 +44,10 @@ export const routes: Routes = [
       {
         path: 'proveedores',
         loadChildren: './views/proveedores/proveedores.module#ProveedoresModule'
+      },
+      {
+        path: 'categorias',
+        loadChildren: './views/categorias/categorias.module#CategoriasModule'
       }
     ]
   },
