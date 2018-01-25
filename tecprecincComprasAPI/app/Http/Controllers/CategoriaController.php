@@ -43,7 +43,7 @@ class CategoriaController extends Controller
     {
         $tipos = \App\Tipo::all();
         $rubros = \App\Rubro::all();
-        $categorias = \App\Categoria::all();
+        $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
         
         if(count($categorias) == 0){
             return response()->json(['error'=>'No existen categorías.'], 404);          

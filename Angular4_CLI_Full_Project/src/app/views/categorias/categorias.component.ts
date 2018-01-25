@@ -14,6 +14,7 @@ export class CategoriasComponent {
   public tipos: any;
   public productos: any;
   public proveedor: any='';
+  public aEditar:any= [];
   constructor(private http: HttpClient) {
 
   }
@@ -25,17 +26,33 @@ export class CategoriasComponent {
            .then(
            data => {
            	  this.categoria=data;
-              console.log(this.categoria);
+              
               this.categorias=this.categoria.categorias;
               this.rubros=this.categoria.rubros;
               this.tipos=this.categoria.tipos;
+
+              for (var i = 0; i < this.categorias.length; ++i) {
+                this.categorias[i].habilitado=true;
+              }
+              console.log(this.categoria);
             },
            msg => { 
              console.log(msg);
            });
     }
 
-    ver(item){
-    	this.proveedor=item.razonSocial;
+    editar(id){
+    	console.log(id);
+      for (var i = 0; i < this.categorias.length; i++) {
+        if (this.categorias[i].id==id) {
+          console.log(id);
+          this.categorias[i].habilitado=false;
+          this.aEditar.push(this.categorias[i]);
+        }
+      }
     }
+
+  guardarCambios(){
+    console.log(this.aEditar);
+  }
 }

@@ -3,7 +3,10 @@
     <div class="col-sm-12 col-md-12">
       <div class="card">
         <div class="card-header">
-          <h3>Categorias</h3>
+          <h2>Categorias</h2> 
+          <div align="right">
+            <button type="button" class="btn btn-success" style="text-align: right;" (click)="guardarCambios()"><i class="fa fa-floppy-o"></i>&nbsp; Guardar cambios</button>
+          </div>
         </div>
         <div class="card-body">
           <div class="row">
@@ -15,20 +18,24 @@
                       <p>{{categoria.nombre}}</p>
                     </div>
                     <div class="col-md-3" style="text-align: center">
-                      <select id="tipo" name="tipo" class="form-control">
+                      <select id="tipo" name="tipo" class="form-control" [(ngModel)]="categoria.tipo_id" [disabled]="categoria.habilitado">
                         <option *ngFor="let tipo of tipos" [value]="tipo.id">{{tipo.nombre}}</option>
                       </select>
                     </div>
                     <div class="col-md-3" style="text-align: center">
-                      <select id="rubro" name="rubro" class="form-control">
+                      <select id="rubro" name="rubro" class="form-control" [(ngModel)]="categoria.rubro_id" [disabled]="categoria.habilitado">
                         <option *ngFor="let rubro of rubros" [value]="rubro.id">{{rubro.nombre}}</option>
                       </select>
                     </div>
                     <div class="col-md-3" style="text-align: center">
-                      <button type="button" class="btn btn-outline-success"><i class="fa fa-magic"></i>&nbsp; Guardar</button>
+                      <button type="button" class="btn btn-outline-primary" (click)="editar(categoria.id)" *ngIf="categoria.habilitado"><i class="fa fa-pencil"></i>&nbsp; Editar</button>
                     </div>
                   </div>
                   <hr>
+                </div>
+                
+                <div style="text-align: center" >
+                  <button type="button" class="btn btn-success" (click)="guardarCambios()"><i class="fa fa-floppy-o"></i>&nbsp; Guardar cambios</button>
                 </div>
 
             </div>
