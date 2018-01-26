@@ -102,6 +102,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::delete('/stock/{id}','StockController@destroy');
         Route::get('/stock/{id}','StockController@show');
 
+        Route::get('/prestock','PrestockController@index');
         //----Pruebas StockController
         Route::get('/stockDepartamento','StockDepartamentoController@index');
         Route::post('/stockDepartamento','StockDepartamentoController@store');
