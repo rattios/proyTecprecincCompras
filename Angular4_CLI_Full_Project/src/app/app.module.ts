@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { RutaService } from './services/ruta.service';
 
 import { AppComponent } from './app.component';
 
@@ -75,7 +76,9 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     ...APP_COMPONENTS,
     ...APP_DIRECTIVES
   ],
-  providers: [{
+  providers: [
+    RutaService,
+    {
     provide: LocationStrategy,
     useClass: HashLocationStrategy
   }],

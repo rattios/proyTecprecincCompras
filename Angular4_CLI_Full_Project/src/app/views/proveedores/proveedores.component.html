@@ -21,11 +21,11 @@
             <tbody>
               <tr *ngFor="let item of proveedores">      
                 <td>{{item.id}}</td>
-                <td>{{item.razonSocial}}</td>
-                <td>{{item.CUIT}}</td>
-                <td>{{item.Telefono}}</td>
-                <td>{{item.Email}}</td>
-                <td>{{item.EstadoProveedor}}</td>
+                <td>{{item.razon_social}}</td>
+                <td>{{item.cuit}}</td>
+                <td>{{item.telefono}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.estado}}</td>
                 <td><button type="button" class="btn btn-success" (click)=ver(item)>Ir</button></td>
               </tr>
             </tbody>

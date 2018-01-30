@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
+import { RutaService } from '../../services/ruta.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -16,13 +17,13 @@ export class CategoriasComponent {
   public productos: any;
   public proveedor: any='';
   public aEditar:any= [];
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
 
-      this.http.get('http://localhost:8000/fullcategorias')
+      this.http.get(this.ruta.get_ruta()+'fullcategorias')
            .toPromise()
            .then(
            data => {
@@ -59,7 +60,7 @@ export class CategoriasComponent {
     var send = {
       categorias: JSON.stringify(this.aEditar)
     }
-    this.http.put('http://localhost:8000/categorias',send)
+    this.http.put(this.ruta.get_ruta()+'categorias',send)
            .toPromise()
            .then(
            data => {

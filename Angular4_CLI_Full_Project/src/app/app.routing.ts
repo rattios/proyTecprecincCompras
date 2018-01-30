@@ -46,6 +46,10 @@ export const routes: Routes = [
         loadChildren: './views/proveedores/proveedores.module#ProveedoresModule'
       },
       {
+        path: 'stock',
+        loadChildren: './views/stock/stock.module#stockModule'
+      },
+      {
         path: 'categorias',
         loadChildren: './views/categorias/categorias.module#CategoriasModule'
       }

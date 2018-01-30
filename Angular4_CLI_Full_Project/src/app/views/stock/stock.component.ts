@@ -5,11 +5,11 @@ import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../services/ruta.service';
 
 @Component({
-  templateUrl: 'proveedores.component.html'
+  templateUrl: 'stock.component.html'
 })
-export class ProveedoresComponent {
+export class stockComponent {
   public prov: any;
-  public proveedores: any;
+  public stock: any;
   public productos: any;
   public proveedor: any='';
   constructor(private http: HttpClient, private ruta: RutaService) {
@@ -18,24 +18,13 @@ export class ProveedoresComponent {
 
    ngOnInit(): void {
 
-      this.http.get(this.ruta.get_ruta()+'proveedores')
+      this.http.get(this.ruta.get_ruta()+'stock')
            .toPromise()
            .then(
            data => {
              this.prov=data;
-           	  this.proveedores=this.prov.proveedores;
-              console.log(this.proveedores);
-              
-            },
-           msg => { 
-             console.log(msg);
-           });
-       this.http.get('http://vivomedia.com.ar/Tecprecinc/productos.json')
-           .toPromise()
-           .then(
-           data => {
-           	  this.productos=data;
-              console.log(this.productos);
+           	  this.stock=this.prov.productos;
+              console.log(this.stock);
               
             },
            msg => { 

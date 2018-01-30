@@ -255,12 +255,12 @@ class CategoriaController extends Controller
             // Comprobamos si la categoria que nos están pasando existe o no.
             $categoria=\App\Categoria::find($categorias[$i]->categoria_id);
 
-            if (count($categoria)==0)
+            if (!$categoria)
             {
                 // Devolvemos error codigo http 404
                 return response()->json(['error'=>'No existe la categoría con id '.$categorias[$i]->categoria_id], 404);
             }      
-
+            //
             // Listado de campos recibidos teóricamente.
             /*if (property_exists($categorias[$i], 'nombre')) {
                 $nombre = $categorias[$i]->nombre;
@@ -322,8 +322,8 @@ class CategoriaController extends Controller
             if ($tipo_id != null && $tipo_id!='')
             {
                 $aux = \App\Tipo::find($tipo_id);
-
-                if(count($aux)==0){
+                
+                if(!$aux){
                    // Devolvemos un código 409 Conflict. 
                     return response()->json(['error'=>'No existe el tipo con id '.$tipo_id.'.'], 409);
                 }
@@ -335,8 +335,8 @@ class CategoriaController extends Controller
             if ($rubro_id != null && $rubro_id!='')
             {
                 $aux = \App\Rubro::find($rubro_id);
-
-                if(count($aux)==0){
+                
+                if(!$aux){
                    // Devolvemos un código 409 Conflict. 
                     return response()->json(['error'=>'No existe el rubro con id '.$rubro_id.'.'], 409);
                 }
@@ -349,9 +349,9 @@ class CategoriaController extends Controller
             {
                 // Almacenamos en la base de datos el registro.
                 if ($categoria->save()) {
-
+                    
                     //continue;
-                    return response()->json(['message'=>'Categoría(s) editada(s) con éxito.'], 200);
+                    //return response()->json(['message'=>'Categoría(s) editada(s) con éxito.'], 200);
                     
                 }else{
                     return response()->json(['error'=>'Error al actualizar la categoría con id '.$categoria->id], 500);
@@ -360,7 +360,7 @@ class CategoriaController extends Controller
             }
             
         } 
-
+        return $categoria;
          /*if ($bandera) {
             if (Cache::has('categorias'))
             {
