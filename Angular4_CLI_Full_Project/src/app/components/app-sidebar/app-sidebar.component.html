@@ -39,6 +39,22 @@
           </li>
         </ul>
       </li>
+
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Pedidos</a>
+        <ul class="nav-dropdown-items">
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/buttons']"><i class="icon-puzzle"></i> Hacer un pedido</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/social-buttons']"><i class="icon-puzzle"></i> Mis pedidos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/cards']"><i class="icon-puzzle"></i> Todos los pedidos</a>
+          </li>
+        </ul>
+      </li>
+
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i> Icons</a>
         <ul class="nav-dropdown-items">
