@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { stockComponent } from './stock.component';
 import { stockRoutingModule } from './stock-routing.module';
@@ -11,7 +12,8 @@ import { stockRoutingModule } from './stock-routing.module';
     stockRoutingModule,
     ChartsModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   declarations: [ stockComponent ]
 })

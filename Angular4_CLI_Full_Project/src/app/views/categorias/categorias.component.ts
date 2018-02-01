@@ -17,6 +17,8 @@ export class CategoriasComponent {
   public productos: any;
   public proveedor: any='';
   public aEditar:any= [];
+  public success=false;
+  public fail=false;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
@@ -65,9 +67,18 @@ export class CategoriasComponent {
            .then(
            data => {
               console.log(data);
+
+              this.success=true;
+              setTimeout(() => {  
+                this.success=false;
+              }, 4000);
             },
            msg => { 
              console.log(msg);
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
            });
   }
 }
