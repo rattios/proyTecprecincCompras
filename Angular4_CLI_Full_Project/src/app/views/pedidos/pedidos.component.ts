@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../services/ruta.service';
 
@@ -16,12 +15,12 @@ export class pedidosComponent {
   public proveedor: any='';
   public departamento='RRHH';
   public template:'http://localhost/template.gif';
-  constructor(private http: HttpClient, private ruta: RutaService, private spinnerService: Ng4LoadingSpinnerService) {
+  constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
-       this.spinnerService.show();
+      
       this.http.get(this.ruta.get_ruta()+'stock')
            .toPromise()
            .then(
@@ -32,11 +31,11 @@ export class pedidosComponent {
               this.productList = this.stock;
               this.filteredItems = this.productList;
               this.init();
-              this.spinnerService.hide();
+           
             },
            msg => { 
              console.log(msg);
-             this.spinnerService.hide();
+           
            });
     }
 
@@ -73,19 +72,19 @@ export class pedidosComponent {
           estado: 0
         }
         console.log(enviar);
-        this.spinnerService.show();
+
         setTimeout(() => {
           this.http.post(this.ruta.get_ruta()+'pedidos',enviar)
            .toPromise()
            .then(
            data => {
              console.log(data);
-              this.spinnerService.hide();
+              
               this.vaciar();
             },
            msg => { 
              console.log(msg);
-             this.spinnerService.hide();
+             
            });
         }, 1000);
        } 
