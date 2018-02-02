@@ -62,6 +62,8 @@ Route::group(  ['middleware' =>'cors'], function(){
 
         //----Pruebas CategoriaController
         Route::get('/categorias','CategoriaController@index');
+        Route::get('/categorias','CategoriaController@index');
+        Route::get('/categorias','CategoriaController@index');
         Route::get('/categorias/productos','CategoriaController@categoriasProductos');
         Route::post('/categorias','CategoriaController@store');
         Route::put('/categorias','CategoriaController@update');
@@ -97,6 +99,9 @@ Route::group(  ['middleware' =>'cors'], function(){
 
         //----Pruebas StockController
         Route::get('/stock','StockController@index');
+        Route::get('/stockUso','StockController@indexCategoriasUso');
+        Route::get('/stockConsumo','StockController@indexCategoriasConsumo');
+        Route::get('/stockServicio','StockController@indexCategoriasServicio');
         Route::post('/stock','StockController@store');
         Route::put('/stock/{id}','StockController@update');
         Route::delete('/stock/{id}','StockController@destroy');

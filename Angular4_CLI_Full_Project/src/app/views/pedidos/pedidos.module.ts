@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { pedidosComponent } from './pedidos.component';
+import { misPedidosComponent } from './mis-pedidos.component';
+import { todosPedidosComponent } from './todos-pedidos.component';
 import { pedidosRoutingModule } from './pedidos-routing.module';
 
 @NgModule({
@@ -15,6 +17,10 @@ import { pedidosRoutingModule } from './pedidos-routing.module';
     CommonModule,
     FormsModule
   ],
-  declarations: [ pedidosComponent ]
+  declarations: [ 
+  	pedidosComponent,
+  	misPedidosComponent,
+	todosPedidosComponent
+	]
 })
-export class PedidosModule { }
+export class pedidosModule { }

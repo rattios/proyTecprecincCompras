@@ -46,6 +46,10 @@ export const routes: Routes = [
         loadChildren: './views/proveedores/proveedores.module#ProveedoresModule'
       },
       {
+        path: 'pedidos',
+        loadChildren: './views/pedidos/pedidos.module#pedidosModule'
+      },
+      {
         path: 'stock',
         loadChildren: './views/stock/stock.module#stockModule'
       },

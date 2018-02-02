@@ -6,6 +6,10 @@ import { FormsModule } from '@angular/forms';
 
 import { stockComponent } from './stock.component';
 import { stockRoutingModule } from './stock-routing.module';
+import { servicioComponent } from './servicio.component';
+import { usoComponent } from './uso.component';
+import { consumoComponent } from './consumo.component';
+
 
 @NgModule({
   imports: [
@@ -15,6 +19,11 @@ import { stockRoutingModule } from './stock-routing.module';
     CommonModule,
     FormsModule
   ],
-  declarations: [ stockComponent ]
+  declarations: [ 
+  	stockComponent,
+  	servicioComponent,
+	usoComponent,
+	consumoComponent
+   ]
 })
 export class stockModule { }

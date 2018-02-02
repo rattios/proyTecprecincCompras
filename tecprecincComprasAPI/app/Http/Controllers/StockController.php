@@ -26,6 +26,42 @@ class StockController extends Controller
         } 
     }
 
+    public function indexCategoriasUso()
+    {
+        //cargar todos los productos en el stock
+        $productos = \App\Categoria::where('tipo_id',2)->with('stock')->get();
+
+        if(count($productos) == 0){
+            return response()->json(['error'=>'No existen productos en el stock Uso.'], 404);          
+        }else{
+            return response()->json(['status'=>'ok', 'productos'=>$productos], 200);
+        } 
+    }
+
+    public function indexCategoriasConsumo()
+    {
+        //cargar todos los productos en el stock
+        $productos = \App\Categoria::where('tipo_id',1)->with('stock')->get();
+
+        if(count($productos) == 0){
+            return response()->json(['error'=>'No existen productos en el stock Comsumo. '], 404);          
+        }else{
+            return response()->json(['status'=>'ok', 'productos'=>$productos], 200);
+        } 
+    }
+
+    public function indexCategoriasServicio()
+    {
+        //cargar todos los productos en el stock
+        $productos = \App\Categoria::where('tipo_id',3)->where('id',3)->get();
+
+        if(count($productos) == 0){
+            return response()->json(['error'=>'No existen productos en el stock Servicios.'], 404);          
+        }else{
+            return response()->json(['status'=>'ok', 'productos'=>$productos], 200);
+        } 
+    }
+
     /**
      * Show the form for creating a new resource.
      *

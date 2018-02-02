@@ -44,13 +44,13 @@
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Pedidos</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/buttons']"><i class="icon-puzzle"></i> Hacer un pedido</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/pedido']"><i class="icon-puzzle"></i> Hacer un pedido</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/social-buttons']"><i class="icon-puzzle"></i> Mis pedidos</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/mis-pedidos']"><i class="icon-puzzle"></i> Mis pedidos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/cards']"><i class="icon-puzzle"></i> Todos los pedidos</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/todos-pedidos']"><i class="icon-puzzle"></i> Todos los pedidos</a>
           </li>
         </ul>
       </li>
@@ -75,8 +75,22 @@
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/proveedores']"><i class="icon-calculator"></i> Proveedores</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock']"><i class="icon-calculator"></i> Stock</a>
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Stock</a>
+        <ul class="nav-dropdown-items">
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/stock']"><i class="icon-puzzle"></i> Todos los productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/uso']"><i class="icon-puzzle"></i> Bienes de uso</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/consumo']"><i class="icon-puzzle"></i> Bienes de cosumo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/servicio']"><i class="icon-puzzle"></i> Servicios</a>
+          </li>
+        </ul>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/categorias']"><i class="icon-calculator"></i> Categorias</a>

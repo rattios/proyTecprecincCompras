@@ -5,28 +5,34 @@ import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../services/ruta.service';
 
 @Component({
-  templateUrl: 'pedidos.component.html'
+  templateUrl: 'consumo.component.html'
 })
-export class pedidosComponent {
+export class consumoComponent {
   public prov: any;
   public stock: any;
   public productos: any;
-  public productosSeleccionados: any=[];
+  public preProductos: any=[];
   public proveedor: any='';
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
-
-      this.http.get(this.ruta.get_ruta()+'stock')
+     console.log('consumo');
+      this.http.get(this.ruta.get_ruta()+'stockConsumo')
            .toPromise()
            .then(
            data => {
              this.prov=data;
            	  this.stock=this.prov.productos;
               console.log(this.stock);
-              this.productList = this.stock;
+              for (var i = 0; i < this.stock.length; i++) {
+                for (var j = 0; j < this.stock[i].stock.length; j++) {
+                    this.stock[i].stock[j].categoria=this.stock[i].nombre;
+                    this.preProductos.push(this.stock[i].stock[j]);
+                }
+              }
+              this.productList = this.preProductos;
               this.filteredItems = this.productList;
               this.init();
             },
@@ -36,8 +42,7 @@ export class pedidosComponent {
     }
 
     ver(item){
-    	this.productosSeleccionados.push(item);
-      console.log(this.productosSeleccionados);
+    	this.proveedor=item.razonSocial;
     }
     setProductos(){
       console.log('asdasd');
@@ -81,6 +86,8 @@ export class pedidosComponent {
               if (this.productList[i].stock==this.inputName) {
                  this.filteredItems.push(this.productList[i]);
               }else if (this.productList[i].nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
+                 this.filteredItems.push(this.productList[i]);
+              }else if (this.productList[i].categoria.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
               }else if (this.productList[i].precio==this.inputName) {
                  this.filteredItems.push(this.productList[i]);
