@@ -47,24 +47,28 @@ class PedidoController extends Controller
 
     public function store(Request $request)
     {
+        //return $request->input('estado');
         // Primero comprobaremos si estamos recibiendo todos los campos obligatorios.
-        if (!$request->input('estado') ||
+        if (/*!$request->input('estado') ||*/
             !$request->input('usuario_id') ||
             !$request->input('solicitud'))
         {
             // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
-            return response()->json(['error'=>'Faltan datos necesarios para el proceso de alta.'],422);
+            return response()->json(['error'=>'Faltan datos necesarios para el proceso de alta del pedido.'],422);
         }
 
         //validaciones
-        $aux1 = \App\User::find($request->input('usuario_id'));
+        /*$aux1 = \App\User::find($request->input('usuario_id'));
         if(count($aux1) == 0){
            // Devolvemos un código 409 Conflict. 
             return response()->json(['error'=>'No existe el usuario al cual se quiere asociar el pedido.'], 409);
-        } 
+        } */
 
         //Verificar que todos los productos solicitados del pedido existen en la tabla stock
+        //$solicitud = json_decode($request->input('solicitud'));
+        //return json_decode($request->input('solicitud'));
         $solicitud = json_decode($request->input('solicitud'));
+        //return $solicitud[0]->producto_id;
         for ($i=0; $i < count($solicitud) ; $i++) { 
             $aux2 = \App\Stock::find($solicitud[$i]->producto_id);
             if(count($aux2) == 0){
@@ -74,7 +78,8 @@ class PedidoController extends Controller
         }    
 
         if($nuevoPedido=\App\Pedido::create([
-            'estado'=>$request->input('estado'), 
+            //'estado'=>$request->input('estado'),
+            'estado'=>0, 
             'usuario_id'=>$request->input('usuario_id')
             ]))
         {

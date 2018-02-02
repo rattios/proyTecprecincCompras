@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../services/ruta.service';
 
@@ -13,12 +14,14 @@ export class pedidosComponent {
   public productos: any;
   public productosSeleccionados: any=[];
   public proveedor: any='';
-  constructor(private http: HttpClient, private ruta: RutaService) {
+  public departamento='RRHH';
+  public template:'http://localhost/template.gif';
+  constructor(private http: HttpClient, private ruta: RutaService, private spinnerService: Ng4LoadingSpinnerService) {
 
   }
 
    ngOnInit(): void {
-
+       this.spinnerService.show();
       this.http.get(this.ruta.get_ruta()+'stock')
            .toPromise()
            .then(
@@ -29,18 +32,66 @@ export class pedidosComponent {
               this.productList = this.stock;
               this.filteredItems = this.productList;
               this.init();
+              this.spinnerService.hide();
             },
            msg => { 
              console.log(msg);
+             this.spinnerService.hide();
            });
     }
 
-    ver(item){
-    	this.productosSeleccionados.push(item);
+    setProductos(item){
+      if(!this.checkProductos(item)) {
+        item.cantidad=1;
+        item.producto_id=item.id;
+        this.productosSeleccionados.push(item);
+      }
+      
       console.log(this.productosSeleccionados);
     }
-    setProductos(){
-      console.log('asdasd');
+    checkProductos(item){
+      var band=false;
+      for (var i = 0; i < this.productosSeleccionados.length; i++) {
+        if(this.productosSeleccionados[i].id==item.id) {
+          band=true;
+        }
+      }
+      return band;
+    }
+    delProductos(item){
+      for (var i = 0; i < this.productosSeleccionados.length; i++) {
+        if(this.productosSeleccionados[i].id==item.id) {
+          this.productosSeleccionados.splice(i, 1);
+        }
+      }
+    }
+    enviar(){
+      if(this.productosSeleccionados.length>0) {
+        var enviar = {
+          usuario_id: 1,
+          solicitud: JSON.stringify(this.productosSeleccionados),
+          estado: 0
+        }
+        console.log(enviar);
+        this.spinnerService.show();
+        setTimeout(() => {
+          this.http.post(this.ruta.get_ruta()+'pedidos',enviar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+              this.spinnerService.hide();
+              this.vaciar();
+            },
+           msg => { 
+             console.log(msg);
+             this.spinnerService.hide();
+           });
+        }, 1000);
+       } 
+    }
+    vaciar(){
+      this.productosSeleccionados=[];
     }
 
     //-------------------------------------------------------------------------------------------------------------------------

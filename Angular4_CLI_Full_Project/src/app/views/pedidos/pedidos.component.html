@@ -1,21 +1,18 @@
+<ng4-loading-spinner> </ng4-loading-spinner>
 <div class="animated fadeIn">
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-          <i class="fa fa-align-justify"></i> Lista de stock
+          <i class="fa fa-align-justify"></i>  <label class="labels" style="font-size: 18px; font-weight: bold">Busca y agrega los productos a solicitar </label>
         </div>
         <div class="card-body">
-          <div class="form-group form-black label-floating is-empty">
-               <label class="labels" style="font-size: 18px; font-weight: bold">Busca y agrega los productos a solicitar </label>
-              
-          </div>
           <div class="form-group form-black label-floating is-empty">
                <label class="labels" style="font-size: 16px; font-weight: bold">Buscar: </label>
               <input  class="form-control" type="text"  id="inputName" [(ngModel)]="inputName" (ngModelChange)="FilterByName()"/>
                <br>
           </div>
-          <table class="table table-bordered table-striped table-sm">
+          <table class="table table-striped">
             <thead>
               <th>stock</th>
               <th>nombre</th>
@@ -30,7 +27,7 @@
                   <td>{{item.nombre}}</td>
                   <td>{{item.precio}}</td>
                   <td>{{item.codigo}}</td>
-                  <td><button type="button" class="btn btn-success" (click)=ver(item)>Agregar</button></td>
+                  <td><button type="button" class="btn btn-success" (click)=setProductos(item)>Agregar</button></td>
                </tr>
             </tbody>
           </table>
@@ -48,64 +45,43 @@
                  </ul>
               </div>
             </div>
-            <div>
-              <table class="table table-striped">
+        </div>   
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i>  <label class="labels" style="font-size: 18px; font-weight: bold">Información del pedido </label>
+        </div>
+        <div class="card-body">
+          <div class="form-group form-black label-floating is-empty">
+               <label class="labels" style="font-size: 14px; font-weight: bold">Departamento:</label> {{departamento}}
+          </div>
+          <div class="form-group form-black label-floating is-empty">
+               <label class="labels" style="font-size: 14px; font-weight: bold">Productos seleccionados</label>
+          </div>
+          <table class="table table-sm">
             <thead>
               <tr>
-                <th>Username</th>
-                <th>Date registered</th>
-                <th>Role</th>
-                <th>Status</th>
+                <th>Cantidad</th>
+                <th>Nombre</th>
+                <th>Código</th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Vishnu Serghei</td>
-                <td>2012/01/01</td>
-                <td>Member</td>
-                <td>
-                  <span class="badge badge-success">Active</span>
-                </td>
-              </tr>
-              <tr>
-                <td>Zbyněk Phoibos</td>
-                <td>2012/02/01</td>
-                <td>Staff</td>
-                <td>
-                  <span class="badge badge-danger">Banned</span>
-                </td>
-              </tr>
-              <tr>
-                <td>Einar Randall</td>
-                <td>2012/02/01</td>
-                <td>Admin</td>
-                <td>
-                  <span class="badge badge-secondary">Inactive</span>
-                </td>
-              </tr>
-              <tr>
-                <td>Félix Troels</td>
-                <td>2012/03/01</td>
-                <td>Member</td>
-                <td>
-                  <span class="badge badge-warning">Pending</span>
-                </td>
-              </tr>
-              <tr>
-                <td>Aulus Agmundr</td>
-                <td>2012/01/21</td>
-                <td>Staff</td>
-                <td>
-                  <span class="badge badge-success">Active</span>
-                </td>
-              </tr>
+              <tr *ngFor="let item of productosSeleccionados"> 
+                  <td><input type="number" min="1" class="form-control" id="cantidad" [(ngModel)]="item.cantidad"></td>
+                  <td>{{item.nombre}}</td>
+                  <td>{{item.codigo}}</td>
+                  <td></td>
+                  <td><button type="button" class="btn btn-danger" (click)=delProductos(item)>X</button></td>
+               </tr>
             </tbody>
-          </table>
-            </div>   
+          </table>   
         </div>
         <div class="card-footer">
-          <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
-          <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+          <button type="submit" class="btn btn-sm btn-primary" (click)=enviar()><i class="fa fa-dot-circle-o"></i> Enviar pedido</button>
+          <button type="reset" class="btn btn-sm btn-danger" (click)=vaciar()><i class="fa fa-ban"></i> Vaciar</button>
         </div>
       </div>
     </div>
