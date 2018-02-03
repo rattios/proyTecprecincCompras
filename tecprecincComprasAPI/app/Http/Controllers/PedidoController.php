@@ -162,7 +162,7 @@ class PedidoController extends Controller
 
         // Listado de campos recibidos teóricamente.
         $estado=$request->input('estado');
-        //$productos=$request->input('productos');
+        $solicitud=$request->input('solicitud');
 
         // Creamos una bandera para controlar si se ha modificado algún dato.
         $bandera = false;
@@ -172,6 +172,26 @@ class PedidoController extends Controller
         {
             $pedido->estado = $estado;
             $bandera=true;
+        }
+
+        if ($solicitud) {
+            $solicitud = json_decode($request->input('solicitud'));
+            for ($i=0; $i < count($solicitud) ; $i++) { 
+                  $pedido->solicitud()->updateExistingPivot($solicitud[$i]->id, [
+                    'cantidad' => $solicitud[$i]->pivot->cantidad,
+                    'aprobado' => $solicitud[$i]->pivot->aprobado,
+                    'entregado' => $solicitud[$i]->pivot->entregado,
+                    'f_entrega' => $solicitud[$i]->pivot->f_entrega,
+                    'tipo_entrega' => $solicitud[$i]->pivot->tipo_entrega,
+                    'devuelto' => $solicitud[$i]->pivot->devuelto,
+                    'cancelado' => $solicitud[$i]->pivot->cancelado,
+                    'pendiente' => $solicitud[$i]->pivot->pendiente,
+                    'observaciones' => $solicitud[$i]->pivot->observaciones
+                    ]
+                    );
+            }
+
+            $bandera=true; 
         }
 
         if ($bandera)
