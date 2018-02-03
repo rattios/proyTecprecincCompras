@@ -1,16 +1,15 @@
 <div class="animated fadeIn">
   <div class="row">
     <div class="col-sm-12 col-md-12">
-      <div class="row" align="center" style="position: fixed; text-align: center; z-index: 99" >
-        <alert type="success" *ngIf="success">
-          <strong>Actualizado con éxito</strong> 
-        </alert>
-        <alert type="danger" *ngIf="fail">
-          <strong>Ha ocurrido un Error!</strong> 
-        </alert>
-      </div>
       <div class="card">
-        
+          <div style="width: 100%">
+            <alert type="success" *ngIf="success" style="position: fixed;width: calc(100% - 262px);z-index: 99;top: 65px;text-align: center;">
+              <strong>Actualizado con éxito</strong> 
+            </alert>
+            <alert type="danger" *ngIf="fail" style="position: fixed;width: calc(100% - 262px);z-index: 99;top: 65px;text-align: center;">
+              <strong>Ha ocurrido un Error!</strong> 
+            </alert>
+          </div>
         <div class="card-header">
           <h2>Categorias</h2> 
           <div align="right">

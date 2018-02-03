@@ -18,7 +18,7 @@ class PedidoController extends Controller
     public function index()
     {
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::with('solicitud')->get();
+        $pedidos = \App\Pedido::with('solicitud')->with('usuario.departamento')->get();
 
         if(count($pedidos) == 0){
             return response()->json(['error'=>'No existen pedidos.'], 404);          
