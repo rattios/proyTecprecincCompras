@@ -3,10 +3,13 @@ import {CommonModule} from '@angular/common';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { pedidosComponent } from './pedidos.component';
 import { misPedidosComponent } from './mis-pedidos.component';
 import { todosPedidosComponent } from './todos-pedidos.component';
+import { infoComponent } from './info.component';
+import { tablaInfoComponent } from './tablaInfo.component';
 import { pedidosRoutingModule } from './pedidos-routing.module';
 
 @NgModule({
@@ -16,11 +19,14 @@ import { pedidosRoutingModule } from './pedidos-routing.module';
     HttpClientModule,
     CommonModule,
     FormsModule,
+    TabsModule
   ],
   declarations: [ 
   	pedidosComponent,
   	misPedidosComponent,
-	todosPedidosComponent
+  	todosPedidosComponent,
+    infoComponent,
+    tablaInfoComponent
 	]
 })
 export class pedidosModule { }
