@@ -27,9 +27,7 @@ export class infoComponent {
       }
     }
 
-    ver(item){
-    	this.proveedor=item.razonSocial;
-    }
+    
     setProductos(){
       console.log('asdasd');
     }

@@ -52,5 +52,38 @@ export class todosPedidosComponent {
            });
     }
 
+    reset(){
+      this.loading=true;
+      this.pedidos0=[];
+      this.pedidos1=[];
+      this.pedidos2=[];
+      this.pedidos3=[];
+      this.http.get(this.ruta.get_ruta()+'pedidos')
+           .toPromise()
+           .then(
+           data => {
+             this.prov=data;
+               this.pedidos=this.prov.pedidos;
+              console.log(this.pedidos);
+              for (var i = 0; i < this.pedidos.length; ++i) {
+                if(this.pedidos[i].estado==0) {
+                  this.pedidos0.push(this.pedidos[i]);
+                }else if(this.pedidos[i].estado==1) {
+                  this.pedidos1.push(this.pedidos[i]);
+                }else if(this.pedidos[i].estado==2) {
+                  this.pedidos2.push(this.pedidos[i]);
+                }else if(this.pedidos[i].estado==3) {
+                  this.pedidos3.push(this.pedidos[i]);
+                }
+              }
+              this.loading=false;
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+             alert('Ha ocurrido un error!');
+           });
+    }
+
     
 }

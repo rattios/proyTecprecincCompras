@@ -55,7 +55,25 @@
 	        	</div>
 	        </div>
 	        <div class="card-body">
-	          	<app-info [informacion]="informacion"></app-info>
+          	<app-info [informacion]="informacion"></app-info>
+            <br>
+            <div *ngIf="informacion.estado==0" class="row">
+                <div class="col-lg-6">
+                  <button type="button" class="btn btn-primary btn-lg btn-block" (click)=aceptarSolicitud(informacion.id)>Aceptar solicitud</button>
+                </div>
+                <div class="col-lg-6">
+                 <button type="button" class="btn btn-danger btn-lg btn-block" (click)=cancelarSolicitud(informacion.id)>Cancelar solicitud</button>
+                </div> 
+            </div>
+            <div *ngIf="informacion.estado==1" class="row">
+              <div class="col-lg-6">
+                <button type="button" class="btn btn-primary btn-lg btn-block" (click)=finalizarSolicitud(informacion.id)>Finalizar solicitud</button>
+              </div>
+              <div class="col-lg-6">
+                <button type="button" class="btn btn-danger btn-lg btn-block" (click)=cancelarSolicitud(informacion.id)>Cancelar solicitud</button>
+              </div>
+            </div>
+            <br>
 	        </div>
 	    </div>
   	</div>

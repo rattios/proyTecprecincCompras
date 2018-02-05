@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../services/ruta.service';
+import { todosPedidosComponent } from './todos-pedidos.component';
 
 @Component({
   selector: 'app-tabla-info',
@@ -11,10 +12,11 @@ import { RutaService } from '../../services/ruta.service';
 export class tablaInfoComponent {
 
   public verInfo=false;
+  public loading=false;
   
   @Input() informacion:any;
 
-  constructor(private http: HttpClient, private ruta: RutaService) {
+  constructor(private http: HttpClient, private ruta: RutaService, private parent: todosPedidosComponent) {
 
   }
 
@@ -26,7 +28,57 @@ export class tablaInfoComponent {
        this.init();
       }
     }
-
+    aceptarSolicitud(id){
+      console.log(id);
+      var aceptar={
+        estado:1
+      }
+      this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.parent.reset();
+            },
+           msg => { 
+             console.log(msg);
+             alert('Ha ocurrido un error!');
+           });     
+    }
+    finalizarSolicitud(id){
+      console.log(id);
+      var aceptar={
+        estado:2
+      }
+      this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.parent.reset();
+            },
+           msg => { 
+             console.log(msg);
+             alert('Ha ocurrido un error!');
+           });     
+    }
+    cancelarSolicitud(id){
+      console.log(id);
+      var aceptar={
+        estado:4
+      }
+      this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.parent.reset();
+            },
+           msg => { 
+             console.log(msg);
+             alert('Ha ocurrido un error!');
+           });     
+    }
     ver(item){
 
       console.log(item);
