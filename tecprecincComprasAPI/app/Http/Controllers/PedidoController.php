@@ -20,9 +20,25 @@ class PedidoController extends Controller
         //cargar todos los pedidos
         $pedidos = \App\Pedido::with('solicitud')->with('usuario.departamento')->get();
 
+
         if(count($pedidos) == 0){
             return response()->json(['error'=>'No existen pedidos.'], 404);          
         }else{
+
+            $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    for ($k=0; $k < count($categorias); $k++) { 
+                        if ($pedidos[$i]->solicitud[$j]->categoria_id == $categorias[$k]->id ) {
+                            $pedidos[$i]->solicitud[$j]->categoria = $categorias[$k];
+                        }
+                    }
+                    
+                }
+                
+            }
+
             return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
         } 
     }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class StockController extends Controller
 {
@@ -17,12 +18,34 @@ class StockController extends Controller
     public function index()
     {
         //cargar todos los productos en el stock
-        $productos = \App\Stock::with('categoria')->get();
+        /*$productos = \App\Stock::select('nombre', 'codigo', 'precio',
+            'stock',
+            'stock_min',  'categoria_id',
+            'proveedor_id')->with('categoria')->get();
 
         if(count($productos) == 0){
             return response()->json(['error'=>'No existen productos en el stock.'], 404);          
         }else{
             return response()->json(['status'=>'ok', 'productos'=>$productos], 200);
+        }*/
+
+        $produc=DB::select("SELECT id,nombre,codigo,stock,categoria_id FROM  `stock` WHERE 1 ");
+        $categ=DB::select("SELECT id,nombre,codigo,tipo_id,rubro_id FROM  `categorias` WHERE 1 ");
+
+        for ($i=0; $i < count($produc); $i++) { 
+            $produc[$i]->categoria=[];
+            for ($j=0; $j < count($categ); $j++) { 
+                if ($produc[$i]->categoria_id==$categ[$j]->id) {
+                    array_push($produc[$i]->categoria,$categ[$j]);
+                }
+            }
+        }
+
+
+        if(count($produc) == 0){
+            return response()->json(['error'=>'No existen productos en el stock.'], 404);          
+        }else{
+            return response()->json(['status'=>'ok', 'productos'=>$produc], 200);
         } 
     }
 
