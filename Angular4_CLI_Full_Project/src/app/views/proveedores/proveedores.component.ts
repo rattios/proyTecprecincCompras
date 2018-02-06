@@ -12,12 +12,13 @@ export class ProveedoresComponent {
   public proveedores: any;
   public productos: any;
   public proveedor: any='';
+  public loading=true;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
-
+      this.loading=true;
       this.http.get(this.ruta.get_ruta()+'proveedores')
            .toPromise()
            .then(
@@ -28,9 +29,11 @@ export class ProveedoresComponent {
               this.productList = this.proveedores;
               this.filteredItems = this.productList;
               this.init();
+              this.loading=false;
             },
            msg => { 
              console.log(msg);
+             this.loading=false;
            });
     }
 

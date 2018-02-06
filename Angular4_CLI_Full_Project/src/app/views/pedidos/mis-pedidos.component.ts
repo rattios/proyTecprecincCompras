@@ -12,12 +12,14 @@ export class misPedidosComponent {
   public stock: any;
   public productos: any;
   public proveedor: any='';
+  public loading=true;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
 
+       this.loading=true;
       this.http.get(this.ruta.get_ruta()+'stock')
            .toPromise()
            .then(
@@ -28,9 +30,11 @@ export class misPedidosComponent {
               this.productList = this.stock;
               this.filteredItems = this.productList;
               this.init();
+              this.loading=false;
             },
            msg => { 
              console.log(msg);
+             this.loading=false;
            });
     }
 

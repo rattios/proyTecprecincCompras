@@ -15,12 +15,13 @@ export class pedidosComponent {
   public proveedor: any='';
   public departamento='RRHH';
   public template:'http://localhost/template.gif';
+  public loading=true;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
-      
+      this.loading=true;
       this.http.get(this.ruta.get_ruta()+'stock')
            .toPromise()
            .then(
@@ -31,11 +32,11 @@ export class pedidosComponent {
               this.productList = this.stock;
               this.filteredItems = this.productList;
               this.init();
-           
+              this.loading=false;
             },
            msg => { 
              console.log(msg);
-           
+              this.loading=false;
            });
     }
 

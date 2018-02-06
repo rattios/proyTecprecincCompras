@@ -3,14 +3,14 @@
   <app-sidebar-form></app-sidebar-form>
   <nav class="sidebar-nav">
     <ul class="nav">
-     <li class="nav-item">
+     <!-- <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']"><i class="icon-speedometer"></i> Dashboard <span class="badge badge-info">NEW</span></a>
-      </li>
+      </li> -->
       <li class="divider"></li>
       <li class="nav-title">
-        UI Elements
+        Menú
       </li>
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+      <!-- <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Components</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item">
@@ -38,43 +38,23 @@
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/tabs']"><i class="icon-puzzle"></i> Tabs</a>
           </li>
         </ul>
-      </li>
+      </li> -->
 
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
-        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Pedidos</a>
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Solicitudes</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/pedido']"><i class="icon-puzzle"></i> Hacer un pedido</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/pedido']"><i class="icon-puzzle"></i> Hacer una solicitud</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/mis-pedidos']"><i class="icon-puzzle"></i> Mis pedidos</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/mis-pedidos']"><i class="icon-puzzle"></i> Mis solicitudes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/todos-pedidos']"><i class="icon-puzzle"></i> Todos los pedidos</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/todos-pedidos']"><i class="icon-puzzle"></i> Todos las solicitudes</a>
           </li>
         </ul>
       </li>
 
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
-        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i> Icons</a>
-        <ul class="nav-dropdown-items">
-          <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/icons/font-awesome']"><i class="icon-star"></i> Font Awesome<span class="badge badge-secondary">4.7</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/icons/simple-line-icons']"><i class="icon-star"></i> Simple Line Icons</a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" [routerLink]="['/widgets']"><i class="icon-calculator"></i> Widgets <span class="badge badge-info">NEW</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" [routerLink]="['/charts']"><i class="icon-pie-chart"></i> Charts</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" [routerLink]="['/proveedores']"><i class="icon-calculator"></i> Proveedores</a>
-      </li>
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Stock</a>
         <ul class="nav-dropdown-items">
@@ -92,11 +72,35 @@
           </li>
         </ul>
       </li>
+
+      <!-- <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i> Icons</a>
+        <ul class="nav-dropdown-items">
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/icons/font-awesome']"><i class="icon-star"></i> Font Awesome<span class="badge badge-secondary">4.7</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/icons/simple-line-icons']"><i class="icon-star"></i> Simple Line Icons</a>
+          </li>
+        </ul>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/widgets']"><i class="icon-calculator"></i> Widgets <span class="badge badge-info">NEW</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/charts']"><i class="icon-pie-chart"></i> Charts</a>
+      </li>-->
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/categorias']"><i class="icon-calculator"></i> Categorias</a>
       </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/proveedores']"><i class="icon-calculator"></i> Proveedores</a>
+      </li>
+      
+      
        <li class="divider"></li>
-      <li class="nav-title">
+      <!-- <li class="nav-title">
         Extras
       </li>
       <li class="nav-item nav-dropdown" appNavDropdown>
@@ -121,7 +125,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link nav-link-danger" href="http://coreui.io/pro/angular/"><i class="icon-layers"></i> Try CoreUI <strong>PRO</strong></a>
-      </li>
+      </li> -->
     </ul> 
   </nav>
   <app-sidebar-footer></app-sidebar-footer>

@@ -13,12 +13,14 @@ export class usoComponent {
   public productos: any;
   public preProductos: any=[];
   public proveedor: any='';
+  public loading=true;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
 
+      this.loading=true;
       this.http.get(this.ruta.get_ruta()+'stockUso')
            .toPromise()
            .then(
@@ -35,9 +37,11 @@ export class usoComponent {
               this.productList = this.preProductos;
               this.filteredItems = this.productList;
               this.init();
+              this.loading=false;
             },
            msg => { 
              console.log(msg);
+             this.loading=false;
            });
     }
 
