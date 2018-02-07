@@ -4,6 +4,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 import { pedidosComponent } from './pedidos.component';
 import { misPedidosComponent } from './mis-pedidos.component';
@@ -19,7 +20,8 @@ import { pedidosRoutingModule } from './pedidos-routing.module';
     HttpClientModule,
     CommonModule,
     FormsModule,
-    TabsModule
+    TabsModule,
+    AlertModule.forRoot()
   ],
   declarations: [ 
   	pedidosComponent,

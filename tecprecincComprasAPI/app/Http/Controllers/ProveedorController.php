@@ -267,13 +267,14 @@ class ProveedorController extends Controller
             $proveedor->productos()->detach();
 
             //Crear las nuevas relaciones en la tabla pivote
+            //return $request->input('productos');
             $productos = json_decode($request->input('productos'));
             
             for ($i=0; $i < count($productos) ; $i++) { 
 
                 //$proveedor->productos()->attach($productos[$i]->producto_id, ['precio' => $productos[$i]->precio]);
 
-                $proveedor->productos()->attach($productos[$i]->producto_id);       
+                $proveedor->productos()->attach($productos[$i]->id);       
             }
             
             $bandera=true;

@@ -16,6 +16,8 @@ export class pedidosComponent {
   public departamento='RRHH';
   public template:'http://localhost/template.gif';
   public loading=true;
+  public success=false;
+  public fail=false;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
@@ -82,9 +84,18 @@ export class pedidosComponent {
              console.log(data);
               
               this.vaciar();
+              this.success=true;
+              setTimeout(() => {  
+                this.success=false;
+              }, 4000);
+
             },
            msg => { 
              console.log(msg);
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
              
            });
         }, 1000);
