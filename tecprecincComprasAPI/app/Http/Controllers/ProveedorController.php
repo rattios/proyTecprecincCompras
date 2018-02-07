@@ -271,7 +271,9 @@ class ProveedorController extends Controller
             
             for ($i=0; $i < count($productos) ; $i++) { 
 
-                $proveedor->productos()->attach($productos[$i]->producto_id, ['precio' => $productos[$i]->precio]);      
+                //$proveedor->productos()->attach($productos[$i]->producto_id, ['precio' => $productos[$i]->precio]);
+
+                $proveedor->productos()->attach($productos[$i]->producto_id);       
             }
             
             $bandera=true;
