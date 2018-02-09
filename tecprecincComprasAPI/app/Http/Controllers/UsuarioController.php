@@ -106,14 +106,14 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         // Primero comprobaremos si estamos recibiendo todos los campos.
-        if ( !$request->input('user') || !$request->input('password') ||
+        /*if ( !$request->input('user') || !$request->input('password') ||
             !$request->input('email') || !$request->input('nombre') ||
             !$request->input('apellido') || !$request->input('telefono') ||
             !$request->input('departamento_id') || !$request->input('rol'))
         {
             // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
             return response()->json(['error'=>'Faltan datos necesarios para el proceso de alta.'],422);
-        } 
+        } */
         
         $aux = \App\User::where('user', $request->input('user'))
             ->orWhere('email', $request->input('email'))->get();
