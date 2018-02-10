@@ -257,8 +257,10 @@ class PedidoController extends Controller
     public function picking(Request $request)
     {
 
+        return $request->input('categoria');
+
         $categoria = json_decode($request->input('categoria'));
-        
+
         if ($categoria->tipo->nombre == 'CONSUMO') {
             return response()->json(['message'=>'consumo'], 200);
         }else if($categoria->tipo->nombre == 'USO'){
