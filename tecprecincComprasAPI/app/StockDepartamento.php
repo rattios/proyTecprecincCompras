@@ -24,10 +24,8 @@ class StockDepartamento extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre', 'codigo',
-		'stock', 'stock_min',
-		'categoria_id', 'proveedor_id',
-		'departamento_id'];
+    protected $fillable = ['stock_id', 'stock',
+		'stock_min', 'departamento_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -43,19 +41,11 @@ class StockDepartamento extends Model
 		return $this->belongsTo('App\Departamento', 'departamento_id');
 	}
 
-	// Relación de stockDepartamentos con categoria:
-	public function categoria()
+	// Relación de stockDepartamentos con producto:
+	public function producto()
 	{
-		// 1 stockDepartamento (producto) pertenece a una categoria
-		return $this->belongsTo('App\Categoria', 'categoria_id');
+		// 1 stockDepartamento (producto) pertenece a un producto del stock
+		return $this->belongsTo('App\Stock', 'stock_id');
 	}
-
-	// Relación de stockDepartamentos con proveedor:
-	public function proveedor()
-	{
-		// 1 stockDepartamento (producto) pertenece a un proveedor
-		return $this->belongsTo('App\Proveedor', 'proveedor_id');
-	}
-
     
 }

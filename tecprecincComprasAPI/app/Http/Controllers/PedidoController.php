@@ -284,7 +284,46 @@ class PedidoController extends Controller
             return response()->json(['message'=>'Se ha descontado la cantidad solicitada del stock.', 'picking'=>$picking], 200);
 
         }else if($picking->categoria->tipo->nombre == 'USO'){
-            return response()->json(['message'=>'No implementado.'], 200);
+            
+            $descontar = $picking->stock - $picking->pivot->cantidad;
+
+            DB::table('stock')
+                ->where('id', $picking->id)
+                ->update(['stock' => $descontar]);
+
+            DB::table('pedido_stock')
+                ->where('pedido_id', $picking->pivot->pedido_id)
+                ->where('stock_id', $picking->pivot->stock_id)
+                ->update(['entregado' => 1]);
+
+            $picking->stock = $descontar;
+            $picking->pivot->entregado = 1;
+
+            //verificar si no existe el producto en el departamento para crearlo
+            $productoEnDep = \App\StockDepartamento::where('stock_id', $picking->pivot->stock_id)
+                ->where('departamento_id', $picking->departamento->id)->get();
+
+            if(count($productoEnDep)==0){
+                $NewProdEnDep = new \App\StockDepartamento;
+                $NewProdEnDep->stock_id = $picking->pivot->stock_id;
+                $NewProdEnDep->stock = $picking->pivot->cantidad;
+                $NewProdEnDep->stock_min = 0;
+                $NewProdEnDep->departamento_id = $picking->departamento->id;
+
+                if($NewProdEnDep->save()){
+                   return response()->json(['message'=>'Se ha descontado la cantidad solicitada del stock.', 'picking'=>$picking], 200);
+                }else{
+                    return response()->json(['error'=>'Error al crear producto en el stock del departamento.'], 500);
+                }                          
+            }else{
+                $productoEnDep[0]->stock = $productoEnDep[0]->stock + $picking->pivot->cantidad;
+
+                if($productoEnDep[0]->save()){
+                   return response()->json(['message'=>'Se ha descontado la cantidad solicitada del stock.', 'picking'=>$picking], 200);
+                }else{
+                    return response()->json(['error'=>'Error al actualizar producto en el stock del departamento.'], 500);
+                }
+            } 
         }
     }
 
