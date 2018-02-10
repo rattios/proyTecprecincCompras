@@ -273,7 +273,15 @@ class PedidoController extends Controller
                 ->where('id', $picking->id)
                 ->update(['stock' => $descontar]);
 
-            return response()->json(['message'=>'Se ha descontado la cantidad solicitada del stock.'], 200);
+            DB::table('pedido_stock')
+                ->where('pedido_id', $picking->pivot->pedido_id)
+                ->where('stock_id', $picking->pivot->stock_id)
+                ->update(['entregado' => 1]);
+
+            $picking->stock = $descontar;
+            $picking->pivot->entregado = 1;
+
+            return response()->json(['message'=>'Se ha descontado la cantidad solicitada del stock.', 'picking'=>$picking], 200);
 
         }else if($picking->categoria->tipo->nombre == 'USO'){
             return response()->json(['message'=>'No implementado.'], 200);
