@@ -256,17 +256,9 @@ class PedidoController extends Controller
 
     public function picking(Request $request)
     {
-        if (!$request->input('departamento'))
-        {
-            // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
-            return response()->json(['error'=>'Faltan datos necesarios para el proceso de picking.'],422);
-        }
+        $picking = $request->all();
 
-
-        //$picking = json_decode($request->input('picking'));
-        $picking = $request->input('departamento');
-
-        return response()->json(['picking'=>$picking],200);
+        return response()->json(['picking'=>$picking->codigo],200);
 
         if ($picking->categoria->tipo->nombre == 'CONSUMO') {
             
