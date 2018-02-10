@@ -262,16 +262,21 @@ class PedidoController extends Controller
             return response()->json(['error'=>'Faltan datos necesarios para el proceso de picking.'],422);
         }
 
-
         $picking = json_decode($request->input('picking'));
         //$picking = $request->input('picking');
 
-        return response()->json(['picking'=>$picking->categoria->tipo->nombre],200);
-
         if ($picking->categoria->tipo->nombre == 'CONSUMO') {
             
-        }else if($picking->categoria->tipo->nombre == 'USO'){
+            $descontar = $picking->stock - $picking->pivot->cantidad;
 
+            DB::table('stock')
+                ->where('id', $picking->id)
+                ->update(['stock' => $descontar]);
+
+            return response()->json(['message'=>'Se ha descontado la cantidad solicitada del stock.'], 200);
+
+        }else if($picking->categoria->tipo->nombre == 'USO'){
+            return response()->json(['message'=>'No implementado.'], 200);
         }
     }
 
