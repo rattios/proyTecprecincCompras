@@ -266,7 +266,7 @@ class PedidoController extends Controller
         //$picking = json_decode($request->input('picking'));
         $picking = $request->input('picking');
 
-        return response()->json(['picking'=>$picking],200);
+        return response()->json(['picking'=>$picking->departamento],200);
 
         if ($picking->categoria->tipo->nombre == 'CONSUMO') {
             
@@ -274,5 +274,5 @@ class PedidoController extends Controller
 
         }
     }
-    
+
 }
