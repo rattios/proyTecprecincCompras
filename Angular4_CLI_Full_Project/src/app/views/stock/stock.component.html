@@ -6,7 +6,10 @@
         <div class="card-header">
           <i class="fa fa-align-justify"></i> Lista de stock
         </div>
-        <div class="card-body">
+        <div class="card-body" *ngIf="verProduc">
+          <app-info [informacion]="producSelec" *ngIf="verProduc"></app-info>
+        </div>
+        <div class="card-body" *ngIf="!verProduc">
           <div class="form-group form-black label-floating is-empty">
                <label class="labels" style="font-size: 18px; font-weight: bold">Buscar: </label>
               <input  class="form-control" type="text"  id="inputName" [(ngModel)]="inputName" (ngModelChange)="FilterByName()"/>

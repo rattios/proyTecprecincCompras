@@ -9,6 +9,7 @@ import { stockRoutingModule } from './stock-routing.module';
 import { servicioComponent } from './servicio.component';
 import { usoComponent } from './uso.component';
 import { consumoComponent } from './consumo.component';
+import { infoComponent } from './info.component';
 
 
 @NgModule({
@@ -22,8 +23,9 @@ import { consumoComponent } from './consumo.component';
   declarations: [ 
   	stockComponent,
   	servicioComponent,
-	usoComponent,
-	consumoComponent
+  	usoComponent,
+  	consumoComponent,
+    infoComponent
    ]
 })
 export class stockModule { }

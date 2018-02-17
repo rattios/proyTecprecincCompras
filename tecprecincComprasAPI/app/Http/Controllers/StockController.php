@@ -29,7 +29,7 @@ class StockController extends Controller
             return response()->json(['status'=>'ok', 'productos'=>$productos], 200);
         }*/
 
-        $produc=DB::select("SELECT id,nombre,codigo,stock,categoria_id FROM  `stock` WHERE 1 ");
+        $produc=DB::select("SELECT id,nombre,codigo,stock,categoria_id,tipo_id,rubro_id,precio,stock_min FROM  `stock` WHERE 1 ");
         $categ=DB::select("SELECT id,nombre,codigo,tipo_id,rubro_id FROM  `categorias` WHERE 1 ");
 
         for ($i=0; $i < count($produc); $i++) { 

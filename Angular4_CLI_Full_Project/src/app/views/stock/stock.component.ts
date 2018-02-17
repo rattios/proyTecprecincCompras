@@ -13,6 +13,12 @@ export class stockComponent {
   public productos: any;
   public proveedor: any='';
   public loading=true;
+  public verProduc=false;
+  public producSelec:any;
+  public categoria: any;
+  public categorias: any;
+  public rubros: any;
+  public tipos: any;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
@@ -35,13 +41,39 @@ export class stockComponent {
              console.log(msg);
              this.loading=false;
            });
+      this.http.get(this.ruta.get_ruta()+'fullcategorias')
+           .toPromise()
+           .then(
+           data => {
+              this.categoria=data;
+              
+              this.categorias=this.categoria.categorias;
+              this.rubros=this.categoria.rubros;
+              this.tipos=this.categoria.tipos;
+
+              
+              console.log(this.categoria);
+            },
+           msg => { 
+             console.log(msg);
+           });
     }
 
     ver(item){
-    	this.proveedor=item.razonSocial;
+    	this.producSelec=item;
+      this.verProduc=true;
     }
-    setProductos(){
-      console.log('asdasd');
+    atras(){
+      this.verProduc=false;
+    }
+    getCategorias(){
+      return this.categorias;
+    }
+    getTipos(){
+      return this.tipos;
+    }
+    getRubros(){
+      return this.rubros;
     }
 
     //-------------------------------------------------------------------------------------------------------------------------
