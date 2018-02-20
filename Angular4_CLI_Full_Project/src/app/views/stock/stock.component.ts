@@ -19,6 +19,7 @@ export class stockComponent {
   public categorias: any;
   public rubros: any;
   public tipos: any;
+  public departamentos: any;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
@@ -57,6 +58,19 @@ export class stockComponent {
            msg => { 
              console.log(msg);
            });
+      this.http.get(this.ruta.get_ruta()+'departamentos')
+           .toPromise()
+           .then(
+           data => {
+              this.departamentos=data;
+              
+              this.departamentos=this.departamentos.departamentos;
+              
+              console.log(this.departamentos);
+            },
+           msg => { 
+             console.log(msg);
+           });
     }
 
     ver(item){
@@ -74,6 +88,9 @@ export class stockComponent {
     }
     getRubros(){
       return this.rubros;
+    }
+    getDepartamentos(){
+      return this.departamentos;
     }
 
     //-------------------------------------------------------------------------------------------------------------------------

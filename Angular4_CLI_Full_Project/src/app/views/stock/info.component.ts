@@ -19,7 +19,7 @@ export class infoComponent {
   public categorias:any;
   public tipos:any;
   public rubros:any;
-
+  public departamentos:any;
   constructor(private http: HttpClient, private ruta: RutaService, private parent: stockComponent) {
 
   }
@@ -29,7 +29,7 @@ export class infoComponent {
       this.categorias=this.parent.getCategorias();
       this.tipos=this.parent.getTipos();
       this.rubros=this.parent.getRubros();
-
+      this.departamentos=this.parent.getDepartamentos();
       if(this.informacion!=undefined) {
        
       }

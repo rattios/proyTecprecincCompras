@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-02-2018 a las 23:53:24
+-- Tiempo de generación: 20-02-2018 a las 20:03:27
 -- Versión del servidor: 10.1.26-MariaDB
 -- Versión de PHP: 7.1.8
 
@@ -198,7 +198,12 @@ CREATE TABLE `departamentos` (
 --
 
 INSERT INTO `departamentos` (`id`, `nombre`, `codigo`, `created_at`, `updated_at`) VALUES
-(1, 'Compras', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(1, 'Compras', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 'Ventas', '2', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 'RRHH', '3', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 'Operaciones', '4', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 'Calidad', '5', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 'Obras', '6', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -4384,8 +4389,8 @@ CREATE TABLE `stock` (
 INSERT INTO `stock` (`id`, `nombre`, `codigo`, `precio`, `stock`, `peps`, `valor_reposicion`, `stock_min`, `partida_parcial`, `categoria_id`, `rubro_id`, `tipo_id`, `proveedor_id`, `created_at`, `updated_at`) VALUES
 (1, ' Alcohol Iodado', '2951', 10.00, 10, 0.00, 0.00, 5, NULL, 88, 1, 1, NULL, '2018-01-26 06:02:30', '2018-02-17 21:16:10'),
 (2, ' Apósito (para acolchado de heridas o vendajes compresivos)', '2949', 45.00, 6, 0.00, 0.00, 0, NULL, 84, 6, 1, NULL, '2018-01-26 06:02:30', '2018-02-17 21:07:12'),
-(3, ' Ficha Macho 2P + T x 16amp (Domiciliaria) .-', '3471', 0.00, 0, 0.00, 0.00, 0, NULL, 18, 0, 0, NULL, '2018-01-26 06:02:30', '2018-01-26 06:02:30'),
-(4, ' Ficha Macho 2P + T x 32amp (Domiciliaria) .-', '2733', 1.08, 9, 0.00, 0.00, 0, NULL, 18, 0, 0, NULL, '2018-01-26 06:02:30', '2018-01-26 06:02:30'),
+(3, ' Ficha Macho 2P + T x 16amp (Domiciliaria) .-', '3471', 0.00, 0, 0.00, 0.00, 0, NULL, 18, 10, 2, NULL, '2018-01-26 06:02:30', '2018-02-19 05:26:34'),
+(4, ' Ficha Macho 2P + T x 32amp (Domiciliaria) .-', '2733', 1.08, 9, 0.00, 0.00, 0, NULL, 18, 9, 2, NULL, '2018-01-26 06:02:30', '2018-02-19 05:26:22'),
 (5, ' Gabinete p/ mang y elem seg. BWG-16, puerta ciega y cerr. aldaba. 170x100x22 cm. Div. int. 60cm sup y 114 cm entre 2 est. div. vertical 49 cm. Gancho', '3021', 0.00, 0, 0.00, 0.00, 0, NULL, 46, 0, 0, NULL, '2018-01-26 06:02:30', '2018-01-26 06:02:30'),
 (6, ' Otosporin L Gotas (analg?sico para o?dos)', '2955', 0.00, 0, 0.00, 0.00, 0, NULL, 88, 0, 0, NULL, '2018-01-26 06:02:30', '2018-01-26 06:02:30'),
 (7, ' Piso de Goma Moneda Negro x mts (goma por pa?o para piso, mesa d ebanco, etc)', '3235', 0.00, 0, 0.00, 0.00, 0, NULL, 7, 0, 0, NULL, '2018-01-26 06:02:30', '2018-01-26 06:02:30'),
@@ -8097,7 +8102,7 @@ ALTER TABLE `controlesrecepcion`
 -- AUTO_INCREMENT de la tabla `departamentos`
 --
 ALTER TABLE `departamentos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --

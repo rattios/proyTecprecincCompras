@@ -90,6 +90,24 @@
                 </div>
       		</div>	
       	</div>
+      	<br><br><br><br>
+      	<div class="row" style="text-align:center">
+      		<div *ngFor="let depart of departamentos" >
+	      		<div class="col-lg-3">
+	      			<label>{{depart.nombre}}:</label>
+		      			
+	      		</div>
+	      		<div class="col-lg-3">
+	      			<label class="switch switch-3d switch-secondary">
+			            <input type="checkbox" class="switch-input" checked>
+			            <span class="switch-label"></span>
+			            <span class="switch-handle"></span>
+			        </label>
+			        &nbsp;&nbsp;&nbsp;
+	      		</div>
+      		</div>
+      	</div>
+
       	<br><br>
   		<div class="row">
       		<div class="col-lg-12" style="text-align: center">
