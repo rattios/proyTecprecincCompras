@@ -52,7 +52,8 @@ class StockController extends Controller
     public function indexCategoriasUso()
     {
         //cargar todos los productos en el stock
-        $productos = \App\Categoria::where('tipo_id',2)->with('stock')->get();
+        //$productos = \App\Categoria::where('tipo_id',2)->with('stock')->get();
+        $productos = \App\Stock::where('tipo_id',2)->get();
 
         if(count($productos) == 0){
             return response()->json(['error'=>'No existen productos en el stock Uso.'], 404);          
@@ -64,8 +65,9 @@ class StockController extends Controller
     public function indexCategoriasConsumo()
     {
         //cargar todos los productos en el stock
-        $productos = \App\Categoria::where('tipo_id',1)->with('stock')->get();
-
+       // $productos = \App\Categoria::where('tipo_id',1)->with('stock')->get();
+        $productos = \App\Stock::where('tipo_id',1)->get();
+        
         if(count($productos) == 0){
             return response()->json(['error'=>'No existen productos en el stock Comsumo. '], 404);          
         }else{
@@ -192,7 +194,7 @@ class StockController extends Controller
         if(count($producto)==0){
             return response()->json(['error'=>'No existe el producto con id '.$id.' en el stock.'], 404);          
         }   
-
+         
         // Listado de campos recibidos teóricamente.
         $nombre=$request->input('nombre');
         $codigo=$request->input('codigo');
@@ -203,11 +205,29 @@ class StockController extends Controller
         $stock_min=$request->input('stock_min');
         $partida_parcial=$request->input('partida_parcial');
         $categoria_id=$request->input('categoria_id');
+        $tipo_id=$request->input('tipo_id');
+        $rubro_id=$request->input('rubro_id');
         $proveedor_id=$request->input('proveedor_id');
                 
         // Creamos una bandera para controlar si se ha modificado algún dato.
         $bandera = false;
-
+        if ($tipo_id != null && $tipo_id!='')
+        {
+            $producto->tipo_id = $tipo_id;
+            $bandera=true;
+            //return 1;
+        }
+        if ($rubro_id != null && $rubro_id!='')
+        {
+            $producto->rubro_id = $rubro_id;
+            $bandera=true;
+            //return 1;
+        }
+        if ($categoria_id != null && $categoria_id!='')
+        {
+            $producto->categoria_id = $categoria_id;
+            $bandera=true;
+        }
         // Actualización parcial de campos.
         if ($nombre != null && $nombre!='')
         {
