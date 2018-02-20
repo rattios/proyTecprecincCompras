@@ -59,5 +59,11 @@ class Stock extends Model
                 'cancelado','pendiente','observaciones')/*->withTimestamps()*/; 
     }
 
+    // Relación de stock con departamentos:
+    public function permisos_departs(){
+        // 1 un producto del stock puede ser visto por muchos departamentos
+        return $this->belongsToMany('\App\Departamento','stock_permisos_departs','stock_id','departamento_id')/*->withTimestamps()*/; 
+    }
+
 
 }

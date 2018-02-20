@@ -47,4 +47,10 @@ class Departamento extends Model
         return $this->hasMany('App\StockDepartamento', 'departamento_id');
     }
 
+    // Relación de departamento con stock:
+    public function permisos_productos(){
+        // 1 un departamento puede tener permiso para ver muchos productos del stock
+        return $this->belongsToMany('\App\Stock','stock_permisos_departs','departamento_id','stock_id')/*->withTimestamps()*/; 
+    }
+
 }

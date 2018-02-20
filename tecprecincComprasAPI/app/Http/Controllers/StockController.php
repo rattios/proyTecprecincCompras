@@ -208,6 +208,7 @@ class StockController extends Controller
         $tipo_id=$request->input('tipo_id');
         $rubro_id=$request->input('rubro_id');
         $proveedor_id=$request->input('proveedor_id');
+        $permisos_departs=$request->input('permisos_departs');
                 
         // Creamos una bandera para controlar si se ha modificado algún dato.
         $bandera = false;
@@ -319,6 +320,20 @@ class StockController extends Controller
 
             $producto->proveedor_id = $proveedor_id;
             $bandera=true;
+        }
+
+        if ($permisos_departs) {
+            $permisos_departs = json_decode($request->input('permisos_departs'));
+
+            //Eliminar las relaciones(permisos) en la tabla pivote
+            $producto->permisos_departs()->detach();
+
+            //Agregar las nuevas relaciones(permisos) en la tabla pivote
+            for ($i=0; $i < count($permisos_departs) ; $i++) { 
+                  $producto->permisos_departs()->attach($permisos_departs[$i]->id);
+            }
+
+            $bandera=true; 
         }
 
         if ($bandera)

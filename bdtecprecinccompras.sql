@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-02-2018 a las 20:03:27
--- Versión del servidor: 10.1.26-MariaDB
--- Versión de PHP: 7.1.8
+-- Tiempo de generación: 20-02-2018 a las 21:02:30
+-- Versión del servidor: 10.1.21-MariaDB
+-- Versión de PHP: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -235,7 +233,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2018_01_12_130721_stockDepartamentos_migration', 1),
 ('2018_01_12_142706_presupuestos_migration', 1),
 ('2018_01_12_144643_compras_migration', 1),
-('2018_01_12_145347_controlesRecepcion_migration', 1);
+('2018_01_12_145347_controlesRecepcion_migration', 1),
+('2018_02_20_132046_stock_permisos_departs_migration', 2);
 
 -- --------------------------------------------------------
 
@@ -7905,6 +7904,20 @@ CREATE TABLE `stockdepartamentos` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `stock_permisos_departs`
+--
+
+CREATE TABLE `stock_permisos_departs` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `stock_id` int(10) UNSIGNED NOT NULL,
+  `departamento_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tipos`
 --
 
@@ -8063,6 +8076,14 @@ ALTER TABLE `stockdepartamentos`
   ADD KEY `stockdepartamentos_departamento_id_foreign` (`departamento_id`);
 
 --
+-- Indices de la tabla `stock_permisos_departs`
+--
+ALTER TABLE `stock_permisos_departs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `stock_permisos_departs_stock_id_foreign` (`stock_id`),
+  ADD KEY `stock_permisos_departs_departamento_id_foreign` (`departamento_id`);
+
+--
 -- Indices de la tabla `tipos`
 --
 ALTER TABLE `tipos`
@@ -8149,6 +8170,11 @@ ALTER TABLE `stock`
 ALTER TABLE `stockdepartamentos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `stock_permisos_departs`
+--
+ALTER TABLE `stock_permisos_departs`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `tipos`
 --
 ALTER TABLE `tipos`
@@ -8231,11 +8257,17 @@ ALTER TABLE `stockdepartamentos`
   ADD CONSTRAINT `stockdepartamentos_stock_id_foreign` FOREIGN KEY (`stock_id`) REFERENCES `stock` (`id`);
 
 --
+-- Filtros para la tabla `stock_permisos_departs`
+--
+ALTER TABLE `stock_permisos_departs`
+  ADD CONSTRAINT `stock_permisos_departs_departamento_id_foreign` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`),
+  ADD CONSTRAINT `stock_permisos_departs_stock_id_foreign` FOREIGN KEY (`stock_id`) REFERENCES `stock` (`id`);
+
+--
 -- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `usuarios_departamento_id_foreign` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
