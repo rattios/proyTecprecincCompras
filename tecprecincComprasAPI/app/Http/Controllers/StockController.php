@@ -29,7 +29,12 @@ class StockController extends Controller
             return response()->json(['status'=>'ok', 'productos'=>$productos], 200);
         }*/
 
+
         $produc=DB::select("SELECT id,nombre,codigo,stock,categoria_id,tipo_id,rubro_id,precio,stock_min FROM  `stock` WHERE 1 ");
+
+        $departs=DB::select("SELECT id,nombre FROM  `departamentos` WHERE 1 ");
+
+
         $categ=DB::select("SELECT id,nombre,codigo,tipo_id,rubro_id FROM  `categorias` WHERE 1 ");
 
         for ($i=0; $i < count($produc); $i++) { 
@@ -37,6 +42,20 @@ class StockController extends Controller
             for ($j=0; $j < count($categ); $j++) { 
                 if ($produc[$i]->categoria_id==$categ[$j]->id) {
                     array_push($produc[$i]->categoria,$categ[$j]);
+                }
+            }
+
+            $aux=DB::select("SELECT departamento_id 
+                    FROM  `stock_permisos_departs`
+                    WHERE stock_id = ".$produc[$i]->id);
+
+            $produc[$i]->departamentos=[];
+
+            for ($k=0; $k < count($aux); $k++) { 
+                for ($h=0; $h < count($departs) ; $h++) { 
+                    if ($aux[$k]->departamento_id == $departs[$h]->id) {
+                        array_push($produc[$i]->departamentos, $departs[$h]);
+                    }
                 }
             }
         }
