@@ -1,76 +1,95 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../services/ruta.service';
+import { todosPedidosComponent } from './todos-pedidos.component';
 
 @Component({
-  templateUrl: 'stock.component.html'
+  selector: 'app-tabla-info',
+  templateUrl: 'tablaInfo.component.html'
 })
-export class stockComponent {
-  public prov: any;
-  public stock: any;
-  public productos: any;
-  public proveedor: any='';
-  public loading=true;
-  public verProduc=false;
-  public producSelec:any;
-  public categoria: any;
-  public categorias: any;
-  public rubros: any;
-  public tipos: any;
-  public departamentos: any;
-  constructor(private http: HttpClient, private ruta: RutaService) {
+export class tablaInfoComponent {
+
+  public verInfo=false;
+  public loading=false;
+  
+  @Input() informacion:any;
+
+  constructor(private http: HttpClient, private ruta: RutaService, private parent: todosPedidosComponent) {
 
   }
 
    ngOnInit(): void {
-     this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'todos')
+      console.log(this.informacion);
+      if(this.informacion!=undefined) {
+       this.productList = this.informacion;
+       this.filteredItems = this.productList;
+       this.init();
+      }
+    }
+    aceptarSolicitud(id){
+      console.log(id);
+      var aceptar={
+        estado:1
+      }
+      this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
            .toPromise()
            .then(
            data => {
-             this.prov=data;
-           	  this.stock=this.prov.productos;
-
-              this.categorias=this.prov.categorias;
-              this.rubros=this.prov.rubros;
-              this.tipos=this.prov.tipos;
-              this.departamentos=this.prov.departamentos;
-
-              console.log(this.stock);
-              this.productList = this.stock;
-              this.filteredItems = this.productList;
-              this.init();
-              this.loading=false;
+             console.log(data);
+             this.parent.reset();
             },
            msg => { 
              console.log(msg);
-             this.loading=false;
-           });
+             alert('Ha ocurrido un error!');
+           });     
     }
-
+    finalizarSolicitud(id){
+      console.log(id);
+      var aceptar={
+        estado:2
+      }
+      this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.parent.reset();
+            },
+           msg => { 
+             console.log(msg);
+             alert('Ha ocurrido un error!');
+           });     
+    }
+    cancelarSolicitud(id){
+      console.log(id);
+      var aceptar={
+        estado:4
+      }
+      this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.parent.reset();
+            },
+           msg => { 
+             console.log(msg);
+             alert('Ha ocurrido un error!');
+           });     
+    }
     ver(item){
-    	this.producSelec=item;
-      this.verProduc=true;
+
+      console.log(item);
+      this.informacion=item;
+      this.verInfo=true;
     }
-    atras(){
-      this.verProduc=false;
-    }
-    getCategorias(){
-      return this.categorias;
-    }
-    getTipos(){
-      return this.tipos;
-    }
-    getRubros(){
-      return this.rubros;
-    }
-    getDepartamentos(){
-      return this.departamentos;
+    volver(){
+      this.verInfo=false;
     }
 
-    //-------------------------------------------------------------------------------------------------------------------------
+     //-------------------------------------------------------------------------------------------------------------------------
    
    filteredItems : any;
    productList : any;

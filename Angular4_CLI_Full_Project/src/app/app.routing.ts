@@ -42,6 +42,10 @@ export const routes: Routes = [
         loadChildren: './views/chartjs/chartjs.module#ChartJSModule'
       },
       {
+        path: 'login',
+        loadChildren: './views/pages/pages.module#PagesModule'
+      },
+      {
         path: 'proveedores',
         loadChildren: './views/proveedores/proveedores.module#ProveedoresModule'
       },

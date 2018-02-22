@@ -5,39 +5,27 @@ import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../services/ruta.service';
 
 @Component({
-  templateUrl: 'stock.component.html'
+  templateUrl: 'mis-pedidos.component.html'
 })
-export class stockComponent {
+export class misPedidosComponent {
   public prov: any;
   public stock: any;
   public productos: any;
   public proveedor: any='';
   public loading=true;
-  public verProduc=false;
-  public producSelec:any;
-  public categoria: any;
-  public categorias: any;
-  public rubros: any;
-  public tipos: any;
-  public departamentos: any;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
-     this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'todos')
+
+       this.loading=true;
+      this.http.get(this.ruta.get_ruta()+'stock')
            .toPromise()
            .then(
            data => {
              this.prov=data;
            	  this.stock=this.prov.productos;
-
-              this.categorias=this.prov.categorias;
-              this.rubros=this.prov.rubros;
-              this.tipos=this.prov.tipos;
-              this.departamentos=this.prov.departamentos;
-
               console.log(this.stock);
               this.productList = this.stock;
               this.filteredItems = this.productList;
@@ -51,23 +39,10 @@ export class stockComponent {
     }
 
     ver(item){
-    	this.producSelec=item;
-      this.verProduc=true;
+    	this.proveedor=item.razonSocial;
     }
-    atras(){
-      this.verProduc=false;
-    }
-    getCategorias(){
-      return this.categorias;
-    }
-    getTipos(){
-      return this.tipos;
-    }
-    getRubros(){
-      return this.rubros;
-    }
-    getDepartamentos(){
-      return this.departamentos;
+    setProductos(){
+      console.log('asdasd');
     }
 
     //-------------------------------------------------------------------------------------------------------------------------

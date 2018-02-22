@@ -100,6 +100,7 @@ Route::group(  ['middleware' =>'cors'], function(){
 
         //----Pruebas StockController
         Route::get('/stock','StockController@index');
+        Route::get('/todos','StockController@todos');
         Route::get('/stockUso','StockController@indexCategoriasUso');
         Route::get('/stockConsumo','StockController@indexCategoriasConsumo');
         Route::get('/stockServicio','StockController@indexCategoriasServicio');

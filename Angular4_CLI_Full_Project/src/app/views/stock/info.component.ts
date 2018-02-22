@@ -20,6 +20,7 @@ export class infoComponent {
   public tipos:any;
   public rubros:any;
   public departamentos:any;
+  public permisos_departs:any=[];
   constructor(private http: HttpClient, private ruta: RutaService, private parent: stockComponent) {
 
   }
@@ -33,13 +34,57 @@ export class infoComponent {
       if(this.informacion!=undefined) {
        
       }
+      for (var i = 0; i < this.departamentos.length; i++) {
+        this.departamentos[i].bandera=false;
+        for (var j = 0; j < this.informacion.departamentos.length; j++) {
+          if(this.informacion.departamentos[j].id==this.departamentos[i].id) {
+            this.departamentos[i].bandera=true;
+            this.permisos_departs.push({"id":this.informacion.departamentos[j].id});
+          }
+        }
+      }
     }
 
     volver(){
       this.parent.atras();
     }
+    checkAdd(id){
+     console.log(id);
+     if(this.permisos_departs.length>0) {
+       var b=0;
+       for (var i = 0; i < this.permisos_departs.length; i++) {
+         if(this.permisos_departs[i].id==id) {
+           b=1;
+           this.permisos_departs.splice(i, 1);
+           this.delDepart(id);
+         }
+       }
+       if(b==0) {
+         this.addDepart(id);
+       }
+     }else if(this.permisos_departs.length==0){
+       this.addDepart(id);
+     }
+     
+     console.log(this.permisos_departs);
+     console.log(this.informacion);
+    }
+
+    addDepart(id){
+      this.permisos_departs.push({"id":id});
+      this.informacion.departamentos.push({"id":id});
+    }
+    delDepart(id){
+      for (var i = 0; i < this.informacion.departamentos.length; i++) {
+        if(this.informacion.departamentos[i].id==id) {
+          this.informacion.departamentos.splice(i, 1);
+        }
+          
+      }
+    }
 
     editar(){
+      this.informacion.permisos_departs=JSON.stringify(this.permisos_departs);
       console.log(this.informacion);
       this.http.put(this.ruta.get_ruta()+'stock/'+this.informacion.id,this.informacion)
        .toPromise()

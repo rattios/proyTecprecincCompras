@@ -28,26 +28,7 @@ export class infoComponent {
     }
 
     
-    picking(item){
-      item.departamento=this.informacion.usuario.departamento;
-      console.log(item);
-      //alert(JSON.stringify(item));
-      var send = {
-        picking: JSON.stringify(item)
-      }
-
-      this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
-           .toPromise()
-           .then(
-           data => {
-             console.log(data);
-             var rec:any;
-             rec=data;
-             this.informacion=rec.informacion;
-            },
-           msg => { 
-             console.log(msg);
-             
-           });
+    setProductos(){
+      console.log('asdasd');
     }
 }

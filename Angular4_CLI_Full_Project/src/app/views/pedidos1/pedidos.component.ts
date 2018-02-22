@@ -5,39 +5,31 @@ import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../services/ruta.service';
 
 @Component({
-  templateUrl: 'stock.component.html'
+  templateUrl: 'pedidos.component.html'
 })
-export class stockComponent {
+export class pedidosComponent {
   public prov: any;
   public stock: any;
   public productos: any;
+  public productosSeleccionados: any=[];
   public proveedor: any='';
+  public departamento= localStorage.getItem('tecprecinc_nombre');
+  public template:'http://localhost/template.gif';
   public loading=true;
-  public verProduc=false;
-  public producSelec:any;
-  public categoria: any;
-  public categorias: any;
-  public rubros: any;
-  public tipos: any;
-  public departamentos: any;
+  public success=false;
+  public fail=false;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
-     this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'todos')
+      this.loading=true;
+      this.http.get(this.ruta.get_ruta()+'stock')
            .toPromise()
            .then(
            data => {
              this.prov=data;
            	  this.stock=this.prov.productos;
-
-              this.categorias=this.prov.categorias;
-              this.rubros=this.prov.rubros;
-              this.tipos=this.prov.tipos;
-              this.departamentos=this.prov.departamentos;
-
               console.log(this.stock);
               this.productList = this.stock;
               this.filteredItems = this.productList;
@@ -46,28 +38,71 @@ export class stockComponent {
             },
            msg => { 
              console.log(msg);
-             this.loading=false;
+              this.loading=false;
            });
     }
 
-    ver(item){
-    	this.producSelec=item;
-      this.verProduc=true;
+    setProductos(item){
+      if(!this.checkProductos(item)) {
+        item.cantidad=1;
+        item.producto_id=item.id;
+        this.productosSeleccionados.push(item);
+      }
+      
+      console.log(this.productosSeleccionados);
     }
-    atras(){
-      this.verProduc=false;
+    checkProductos(item){
+      var band=false;
+      for (var i = 0; i < this.productosSeleccionados.length; i++) {
+        if(this.productosSeleccionados[i].id==item.id) {
+          band=true;
+        }
+      }
+      return band;
     }
-    getCategorias(){
-      return this.categorias;
+    delProductos(item){
+      for (var i = 0; i < this.productosSeleccionados.length; i++) {
+        if(this.productosSeleccionados[i].id==item.id) {
+          this.productosSeleccionados.splice(i, 1);
+        }
+      }
     }
-    getTipos(){
-      return this.tipos;
+    enviar(){
+      if(this.productosSeleccionados.length>0) {
+        var enviar = {
+          usuario_id: localStorage.getItem('tecprecinc_usuario_id'),
+          solicitud: JSON.stringify(this.productosSeleccionados),
+          estado: 0
+        }
+        console.log(enviar);
+
+        setTimeout(() => {
+          this.http.post(this.ruta.get_ruta()+'pedidos',enviar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+              
+              this.vaciar();
+              this.success=true;
+              setTimeout(() => {  
+                this.success=false;
+              }, 4000);
+
+            },
+           msg => { 
+             console.log(msg);
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
+             
+           });
+        }, 1000);
+       } 
     }
-    getRubros(){
-      return this.rubros;
-    }
-    getDepartamentos(){
-      return this.departamentos;
+    vaciar(){
+      this.productosSeleccionados=[];
     }
 
     //-------------------------------------------------------------------------------------------------------------------------

@@ -68,6 +68,60 @@ class StockController extends Controller
         } 
     }
 
+     
+    public function todos()
+    {
+
+
+        $produc=DB::select("SELECT id,nombre,codigo,stock,categoria_id,tipo_id,rubro_id,precio,stock_min FROM  `stock` WHERE 1 ");
+
+        $departs=DB::select("SELECT id,nombre FROM  `departamentos` WHERE 1 ");
+
+
+        $categ=DB::select("SELECT id,nombre,codigo,tipo_id,rubro_id FROM  `categorias` WHERE 1 ");
+
+        for ($i=0; $i < count($produc); $i++) { 
+            $produc[$i]->categoria=[];
+            for ($j=0; $j < count($categ); $j++) { 
+                if ($produc[$i]->categoria_id==$categ[$j]->id) {
+                    array_push($produc[$i]->categoria,$categ[$j]);
+                }
+            }
+
+            $aux=DB::select("SELECT departamento_id 
+                    FROM  `stock_permisos_departs`
+                    WHERE stock_id = ".$produc[$i]->id);
+
+            $produc[$i]->departamentos=[];
+
+            for ($k=0; $k < count($aux); $k++) { 
+                for ($h=0; $h < count($departs) ; $h++) { 
+                    if ($aux[$k]->departamento_id == $departs[$h]->id) {
+                        array_push($produc[$i]->departamentos, $departs[$h]);
+                    }
+                }
+            }
+        }
+
+
+        $tipos = \App\Tipo::all();
+        $rubros = \App\Rubro::all();
+        $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
+        
+        if(count($produc) == 0){
+            return response()->json(['error'=>'No existen productos en el stock.'], 404);          
+        }else{
+            return response()->json(['status'=>'ok', 
+                'productos'=>$produc,
+                'tipos'=>$tipos,
+                'rubros'=>$rubros,
+                'categorias'=>$categorias,
+                'departamentos'=>$departs
+            ], 200);
+        } 
+    }
+
+
     public function indexCategoriasUso()
     {
         //cargar todos los productos en el stock
