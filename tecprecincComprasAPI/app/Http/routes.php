@@ -90,6 +90,9 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::delete('/pedidos/{id}','PedidoController@destroy');
         Route::get('/pedidos/{id}','PedidoController@show');
         Route::post('/pedidos/picking','PedidoController@picking');
+        Route::get('/pedidos/ubicar/{stock_id}','PedidoController@ubicarProducto');
+        Route::post('/pedidos/transferencia','PedidoController@transferencia');
+
 
         //----Pruebas ProveedorController
         Route::get('/proveedores','ProveedorController@index');

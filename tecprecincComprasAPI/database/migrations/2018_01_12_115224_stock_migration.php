@@ -26,6 +26,12 @@ class StockMigration extends Migration
             $table->integer('categoria_id')->unsigned()->nullable();
             $table->foreign('categoria_id')->references('id')->on('categorias');
 
+            $table->integer('rubro_id')->unsigned()->nullable();
+            $table->foreign('rubro_id')->references('id')->on('rubros');
+
+            $table->integer('tipo_id')->unsigned()->nullable();
+            $table->foreign('tipo_id')->references('id')->on('tipos');
+
             $table->integer('proveedor_id')->unsigned()->nullable();
             $table->foreign('proveedor_id')->references('id')->on('proveedores');
             

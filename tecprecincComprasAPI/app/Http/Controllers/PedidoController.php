@@ -267,6 +267,7 @@ class PedidoController extends Controller
 
         if ($picking->categoria->tipo->nombre == 'CONSUMO') {
             
+            //Descontar del stock
             $descontar = $picking->stock - $picking->pivot->cantidad;
 
             DB::table('stock')
@@ -324,6 +325,78 @@ class PedidoController extends Controller
                     return response()->json(['error'=>'Error al actualizar producto en el stock del departamento.'], 500);
                 }
             } 
+        }
+    }
+
+    /*buscar los departamentos que contien un stock_id(producto) y su stock(existencias) es mayor a cero*/
+    public function ubicarProducto($stock_id)
+    {
+        $departamentos = \App\StockDepartamento::with('departamento')->where('stock_id', $stock_id)
+                ->where('stock', '>', 0)->get();
+
+        if (count($departamentos)==0)
+        {
+            // Devolvemos error codigo http 404
+            return response()->json(['error'=>'No hay existencias del producto solicitado en ningún departamento.'], 404);
+        } 
+
+        return response()->json(['departamentos'=>$departamentos], 200);
+    }
+
+    public function transferencia(Request $request)
+    {
+        if (!$request->input('stock_id') ||
+            !$request->input('departamento_id') ||
+            !$request->input('stock_dep') ||
+            !$request->input('cantidad_transf'))
+        {
+            // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
+            return response()->json(['error'=>'Faltan datos necesarios para el proceso de transferencia.'],422);
+        }
+
+        if($request->input('stock_dep') <= 0){
+           // Devolvemos un código 409 Conflict. 
+            return response()->json(['error'=>'No se puede realizar una transferencia con el stock del departamento en cero.'], 409);
+        }
+
+        $producto=\App\Stock::find($request->input('stock_id'));
+
+        if (count($producto)==0)
+        {
+            // Devolvemos error codigo http 404
+            return response()->json(['error'=>'No existe el producto con id '.$request->input('stock_id').' en el stock.'], 404);
+        }
+
+        if (!$producto->tipo_id)
+        {
+            // Devolvemos error codigo http 404
+            return response()->json(['error'=>'El producto a transferir debe tener un tipo asociado.'], 404);
+        }else{
+            $tipo_producto=\App\Tipo::find($producto->tipo_id);
+        } 
+
+        if($tipo_producto->nombre == 'CONSUMO'){
+            return response()->json(['error'=>'El proceso de transferencia no esta implementado para vienes de consumo.'],409);
+        }
+        else if($tipo_producto->nombre == 'USO'){
+            
+            //Descontar del stock del departamento la cantidad a transferir
+            $descontar = $request->input('stock_dep') - $request->input('cantidad_transf');
+
+            DB::table('stockdepartamentos')
+                ->where('departamento_id', $request->input('departamento_id'))
+                ->update(['stock' => $descontar]);
+
+            /*Aqui crear el msg para informar al departamento de la transferencia*/
+
+            //Aumentar el stock pricipal con la catidad a transferir
+            $aumentar = $producto->stock + $request->input('cantidad_transf');
+
+            $producto->stock = $aumentar;
+
+            $producto->save();
+
+            return response()->json(['message'=>'Se ha realizado la transferencia.', 'producto'=>$producto], 200);
         }
     }
 
