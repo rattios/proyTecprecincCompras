@@ -40,12 +40,12 @@ class Categoria extends Model
         return $this->hasMany('App\Producto', 'categoria_id');
     }
 
-    // Relación de categoria con stockDepartamentos:
+    /*// Relación de categoria con stockDepartamentos:
     public function stockDepartamentos()
     {
         // 1 categoria puede tener varios productos en los departamentos
         return $this->hasMany('App\StockDepartamento', 'categoria_id');
-    }
+    }*/
 
     // Relación de categoria con stock:
     public function stock()

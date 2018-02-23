@@ -91,8 +91,6 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/pedidos/{id}','PedidoController@show');
         Route::post('/pedidos/picking','PedidoController@picking');
         Route::get('/pedidos/ubicar/{stock_id}','PedidoController@ubicarProducto');
-        Route::post('/pedidos/transferencia','PedidoController@transferencia');
-
 
         //----Pruebas ProveedorController
         Route::get('/proveedores','ProveedorController@index');
@@ -119,6 +117,15 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::put('/stockDepartamento/{id}','StockDepartamentoController@update');
         Route::delete('/stockDepartamento/{id}','StockDepartamentoController@destroy');
         Route::get('/stockDepartamento/{id}','StockDepartamentoController@show');
+
+        //----Pruebas TransferenciaController
+        Route::get('/transferencias','TransferenciaController@index');
+        Route::post('/transferencias','TransferenciaController@store');
+        Route::put('/transferencias/{id}','TransferenciaController@update');
+        Route::delete('/transferencias/{id}','TransferenciaController@destroy');
+        Route::get('/transferencias/{id}','TransferenciaController@show');
+        Route::get('/transferencias/departamento/{departamento_id}','TransferenciaController@transfsDep');
+        Route::post('/transferencias/aprobar/{id}','TransferenciaController@aprobarTrasf');
 
 
     Route::group(['middleware' => 'jwt-auth'], function(){

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-02-2018 a las 21:02:30
+-- Tiempo de generación: 24-02-2018 a las 00:25:05
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -234,7 +234,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2018_01_12_142706_presupuestos_migration', 1),
 ('2018_01_12_144643_compras_migration', 1),
 ('2018_01_12_145347_controlesRecepcion_migration', 1),
-('2018_02_20_132046_stock_permisos_departs_migration', 2);
+('2018_02_20_132046_stock_permisos_departs_migration', 2),
+('2018_02_23_144826_transferencias_migration', 3);
 
 -- --------------------------------------------------------
 
@@ -4386,7 +4387,7 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`id`, `nombre`, `codigo`, `precio`, `stock`, `peps`, `valor_reposicion`, `stock_min`, `partida_parcial`, `categoria_id`, `rubro_id`, `tipo_id`, `proveedor_id`, `created_at`, `updated_at`) VALUES
-(1, ' Alcohol Iodado', '2951', 10.00, 10, 0.00, 0.00, 5, NULL, 88, 1, 1, NULL, '2018-01-26 06:02:30', '2018-02-17 21:16:10'),
+(1, ' Alcohol Iodado', '2951', 10.00, 13, 0.00, 0.00, 5, NULL, 88, 1, 1, NULL, '2018-01-26 06:02:30', '2018-02-23 21:21:13'),
 (2, ' Apósito (para acolchado de heridas o vendajes compresivos)', '2949', 45.00, 6, 0.00, 0.00, 0, NULL, 84, 6, 1, NULL, '2018-01-26 06:02:30', '2018-02-17 21:07:12'),
 (3, ' Ficha Macho 2P + T x 16amp (Domiciliaria) .-', '3471', 0.00, 0, 0.00, 0.00, 0, NULL, 18, 10, 2, NULL, '2018-01-26 06:02:30', '2018-02-19 05:26:34'),
 (4, ' Ficha Macho 2P + T x 32amp (Domiciliaria) .-', '2733', 1.08, 9, 0.00, 0.00, 0, NULL, 18, 9, 2, NULL, '2018-01-26 06:02:30', '2018-02-19 05:26:22'),
@@ -7901,6 +7902,13 @@ CREATE TABLE `stockdepartamentos` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `stockdepartamentos`
+--
+
+INSERT INTO `stockdepartamentos` (`id`, `stock_id`, `stock`, `stock_min`, `departamento_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 0, 5, 1, '2018-02-23 08:12:13', '2018-02-23 08:09:09');
+
 -- --------------------------------------------------------
 
 --
@@ -7937,6 +7945,22 @@ INSERT INTO `tipos` (`id`, `nombre`, `codigo`, `created_at`, `updated_at`) VALUE
 (1, 'CONSUMO', '1', '2018-01-19 17:29:13', '2018-01-19 17:29:13'),
 (2, 'USO', '2', '2018-01-19 17:32:29', '2018-01-19 17:47:03'),
 (4, 'SERVICIOS', '3', '2018-01-19 17:49:28', '2018-01-19 17:49:28');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `transferencias`
+--
+
+CREATE TABLE `transferencias` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `estado` int(11) NOT NULL,
+  `cantidad_transf` int(11) NOT NULL,
+  `stock_id` int(10) UNSIGNED NOT NULL,
+  `departamento_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -8092,6 +8116,14 @@ ALTER TABLE `tipos`
   ADD UNIQUE KEY `tipos_codigo_unique` (`codigo`);
 
 --
+-- Indices de la tabla `transferencias`
+--
+ALTER TABLE `transferencias`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transferencias_stock_id_foreign` (`stock_id`),
+  ADD KEY `transferencias_departamento_id_foreign` (`departamento_id`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -8168,7 +8200,7 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT de la tabla `stockdepartamentos`
 --
 ALTER TABLE `stockdepartamentos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `stock_permisos_departs`
 --
@@ -8179,6 +8211,11 @@ ALTER TABLE `stock_permisos_departs`
 --
 ALTER TABLE `tipos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT de la tabla `transferencias`
+--
+ALTER TABLE `transferencias`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
@@ -8262,6 +8299,13 @@ ALTER TABLE `stockdepartamentos`
 ALTER TABLE `stock_permisos_departs`
   ADD CONSTRAINT `stock_permisos_departs_departamento_id_foreign` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`),
   ADD CONSTRAINT `stock_permisos_departs_stock_id_foreign` FOREIGN KEY (`stock_id`) REFERENCES `stock` (`id`);
+
+--
+-- Filtros para la tabla `transferencias`
+--
+ALTER TABLE `transferencias`
+  ADD CONSTRAINT `transferencias_departamento_id_foreign` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`),
+  ADD CONSTRAINT `transferencias_stock_id_foreign` FOREIGN KEY (`stock_id`) REFERENCES `stock` (`id`);
 
 --
 -- Filtros para la tabla `usuarios`
