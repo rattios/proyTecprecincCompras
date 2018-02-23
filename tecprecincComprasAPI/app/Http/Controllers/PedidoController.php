@@ -265,7 +265,12 @@ class PedidoController extends Controller
         $picking = json_decode($request->input('picking'));
         //$picking = $request->input('picking');
 
-        if ($picking->categoria->tipo->nombre == 'CONSUMO') {
+        //producto sin tipo
+        if ($picking->tipo_id == 0) {
+            return response()->json(['error'=>'El producto de tener asociado un tipo para poder realizar el proceso de picking.'],409);
+        }
+        //vienes de consumo
+        else if ($picking->tipo_id == 1) {
             
             //Descontar del stock
             $descontar = $picking->stock - $picking->pivot->cantidad;
@@ -284,7 +289,8 @@ class PedidoController extends Controller
 
             return response()->json(['message'=>'Se ha descontado la cantidad solicitada del stock.', 'picking'=>$picking], 200);
 
-        }else if($picking->categoria->tipo->nombre == 'USO'){
+        //vienes de uso
+        }else if($picking->tipo_id == 2){
             
             $descontar = $picking->stock - $picking->pivot->cantidad;
 
@@ -326,6 +332,11 @@ class PedidoController extends Controller
                 }
             } 
         }
+        //servicios
+        else if ($picking->tipo_id == 3) {
+            return response()->json(['error'=>'El proceso de picking no esta implementado para servicios.'],409);
+        }
+        
     }
 
     /*buscar los departamentos que contien un stock_id(producto) y su stock(existencias) es mayor a cero*/
@@ -367,7 +378,7 @@ class PedidoController extends Controller
             return response()->json(['error'=>'No existe el producto con id '.$request->input('stock_id').' en el stock.'], 404);
         }
 
-        if (!$producto->tipo_id)
+        if (!$producto->tipo_id || $producto->tipo_id == 0)
         {
             // Devolvemos error codigo http 404
             return response()->json(['error'=>'El producto a transferir debe tener un tipo asociado.'], 404);
