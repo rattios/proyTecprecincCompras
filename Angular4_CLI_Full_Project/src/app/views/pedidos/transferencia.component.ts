@@ -2,37 +2,34 @@ import { Component, OnInit, Input } from '@angular/core';
 import {CommonModule, NgClass} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
-import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
 import { RutaService } from '../../services/ruta.service';
 
 @Component({
-  selector: 'app-info',
-  templateUrl: 'info.component.html'
+  selector: 'app-transferencia',
+  templateUrl: 'transferencia.component.html'
 })
-export class infoComponent {
+export class transferenciaComponent {
   public prov: any;
   public pedidos: any;
   public productos: any;
   public proveedor: any='';
-  public showTransferencia=false;
-  public aTransferir:any;
 
-  @Input() informacion:any;
+  @Input() producto:any;
 
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
-      console.log(this.informacion);
-      if(this.informacion!=undefined) {
+      console.log(this.producto);
+      if(this.producto!=undefined) {
        
       }
     }
 
     
     picking(item){
-      item.departamento=this.informacion.usuario.departamento;
+      item.departamento=this.producto.usuario.departamento;
       console.log(item);
       //alert(JSON.stringify(item));
       var send = {
@@ -46,23 +43,11 @@ export class infoComponent {
              console.log(data);
              var rec:any;
              rec=data;
-             console.log(this.informacion);
-             console.log(rec);
-             console.log(rec.picking);
-             for (var i = 0; i < this.informacion.solicitud.length; i++) {
-               if(this.informacion.solicitud[i].id==rec.picking.id) {
-                 this.informacion.solicitud[i]=rec.picking;
-               }
-             }
+             this.producto=rec.informacion;
             },
            msg => { 
              console.log(msg);
              
            });
-    }
-
-    transferencia(item){
-      this.aTransferir=item;
-      this.showTransferencia=true;
     }
 }

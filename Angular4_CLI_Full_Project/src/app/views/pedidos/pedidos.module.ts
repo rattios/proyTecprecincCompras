@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { pedidosComponent } from './pedidos.component';
 import { misPedidosComponent } from './mis-pedidos.component';
@@ -12,6 +13,7 @@ import { todosPedidosComponent } from './todos-pedidos.component';
 import { infoComponent } from './info.component';
 import { tablaInfoComponent } from './tablaInfo.component';
 import { pedidosRoutingModule } from './pedidos-routing.module';
+import { transferenciaComponent } from './transferencia.component';
 
 @NgModule({
   imports: [
@@ -21,14 +23,16 @@ import { pedidosRoutingModule } from './pedidos-routing.module';
     CommonModule,
     FormsModule,
     TabsModule,
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    ModalModule.forRoot(),
   ],
   declarations: [ 
   	pedidosComponent,
   	misPedidosComponent,
   	todosPedidosComponent,
     infoComponent,
-    tablaInfoComponent
+    tablaInfoComponent,
+    transferenciaComponent
 	]
 })
 export class pedidosModule { }

@@ -13,7 +13,7 @@ export class pedidosComponent {
   public productos: any;
   public productosSeleccionados: any=[];
   public proveedor: any='';
-  public departamento='RRHH';
+  public departamento=localStorage.getItem('tecprecinc_nombre');
   public template:'http://localhost/template.gif';
   public loading=true;
   public success=false;
@@ -70,7 +70,7 @@ export class pedidosComponent {
     enviar(){
       if(this.productosSeleccionados.length>0) {
         var enviar = {
-          usuario_id: 1,
+          usuario_id: localStorage.getItem('tecprecinc_usuario_id'),
           solicitud: JSON.stringify(this.productosSeleccionados),
           estado: 0
         }
