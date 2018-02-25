@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-02-2018 a las 00:25:05
+-- Tiempo de generación: 25-02-2018 a las 23:04:54
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -259,7 +259,9 @@ INSERT INTO `pedidos` (`id`, `estado`, `usuario_id`, `created_at`, `updated_at`)
 (6, '1', 1, '2018-02-02 04:30:35', '2018-02-02 04:30:35'),
 (7, '2', 1, '2018-02-02 04:30:55', '2018-02-02 04:30:55'),
 (8, '1', 1, '2018-02-02 20:17:47', '2018-02-05 01:53:40'),
-(9, '0', 1, '2018-02-04 21:58:03', '2018-02-04 21:58:03');
+(9, '0', 1, '2018-02-04 21:58:03', '2018-02-04 21:58:03'),
+(10, '0', 1, '2018-02-25 19:32:59', '2018-02-25 19:32:59'),
+(11, '0', 7, '2018-02-25 20:03:43', '2018-02-25 20:03:43');
 
 -- --------------------------------------------------------
 
@@ -294,7 +296,11 @@ INSERT INTO `pedido_stock` (`id`, `pedido_id`, `stock_id`, `cantidad`, `aprobado
 (3, 7, 8, 1, 0, 0, NULL, NULL, 1, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (4, 7, 10, 1, 0, 0, NULL, NULL, 0, 1, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (5, 8, 10, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(6, 9, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(6, 9, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(7, 10, 1, 3, 0, 0, NULL, NULL, 0, 0, NULL, 'observacion', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(8, 10, 2, 12, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(9, 11, 1, 3, 0, 0, NULL, NULL, 0, 0, NULL, 'observacion', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(10, 11, 2, 12, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -7989,7 +7995,13 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `user`, `password`, `email`, `nombre`, `apellido`, `telefono`, `rol`, `codigo_verificacion`, `departamento_id`, `created_at`, `updated_at`) VALUES
 (1, 'Rafael', '$2y$10$ewNAU/1tzVzD6uWgXbAPTegezFGyPQmNDxghLiskGCy0//wRlsChu', 'petitrafi@gmail.com', 'Rafael', 'Sanchez', '555555', 0, NULL, 1, '2018-02-05 15:06:19', '2018-02-05 15:06:19'),
-(2, 'stalin', '$2y$10$il.tPETfkTpX5Ydn9iJCQurG7vM7TYvJ4ydBokpWv7sUQIArwCWXC', 'e.rangeld@hotmail.com', 'eimar', 'rangel', '04147428420', 0, NULL, 1, '2018-02-05 15:02:31', '2018-02-05 15:02:31');
+(2, 'stalin', '$2y$10$il.tPETfkTpX5Ydn9iJCQurG7vM7TYvJ4ydBokpWv7sUQIArwCWXC', 'e.rangeld@hotmail.com', 'eimar', 'rangel', '04147428420', 0, NULL, 1, '2018-02-05 15:02:31', '2018-02-05 15:02:31'),
+(3, 'compras', '$2y$10$WNNdSNQUPPOLZOZGTeCjfei2rSAEahexx.0rM.JK3.1DQLVcaxmmS', 'compras@tecprecinc.com', 'Compras', 'Tecprecinc', '555-555-555', 1, NULL, 1, '2018-02-25 19:59:32', '2018-02-25 19:59:32'),
+(4, 'ventas', '$2y$10$kMV3fS6bIx0Zp8HFts//5uTTyjSH32D7iAgluG6Ioazz/wCae/xZy', 'ventas@tecprecinc.com', 'Ventas', 'Tecprecinc', '555-555-555', 1, NULL, 2, '2018-02-25 20:00:25', '2018-02-25 20:00:25'),
+(5, 'rrhh', '$2y$10$GKw6GF/pHkbMCoYQTnEQV.NHgykAeoVJQbP/J5mKzZltdnXb3Ta4C', 'rrhh@tecprecinc.com', 'RRHH', 'Tecprecinc', '555-555-555', 1, NULL, 3, '2018-02-25 20:01:09', '2018-02-25 20:01:09'),
+(6, 'operaciones', '$2y$10$8vMcdLXiRHdwJrfnjj8TkuTvFcyOnj8QxcrMWzkEpEMNSR/MFSEsK', 'operaciones@tecprecinc.com', 'Operaciones', 'Tecprecinc', '555-555-555', 1, NULL, 4, '2018-02-25 20:01:50', '2018-02-25 20:01:50'),
+(7, 'calidad', '$2y$10$/8LXWHPD861qm8SqZnACo.4.hvAHPrarxvHkofMc1vN7sJbMQ716m', 'calidad@tecprecinc.com', 'Calidad', 'Tecprecinc', '555-555-555', 1, NULL, 5, '2018-02-25 20:02:28', '2018-02-25 20:02:28'),
+(8, 'obras', '$2y$10$NuddD28remI3f..uAr8IDOqn/jgd3LDlQQr98ipZlhf3bYWn/YIgC', 'obras@tecprecinc.com', 'Obras', 'Tecprecinc', '555-555-555', 1, NULL, 6, '2018-02-25 20:02:57', '2018-02-25 20:02:57');
 
 --
 -- Índices para tablas volcadas
@@ -8160,12 +8172,12 @@ ALTER TABLE `departamentos`
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `pedido_stock`
 --
 ALTER TABLE `pedido_stock`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `presupuestos`
 --
@@ -8220,7 +8232,7 @@ ALTER TABLE `transferencias`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- Restricciones para tablas volcadas
 --
