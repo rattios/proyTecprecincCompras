@@ -14,6 +14,7 @@ export class transferenciaComponent {
   public productos: any;
   public proveedor: any='';
 
+  public departamentos:any;
   @Input() producto:any;
 
   constructor(private http: HttpClient, private ruta: RutaService) {
@@ -22,9 +23,18 @@ export class transferenciaComponent {
 
    ngOnInit(): void {
       console.log(this.producto);
-      if(this.producto!=undefined) {
-       
-      }
+      this.http.get(this.ruta.get_ruta()+'pedidos/ubicar/'+this.producto.id)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.departamentos=data;
+             this.departamentos=this.departamentos.departamentos;
+            },
+           msg => { 
+             console.log(msg);
+             
+           });
     }
 
     
