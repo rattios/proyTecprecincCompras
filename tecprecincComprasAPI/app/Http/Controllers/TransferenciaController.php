@@ -19,7 +19,8 @@ class TransferenciaController extends Controller
     {
         
         //cargar todas las transferencias
-        $transferencias = \App\Transferencia::with('departamento')->with('stockDep')->get();
+        $transferencias = \App\Transferencia::with('departamento')
+        ->with('stockDep')->with('stockCentral')->get();
 
         if(count($transferencias) == 0){
             return response()->json(['error'=>'No existen transferencias.'], 404);          
@@ -67,7 +68,7 @@ class TransferenciaController extends Controller
         if(count($stock_dep)==0){
             return response()->json(['error'=>'No existe el producto con id '.$request->input('stock_id').' en el stock del departamento.'], 404);          
         }
-
+        
         if($stock_dep->stock <= 0){
            // Devolvemos un código 409 Conflict. 
             return response()->json(['error'=>'No se puede generar una transferencia con el stock del departamento en cero.'], 409);
@@ -269,7 +270,7 @@ class TransferenciaController extends Controller
 
             //cargar todas las transferencias de un departamento
             $transferencias = \App\Transferencia::where('departamento_id', $departamento_id)
-                ->with('departamento')->with('stockDep')->get();
+                ->with('departamento')->with('stockDep')->with('stockCentral')->get();
 
             if(count($transferencias) == 0){
 
@@ -283,7 +284,7 @@ class TransferenciaController extends Controller
             //cargar todas las transferencias de un departamento con un estado especifico
             $transferencias = \App\Transferencia::where('departamento_id', $departamento_id)
                 ->where('estado', $request->input('estado'))
-                ->with('departamento')->with('stockDep')->get();
+                ->with('departamento')->with('stockDep')->with('stockCentral')->get();
 
             if(count($transferencias) == 0){
 
