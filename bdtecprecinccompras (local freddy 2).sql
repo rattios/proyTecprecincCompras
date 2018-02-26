@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-02-2018 a las 23:04:54
+-- Tiempo de generación: 26-02-2018 a las 16:45:33
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -206,6 +206,24 @@ INSERT INTO `departamentos` (`id`, `nombre`, `codigo`, `created_at`, `updated_at
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `mensajes`
+--
+
+CREATE TABLE `mensajes` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `estado` int(11) NOT NULL,
+  `tipo` int(11) NOT NULL,
+  `asunto` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `msg` text COLLATE utf8_unicode_ci,
+  `adjunto` text COLLATE utf8_unicode_ci,
+  `departamento_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `migrations`
 --
 
@@ -235,7 +253,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2018_01_12_144643_compras_migration', 1),
 ('2018_01_12_145347_controlesRecepcion_migration', 1),
 ('2018_02_20_132046_stock_permisos_departs_migration', 2),
-('2018_02_23_144826_transferencias_migration', 3);
+('2018_02_23_144826_transferencias_migration', 3),
+('2018_02_26_084716_mensajes_migration', 4);
 
 -- --------------------------------------------------------
 
@@ -261,7 +280,8 @@ INSERT INTO `pedidos` (`id`, `estado`, `usuario_id`, `created_at`, `updated_at`)
 (8, '1', 1, '2018-02-02 20:17:47', '2018-02-05 01:53:40'),
 (9, '0', 1, '2018-02-04 21:58:03', '2018-02-04 21:58:03'),
 (10, '0', 1, '2018-02-25 19:32:59', '2018-02-25 19:32:59'),
-(11, '0', 7, '2018-02-25 20:03:43', '2018-02-25 20:03:43');
+(11, '0', 7, '2018-02-25 20:03:43', '2018-02-25 20:03:43'),
+(12, '0', 1, '2018-02-25 20:14:16', '2018-02-25 20:14:16');
 
 -- --------------------------------------------------------
 
@@ -300,7 +320,9 @@ INSERT INTO `pedido_stock` (`id`, `pedido_id`, `stock_id`, `cantidad`, `aprobado
 (7, 10, 1, 3, 0, 0, NULL, NULL, 0, 0, NULL, 'observacion', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (8, 10, 2, 12, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (9, 11, 1, 3, 0, 0, NULL, NULL, 0, 0, NULL, 'observacion', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(10, 11, 2, 12, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(10, 11, 2, 12, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(11, 12, 1, 3, 0, 0, NULL, NULL, 0, 0, NULL, 'observacion', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(12, 12, 2, 12, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -4393,7 +4415,7 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`id`, `nombre`, `codigo`, `precio`, `stock`, `peps`, `valor_reposicion`, `stock_min`, `partida_parcial`, `categoria_id`, `rubro_id`, `tipo_id`, `proveedor_id`, `created_at`, `updated_at`) VALUES
-(1, ' Alcohol Iodado', '2951', 10.00, 13, 0.00, 0.00, 5, NULL, 88, 1, 1, NULL, '2018-01-26 06:02:30', '2018-02-23 21:21:13'),
+(1, ' Alcohol Iodado', '2951', 10.00, 14, 0.00, 0.00, 5, NULL, 88, 1, 1, NULL, '2018-01-26 06:02:30', '2018-02-26 13:42:58'),
 (2, ' Apósito (para acolchado de heridas o vendajes compresivos)', '2949', 45.00, 6, 0.00, 0.00, 0, NULL, 84, 6, 1, NULL, '2018-01-26 06:02:30', '2018-02-17 21:07:12'),
 (3, ' Ficha Macho 2P + T x 16amp (Domiciliaria) .-', '3471', 0.00, 0, 0.00, 0.00, 0, NULL, 18, 10, 2, NULL, '2018-01-26 06:02:30', '2018-02-19 05:26:34'),
 (4, ' Ficha Macho 2P + T x 32amp (Domiciliaria) .-', '2733', 1.08, 9, 0.00, 0.00, 0, NULL, 18, 9, 2, NULL, '2018-01-26 06:02:30', '2018-02-19 05:26:22'),
@@ -7913,7 +7935,7 @@ CREATE TABLE `stockdepartamentos` (
 --
 
 INSERT INTO `stockdepartamentos` (`id`, `stock_id`, `stock`, `stock_min`, `departamento_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 0, 5, 1, '2018-02-23 08:12:13', '2018-02-23 08:09:09');
+(1, 1, 4, 5, 1, '2018-02-23 08:12:13', '2018-02-23 08:09:09');
 
 -- --------------------------------------------------------
 
@@ -8040,6 +8062,13 @@ ALTER TABLE `departamentos`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `departamentos_nombre_unique` (`nombre`),
   ADD UNIQUE KEY `departamentos_codigo_unique` (`codigo`);
+
+--
+-- Indices de la tabla `mensajes`
+--
+ALTER TABLE `mensajes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `mensajes_departamento_id_foreign` (`departamento_id`);
 
 --
 -- Indices de la tabla `pedidos`
@@ -8169,15 +8198,20 @@ ALTER TABLE `controlesrecepcion`
 ALTER TABLE `departamentos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
+-- AUTO_INCREMENT de la tabla `mensajes`
+--
+ALTER TABLE `mensajes`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `pedido_stock`
 --
 ALTER TABLE `pedido_stock`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `presupuestos`
 --
@@ -8257,6 +8291,12 @@ ALTER TABLE `compras`
 --
 ALTER TABLE `controlesrecepcion`
   ADD CONSTRAINT `controlesrecepcion_compra_id_foreign` FOREIGN KEY (`compra_id`) REFERENCES `compras` (`id`);
+
+--
+-- Filtros para la tabla `mensajes`
+--
+ALTER TABLE `mensajes`
+  ADD CONSTRAINT `mensajes_departamento_id_foreign` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`);
 
 --
 -- Filtros para la tabla `pedidos`

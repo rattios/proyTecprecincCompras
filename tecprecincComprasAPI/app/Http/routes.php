@@ -127,6 +127,14 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/transferencias/departamento/{departamento_id}','TransferenciaController@transfsDep');
         Route::post('/transferencias/aprobar/{id}','TransferenciaController@aprobarTrasf');
 
+        //----Pruebas MensajeController
+        Route::get('/mensajes','MensajeController@index');
+        Route::post('/mensajes','MensajeController@store');
+        Route::put('/mensajes/{id}','MensajeController@update');
+        Route::delete('/mensajes/{id}','MensajeController@destroy');
+        Route::get('/mensajes/{id}','MensajeController@show');
+        Route::get('/mensajes/departamento/{departamento_id}','MensajeController@mensajesDep');
+
 
     Route::group(['middleware' => 'jwt-auth'], function(){
 

@@ -103,6 +103,14 @@ class TransferenciaController extends Controller
             ]))
             {
                 /*Aqui crear el msg para informar al departamento que tiene una nueva transferencia pendiente*/
+                $nuevoMsg=\App\Mensaje::create([
+                    'estado'=> 1,
+                    'tipo'=> 1,
+                    'asunto'=> 'Nueva Transferencia',
+                    'msg'=> 'Tienes una nueva transferencia.',
+                    /*'adjunto'=> 'adjunto',*/
+                    'departamento_id'=> $request->input('departamento_id')
+                ]);
 
                return response()->json(['message'=>'Transferencia creada con éxito.',
                  'Transferencia'=>$nuevaTransf], 200);
@@ -159,7 +167,7 @@ class TransferenciaController extends Controller
         if (count($transferencia)==0)
         {
             // Devolvemos error codigo http 404
-            return response()->json(['error'=>'No existe el transferencia con id '.$id], 404);
+            return response()->json(['error'=>'No existe la transferencia con id '.$id], 404);
         }      
 
         // Listado de campos recibidos teóricamente.
@@ -260,7 +268,8 @@ class TransferenciaController extends Controller
         if (!$request->input('estado')) {
 
             //cargar todas las transferencias de un departamento
-            $transferencias = \App\Transferencia::with('departamento')->with('stockDep')->get();
+            $transferencias = \App\Transferencia::where('departamento_id', $departamento_id)
+                ->with('departamento')->with('stockDep')->get();
 
             if(count($transferencias) == 0){
 
@@ -272,7 +281,9 @@ class TransferenciaController extends Controller
         else{
 
             //cargar todas las transferencias de un departamento con un estado especifico
-            $transferencias = \App\Transferencia::where('estado', $request->input('estado'))->with('departamento')->with('stockDep')->get();
+            $transferencias = \App\Transferencia::where('departamento_id', $departamento_id)
+                ->where('estado', $request->input('estado'))
+                ->with('departamento')->with('stockDep')->get();
 
             if(count($transferencias) == 0){
 
@@ -349,6 +360,14 @@ class TransferenciaController extends Controller
                 $transferencia->save();
 
                 /*Aqui crear msg para informar al departamento de compras de que aprobaron una transferencia*/
+                $nuevoMsg=\App\Mensaje::create([
+                    'estado'=> 1,
+                    'tipo'=> 1,
+                    'asunto'=> 'Transferencia Aprobada',
+                    'msg'=> 'Una transferencia fué aprobada.',
+                    /*'adjunto'=> 'adjunto',*/
+                    'departamento_id'=> 1
+                ]);
 
                 return response()->json(['message'=>'Se ha aprobado la transferencia.', 'transferencia'=>$transferencia], 200);
             }
