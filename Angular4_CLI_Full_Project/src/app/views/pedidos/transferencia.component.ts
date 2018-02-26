@@ -38,26 +38,23 @@ export class transferenciaComponent {
     }
 
     
-    picking(item){
-      item.departamento=this.producto.usuario.departamento;
+    transferir(item){
       console.log(item);
-      //alert(JSON.stringify(item));
+      
       var send = {
-        picking: JSON.stringify(item)
+        cantidad_transf:this.producto.pivot.cantidad,
+        stock_id:item.id,
+        departamento_id:item.departamento_id
       }
-
-      this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
+      console.log(send);
+      this.http.post(this.ruta.get_ruta()+'transferencias',send)
            .toPromise()
            .then(
            data => {
              console.log(data);
-             var rec:any;
-             rec=data;
-             this.producto=rec.informacion;
             },
            msg => { 
              console.log(msg);
-             
            });
     }
 }

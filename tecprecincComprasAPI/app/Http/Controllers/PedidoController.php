@@ -44,6 +44,40 @@ class PedidoController extends Controller
     }
 
 
+    public function index_departamentos($id)
+    {
+        //cargar todos los pedidos
+        $pedidos = \App\Pedido::where('usuario_id',$id)->with('solicitud')->with('usuario.departamento')->get();
+        $usuario = \App\User::where('id',$id)->with('departamento')->get();
+        
+        $transferencias = \App\Transferencia::where('departamento_id',$usuario[0]->departamento->id)->with('departamento')->with('stockDep')->get();
+        if(count($pedidos) == 0){
+           // return response()->json(['error'=>'No existen pedidos.'], 404);          
+        }else{
+
+            $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    for ($k=0; $k < count($categorias); $k++) { 
+                        if ($pedidos[$i]->solicitud[$j]->categoria_id == $categorias[$k]->id ) {
+                            $pedidos[$i]->solicitud[$j]->categoria = $categorias[$k];
+                        }
+                    }
+                    
+                }
+                
+            }
+
+            return response()->json([
+                'status'=>'ok',
+                'pedidos'=>$pedidos,
+                'transferencias'=>$transferencias
+            ], 200);
+        } 
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *

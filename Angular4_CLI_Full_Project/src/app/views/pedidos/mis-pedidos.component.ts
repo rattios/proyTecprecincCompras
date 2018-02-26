@@ -9,125 +9,80 @@ import { RutaService } from '../../services/ruta.service';
 })
 export class misPedidosComponent {
   public prov: any;
-  public stock: any;
+  public pedidos: any;
+  public pedidos0: any=[];
+  public pedidos1: any=[];
+  public pedidos2: any=[];
+  public pedidos3: any=[];
   public productos: any;
+  public informacion: any;
   public proveedor: any='';
   public loading=true;
+  public verInfo=false;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
 
-       this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'stock')
+      this.http.get(this.ruta.get_ruta()+'pedidos/departamento/'+localStorage.getItem('tecprecinc_usuario_id'))
            .toPromise()
            .then(
            data => {
+             console.log(data);
              this.prov=data;
-           	  this.stock=this.prov.productos;
-              console.log(this.stock);
-              this.productList = this.stock;
-              this.filteredItems = this.productList;
-              this.init();
+               this.pedidos=this.prov.pedidos;
+              console.log(this.pedidos);
+              for (var i = 0; i < this.pedidos.length; ++i) {
+                if(this.pedidos[i].estado==0) {
+                  this.pedidos0.push(this.pedidos[i]);
+                }else if(this.pedidos[i].estado==1) {
+                  this.pedidos1.push(this.pedidos[i]);
+                }else if(this.pedidos[i].estado==2) {
+                  this.pedidos2.push(this.pedidos[i]);
+                }else if(this.pedidos[i].estado==3) {
+                  this.pedidos3.push(this.pedidos[i]);
+                }
+              }
               this.loading=false;
             },
            msg => { 
              console.log(msg);
              this.loading=false;
+             alert('Ha ocurrido un error!');
            });
     }
 
-    ver(item){
-    	this.proveedor=item.razonSocial;
-    }
-    setProductos(){
-      console.log('asdasd');
-    }
-
-    //-------------------------------------------------------------------------------------------------------------------------
-   
-   filteredItems : any;
-   productList : any;
-   pages : number = 4;
-   pageSize : number = 10;
-   pageNumber : number = 0;
-   currentIndex : number = 1;
-   items: any;
-   pagesIndex : Array<number>;
-   pageStart : number = 1;
-   inputName : string = '';
-
-   init(){
-         this.currentIndex = 1;
-         this.pageStart = 1;
-         this.pages = 4;
-
-         this.pageNumber = parseInt(""+ (this.filteredItems.length / this.pageSize));
-         if(this.filteredItems.length % this.pageSize != 0){
-            this.pageNumber ++;
-         }
-    
-         if(this.pageNumber  < this.pages){
-               this.pages =  this.pageNumber;
-         }
-       
-         this.refreshItems();
-         console.log("this.pageNumber :  "+this.pageNumber);
-   }
-   FilterByName(){
-      this.filteredItems = [];
-      if(this.inputName != ""){
-            for (var i = 0; i < this.productList.length; ++i) {
-
-              if (this.productList[i].stock==this.inputName) {
-                 this.filteredItems.push(this.productList[i]);
-              }else if (this.productList[i].nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
-                 this.filteredItems.push(this.productList[i]);
-              }else if (this.productList[i].precio==this.inputName) {
-                 this.filteredItems.push(this.productList[i]);
-              }else if (this.productList[i].codigo==this.inputName) {
-                 this.filteredItems.push(this.productList[i]);
+    reset(){
+      this.loading=true;
+      this.pedidos0=[];
+      this.pedidos1=[];
+      this.pedidos2=[];
+      this.pedidos3=[];
+      this.http.get(this.ruta.get_ruta()+'pedidos')
+           .toPromise()
+           .then(
+           data => {
+             this.prov=data;
+               this.pedidos=this.prov.pedidos;
+              console.log(this.pedidos);
+              for (var i = 0; i < this.pedidos.length; ++i) {
+                if(this.pedidos[i].estado==0) {
+                  this.pedidos0.push(this.pedidos[i]);
+                }else if(this.pedidos[i].estado==1) {
+                  this.pedidos1.push(this.pedidos[i]);
+                }else if(this.pedidos[i].estado==2) {
+                  this.pedidos2.push(this.pedidos[i]);
+                }else if(this.pedidos[i].estado==3) {
+                  this.pedidos3.push(this.pedidos[i]);
+                }
               }
-            }
-      }else{
-         this.filteredItems = this.productList;
-      }
-      console.log(this.filteredItems);
-      this.init();
-   }
-   fillArray(): any{
-      var obj = new Array();
-      for(var index = this.pageStart; index< this.pageStart + this.pages; index ++) {
-                  obj.push(index);
-      }
-      return obj;
-   }
- refreshItems(){
-               this.items = this.filteredItems.slice((this.currentIndex - 1)*this.pageSize, (this.currentIndex) * this.pageSize);
-               this.pagesIndex =  this.fillArray();
-   }
-   prevPage(){
-      if(this.currentIndex>1){
-         this.currentIndex --;
-      } 
-      if(this.currentIndex < this.pageStart){
-         this.pageStart = this.currentIndex;
-      }
-      this.refreshItems();
-   }
-   nextPage(){
-      if(this.currentIndex < this.pageNumber){
-            this.currentIndex ++;
-      }
-      if(this.currentIndex >= (this.pageStart + this.pages)){
-         this.pageStart = this.currentIndex - this.pages + 1;
-      }
- 
-      this.refreshItems();
-   }
-    setPage(index : number){
-         this.currentIndex = index;
-         this.refreshItems();
+              this.loading=false;
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+             alert('Ha ocurrido un error!');
+           });
     }
 }

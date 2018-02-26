@@ -1,19 +1,21 @@
 <div class="row">
 	<div class="col-lg-12">
 		<br>
-      	<h4>Producto:</h4> {{producto.nombre}}
+      	 <strong>Cantidad solicitada:</strong> {{producto.pivot.cantidad}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Producto:</strong> {{producto.nombre}}
       	<br><br>
       	<table class="table table-striped">
         	<thead>
+        		<th></th>
+        		<th>Cantidad</th>
               	<th>Departamento</th>
-              	<th>Cantidad</th>
               	<th>Transferir</th>
         	</thead>
         	<tbody>
            		<tr *ngFor="let item of departamentos">
-              		<td>{{item.departamento.nombre}}</td>
+           			<td></td>
               		<td>{{item.stock}}</td>
-              		<td><button type="button" class="btn btn-success" (click)=ver(item)>Ver</button></td>
+              		<td>{{item.departamento.nombre}}</td>
+              		<td><button type="button" class="btn btn-success" (click)=transferir(item)>Transferir</button></td>
            		</tr> 
         	</tbody>
       	</table>
