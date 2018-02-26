@@ -40,12 +40,12 @@ class Transferencia extends Model
         return $this->belongsTo('App\Departamento', 'departamento_id');
     }
 
-    // Relación de transferencia con stockDepartamento:
+    /*// Relación de transferencia con stockDepartamento:
     public function stockDep()
     {
         // 1 transferencia pertenece se genera para un producto del stock del departamento
         return $this->belongsTo('App\StockDepartamento', 'stock_id');
-    }
+    }*/
 
     // Relación de transferencia con stock:
     public function stockCentral()

@@ -20,7 +20,7 @@ class TransferenciaController extends Controller
         
         //cargar todas las transferencias
         $transferencias = \App\Transferencia::with('departamento')
-        ->with('stockDep')->with('stockCentral')->get();
+            /*->with('stockDep')*/->with('stockCentral')->get();
 
         if(count($transferencias) == 0){
             return response()->json(['error'=>'No existen transferencias.'], 404);          
@@ -133,7 +133,7 @@ class TransferenciaController extends Controller
     public function show($id)
     {
         //cargar una transferencia
-        $transferencia = \App\Transferencia::with('departamento')->with('stockDep')->find($id);
+        $transferencia = \App\Transferencia::with('departamento')/*->with('stockDep')*/->find($id);
 
         if(count($transferencia)==0){
             return response()->json(['error'=>'No existe la transferencia con id '.$id], 404);          
@@ -271,7 +271,7 @@ class TransferenciaController extends Controller
 
             //cargar todas las transferencias de un departamento
             $transferencias = \App\Transferencia::where('departamento_id', $departamento_id)
-                ->with('departamento')->with('stockDep')->with('stockCentral')->get();
+                ->with('departamento')/*->with('stockDep')*/->with('stockCentral')->get();
 
             if(count($transferencias) == 0){
 
@@ -307,7 +307,7 @@ class TransferenciaController extends Controller
     public function aprobarTrasf($id)
     {
         //cargar la transferencia
-        $transferencia = \App\Transferencia::with('stockDep')->find($id);
+        $transferencia = \App\Transferencia::/*with('stockDep')->*/find($id);
 
         if(count($transferencia)==0){
             return response()->json(['error'=>'No existe la transferencia con id '.$id], 404);          
@@ -317,7 +317,14 @@ class TransferenciaController extends Controller
                 return response()->json(['error'=>'Esta transferencia ya está aprobada.'],409);
             }
 
-            if($transferencia->stockDep->stock <= 0){
+            // Comprobamos si el stock_id que nos están pasando existe o no en el stock del departamento.
+            $stock_dep = \App\StockDepartamento::where('stock_id', $transferencia->stock_id)
+                ->where('departamento_id', $transferencia->departamento_id)->get();
+            if(count($stock_dep)==0){
+                return response()->json(['error'=>'No existe el producto con id '.$request->input('stock_id').' en el stock del departamento.'], 404);          
+            }
+
+            if($stock_dep[0]->stock <= 0){
                // Devolvemos un código 409 Conflict. 
                 return response()->json(['error'=>'No se puede aprobar una transferencia con el stock del departamento en cero.'], 409);
             }
@@ -344,21 +351,19 @@ class TransferenciaController extends Controller
             else if($tipo_producto->nombre == 'USO'){
                 
                 //Descontar del stock del departamento la cantidad a transferir
-                $descontar = $transferencia->stockDep->stock - $transferencia->cantidad_transf;
+                $descontar = $stock_dep[0]->stock - $transferencia->cantidad_transf;
 
                 DB::table('stockdepartamentos')
-                    ->where('id', $transferencia->stockDep->id)
+                    ->where('id', $stock_dep[0]->id)
                     ->update(['stock' => $descontar]);
 
                 //Aumentar el stock pricipal con la catidad a transferir
                 $aumentar = $producto->stock + $transferencia->cantidad_transf;
 
                 $producto->stock = $aumentar;
-
                 $producto->save();
 
                 $transferencia->estado = 2;
-                $transferencia->stockDep->stock = $descontar;
                 $transferencia->save();
 
                 /*Aqui crear msg para informar al departamento de compras de que aprobaron una transferencia*/
