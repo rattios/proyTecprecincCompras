@@ -50,7 +50,7 @@ class PedidoController extends Controller
         $pedidos = \App\Pedido::where('usuario_id',$id)->with('solicitud')->with('usuario.departamento')->get();
         $usuario = \App\User::where('id',$id)->with('departamento')->get();
         
-        $transferencias = \App\Transferencia::where('departamento_id',$usuario[0]->departamento->id)->with('departamento')->with('stockDep')->get();
+        $transferencias = \App\Transferencia::where('departamento_id',$usuario[0]->departamento->id)->with('departamento')->with('stockDep')->with('stockCentral')->get();
         if(count($pedidos) == 0){
            // return response()->json(['error'=>'No existen pedidos.'], 404);          
         }else{
@@ -67,6 +67,16 @@ class PedidoController extends Controller
                     
                 }
                 
+            }
+
+            for ($i=0; $i < count($transferencias); $i++) { 
+                if ($transferencias[$i]->estado==1) {
+                    $transferencias[$i]->estado2='En curso';
+                }else if ($transferencias[$i]->estado==2) {
+                    $transferencias[$i]->estado2='Aprobada';
+                }else if ($transferencias[$i]->estado==3) {
+                    $transferencias[$i]->estado2='Rechazada';
+                }
             }
 
             return response()->json([

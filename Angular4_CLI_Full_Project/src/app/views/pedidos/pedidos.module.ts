@@ -16,6 +16,7 @@ import { tablaInfoComponent } from './tablaInfo.component';
 import { misTablaInfoComponent } from './misTablaInfo.component';
 import { pedidosRoutingModule } from './pedidos-routing.module';
 import { transferenciaComponent } from './transferencia.component';
+import { transInfoComponent } from './transInfo.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { transferenciaComponent } from './transferencia.component';
     tablaInfoComponent,
     misTablaInfoComponent,
     misInfoComponent,
-    transferenciaComponent
+    transferenciaComponent,
+    transInfoComponent
 	]
 })
 export class pedidosModule { }

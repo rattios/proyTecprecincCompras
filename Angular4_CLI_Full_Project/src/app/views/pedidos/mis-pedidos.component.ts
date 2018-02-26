@@ -14,6 +14,7 @@ export class misPedidosComponent {
   public pedidos1: any=[];
   public pedidos2: any=[];
   public pedidos3: any=[];
+  public transferencias: any=[];
   public productos: any;
   public informacion: any;
   public proveedor: any='';
@@ -32,6 +33,7 @@ export class misPedidosComponent {
              console.log(data);
              this.prov=data;
                this.pedidos=this.prov.pedidos;
+               this.transferencias=this.prov.transferencias;
               console.log(this.pedidos);
               for (var i = 0; i < this.pedidos.length; ++i) {
                 if(this.pedidos[i].estado==0) {

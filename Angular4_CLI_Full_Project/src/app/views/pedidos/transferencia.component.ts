@@ -43,7 +43,7 @@ export class transferenciaComponent {
       
       var send = {
         cantidad_transf:this.producto.pivot.cantidad,
-        stock_id:item.id,
+        stock_id:item.stock_id,
         departamento_id:item.departamento_id
       }
       console.log(send);
@@ -52,9 +52,11 @@ export class transferenciaComponent {
            .then(
            data => {
              console.log(data);
+             alert('Exito');
             },
            msg => { 
              console.log(msg);
+             alert(msg.error);
            });
     }
 }
