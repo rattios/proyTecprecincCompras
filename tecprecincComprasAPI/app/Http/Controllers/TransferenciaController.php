@@ -64,12 +64,13 @@ class TransferenciaController extends Controller
         }
 
         // Comprobamos si el stock_id que nos están pasando existe o no en el stock del departamento.
-        $stock_dep = \App\StockDepartamento::find($request->input('stock_id'));
+        $stock_dep = \App\StockDepartamento::where('stock_id', $request->input('stock_id'))
+            ->where('departamento_id', $request->input('departamento_id'))->get();
         if(count($stock_dep)==0){
             return response()->json(['error'=>'No existe el producto con id '.$request->input('stock_id').' en el stock del departamento.'], 404);          
         }
-        
-        if($stock_dep->stock <= 0){
+
+        if($stock_dep[0]->stock <= 0){
            // Devolvemos un código 409 Conflict. 
             return response()->json(['error'=>'No se puede generar una transferencia con el stock del departamento en cero.'], 409);
         }
