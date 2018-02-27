@@ -60,6 +60,10 @@ export const routes: Routes = [
       {
         path: 'categorias',
         loadChildren: './views/categorias/categorias.module#CategoriasModule'
+      },
+      {
+        path: 'mensajes',
+        loadChildren: './views/mensajes/mensajes.module#MensajesModule'
       }
     ]
   },

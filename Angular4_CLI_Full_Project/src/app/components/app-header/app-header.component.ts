@@ -11,9 +11,10 @@ import { RutaService } from '../../services/ruta.service';
 })
 export class AppHeader {
   public nombre;
-  public noLeidos:any;
-  public nMensajes:any;
-  public mensajes:any;
+  public noLeidos:any=0;
+  public nMensajes:any=0;
+  public mensaje:any;
+  public mensajes:any=[];
 
   constructor(private router: Router,private el: ElementRef,private http: HttpClient, private ruta: RutaService) { }
 
@@ -34,14 +35,62 @@ export class AppHeader {
          .then(
          data => {
            console.log(data);
-           this.mensajes=data;
-           this.mensajes=this.mensajes.mensajes;
+           this.mensaje=data;
+           this.mensaje=this.mensaje.mensajes;
+           for (var i = 0; i < this.mensaje.length; i++) {
+             if(i<=10) {
+               this.mensajes.push(this.mensaje[i]);
+               this.nMensajes++;
+             }
+             
+           }
+           for (var i = 0; i < this.mensaje.length; i++) {
+             if(this.mensaje[i].estado==1) {
+               this.noLeidos++;
+             }
+           }
           },
          msg => { 
            console.log(msg);
-           alert(msg.error);
+           //alert(msg.error);
          });
 
+  }
+
+  reload(){
+    
+    this.http.get(this.ruta.get_ruta()+'mensajes/departamento/'+localStorage.getItem('tecprecinc_departamento_id'))
+         .toPromise()
+         .then(
+         data => {
+           this.mensaje=[];
+            this.mensajes=[];
+            this.nMensajes=0;
+            this.noLeidos=0;
+           console.log(data);
+           this.mensaje=data;
+           this.mensaje=this.mensaje.mensajes;
+           for (var i = 0; i < this.mensaje.length; i++) {
+             if(i<=7) {
+               this.mensajes.push(this.mensaje[i]);
+               this.nMensajes++;
+             }
+             
+           }
+           for (var i = 0; i < this.mensaje.length; i++) {
+             if(this.mensaje[i].estado==1) {
+               this.noLeidos++;
+             }
+           }
+          },
+         msg => { 
+           console.log(msg);
+           //alert(msg.error);
+         });
+  }
+
+  ir(){
+    this.router.navigateByUrl('/mensajes');
   }
 
   logout(){

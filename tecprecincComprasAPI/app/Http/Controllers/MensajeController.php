@@ -91,6 +91,11 @@ class MensajeController extends Controller
         //cargar un mensaje
         $mensaje = \App\Mensaje::with('departamento')->find($id);
 
+        $mensaje2=[];
+        for ($i=count($mensaje)-1; $i > -1; $i--) { 
+            array_push($mensaje2,$mensaje[$i]);
+        }
+        $mensaje= $mensaje2;
         if(count($mensaje)==0){
             return response()->json(['error'=>'No existe el mensaje con id '.$id], 404);          
         }else{
@@ -236,7 +241,14 @@ class MensajeController extends Controller
 
             //cargar todos los mensajes de un departamento
             $mensajes = \App\Mensaje::where('departamento_id', $departamento_id)->get();
-
+            
+            $mensajes2=[];
+            for ($i=count($mensajes)-1; $i > -1; $i--) { 
+                //return count($mensajes)-1;
+                array_push($mensajes2,$mensajes[$i]);
+                //return count($mensajes);
+            }
+            $mensajes= $mensajes2;
             if(count($mensajes) == 0){
 
                 return response()->json(['error'=>'No existen mensajes.'], 404);          

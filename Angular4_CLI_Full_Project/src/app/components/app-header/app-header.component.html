@@ -101,13 +101,13 @@
       </div>
     </li>-->
     <li class="nav-item dropdown d-md-down-none" dropdown placement="bottom right">
-      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
-        <i class="icon-envelope-letter"></i><span class="badge badge-pill badge-info">{{noLeidos}}</span>
+      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false" (click)="reload()" >
+        <i class="icon-envelope-letter"></i><span class="badge badge-pill badge-info" *ngIf="noLeidos!=0">{{noLeidos}}</span>
       </a>
       <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg" *dropdownMenu aria-labelledby="simple-dropdown">
         <div class="dropdown-header text-center"><strong>Tienes {{nMensajes}} mensajes</strong></div>
         <div *ngFor="let item of mensajes">
-          <a class="dropdown-item">
+          <a class="dropdown-item" (click)="ir()">
             <div class="message">
               <!-- <div class="py-3 mr-3 float-left">
                 <div class="avatar">
@@ -116,15 +116,15 @@
                 </div>
               </div> -->
               <div>
-                <small class="text-muted">John Doe</small>
-                <small class="text-muted float-right mt-1">Just now</small>
-              </div>
-              <div class="text-truncate font-weight-bold"><span class="fa fa-exclamation text-danger"></span> Important message</div>
-              <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>
+                <small class="text-muted"></small>
+                <small class="text-muted float-right mt-1">{{item.created_at | date: 'dd-MM-yyyy yy:mm:ss'}}</small>
+              </div><br>
+              <div class="text-truncate font-weight-bold"> {{item.asunto}}</div>
+              <div class="small text-muted text-truncate">{{item.msg}}</div>
             </div>
           </a>
         </div> 
-        <a href="#" class="dropdown-item text-center">
+        <a class="dropdown-item text-center" (click)="ir()">
           <strong>View all messages</strong>
         </a>
       </div>
@@ -155,6 +155,6 @@
     </li>
     <li class="nav-item dropdown" dropdown placement="bottom right">
     </li>
-    <button class="navbar-toggler d-md-down-none" type="button" appAsideMenuToggler>&#9776;</button>
+    <!-- <button class="navbar-toggler d-md-down-none" type="button" appAsideMenuToggler>&#9776;</button> -->
    </ul>
 </header>
