@@ -50,7 +50,20 @@ class PedidoController extends Controller
         $pedidos = \App\Pedido::where('usuario_id',$id)->with('solicitud')->with('usuario.departamento')->get();
         $usuario = \App\User::where('id',$id)->with('departamento')->get();
         
-        $transferencias = \App\Transferencia::where('departamento_id',$usuario[0]->departamento->id)->with('departamento')->with('stockDep')->with('stockCentral')->get();
+        $transferencias = \App\Transferencia::where('departamento_id',$usuario[0]->departamento->id)->with('departamento')/*->with('stockDep')*/->with('stockCentral')->get();
+
+        for ($i=0; $i < count($transferencias) ; $i++) { 
+            // Cargar el stock actual del departamento.
+            $stock_dep = \App\StockDepartamento::where('stock_id', $transferencias[$i]->stock_id)
+                ->where('departamento_id', $transferencias[$i]->departamento_id)->get();
+
+            if(count($stock_dep)==0){
+                //return response()->json(['error'=>'No existe el producto con id '.$transferencias->stock_id.' en el stock del departamento.'], 404);          
+            }else{
+                $transferencias[$i]->stock_dep = $stock_dep[0];
+            }
+        }
+
         if(count($pedidos) == 0){
            // return response()->json(['error'=>'No existen pedidos.'], 404);          
         }else{

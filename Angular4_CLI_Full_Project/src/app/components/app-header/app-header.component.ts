@@ -1,5 +1,9 @@
 import { Component, ElementRef } from '@angular/core';
+import { CommonModule, NgClass} from '@angular/common';
 import { Router } from '@angular/router';
+import { HttpClient, HttpParams  } from '@angular/common/http';
+import 'rxjs/add/operator/toPromise';
+import { RutaService } from '../../services/ruta.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +11,11 @@ import { Router } from '@angular/router';
 })
 export class AppHeader {
   public nombre;
-  constructor(private router: Router,private el: ElementRef) { }
+  public noLeidos:any;
+  public nMensajes:any;
+  public mensajes:any;
+
+  constructor(private router: Router,private el: ElementRef,private http: HttpClient, private ruta: RutaService) { }
 
   //wait for the component to render completely
   ngOnInit(): void {
@@ -20,6 +28,20 @@ export class AppHeader {
     // remove the empty element(the host)
     parentElement.removeChild(nativeElement);
     this.nombre= localStorage.getItem('tecprecinc_nombre');
+
+    this.http.get(this.ruta.get_ruta()+'mensajes/departamento/'+localStorage.getItem('tecprecinc_departamento_id'))
+         .toPromise()
+         .then(
+         data => {
+           console.log(data);
+           this.mensajes=data;
+           this.mensajes=this.mensajes.mensajes;
+          },
+         msg => { 
+           console.log(msg);
+           alert(msg.error);
+         });
+
   }
 
   logout(){

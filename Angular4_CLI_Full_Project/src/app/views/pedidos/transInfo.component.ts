@@ -30,10 +30,10 @@ export class transInfoComponent {
     console.log(item);
 
     var send = {
-      picking: JSON.stringify(item)
+      
     }
 
-    this.http.post(this.ruta.get_ruta()+'/transferencias/aprobar/'+item.id,send)
+    this.http.post(this.ruta.get_ruta()+'transferencias/aprobar/'+item.id,send)
          .toPromise()
          .then(
          data => {
