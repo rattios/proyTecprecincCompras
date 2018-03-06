@@ -11,7 +11,7 @@ class StockDepartamento extends Model
      *
      * @var string
      */
-    protected $table = 'stockDepartamentos';
+    protected $table = 'stockdepartamentos';
 
     //public $timestamps = false;
 

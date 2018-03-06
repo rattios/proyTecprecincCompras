@@ -21,12 +21,18 @@ export class infoComponent {
   public rubros:any;
   public departamentos:any;
   public permisos_departs:any=[];
+  public isCrear=false;
   constructor(private http: HttpClient, private ruta: RutaService, private parent: stockComponent) {
 
   }
 
    ngOnInit(): void {
       console.log(this.informacion);
+      if(this.informacion.id==0) {
+        this.isCrear=true;
+      }else{
+        this.isCrear=false;
+      }
       this.categorias=this.parent.getCategorias();
       this.tipos=this.parent.getTipos();
       this.rubros=this.parent.getRubros();

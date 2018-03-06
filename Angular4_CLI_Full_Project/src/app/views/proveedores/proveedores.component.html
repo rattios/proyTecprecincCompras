@@ -6,6 +6,9 @@
         
         <div class="card-header">
           <i class="fa fa-align-justify"></i> Lista de Proveedores
+          <div style="text-align:right">
+            <button type="button" class="btn btn-success" (click)="ver(0)">Agregar un proveedor</button>
+          </div>
         </div>
         <div class="card-body">
           <div class="form-group form-black label-floating is-empty">
@@ -55,7 +58,7 @@
 
       <div style="width: 100%">
         <alert type="success" *ngIf="success" style="position: fixed;width: calc(100% - 262px);z-index: 99;top: 65px;text-align: center;">
-          <strong>Actualizado con éxito</strong> 
+          <strong>Exito</strong> 
         </alert>
         <alert type="danger" *ngIf="fail" style="position: fixed;width: calc(100% - 262px);z-index: 99;top: 65px;text-align: center;">
           <strong>Ha ocurrido un Error!</strong> 
@@ -76,19 +79,19 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="name">Razón Social</label>
-                    <input type="text" class="form-control" id="razon_social" placeholder="razon_social" [(ngModel)]="proveedor.razon_social">
+                    <input type="text" class="form-control" id="razon_social" placeholder="" [(ngModel)]="proveedor.razon_social">
                   </div>
                 </div>
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="ccnumber">Nombre de Fantasia</label>
-                    <input type="text" class="form-control" id="nombre_fantacia" placeholder="nombre_fantacia" [(ngModel)]="proveedor.nombre_fantacia">
+                    <input type="text" class="form-control" id="nombre_fantacia" placeholder="" [(ngModel)]="proveedor.nombre_fantacia">
                   </div>
                 </div>
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="ccnumber">CUIT</label>
-                    <input type="text" class="form-control" id="cuit" placeholder="cuit" [(ngModel)]="proveedor.cuit">
+                    <input type="text" class="form-control" id="cuit" placeholder="" [(ngModel)]="proveedor.cuit">
                   </div>
                 </div>
               </div><!--/.row-->
@@ -96,29 +99,58 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="ccnumber">Teléfono</label>
-                    <input type="text" class="form-control" id="telefono" placeholder="telefono" [(ngModel)]="proveedor.telefono">
+                    <input type="text" class="form-control" id="telefono" placeholder="" [(ngModel)]="proveedor.telefono">
+                    <button style="text-align:right" type="button" class="btn btn-outline-success">+</button>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="ccnumber">Email</label>
-                    <input type="text" class="form-control" id="email" placeholder="email" [(ngModel)]="proveedor.email">
+                    <input type="text" class="form-control" id="email" placeholder="" [(ngModel)]="proveedor.email">
                   </div>
                 </div>
               </div><!--/.row-->
               <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="ccnumber">Estado</label>
-                    <input type="text" class="form-control" id="estado" placeholder="estado" [(ngModel)]="proveedor.estado">
+                    <label for="ccnumber">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" placeholder="" [(ngModel)]="proveedor.direccion">
                   </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="ccnumber">Forma de pago</label>
+                    <input type="text" class="form-control" id="formaPago" placeholder="" [(ngModel)]="proveedor.formaPago">
+                  </div>
+                </div>
+              </div><!--/.row-->
+              <div class="row">
+                <div class="col-sm-5">
+                  <div class="form-group">
+                    <label for="ccnumber">Estado</label>
+                    <input type="text" class="form-control" id="estado" placeholder="" [(ngModel)]="proveedor.estado">
+                  </div>
+                </div>
+                <!-- <div class="col-sm-3">
                   <div class="form-group">
                     <label for="ccnumber">Habilitado</label>
                     <input type="text" class="form-control" id="habilitado" placeholder="habilitado" [(ngModel)]="proveedor.habilitado">
                   </div>
-                </div>
+                </div> -->
+                <div class="col-sm-2">
+                    <label for="ccnumber">Habilitado</label>
+                    <label class="switch switch-3d switch-success">
+                      <input type="checkbox" class="switch-input" [(ngModel)]="proveedor.habilitado" >
+                      <span class="switch-label"></span>
+                      <span class="switch-handle"></span>
+                    </label>
+                </div> 
+                <div class="col-sm-3">
+                  <div class="form-group" *ngIf="!proveedor.habilitado">
+                    <label for="ccnumber">Motivo</label>
+                    <input type="text" class="form-control" id="motivo" placeholder="" [(ngModel)]="proveedor.motivo">
+                  </div>
+                </div> 
               </div><!--/.row-->
             </div>
             <div class="col-lg-4">
@@ -142,7 +174,8 @@
             </div>
           </div>
           <div style="text-align: center">
-            <button type="button" class="btn btn-success" (click)=editar()>Editar productos del proveedor</button> 
+            <button type="button" class="btn btn-success" (click)=editar() *ngIf="!crear">Editar productos del proveedor</button> 
+            <button type="button" class="btn btn-success" (click)=crearProveedor() *ngIf="crear">Crear proveedor</button> 
           </div>
         </div>
     </div>

@@ -51,8 +51,25 @@ export class stockComponent {
     }
 
     ver(item){
-    	this.producSelec=item;
-      this.verProduc=true;
+      if(item==0) {
+        this.producSelec={
+          categoria_id:0,
+          codigo:"",
+          departamentos:[],
+          id:0,
+          nombre:"",
+          precio:0,
+          rubro_id:0,
+          stock:0,
+          stock_min:0,
+          tipo_id:0
+        };
+        console.log(item);
+        this.verProduc=true;
+      }else{
+    	  this.producSelec=item;
+        this.verProduc=true;
+      }
     }
     atras(){
       this.verProduc=false;

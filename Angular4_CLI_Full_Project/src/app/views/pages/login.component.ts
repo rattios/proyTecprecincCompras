@@ -13,8 +13,8 @@ export class LoginComponent {
   public result:any;
   constructor(private http: HttpClient, private router: Router, private ruta: RutaService) {
   	this.usuario={
-  		user:'compras',
-  		password:'compras123'
+  		user:'',
+  		password:''
   	}
   }
 

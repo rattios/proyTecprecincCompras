@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
+import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
 import { RutaService } from '../../services/ruta.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class ProveedoresComponent {
   public verDatos=false;
   public success=false;
   public fail=false;
+  public crear=false;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
@@ -47,6 +49,11 @@ export class ProveedoresComponent {
              this.prov=data;
                this.stock=this.prov.productos;
               console.log(this.stock);
+              for (var i = 0; i < this.stock.length; i++) {
+                if(this.stock.habilitado=="SI"){
+                  this.stock.habilitado=true;
+                }
+              }
               this.productList2 = this.stock;
               this.filteredItems2 = this.productList2;
               this.init2();
@@ -59,8 +66,33 @@ export class ProveedoresComponent {
     }
 
     ver(item){
-    	this.proveedor=item;
-      console.log(item);
+      if(item==0) {
+        this.proveedor={
+          calificacion:null,
+          cuit:"",
+          email:"",
+          estado:"",
+          fax:"",
+          habilitado:"NO",
+          habilitado2: false,
+          motivo:"",
+          id:0,
+          nombre_fantacia:"",
+          productos:[],
+          razon_social:"",
+          telefono:"",
+          direccion: "",
+          formaPago: "",
+          telefonos: []
+        };
+        this.crear=true;
+        console.log(item);
+      }else{
+        this.proveedor=item;
+        this.crear=false;
+        console.log(item);
+      }
+    	
       this.verDatos=true;
     }
     volver(){
@@ -88,6 +120,65 @@ export class ProveedoresComponent {
       }
     }
 
+    crearProveedor(){
+      
+      var send={
+        productos:JSON.stringify(this.proveedor.productos),
+        razon_social:this.proveedor.razon_social,
+        nombre_fantacia: this.proveedor.nombre_fantacia,
+        cuit: this.proveedor.cuit,
+        telefono: this.proveedor.telefono,
+        email: this.proveedor.email,
+        estado: this.proveedor.estado,
+        habilitado: this.proveedor.habilitado,
+        motivo: this.proveedor.motivo,
+        direccion: this.proveedor.direccion,
+        formaPago: this.proveedor.formaPago,
+        telefonos: JSON.stringify(this.proveedor.telefonos)
+      }
+      this.http.post(this.ruta.get_ruta()+'proveedores',send)
+           .toPromise()
+           .then(
+           data => {
+            
+              console.log(data);
+              this.success=true;
+              setTimeout(() => {  
+                this.success=false;
+              }, 4000);
+
+              this.loading=true;
+              this.http.get(this.ruta.get_ruta()+'proveedores')
+                   .toPromise()
+                   .then(
+                   data => {
+                     this.prov=data;
+                       this.proveedores=this.prov.proveedores;
+                      console.log(this.proveedores);
+                      this.productList = this.proveedores;
+                      this.filteredItems = this.productList;
+                      this.init();
+                      this.loading=false;
+                    },
+                   msg => { 
+                     console.log(msg);
+                     this.loading=false;
+                   });
+             
+
+            },
+           msg => { 
+             console.log(msg);
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
+
+           });
+    }
+
+
+
     editar(){
       
       var send={
@@ -98,8 +189,13 @@ export class ProveedoresComponent {
         telefono: this.proveedor.telefono,
         email: this.proveedor.email,
         estado: this.proveedor.estado,
-        habilitado: this.proveedor.habilitado
+        habilitado: this.proveedor.habilitado,
+        motivo: this.proveedor.motivo,
+        direccion: this.proveedor.direccion,
+        formaPago: this.proveedor.formaPago,
+        telefonos: JSON.stringify(this.proveedor.telefonos)
       }
+      console.log(send);
       this.http.put(this.ruta.get_ruta()+'proveedores/'+this.proveedor.id,send)
            .toPromise()
            .then(
