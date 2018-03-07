@@ -12,9 +12,26 @@ export class presupuestoComponent {
   public stock: any;
   public proveedores: any;
   public productos: any;
-  public proveedor: any='';
   public loading=true;
-
+  public proveedor: any={
+          calificacion:null,
+          cuit:"",
+          email:"",
+          estado:"",
+          fax:"",
+          habilitado:"NO",
+          habilitado2: false,
+          motivo:"",
+          id:0,
+          nombre_fantacia:"",
+          productos:[],
+          razon_social:"",
+          telefono:"",
+          direccion: "",
+          formaPago: "",
+          telefonos: []
+        };
+        
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
@@ -61,9 +78,36 @@ export class presupuestoComponent {
              this.loading=false;
            });
   }
+  seleccionar(item){
+    this.proveedor=item;
+  }
 
+  agregar(item){
+    if(!this.checkProductos(item)) {
+     item.cantidad=0;
+     this.proveedor.productos.push(item);
+    }
+  }
+  checkProductos(item){
+      var band=false;
+      for (var i = 0; i < this.proveedor.productos.length; i++) {
+        if(this.proveedor.productos[i].id==item.id) {
+          band=true;
+        }
+      }
+      return band;
+    }
+    eliminarProducto(it){
+      for (var i = 0; i < this.proveedor.productos.length; i++) {
+        if(this.proveedor.productos[i].id==it.id) {
+          this.proveedor.productos.splice(i, 1);
+        }
+      }
+    }
 
-
+    enviarPresupuesto(){
+      console.log(this.proveedor);
+    }
 
 
 
@@ -73,8 +117,8 @@ export class presupuestoComponent {
    filteredItems : any;
    productList : any;
    pages : number = 4;
-   pageSize : number = 10;
-   pageNumber : number = 0;
+   pageSize : number = 5;
+   pageNumber : number = 6;
    currentIndex : number = 1;
    items: any;
    pagesIndex : Array<number>;
@@ -165,7 +209,7 @@ export class presupuestoComponent {
    filteredItems2 : any;
    productList2 : any;
    pages2 : number = 4;
-   pageSize2 : number = 10;
+   pageSize2 : number = 5;
    pageNumber2 : number = 0;
    currentIndex2 : number = 1;
    items2: any;
