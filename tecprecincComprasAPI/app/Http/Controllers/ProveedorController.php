@@ -54,17 +54,17 @@ class ProveedorController extends Controller
         }*/
 
         //validaciones
-        $aux1 = \App\Proveedor::where('razonSocial', $request->input('razonSocial'))->get();
+        $aux1 = \App\Proveedor::where('razon_social', $request->input('razon_social'))->get();
         if(count($aux1) != 0){
            // Devolvemos un código 409 Conflict. 
-            return response()->json(['error'=>'Ya existe otro proveedor con el nombre(razón social) '.$request->input('razonSocial')], 409);
+            return response()->json(['error'=>'Ya existe otro proveedor con el nombre(razón social) '.$request->input('razon_social')], 409);
         } 
 
-        if ($request->input('nombreFantacia')) {
-            $aux2 = \App\Proveedor::where('nombreFantacia', $request->input('nombreFantacia'))->get();
+        if ($request->input('nombre_fantacia')) {
+            $aux2 = \App\Proveedor::where('nombre_fantacia', $request->input('nombre_fantacia'))->get();
             if(count($aux2) != 0){
                // Devolvemos un código 409 Conflict. 
-                return response()->json(['error'=>'Ya existe otro proveedor con el nombre fantacia '.$request->input('nombreFantacia')], 409);
+                return response()->json(['error'=>'Ya existe otro proveedor con el nombre fantacia '.$request->input('nombre_fantacia')], 409);
             } 
         }
 
@@ -173,6 +173,9 @@ class ProveedorController extends Controller
         $estado=$request->input('estado');
         $calificacion=$request->input('calificacion');
         $productos=$request->input('productos');
+        $motivo=$request->input('motivo');
+        $direccion=$request->input('direccion');
+        $forma_pago=$request->input('forma_pago');
 
         // Creamos una bandera para controlar si se ha modificado algún dato.
         $bandera = false;
@@ -276,6 +279,24 @@ class ProveedorController extends Controller
                 $proveedor->productos()->attach($productos[$i]->id);       
             }
             
+            $bandera=true;
+        }
+
+        if ($motivo != null && $motivo!='')
+        {
+            $proveedor->motivo = $motivo;
+            $bandera=true;
+        }
+
+        if ($direccion != null && $direccion!='')
+        {
+            $proveedor->direccion = $direccion;
+            $bandera=true;
+        }
+
+        if ($forma_pago != null && $forma_pago!='')
+        {
+            $proveedor->forma_pago = $forma_pago;
             $bandera=true;
         }
 

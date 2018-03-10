@@ -14,8 +14,8 @@ class ProveedoresMigration extends Migration
     {
         Schema::create('proveedores', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('razonSocial')->unique();
-            $table->string('nombreFantacia')->unique()->nullable();
+            $table->string('razon_social')->unique();
+            $table->string('nombre_fantacia')->unique()->nullable();
             $table->string('cuit')->unique();
             $table->string('telefono')->nullable();
             $table->string('fax')->nullable();
@@ -23,6 +23,9 @@ class ProveedoresMigration extends Migration
             $table->string('habilitado'); // SI - NO 
             $table->string('estado'); // Definir estados*
             $table->integer('calificacion')->nullable();
+            $table->text('motivo');
+            $table->string('direccion');
+            $table->string('forma_pago');
             $table->timestamps();
         });
     }
