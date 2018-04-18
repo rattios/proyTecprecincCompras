@@ -8,29 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
-use JWTAuth;
-
 class StockController extends Controller
 {
-    /*Retorna los productos que puede ver el departamento
-    al cual pertenece el usuario que hace la peticion*/
-    public function stockPermitido()
-    {
-
-        $currentUser = JWTAuth::parseToken()->authenticate();
-
-        if ($currentUser) {
-
-            $dep = \App\Departamento::with('permisos_productos')->find($currentUser->departamento_id);
-
-            return response()->json(['departamento'=>$dep], 200);
-        }else{
-            return response()->json(['error'=>'Usuario no encontrado.'], 404);
-        }
-
-    }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +17,6 @@ class StockController extends Controller
      */
     public function index()
     {
-
         //cargar todos los productos en el stock
         /*$productos = \App\Stock::select('nombre', 'codigo', 'precio',
             'stock',
@@ -200,7 +178,6 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        /*
         // Primero comprobaremos si estamos recibiendo todos los campos.
         if ( !$request->input('nombre') || !$request->input('precio') ||
              !$request->input('stock') || !$request->input('peps') ||
@@ -209,7 +186,7 @@ class StockController extends Controller
         {
             // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
             return response()->json(['error'=>'Faltan datos necesarios para el proceso de alta.'],422);
-        }*/ 
+        } 
 
         // Comprobamos si la categoria que nos están pasando existe o no.
         $categoria = \App\Categoria::find($request->input('categoria_id'));
