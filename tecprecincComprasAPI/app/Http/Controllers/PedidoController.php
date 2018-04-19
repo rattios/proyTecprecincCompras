@@ -46,6 +46,7 @@ class PedidoController extends Controller
 
     public function index_departamentos($id)
     {
+
         //cargar todos los pedidos
         $pedidos = \App\Pedido::where('usuario_id',$id)->with('solicitud')->with('usuario.departamento')->get();
         $usuario = \App\User::where('id',$id)->with('departamento')->get();
@@ -65,7 +66,7 @@ class PedidoController extends Controller
         }
 
         if(count($pedidos) == 0){
-           // return response()->json(['error'=>'No existen pedidos.'], 404);          
+            return response()->json(['error'=>'No existen pedidos.'], 404);          
         }else{
 
             $categorias = \App\Categoria::with('tipo')->with('rubro')->get();

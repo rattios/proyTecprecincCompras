@@ -9,6 +9,7 @@ import { RutaService } from '../../services/ruta.service';
 })
 export class pedidosComponent {
   public prov: any;
+  public centroCostos: any;
   public stock: any;
   public productos: any;
   public productosSeleccionados: any=[];
@@ -24,6 +25,19 @@ export class pedidosComponent {
 
    ngOnInit(): void {
       this.loading=true;
+      this.http.get(this.ruta.get_ruta()+'centro_costos')
+           .toPromise()
+           .then(
+           data => {
+             this.centroCostos=data;
+             this.centroCostos=this.centroCostos.CentroCostos;
+             console.log(this.centroCostos);
+            },
+           msg => { 
+             console.log(msg);
+              this.loading=false;
+           });
+
       this.http.get(this.ruta.get_ruta()+'stock')
            .toPromise()
            .then(

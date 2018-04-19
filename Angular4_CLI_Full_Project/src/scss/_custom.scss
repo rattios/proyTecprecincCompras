@@ -1,1 +1,10 @@
 // Here you can add other styles
+
+.sidebar-fixed .sidebar{
+	background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRm_PA2p1IPAfeySCi1J4d5aNYbgUKlZyz6z69NSE73_sf8w1tNg') !important;
+	background-size: cover
+}
+
+.sidebar .nav-link i, .sidebar .navbar .dropdown-toggle i, .navbar .sidebar .dropdown-toggle i {
+    color: #ffffff;
+}
