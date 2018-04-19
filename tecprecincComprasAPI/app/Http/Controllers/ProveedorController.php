@@ -45,27 +45,27 @@ class ProveedorController extends Controller
     public function store(Request $request)
     {
         // Primero comprobaremos si estamos recibiendo todos los campos obligatorios.
-        if (!$request->input('razonSocial') ||
+       /* if (!$request->input('razonSocial') ||
             !$request->input('cuit') ||
             !$request->input('habilitado') ||
             !$request->input('estado')) 
         {
             // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
             return response()->json(['error'=>'Faltan datos necesarios para el proceso de alta.'],422);
-        }
+        }*/
 
         //validaciones
-        $aux1 = \App\Proveedor::where('razonSocial', $request->input('razonSocial'))->get();
+        $aux1 = \App\Proveedor::where('razon_social', $request->input('razon_social'))->get();
         if(count($aux1) != 0){
            // Devolvemos un código 409 Conflict. 
-            return response()->json(['error'=>'Ya existe otro proveedor con el nombre(razón social) '.$request->input('razonSocial')], 409);
+            return response()->json(['error'=>'Ya existe otro proveedor con el nombre(razón social) '.$request->input('razon_social')], 409);
         } 
 
-        if ($request->input('nombreFantacia')) {
-            $aux2 = \App\Proveedor::where('nombreFantacia', $request->input('nombreFantacia'))->get();
+        if ($request->input('nombre_fantacia')) {
+            $aux2 = \App\Proveedor::where('nombre_fantacia', $request->input('nombre_fantacia'))->get();
             if(count($aux2) != 0){
                // Devolvemos un código 409 Conflict. 
-                return response()->json(['error'=>'Ya existe otro proveedor con el nombre fantacia '.$request->input('nombreFantacia')], 409);
+                return response()->json(['error'=>'Ya existe otro proveedor con el nombre fantacia '.$request->input('nombre_fantacia')], 409);
             } 
         }
 
@@ -164,8 +164,8 @@ class ProveedorController extends Controller
         }      
 
         // Listado de campos recibidos teóricamente.
-        $razonSocial=$request->input('razonSocial'); 
-        $nombreFantacia=$request->input('nombreFantacia'); 
+        $razonSocial=$request->input('nombre_fantacia'); 
+        $nombreFantacia=$request->input('nombre_fantacia'); 
         $cuit=$request->input('cuit'); 
         $telefono=$request->input('telefono');
         $fax=$request->input('fax');
@@ -174,6 +174,9 @@ class ProveedorController extends Controller
         $estado=$request->input('estado');
         $calificacion=$request->input('calificacion');
         $productos=$request->input('productos');
+        $motivo=$request->input('motivo');      
+        $direccion=$request->input('direccion');      
+        $forma_pago=$request->input('forma_pago');
 
         // Creamos una bandera para controlar si se ha modificado algún dato.
         $bandera = false;
@@ -279,6 +282,23 @@ class ProveedorController extends Controller
             
             $bandera=true;
         }
+        if ($motivo != null && $motivo!='')     
+ -        {     
+ -            $proveedor->motivo = $motivo;     
+ -            $bandera=true;        
+ -        }     
+ -      
+ -        if ($direccion != null && $direccion!='')     
+ -        {     
+ -            $proveedor->direccion = $direccion;       
+ -            $bandera=true;        
+ -        }     
+ -      
+ -        if ($forma_pago != null && $forma_pago!='')       
+ -        {     
+ -            $proveedor->forma_pago = $forma_pago;     
+ -            $bandera=true;        
+ -        }
 
         if ($bandera)
         {
