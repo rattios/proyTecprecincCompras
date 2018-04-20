@@ -86,6 +86,61 @@ class StockController extends Controller
         } 
     }
 
+    public function index_centro_costos()
+    {
+        //cargar todos los productos en el stock
+        /*$productos = \App\Stock::select('nombre', 'codigo', 'precio',
+            'stock',
+            'stock_min',  'categoria_id',
+            'proveedor_id')->with('categoria')->get();
+
+        if(count($productos) == 0){
+            return response()->json(['error'=>'No existen productos en el stock.'], 404);          
+        }else{
+            return response()->json(['status'=>'ok', 'productos'=>$productos], 200);
+        }*/
+
+
+        $produc=DB::select("SELECT id,nombre,codigo,stock,categoria_id,tipo_id,rubro_id,precio,stock_min FROM  `stock` WHERE 1 ");
+
+        $departs=DB::select("SELECT id,nombre FROM  `departamentos` WHERE 1 ");
+
+
+        $categ=DB::select("SELECT id,nombre,codigo,tipo_id,rubro_id FROM  `categorias` WHERE 1 ");
+
+        $centrocostos = \App\CentroCostos::all();
+
+        for ($i=0; $i < count($produc); $i++) { 
+            $produc[$i]->categoria=[];
+            for ($j=0; $j < count($categ); $j++) { 
+                if ($produc[$i]->categoria_id==$categ[$j]->id) {
+                    array_push($produc[$i]->categoria,$categ[$j]);
+                }
+            }
+
+            $aux=DB::select("SELECT departamento_id 
+                    FROM  `stock_permisos_departs`
+                    WHERE stock_id = ".$produc[$i]->id);
+
+            $produc[$i]->departamentos=[];
+
+            for ($k=0; $k < count($aux); $k++) { 
+                for ($h=0; $h < count($departs) ; $h++) { 
+                    if ($aux[$k]->departamento_id == $departs[$h]->id) {
+                        array_push($produc[$i]->departamentos, $departs[$h]);
+                    }
+                }
+            }
+        }
+
+
+        if(count($produc) == 0){
+            return response()->json(['error'=>'No existen productos en el stock.'], 404);          
+        }else{
+            return response()->json(['status'=>'ok', 'productos'=>$produc, 'centrocostos'=>$centrocostos], 200);
+        } 
+    }
+
      
     public function todos()
     {

@@ -154,7 +154,8 @@ class PedidoController extends Controller
         if($nuevoPedido=\App\Pedido::create([
             //'estado'=>$request->input('estado'),
             'estado'=>0, 
-            'usuario_id'=>$request->input('usuario_id')
+            'usuario_id'=>$request->input('usuario_id'),
+            'centro_costos_id'=>$request->input('centro_costos_id')
             ]))
         {
 

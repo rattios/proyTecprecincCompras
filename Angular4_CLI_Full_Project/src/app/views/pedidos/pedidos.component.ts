@@ -10,6 +10,7 @@ import { RutaService } from '../../services/ruta.service';
 export class pedidosComponent {
   public prov: any;
   public centroCostos: any;
+  public idCentroCostos: any;
   public stock: any;
   public productos: any;
   public productosSeleccionados: any=[];
@@ -25,26 +26,17 @@ export class pedidosComponent {
 
    ngOnInit(): void {
       this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'centro_costos')
-           .toPromise()
-           .then(
-           data => {
-             this.centroCostos=data;
-             this.centroCostos=this.centroCostos.CentroCostos;
-             console.log(this.centroCostos);
-            },
-           msg => { 
-             console.log(msg);
-              this.loading=false;
-           });
 
-      this.http.get(this.ruta.get_ruta()+'stock')
+
+      this.http.get(this.ruta.get_ruta()+'stock_centro_costos')
            .toPromise()
            .then(
            data => {
              this.prov=data;
            	  this.stock=this.prov.productos;
               console.log(this.stock);
+              this.centroCostos=this.prov.centrocostos;
+              console.log(this.centroCostos);
               this.productList = this.stock;
               this.filteredItems = this.productList;
               this.init();
@@ -86,6 +78,7 @@ export class pedidosComponent {
         var enviar = {
           usuario_id: localStorage.getItem('tecprecinc_usuario_id'),
           solicitud: JSON.stringify(this.productosSeleccionados),
+          centro_costos_id:this.idCentroCostos,
           estado: 0
         }
         console.log(enviar);

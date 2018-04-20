@@ -111,6 +111,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::put('/stock/{id}','StockController@update');
         Route::delete('/stock/{id}','StockController@destroy');
         Route::get('/stock/{id}','StockController@show');
+        Route::get('/stock_centro_costos','StockController@index_centro_costos');
 
         Route::get('/prestock','PrestockController@index');
         //----Pruebas StockController
@@ -138,6 +139,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/mensajes/departamento/{departamento_id}','MensajeController@mensajesDep');
 
         Route::get('/centro_costos','CentroCostosController@index');
+        
 
 
     Route::group(['middleware' => 'jwt-auth'], function(){

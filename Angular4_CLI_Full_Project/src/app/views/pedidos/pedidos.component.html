@@ -90,7 +90,16 @@
                       <td><button type="button" class="btn btn-danger" (click)=delProductos(item)>X</button></td>
                    </tr>
                 </tbody>
-              </table>   
+              </table>  
+              <div class="form-group row">
+                <label class="col-md-12 form-control-label" for="select">Centro de costos</label>
+                <br>
+                <div class="col-md-12">
+                  <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="idCentroCostos">
+                    <option *ngFor="let cc of centroCostos" [value]="cc.id">{{cc.descripcion}}</option>
+                  </select>
+                </div>
+              </div> 
             </div>
             <div class="card-footer">
               <button type="submit" class="btn btn-sm btn-primary" (click)=enviar()><i class="fa fa-dot-circle-o"></i> Enviar pedido</button>
