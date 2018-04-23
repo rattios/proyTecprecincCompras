@@ -85,6 +85,10 @@ Route::group(  ['middleware' =>'cors'], function(){
         
         //----Pruebas PedidoController
         Route::get('/pedidos','PedidoController@index');
+        Route::get('/pedidos0','PedidoController@index0');
+        Route::get('/pedidos1','PedidoController@index1');
+        Route::get('/pedidos2','PedidoController@index2');
+        Route::get('/pedidos4','PedidoController@index4');
         Route::get('/pedidos/departamento/{id}','PedidoController@index_departamentos');
         Route::post('/pedidos','PedidoController@store');
         Route::put('/pedidos/{id}','PedidoController@update');

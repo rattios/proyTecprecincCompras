@@ -1,51 +1,95 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
-import { RutaService } from '../../services/ruta.service';
+import { RutaService } from '../../../services/ruta.service';
+import { canceladosComponent } from './cancelados.component';
 
 @Component({
-  templateUrl: 'mis-pedidos.component.html'
+  selector: 'app-tabla-info-cancelados',
+  templateUrl: 'tablaInfoCancelados.component.html'
 })
-export class misPedidosComponent {
-  public prov: any;
-  public stock: any;
-  public productos: any;
-  public proveedor: any='';
-  public loading=true;
-  constructor(private http: HttpClient, private ruta: RutaService) {
+export class tablaInfoCanceladosComponent {
+
+  public verInfo=false;
+  public loading=false;
+  
+  @Input() informacion:any;
+
+  constructor(private http: HttpClient, private ruta: RutaService, private parent: canceladosComponent) {
 
   }
 
    ngOnInit(): void {
-
-       this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'stock')
+      console.log(this.informacion);
+      if(this.informacion!=undefined) {
+       this.productList = this.informacion;
+       this.filteredItems = this.productList;
+       this.init();
+      }
+    }
+    aceptarSolicitud(id){
+      console.log(id);
+      var aceptar={
+        estado:1
+      }
+      this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
            .toPromise()
            .then(
            data => {
-             this.prov=data;
-           	  this.stock=this.prov.productos;
-              console.log(this.stock);
-              this.productList = this.stock;
-              this.filteredItems = this.productList;
-              this.init();
-              this.loading=false;
+             console.log(data);
+             this.parent.reset();
             },
            msg => { 
              console.log(msg);
-             this.loading=false;
-           });
+             alert('Ha ocurrido un error!');
+           });     
     }
-
+    finalizarSolicitud(id){
+      console.log(id);
+      var aceptar={
+        estado:2
+      }
+      this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.parent.reset();
+            },
+           msg => { 
+             console.log(msg);
+             alert('Ha ocurrido un error!');
+           });     
+    }
+    cancelarSolicitud(id){
+      console.log(id);
+      var aceptar={
+        estado:4
+      }
+      this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.parent.reset();
+            },
+           msg => { 
+             console.log(msg);
+             alert('Ha ocurrido un error!');
+           });     
+    }
     ver(item){
-    	this.proveedor=item.razonSocial;
+
+      console.log(item);
+      this.informacion=item;
+      this.verInfo=true;
     }
-    setProductos(){
-      console.log('asdasd');
+    volver(){
+      this.verInfo=false;
     }
 
-    //-------------------------------------------------------------------------------------------------------------------------
+     //-------------------------------------------------------------------------------------------------------------------------
    
    filteredItems : any;
    productList : any;

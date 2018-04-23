@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
-import { RutaService } from '../../services/ruta.service';
+import { RutaService } from '../../../services/ruta.service';
 
 @Component({
-  templateUrl: 'todos-pedidos.component.html'
+  templateUrl: 'entregados.component.html'
 })
-export class todosPedidosComponent {
+export class entregadosComponent {
   public prov: any;
   public pedidos: any;
   public pedidos0: any=[];
@@ -25,12 +25,12 @@ export class todosPedidosComponent {
 
    ngOnInit(): void {
 
-      this.http.get(this.ruta.get_ruta()+'pedidos')
+      this.http.get(this.ruta.get_ruta()+'pedidos2')
            .toPromise()
            .then(
            data => {
              this.prov=data;
-           	  this.pedidos=this.prov.pedidos;
+               this.pedidos=this.prov.pedidos;
               console.log(this.pedidos);
               for (var i = 0; i < this.pedidos.length; ++i) {
                 if(this.pedidos[i].estado==0) {

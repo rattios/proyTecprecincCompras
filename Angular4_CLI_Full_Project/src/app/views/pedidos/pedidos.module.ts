@@ -19,6 +19,21 @@ import { transferenciaComponent } from './transferencia.component';
 import { transInfoComponent } from './transInfo.component';
 import { presupuestoComponent } from './presupuesto/presupuesto.component';
 
+import { entrantesComponent } from './entrantes/entrantes.component';
+import { tablaInfoEntrantesComponent } from './entrantes/tablaInfoEntrantes.component';
+
+import { encursoComponent } from './encurso/encurso.component';
+import { tablaInfoEncursoComponent } from './encurso/tablaInfoEncurso.component';
+
+import { entregadosComponent } from './entregados/entregados.component';
+import { tablaInfoEntregadosComponent } from './entregados/tablaInfoEntregados.component';
+
+import { canceladosComponent } from './cancelados/cancelados.component';
+import { tablaInfoCanceladosComponent } from './cancelados/tablaInfoCancelados.component';
+
+import { transferenciasPuraComponent } from './transferencias/transferenciasPura.component';
+import { transferenciasInfoComponent } from './transferencias/transferenciasInfo.component';
+
 @NgModule({
   imports: [
     pedidosRoutingModule,
@@ -40,7 +55,17 @@ import { presupuestoComponent } from './presupuesto/presupuesto.component';
     misInfoComponent,
     transferenciaComponent,
     transInfoComponent,
-    presupuestoComponent
+    presupuestoComponent,
+    entrantesComponent,
+    tablaInfoEntrantesComponent,
+    encursoComponent,
+    tablaInfoEncursoComponent,
+    entregadosComponent,
+    tablaInfoEntregadosComponent,
+    canceladosComponent,
+    tablaInfoCanceladosComponent,
+    transferenciasPuraComponent,
+    transferenciasInfoComponent
 	]
 })
 export class pedidosModule { }

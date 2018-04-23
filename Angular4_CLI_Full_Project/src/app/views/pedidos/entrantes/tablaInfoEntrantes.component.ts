@@ -2,21 +2,21 @@ import { Component, OnInit, Input } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
-import { RutaService } from '../../services/ruta.service';
-import { todosPedidosComponent } from './todos-pedidos.component';
+import { RutaService } from '../../../services/ruta.service';
+import { entrantesComponent } from './entrantes.component';
 
 @Component({
-  selector: 'app-tabla-info',
-  templateUrl: 'tablaInfo.component.html'
+  selector: 'app-tabla-info-entrantes',
+  templateUrl: 'tablaInfoEntrantes.component.html'
 })
-export class tablaInfoComponent {
+export class tablaInfoEntrantesComponent {
 
   public verInfo=false;
   public loading=false;
   
   @Input() informacion:any;
 
-  constructor(private http: HttpClient, private ruta: RutaService, private parent: todosPedidosComponent) {
+  constructor(private http: HttpClient, private ruta: RutaService, private parent: entrantesComponent) {
 
   }
 

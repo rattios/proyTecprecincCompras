@@ -18,7 +18,7 @@ class PedidoController extends Controller
     public function index()
     {
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::with('solicitud')->with('usuario.departamento')->get();
+        $pedidos = \App\Pedido::with('solicitud')->with('centro_costos')->with('usuario.departamento')->get();
 
 
         if(count($pedidos) == 0){
@@ -37,6 +37,142 @@ class PedidoController extends Controller
                     
                 }
                 
+            }
+            
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                } 
+            }
+
+            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
+        } 
+    }
+    public function index0()
+    {
+        //cargar todos los pedidos
+        $pedidos = \App\Pedido::where('estado', 0)->with('solicitud')->with('centro_costos')->with('usuario.departamento')->get();
+
+
+        if(count($pedidos) == 0){
+            return response()->json(['error'=>'No existen pedidos.'], 200);          
+        }else{
+
+            $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    for ($k=0; $k < count($categorias); $k++) { 
+                        if ($pedidos[$i]->solicitud[$j]->categoria_id == $categorias[$k]->id ) {
+                            $pedidos[$i]->solicitud[$j]->categoria = $categorias[$k];
+                        }
+                    }
+                }
+            }
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                } 
+            }
+
+            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
+        } 
+    }
+    public function index1()
+    {
+        //cargar todos los pedidos
+        $pedidos = \App\Pedido::where('estado', 1)->with('solicitud')->with('centro_costos')->with('usuario.departamento')->get();
+
+
+        if(count($pedidos) == 0){
+            return response()->json(['error'=>'No existen pedidos.'], 200);          
+        }else{
+
+            $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    for ($k=0; $k < count($categorias); $k++) { 
+                        if ($pedidos[$i]->solicitud[$j]->categoria_id == $categorias[$k]->id ) {
+                            $pedidos[$i]->solicitud[$j]->categoria = $categorias[$k];
+                        }
+                    }
+                    
+                }
+                
+            }
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                } 
+            }
+
+            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
+        } 
+    }
+    public function index2()
+    {
+        //cargar todos los pedidos
+        $pedidos = \App\Pedido::where('estado', 2)->with('solicitud')->with('centro_costos')->with('usuario.departamento')->get();
+
+
+        if(count($pedidos) == 0){
+            return response()->json(['error'=>'No existen pedidos.'], 200);          
+        }else{
+
+            $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    for ($k=0; $k < count($categorias); $k++) { 
+                        if ($pedidos[$i]->solicitud[$j]->categoria_id == $categorias[$k]->id ) {
+                            $pedidos[$i]->solicitud[$j]->categoria = $categorias[$k];
+                        }
+                    }
+                    
+                }
+                
+            }
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                } 
+            }
+
+            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
+        } 
+    }
+    public function index4()
+    {
+        //cargar todos los pedidos
+        $pedidos = \App\Pedido::where('estado', 4)->with('solicitud')->with('centro_costos')->with('usuario.departamento')->get();
+
+
+        if(count($pedidos) == 0){
+            return response()->json(['error'=>'No existen pedidos.'], 200);          
+        }else{
+
+            $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    for ($k=0; $k < count($categorias); $k++) { 
+                        if ($pedidos[$i]->solicitud[$j]->categoria_id == $categorias[$k]->id ) {
+                            $pedidos[$i]->solicitud[$j]->categoria = $categorias[$k];
+                        }
+                    }
+                    
+                }
+                
+            }
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                } 
             }
 
             return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);

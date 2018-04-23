@@ -1,111 +1,95 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
-import { RutaService } from '../../services/ruta.service';
+import { RutaService } from '../../../services/ruta.service';
+import { entregadosComponent } from './entregados.component';
 
 @Component({
-  templateUrl: 'pedidos.component.html'
+  selector: 'app-tabla-info-entregados',
+  templateUrl: 'tablaInfoEntregados.component.html'
 })
-export class pedidosComponent {
-  public prov: any;
-  public stock: any;
-  public productos: any;
-  public productosSeleccionados: any=[];
-  public proveedor: any='';
-  public departamento= localStorage.getItem('tecprecinc_nombre');
-  public template:'http://localhost/template.gif';
-  public loading=true;
-  public success=false;
-  public fail=false;
-  constructor(private http: HttpClient, private ruta: RutaService) {
+export class tablaInfoEntregadosComponent {
+
+  public verInfo=false;
+  public loading=false;
+  
+  @Input() informacion:any;
+
+  constructor(private http: HttpClient, private ruta: RutaService, private parent: entregadosComponent) {
 
   }
 
    ngOnInit(): void {
-      this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'stock')
-           .toPromise()
-           .then(
-           data => {
-             this.prov=data;
-           	  this.stock=this.prov.productos;
-              console.log(this.stock);
-              this.productList = this.stock;
-              this.filteredItems = this.productList;
-              this.init();
-              this.loading=false;
-            },
-           msg => { 
-             console.log(msg);
-              this.loading=false;
-           });
-    }
-
-    setProductos(item){
-      if(!this.checkProductos(item)) {
-        item.cantidad=1;
-        item.producto_id=item.id;
-        this.productosSeleccionados.push(item);
-      }
-      
-      console.log(this.productosSeleccionados);
-    }
-    checkProductos(item){
-      var band=false;
-      for (var i = 0; i < this.productosSeleccionados.length; i++) {
-        if(this.productosSeleccionados[i].id==item.id) {
-          band=true;
-        }
-      }
-      return band;
-    }
-    delProductos(item){
-      for (var i = 0; i < this.productosSeleccionados.length; i++) {
-        if(this.productosSeleccionados[i].id==item.id) {
-          this.productosSeleccionados.splice(i, 1);
-        }
+      console.log(this.informacion);
+      if(this.informacion!=undefined) {
+       this.productList = this.informacion;
+       this.filteredItems = this.productList;
+       this.init();
       }
     }
-    enviar(){
-      if(this.productosSeleccionados.length>0) {
-        var enviar = {
-          usuario_id: localStorage.getItem('tecprecinc_usuario_id'),
-          solicitud: JSON.stringify(this.productosSeleccionados),
-          estado: 0
-        }
-        console.log(enviar);
-
-        setTimeout(() => {
-          this.http.post(this.ruta.get_ruta()+'pedidos',enviar)
+    aceptarSolicitud(id){
+      console.log(id);
+      var aceptar={
+        estado:1
+      }
+      this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
            .toPromise()
            .then(
            data => {
              console.log(data);
-              
-              this.vaciar();
-              this.success=true;
-              setTimeout(() => {  
-                this.success=false;
-              }, 4000);
-
+             this.parent.reset();
             },
            msg => { 
              console.log(msg);
-             this.fail=true;
-              setTimeout(() => {  
-                this.fail=false;
-              }, 4000);
-             
-           });
-        }, 1000);
-       } 
+             alert('Ha ocurrido un error!');
+           });     
     }
-    vaciar(){
-      this.productosSeleccionados=[];
+    finalizarSolicitud(id){
+      console.log(id);
+      var aceptar={
+        estado:2
+      }
+      this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.parent.reset();
+            },
+           msg => { 
+             console.log(msg);
+             alert('Ha ocurrido un error!');
+           });     
+    }
+    cancelarSolicitud(id){
+      console.log(id);
+      var aceptar={
+        estado:4
+      }
+      this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.parent.reset();
+            },
+           msg => { 
+             console.log(msg);
+             alert('Ha ocurrido un error!');
+           });     
+    }
+    ver(item){
+
+      console.log(item);
+      this.informacion=item;
+      this.verInfo=true;
+    }
+    volver(){
+      this.verInfo=false;
     }
 
-    //-------------------------------------------------------------------------------------------------------------------------
+     //-------------------------------------------------------------------------------------------------------------------------
    
    filteredItems : any;
    productList : any;

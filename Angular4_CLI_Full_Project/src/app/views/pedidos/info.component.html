@@ -45,7 +45,7 @@
 	      					<strong>Usuario: </strong>{{informacion.usuario.nombre}}
 	      				</div>
 	      				<div class="col-lg-4">
-	      					<strong>Departamento: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
+	      					<strong>Fecha: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
 	      				</div>
       				</div>
       			</div>
@@ -62,7 +62,8 @@
 				              	<th>Código</th>
 				                <th>Cantidad</th>
 				                <th>Nombre</th>
-				                <th>En Stock</th>
+				                <th>Centro de costos</th>
+				                <th *ngIf="informacion.estado==1">En Stock</th>
 				                <th *ngIf="informacion.estado!=0">Estatus</th>
 				                <th *ngIf="informacion.estado==1">Acción</th>
 				              </tr>
@@ -72,7 +73,8 @@
 				              	<td>{{item.codigo}}</td>
 				                <td>{{item.pivot.cantidad}}</td>
 				                <td>{{item.nombre}}</td>
-				                <td>{{item.stock}}</td>
+				                <td>{{item.centro_costos.descripcion}}</td>
+				                <td *ngIf="informacion.estado==1">{{item.stock}}</td>
 				                <td *ngIf="informacion.estado!=0">
 				                  <span [ngClass]="['badge', 'badge-success']" *ngIf="item.pivot.aprobado">Aprobado</span>
 				                  <span [ngClass]="['badge', 'badge-success']" *ngIf="item.pivot.entregado">Entregado</span>

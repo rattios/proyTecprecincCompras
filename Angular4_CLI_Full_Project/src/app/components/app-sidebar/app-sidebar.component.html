@@ -10,7 +10,7 @@
       <li class="nav-title">
         Menú
       </li>
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+      <!-- <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Components</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item">
@@ -38,22 +38,39 @@
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/tabs']"><i class="icon-puzzle"></i> Tabs</a>
           </li>
         </ul>
-      </li> <!-- --> 
+      </li> --> <!-- --> 
       
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-layers"></i> Solicitudes</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/pedido']"><i class="icon-note"></i> Crear una solicitud</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/pedido']"><i class="icon-note"></i> Crear</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/presupuestos/presupuestos']"><i class="icon-doc"></i> Crear un presupuesto</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/entrantes']"><i class="icon-arrow-down-circle"></i> Entrantes</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/encurso']"><i class="icon-clock"></i> En curso</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/entregados']"><i class="icon-check"></i> Entregadas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/cancelados']"><i class="icon-close"></i> Canceladas</a>
+          </li>
+          <!-- <li class="nav-item">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/mis-pedidos']"><i class="icon-docs"></i> Mis solicitudes</a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/todos-pedidos']"><i class="icon-layers"></i> Todos las solicitudes</a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-doc"></i> Presupuestos</a>
+        <ul class="nav-dropdown-items">
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/presupuestos']"><i class="icon-note"></i> Crear un presupuesto</a>
           </li>
         </ul>
       </li>
@@ -80,14 +97,14 @@
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-shuffle"></i> Transferencias</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/stock']"><i class=" icon-action-redo"></i> Transferencia pura</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class=" icon-action-redo"></i> Transferencia pura</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/uso']"><i class="icon-action-undo"></i> Transferencia devolución</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class="icon-action-undo"></i> Transferencia devolución</a>
           </li>
         </ul>
       </li>
-      <!-- <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+     <!-- <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i> Icons</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item">
@@ -97,8 +114,8 @@
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/icons/simple-line-icons']"><i class="icon-star"></i> Simple Line Icons</a>
           </li>
         </ul>
-      </li> 
-      <li class="nav-item">
+      </li>  -->
+       <!-- <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/widgets']"><i class="icon-calculator"></i> Widgets <span class="badge badge-info">NEW</span></a>
       </li>
       <li class="nav-item">

@@ -12,7 +12,7 @@
 	              	<th>Número de pedido</th>
 	              	<th>Usuario</th>
 	              	<th>Departamento</th>
-	              	<th>Estado</th>
+	              	<!-- <th>Estado</th> -->
 	              	<th></th>
             	</thead>
             	<tbody>
@@ -20,7 +20,7 @@
                   		<td>{{item.id}}</td>
                   		<td>{{item.usuario.nombre}} {{item.usuario.apellido}}</td>
                   		<td>{{item.usuario.departamento.nombre}}</td>
-                  		<td>{{item.estado}}</td>
+                  		<!-- <td>{{item.estado}}</td> -->
                   		<td><button type="button" class="btn btn-success" (click)=ver(item)>Ver</button></td>
                		</tr>
             	</tbody>
