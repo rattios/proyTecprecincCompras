@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 19-04-2018 a las 22:25:22
--- Versión del servidor: 10.1.26-MariaDB
--- Versión de PHP: 7.1.8
+-- Servidor: localhost
+-- Tiempo de generación: 24-04-2018 a las 05:53:11
+-- Versión del servidor: 10.1.30-MariaDB
+-- Versión de PHP: 7.1.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -345,6 +345,7 @@ CREATE TABLE `pedidos` (
   `id` int(10) UNSIGNED NOT NULL,
   `estado` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `usuario_id` int(10) UNSIGNED NOT NULL,
+  `centro_costos_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -353,12 +354,16 @@ CREATE TABLE `pedidos` (
 -- Volcado de datos para la tabla `pedidos`
 --
 
-INSERT INTO `pedidos` (`id`, `estado`, `usuario_id`, `created_at`, `updated_at`) VALUES
-(21, '2', 5, '2018-02-27 00:08:22', '2018-02-27 00:08:59'),
-(22, '2', 5, '2018-02-27 00:09:22', '2018-02-27 00:54:51'),
-(23, '1', 5, '2018-02-27 00:55:48', '2018-02-27 00:56:10'),
-(24, '1', 5, '2018-02-27 03:15:40', '2018-02-27 03:15:50'),
-(25, '1', 5, '2018-02-28 00:02:23', '2018-02-28 00:03:24');
+INSERT INTO `pedidos` (`id`, `estado`, `usuario_id`, `centro_costos_id`, `created_at`, `updated_at`) VALUES
+(21, '2', 5, 1, '2018-02-27 00:08:22', '2018-02-27 00:08:59'),
+(22, '2', 5, 2, '2018-02-27 00:09:22', '2018-02-27 00:54:51'),
+(23, '2', 5, 4, '2018-02-27 00:55:48', '2018-04-22 22:05:39'),
+(24, '1', 5, 5, '2018-02-27 03:15:40', '2018-02-27 03:15:50'),
+(25, '1', 5, 6, '2018-02-28 00:02:23', '2018-02-28 00:03:24'),
+(29, '4', 3, 2, '2018-04-19 23:18:21', '2018-04-22 22:27:32'),
+(30, '4', 3, 3, '2018-04-22 22:43:59', '2018-04-22 22:49:53'),
+(31, '0', 3, 3, '2018-04-22 22:50:05', '2018-04-22 22:50:05'),
+(32, '0', 3, 37, '2018-04-22 23:34:28', '2018-04-22 23:34:28');
 
 -- --------------------------------------------------------
 
@@ -391,10 +396,19 @@ INSERT INTO `pedido_stock` (`id`, `pedido_id`, `stock_id`, `cantidad`, `aprobado
 (22, 21, 1, 2, 0, 1, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (23, 21, 2, 2, 0, 1, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (24, 22, 1, 1, 0, 1, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(25, 23, 2, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(25, 23, 2, 1, 0, 1, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (26, 24, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (27, 25, 1, 1, 0, 1, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(28, 25, 2, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(28, 25, 2, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(29, 26, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(30, 27, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(31, 27, 2, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(32, 28, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(33, 29, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(34, 30, 2, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(35, 30, 3, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(36, 31, 3, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(37, 32, 10, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -4488,7 +4502,7 @@ CREATE TABLE `stock` (
 
 INSERT INTO `stock` (`id`, `nombre`, `codigo`, `precio`, `stock`, `peps`, `valor_reposicion`, `stock_min`, `partida_parcial`, `categoria_id`, `rubro_id`, `tipo_id`, `proveedor_id`, `created_at`, `updated_at`) VALUES
 (1, ' Alcohol Iodado', '2951', 10.00, 9, 0.00, 0.00, 5, NULL, 88, 1, 2, NULL, '2018-01-26 06:02:30', '2018-02-28 00:04:17'),
-(2, ' Apósito (para acolchado de heridas o vendajes compresivos)', '2949', 45.00, 3, 0.00, 0.00, 0, NULL, 84, 6, 2, NULL, '2018-01-26 06:02:30', '2018-02-26 16:49:10'),
+(2, ' Apósito (para acolchado de heridas o vendajes compresivos)', '2949', 45.00, 2, 0.00, 0.00, 0, NULL, 84, 6, 2, NULL, '2018-01-26 06:02:30', '2018-02-26 16:49:10'),
 (3, ' Ficha Macho 2P + T x 16amp (Domiciliaria) .-', '3471', 0.00, 0, 0.00, 0.00, 0, NULL, 18, 10, 2, NULL, '2018-01-26 06:02:30', '2018-02-19 05:26:34'),
 (4, ' Ficha Macho 2P + T x 32amp (Domiciliaria) .-', '2733', 1.08, 9, 0.00, 0.00, 0, NULL, 18, 9, 2, NULL, '2018-01-26 06:02:30', '2018-02-19 05:26:22'),
 (5, ' Gabinete p/ mang y elem seg. BWG-16, puerta ciega y cerr. aldaba. 170x100x22 cm. Div. int. 60cm sup y 114 cm entre 2 est. div. vertical 49 cm. Gancho', '3021', 0.00, 0, 0.00, 0.00, 0, NULL, 46, 0, 0, NULL, '2018-01-26 06:02:30', '2018-01-26 06:02:30'),
@@ -8008,7 +8022,7 @@ CREATE TABLE `stockdepartamentos` (
 
 INSERT INTO `stockdepartamentos` (`id`, `stock_id`, `stock`, `stock_min`, `departamento_id`, `created_at`, `updated_at`) VALUES
 (4, 1, 2, 0, 3, '2018-02-27 00:08:54', '2018-02-28 00:04:30'),
-(5, 2, 2, 0, 3, '2018-02-27 00:08:56', '2018-02-27 00:08:56');
+(5, 2, 3, 0, 3, '2018-02-27 00:08:56', '2018-04-22 22:05:02');
 
 -- --------------------------------------------------------
 
@@ -8280,96 +8294,115 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `categorias`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+
 --
 -- AUTO_INCREMENT de la tabla `centro_costos`
 --
 ALTER TABLE `centro_costos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
 --
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `controlesrecepcion`
 --
 ALTER TABLE `controlesrecepcion`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `departamentos`
 --
 ALTER TABLE `departamentos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT de la tabla `mensajes`
 --
 ALTER TABLE `mensajes`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
 --
 -- AUTO_INCREMENT de la tabla `pedido_stock`
 --
 ALTER TABLE `pedido_stock`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
 --
 -- AUTO_INCREMENT de la tabla `presupuestos`
 --
 ALTER TABLE `presupuestos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3489;
+
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1231;
+
 --
 -- AUTO_INCREMENT de la tabla `proveedores_productos`
 --
 ALTER TABLE `proveedores_productos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `rubros`
 --
 ALTER TABLE `rubros`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
 --
 -- AUTO_INCREMENT de la tabla `stock`
 --
 ALTER TABLE `stock`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3489;
+
 --
 -- AUTO_INCREMENT de la tabla `stockdepartamentos`
 --
 ALTER TABLE `stockdepartamentos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT de la tabla `stock_permisos_departs`
 --
 ALTER TABLE `stock_permisos_departs`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT de la tabla `tipos`
 --
 ALTER TABLE `tipos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT de la tabla `transferencias`
 --
 ALTER TABLE `transferencias`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- Restricciones para tablas volcadas
 --
