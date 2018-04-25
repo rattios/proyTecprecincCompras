@@ -10,7 +10,9 @@ import { RutaService } from '../../services/ruta.service';
 export class pedidosComponent {
   public prov: any;
   public centroCostos: any;
-  public idCentroCostos: any;
+  public idCentroCostos: any=43;
+  public contratos:any=[];
+  public idContrato:any=1;
   public stock: any;
   public productos: any;
   public productosSeleccionados: any=[];
@@ -41,6 +43,10 @@ export class pedidosComponent {
               this.filteredItems = this.productList;
               this.init();
               this.loading=false;
+              setTimeout(() => {
+                  this.cc2(43);
+              }, 1000);
+              
             },
            msg => { 
              console.log(msg);
@@ -79,6 +85,7 @@ export class pedidosComponent {
           usuario_id: localStorage.getItem('tecprecinc_usuario_id'),
           solicitud: JSON.stringify(this.productosSeleccionados),
           centro_costos_id:this.idCentroCostos,
+          contrato_id:this.idContrato,
           estado: 0
         }
         console.log(enviar);
@@ -110,6 +117,34 @@ export class pedidosComponent {
     }
     vaciar(){
       this.productosSeleccionados=[];
+    }
+    
+    cc(centro_costo_id) {
+      console.log(centro_costo_id.target.value);
+      this.contratos=[];
+      for (var i = 0; i < this.centroCostos.length; i++) {
+
+        for (var j = 0; j < this.centroCostos[i].contratos.length; j++) {
+          console.log(this.centroCostos[i].contratos[j].centro_costos_id+'='+centro_costo_id.target.value);
+          if(this.centroCostos[i].contratos[j].centro_costos_id==centro_costo_id.target.value) {
+            this.contratos.push(this.centroCostos[i].contratos[j]);
+          }
+        }
+      }
+    }
+    cc2(centro_costo_id) {
+      console.log(centro_costo_id);
+      this.contratos=[];
+      
+      for (var i = 0; i < this.centroCostos.length; i++) {
+        for (var j = 0; j < this.centroCostos[i].contratos.length; j++) {
+          console.log(i+'='+j);
+          console.log(this.centroCostos[i].contratos[j].centro_costos_id+'='+centro_costo_id);
+          if(this.centroCostos[i].contratos[j].centro_costos_id==centro_costo_id) {
+            this.contratos.push(this.centroCostos[i].contratos[j]);
+          }
+        }
+      }
     }
 
     //-------------------------------------------------------------------------------------------------------------------------

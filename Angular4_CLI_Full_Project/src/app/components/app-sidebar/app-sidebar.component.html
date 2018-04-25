@@ -67,6 +67,17 @@
         </ul>
       </li>
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-shuffle"></i> Transferencias</a>
+        <ul class="nav-dropdown-items">
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class=" icon-action-redo"></i> Transferencia pura</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class="icon-action-undo"></i> Transferencia devolución</a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-doc"></i> Presupuestos</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item">
@@ -94,13 +105,13 @@
       </li>
 
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
-        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-shuffle"></i> Transferencias</a>
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-notebook"></i> Centro de costos/Contratos</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class=" icon-action-redo"></i> Transferencia pura</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class="fa fa-building-o"></i> Centro de costos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class="icon-action-undo"></i> Transferencia devolución</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class="fa fa-file-word-o"></i> Contratos</a>
           </li>
         </ul>
       </li>
@@ -131,6 +142,48 @@
       
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/mensajes']"><i class="icon-bubbles"></i> Mensajes</a>
+      </li>
+
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Components</a>
+        <ul class="nav-dropdown-items">
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/buttons']"><i class="icon-puzzle"></i> Buttons</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/social-buttons']"><i class="icon-puzzle"></i> Social Buttons</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/cards']"><i class="icon-puzzle"></i> Cards</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/forms']"><i class="icon-puzzle"></i> Forms</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/modals']"><i class="icon-puzzle"></i> Modals</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/switches']"><i class="icon-puzzle"></i> Switches</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/tables']"><i class="icon-puzzle"></i> Tables</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/tabs']"><i class="icon-puzzle"></i> Tabs</a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i> Icons</a>
+        <ul class="nav-dropdown-items">
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/icons/font-awesome']"><i class="icon-star"></i> Font Awesome<span class="badge badge-secondary">4.7</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/icons/simple-line-icons']"><i class="icon-star"></i> Simple Line Icons</a>
+          </li>
+        </ul>
       </li>
 
        <li class="divider"></li>

@@ -108,7 +108,7 @@ class StockController extends Controller
 
         $categ=DB::select("SELECT id,nombre,codigo,tipo_id,rubro_id FROM  `categorias` WHERE 1 ");
 
-        $centrocostos = \App\CentroCostos::all();
+        $centrocostos = \App\CentroCostos::with('contratos')->get();
 
         for ($i=0; $i < count($produc); $i++) { 
             $produc[$i]->categoria=[];

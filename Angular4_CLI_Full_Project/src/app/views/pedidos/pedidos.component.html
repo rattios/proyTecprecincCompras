@@ -92,12 +92,23 @@
                 </tbody>
               </table>  
               <div class="form-group row">
-                <label class="col-md-12 form-control-label" for="select">Centro de costos</label>
+                <div class="row">
+                  <div class="col-md-12">
+                    <label class="label" for="select">Centro de costos</label>
+                    <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="idCentroCostos" (change)="cc($event)">
+                      <option *ngFor="let cc of centroCostos" [value]="cc.id">{{cc.descripcion}}</option>
+                    </select>
+                  </div>
+                </div>
                 <br>
-                <div class="col-md-12">
-                  <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="idCentroCostos">
-                    <option *ngFor="let cc of centroCostos" [value]="cc.id">{{cc.descripcion}}</option>
-                  </select>
+                <div class="row">
+                  <br>
+                  <div class="col-md-12">
+                    <label class="labels">Contratos:</label>
+                    <select name="contratos" class="form-control" [(ngModel)]="idContrato">
+                        <option *ngFor="let c of contratos" [value]="c.id">{{c.nombre}} {{c.cliente}}</option>
+                    </select>
+                  </div>
                 </div>
               </div> 
             </div>

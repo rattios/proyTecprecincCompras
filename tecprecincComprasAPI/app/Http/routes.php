@@ -144,6 +144,7 @@ Route::group(  ['middleware' =>'cors'], function(){
 
         Route::get('/centro_costos','CentroCostosController@index');
         
+        Route::get('/contratos','ContratosController@index');
 
 
     Route::group(['middleware' => 'jwt-auth'], function(){

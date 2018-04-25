@@ -291,7 +291,8 @@ class PedidoController extends Controller
             //'estado'=>$request->input('estado'),
             'estado'=>0, 
             'usuario_id'=>$request->input('usuario_id'),
-            'centro_costos_id'=>$request->input('centro_costos_id')
+            'centro_costos_id'=>$request->input('centro_costos_id'),
+            'contrato_id'=>$request->input('contrato_id'),
             ]))
         {
 

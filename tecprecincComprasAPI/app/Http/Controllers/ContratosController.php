@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class CentroCostosController extends Controller
+class ContratosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class CentroCostosController extends Controller
     public function index()
     {
         //cargar todos los proveedores con los productos que ofrecen
-        $CentroCostos = \App\CentroCostos::with('contratos')->get();
+        $CentroCostos = \App\Contratos::all();
 
         if(count($CentroCostos) == 0){
             return response()->json(['error'=>'No existen CentroCostos.'], 404);          
@@ -56,7 +56,7 @@ class CentroCostosController extends Controller
     public function show($id)
     {
         //cargar un proveedor
-        $proveedor = \App\Proveedor::with('productos')->find($id);
+        $proveedor = \App\Contratos::with('productos')->find($id);
 
         if(count($proveedor)==0){
             return response()->json(['error'=>'No existe el proveedor con id '.$id], 404);          
@@ -99,7 +99,7 @@ class CentroCostosController extends Controller
     public function destroy($id)
     {
         // Comprobamos si el proveedor que nos están pasando existe o no.
-        $proveedor=\App\Proveedor::find($id);
+        $proveedor=\App\Contratos::find($id);
 
         if (count($proveedor)==0)
         {
@@ -116,3 +116,4 @@ class CentroCostosController extends Controller
         return response()->json(['status'=>'ok', 'message'=>'Se ha eliminado correctamente el proveedor.'], 200);
     }
 }
+
