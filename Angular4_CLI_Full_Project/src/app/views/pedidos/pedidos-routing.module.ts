@@ -6,6 +6,7 @@ import { misPedidosComponent } from './mis-pedidos.component';
 import { todosPedidosComponent } from './todos-pedidos.component';
 import { presupuestoComponent } from './presupuesto/presupuesto.component';
 
+import { aprobarComponent } from './aprobar/aprobar.component';
 import { entrantesComponent } from './entrantes/entrantes.component';
 import { encursoComponent } from './encurso/encurso.component';
 import { entregadosComponent } from './entregados/entregados.component';
@@ -32,6 +33,13 @@ const routes: Routes = [
         component: presupuestoComponent,
         data: {
           title: 'Presupuesto'
+        }
+      },
+      {
+        path: 'aprobar',
+        component: aprobarComponent,
+        data: {
+          title: 'Por aprobar'
         }
       },
       {

@@ -86,7 +86,8 @@ export class pedidosComponent {
           solicitud: JSON.stringify(this.productosSeleccionados),
           centro_costos_id:this.idCentroCostos,
           contrato_id:this.idContrato,
-          estado: 0
+          estado: 0,
+          aprobar:0
         }
         console.log(enviar);
 

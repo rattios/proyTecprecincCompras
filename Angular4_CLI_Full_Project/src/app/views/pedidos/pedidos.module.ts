@@ -22,6 +22,9 @@ import { presupuestoComponent } from './presupuesto/presupuesto.component';
 import { entrantesComponent } from './entrantes/entrantes.component';
 import { tablaInfoEntrantesComponent } from './entrantes/tablaInfoEntrantes.component';
 
+import { aprobarComponent } from './aprobar/aprobar.component';
+import { tablaInfoAprobarComponent } from './aprobar/tablaInfoAprobar.component';
+
 import { encursoComponent } from './encurso/encurso.component';
 import { tablaInfoEncursoComponent } from './encurso/tablaInfoEncurso.component';
 
@@ -56,6 +59,8 @@ import { transferenciasInfoComponent } from './transferencias/transferenciasInfo
     transferenciaComponent,
     transInfoComponent,
     presupuestoComponent,
+    aprobarComponent,
+    tablaInfoAprobarComponent,
     entrantesComponent,
     tablaInfoEntrantesComponent,
     encursoComponent,

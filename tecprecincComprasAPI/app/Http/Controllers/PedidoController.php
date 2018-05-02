@@ -49,14 +49,46 @@ class PedidoController extends Controller
             return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
         } 
     }
-    public function index0()
+    public function aprobar()
     {
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::where('estado', 0)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
+        $pedidos = \App\Pedido::where('estado', 0)->where('aprobar', 0)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
 
 
         if(count($pedidos) == 0){
-            return response()->json(['error'=>'No existen pedidos.'], 200);          
+            return response()->json(['status'=>'ok', 'pedidos'=>[]], 200);          
+        }else{
+
+            $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    for ($k=0; $k < count($categorias); $k++) { 
+                        if ($pedidos[$i]->solicitud[$j]->categoria_id == $categorias[$k]->id ) {
+                            $pedidos[$i]->solicitud[$j]->categoria = $categorias[$k];
+                        }
+                    }
+                }
+            }
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                    $pedidos[$i]->solicitud[$j]->contratos=$pedidos[$i]->contratos;
+                } 
+            }
+
+            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
+        } 
+    }
+    public function index0()
+    {
+        //cargar todos los pedidos
+        $pedidos = \App\Pedido::where('estado', 0)->where('aprobar', 1)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
+
+
+        if(count($pedidos) == 0){
+            return response()->json(['status'=>'ok', 'pedidos'=>[]], 200);          
         }else{
 
             $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
@@ -88,7 +120,7 @@ class PedidoController extends Controller
 
 
         if(count($pedidos) == 0){
-            return response()->json(['error'=>'No existen pedidos.'], 200);          
+            return response()->json(['status'=>'ok', 'pedidos'=>[]], 200);          
         }else{
 
             $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
@@ -122,7 +154,7 @@ class PedidoController extends Controller
 
 
         if(count($pedidos) == 0){
-            return response()->json(['error'=>'No existen pedidos.'], 200);          
+           return response()->json(['status'=>'ok', 'pedidos'=>[]], 200);          
         }else{
 
             $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
@@ -156,7 +188,7 @@ class PedidoController extends Controller
 
 
         if(count($pedidos) == 0){
-            return response()->json(['error'=>'No existen pedidos.'], 200);          
+            return response()->json(['status'=>'ok', 'pedidos'=>[]], 200);          
         }else{
 
             $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
@@ -298,6 +330,7 @@ class PedidoController extends Controller
             'usuario_id'=>$request->input('usuario_id'),
             'centro_costos_id'=>$request->input('centro_costos_id'),
             'contrato_id'=>$request->input('contrato_id'),
+            'aprobar'=>$request->input('aprobar'),
             ]))
         {
 
@@ -380,7 +413,7 @@ class PedidoController extends Controller
         // Listado de campos recibidos teóricamente.
         $estado=$request->input('estado');
         $solicitud=$request->input('solicitud');
-
+        $aprobar=$request->input('aprobar');
         // Creamos una bandera para controlar si se ha modificado algún dato.
         $bandera = false;
 
@@ -388,6 +421,12 @@ class PedidoController extends Controller
         if ($estado != null && $estado!='')
         {
             $pedido->estado = $estado;
+            $bandera=true;
+        }
+        // Actualización parcial de campos.
+        if ($aprobar != null && $aprobar!='')
+        {
+            $pedido->aprobar = $aprobar;
             $bandera=true;
         }
 

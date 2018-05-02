@@ -13,6 +13,7 @@ export class UsuariosComponent {
   public stock: any;
   public proveedores: any;
   public productos: any;
+  public departamentos: any;
   public proveedor: any='';
   public loading=true;
   public verDatos=false;
@@ -25,8 +26,7 @@ export class UsuariosComponent {
 
    ngOnInit(): void {
       this.loading=true;
-            localStorage.getItem('tecprecinc_departamento_id');
-            localStorage.getItem('tecprecinc_rol');
+
       this.http.get(this.ruta.get_ruta()+'usuarios?rol='+localStorage.getItem('tecprecinc_rol')+"&departamento_id="+localStorage.getItem('tecprecinc_departamento_id'))
            .toPromise()
            .then(
@@ -53,27 +53,35 @@ export class UsuariosComponent {
              this.loading=false;
            });
 
+
+      this.http.get(this.ruta.get_ruta()+'departamentos')
+           .toPromise()
+           .then(
+           data => {
+             this.departamentos=data;
+               this.departamentos=this.departamentos.departamentos;
+              
+              console.log(this.departamentos);
+              
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+           });
     }
 
     ver(item){
       if(item==0) {
         this.proveedor={
-          calificacion:null,
-          cuit:"",
+          nombre:"",
+          apellido:"",
           email:"",
-          estado:"",
-          fax:"",
-          habilitado:"NO",
-          habilitado2: false,
-          motivo:"",
-          id:0,
-          nombre_fantacia:"",
-          productos:[],
-          razon_social:"",
           telefono:"",
-          direccion: "",
-          formaPago: "",
-          telefonos: []
+          departamento_id:"",
+          rol: 2,
+          user:"",
+          password:"",
+          id:0
         };
         this.crear=true;
         console.log(item);
@@ -88,45 +96,21 @@ export class UsuariosComponent {
     volver(){
       this.verDatos=false;
     }
-    agregar(item){
-      if(!this.checkProductos(item)) {
-       this.proveedor.productos.push(item);
-      }
-    }
-    checkProductos(item){
-      var band=false;
-      for (var i = 0; i < this.proveedor.productos.length; i++) {
-        if(this.proveedor.productos[i].id==item.id) {
-          band=true;
-        }
-      }
-      return band;
-    }
-    eliminarProducto(it){
-      for (var i = 0; i < this.proveedor.productos.length; i++) {
-        if(this.proveedor.productos[i].id==it.id) {
-          this.proveedor.productos.splice(i, 1);
-        }
-      }
-    }
-
+    
     crearProveedor(){
       
       var send={
-        productos:JSON.stringify(this.proveedor.productos),
-        razon_social:this.proveedor.razon_social,
-        nombre_fantacia: this.proveedor.nombre_fantacia,
-        cuit: this.proveedor.cuit,
+        nombre:this.proveedor.nombre,
+        apellido:this.proveedor.apellido,
         telefono: this.proveedor.telefono,
         email: this.proveedor.email,
-        estado: this.proveedor.estado,
-        habilitado: this.proveedor.habilitado,
-        motivo: this.proveedor.motivo,
-        direccion: this.proveedor.direccion,
-        formaPago: this.proveedor.formaPago,
-        telefonos: JSON.stringify(this.proveedor.telefonos)
+        departamento_id: this.proveedor.departamento_id,
+        rol: this.proveedor.rol,
+        user: this.proveedor.user,
+        password:this.proveedor.password
       }
-      this.http.post(this.ruta.get_ruta()+'proveedores',send)
+
+      this.http.post(this.ruta.get_ruta()+'usuarios',send)
            .toPromise()
            .then(
            data => {
@@ -138,23 +122,32 @@ export class UsuariosComponent {
               }, 4000);
 
               this.loading=true;
-              this.http.get(this.ruta.get_ruta()+'proveedores')
-                   .toPromise()
-                   .then(
-                   data => {
-                     this.prov=data;
-                       this.proveedores=this.prov.proveedores;
-                      console.log(this.proveedores);
-                      this.productList = this.proveedores;
-                      this.filteredItems = this.productList;
-                      this.init();
-                      this.loading=false;
-                    },
-                   msg => { 
-                     console.log(msg);
-                     this.loading=false;
-                   });
-             
+              this.http.get(this.ruta.get_ruta()+'usuarios?rol='+localStorage.getItem('tecprecinc_rol')+"&departamento_id="+localStorage.getItem('tecprecinc_departamento_id'))
+                 .toPromise()
+                 .then(
+                 data => {
+                   this.prov=data;
+                     this.proveedores=this.prov;
+                    for (var i = 0; i < this.proveedores.length; ++i) {
+                      if(this.proveedores[i].rol==0) {
+                        this.proveedores[i].nombreRol='ADMIN';
+                      }else if(this.proveedores[i].rol==1) {
+                        this.proveedores[i].nombreRol='SUPERVISOR';
+                      }else if(this.proveedores[i].rol==2) {
+                        this.proveedores[i].nombreRol='EMPLEADO';
+                      }
+                    }
+                    console.log(this.proveedores);
+                    this.productList = this.proveedores;
+                    this.filteredItems = this.productList;
+                    this.init();
+                    this.loading=false;
+                  },
+                 msg => { 
+                   console.log(msg);
+                   this.loading=false;
+                 });
+                   
 
             },
            msg => { 
@@ -172,21 +165,18 @@ export class UsuariosComponent {
     editar(){
       
       var send={
-        productos:JSON.stringify(this.proveedor.productos),
-        razon_social:this.proveedor.razon_social,
-        nombre_fantacia: this.proveedor.nombre_fantacia,
-        cuit: this.proveedor.cuit,
+        id:this.proveedor.id,
+        nombre:this.proveedor.nombre,
+        apellido:this.proveedor.apellido,
         telefono: this.proveedor.telefono,
         email: this.proveedor.email,
-        estado: this.proveedor.estado,
-        habilitado: this.proveedor.habilitado,
-        motivo: this.proveedor.motivo,
-        direccion: this.proveedor.direccion,
-        formaPago: this.proveedor.formaPago,
-        telefonos: JSON.stringify(this.proveedor.telefonos)
+        departamento_id: this.proveedor.departamento_id,
+        rol: this.proveedor.rol,
+        user: this.proveedor.user
+        //password:this.proveedor.password
       }
       console.log(send);
-      this.http.put(this.ruta.get_ruta()+'proveedores/'+this.proveedor.id,send)
+      this.http.put(this.ruta.get_ruta()+'usuarios/'+this.proveedor.id,send)
            .toPromise()
            .then(
            data => {

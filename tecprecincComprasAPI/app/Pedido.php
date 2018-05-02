@@ -24,7 +24,7 @@ class Pedido extends Model
      *
      * @var array
      */
-    protected $fillable = ['estado', 'usuario_id','centro_costos_id','contrato_id'];
+    protected $fillable = ['estado', 'usuario_id','centro_costos_id','contrato_id','aprobar'];
 
     /**
      * The attributes excluded from the model's JSON form.

@@ -73,25 +73,33 @@
           <div class="row">
             <div class="col-lg-8">
               <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="name">Razón Social</label>
-                    <input type="text" class="form-control" id="razon_social" placeholder="" [(ngModel)]="proveedor.razon_social">
+                    <label for="name">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" placeholder="" [(ngModel)]="proveedor.nombre">
                   </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="ccnumber">Nombre de Fantasia</label>
-                    <input type="text" class="form-control" id="nombre_fantacia" placeholder="" [(ngModel)]="proveedor.nombre_fantacia">
-                  </div>
-                </div>
-                <div class="col-sm-4">
-                  <div class="form-group">
-                    <label for="ccnumber">CUIT</label>
-                    <input type="text" class="form-control" id="cuit" placeholder="" [(ngModel)]="proveedor.cuit">
+                    <label for="ccnumber">Apellido</label>
+                    <input type="text" class="form-control" id="apellido" placeholder="" [(ngModel)]="proveedor.apellido">
                   </div>
                 </div>
               </div><!--/.row-->
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="name">Usuario</label>
+                    <input type="text" class="form-control" id="Usuario" placeholder="" [(ngModel)]="proveedor.user">
+                  </div>
+                </div>
+                <div class="col-sm-6" *ngIf="proveedor.id==0">
+                  <div class="form-group">
+                    <label for="ccnumber">Contraseña</label>
+                    <input type="text" class="form-control" id="password" placeholder="" [(ngModel)]="proveedor.password">
+                  </div>
+                </div>
+              </div>
               <div class="row">
                 <div class="col-sm-12">
                   <div class="form-group">
@@ -108,124 +116,32 @@
                     <input type="text" class="form-control" id="email" placeholder="" [(ngModel)]="proveedor.email">
                   </div>
                 </div>
-              </div><!--/.row-->
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="ccnumber">Dirección</label>
-                    <input type="text" class="form-control" id="direccion" placeholder="" [(ngModel)]="proveedor.direccion">
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="ccnumber">Forma de pago</label>
-                    <input type="text" class="form-control" id="formaPago" placeholder="" [(ngModel)]="proveedor.formaPago">
-                  </div>
-                </div>
-              </div><!--/.row-->
-              <div class="row">
-                <div class="col-sm-5">
-                  <div class="form-group">
-                    <label for="ccnumber">Estado</label>
-                    <input type="text" class="form-control" id="estado" placeholder="" [(ngModel)]="proveedor.estado">
-                  </div>
-                </div>
-                <!-- <div class="col-sm-3">
-                  <div class="form-group">
-                    <label for="ccnumber">Habilitado</label>
-                    <input type="text" class="form-control" id="habilitado" placeholder="habilitado" [(ngModel)]="proveedor.habilitado">
-                  </div>
-                </div> -->
-                <div class="col-sm-2">
-                    <label for="ccnumber">Habilitado</label>
-                    <label class="switch switch-3d switch-success">
-                      <input type="checkbox" class="switch-input" [(ngModel)]="proveedor.habilitado" >
-                      <span class="switch-label"></span>
-                      <span class="switch-handle"></span>
-                    </label>
-                </div> 
-                <div class="col-sm-3">
-                  <div class="form-group" *ngIf="!proveedor.habilitado">
-                    <label for="ccnumber">Motivo</label>
-                    <input type="text" class="form-control" id="motivo" placeholder="" [(ngModel)]="proveedor.motivo">
-                  </div>
-                </div> 
-              </div><!--/.row-->
+              </div>
             </div>
             <div class="col-lg-4">
               <div class="row">
                 <div class="col-sm-12">
-                  <strong>Productos del proveedor</strong>
-                  <table class="table table-bordered">
-                    <thead>
-                      <th>Nombre</th>
-                      <th>Eliminar</th>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let it of proveedor.productos">
-                          <td>{{it.nombre}}</td>
-                          <td><button type="button" class="btn btn-danger" (click)=eliminarProducto(it)>X</button></td>
-                        </tr>
-                    </tbody>
-                  </table>
+                  <strong>Rol del usuario</strong>
+                  <select class="form-control" id="rol" name="rol" class="form-control" [(ngModel)]="proveedor.rol">
+                    <option [value]="2">EMPLEADO</option>
+                    <option [value]="0">ADMIN</option>
+                    <option [value]="1">SUPERVISOR</option>
+                  </select>
+                  <br><br><br>
+                  <strong>Departamento al que pertenece</strong>
+                  <select id="departamento_id" name="departamento_id" class="form-control" [(ngModel)]="proveedor.departamento_id" >
+                    <option *ngFor="let d of departamentos" [value]="d.id">{{d.nombre}}</option>
+                  </select>
                 </div>
               </div>
             </div>
           </div>
           <div style="text-align: center">
-            <button type="button" class="btn btn-success" (click)=editar() *ngIf="!crear">Editar productos del proveedor</button> 
+            <button type="button" class="btn btn-success" (click)=editar() *ngIf="!crear">Editar </button> 
             <button type="button" class="btn btn-success" (click)=crearProveedor() *ngIf="crear">Crear proveedor</button> 
           </div>
         </div>
     </div>
-    <div class="card" *ngIf="verDatos">
-        <div class="card-header">
-          <i class="fa fa-align-justify"></i> Lista de productos que puedes agrear al proveedor
-          
-        </div>
-        <div class="card-body">
-          <div class="form-group form-black label-floating is-empty">
-               <label class="labels" style="font-size: 18px; font-weight: bold">Buscar: </label>
-              <input  class="form-control" type="text"  id="inputName" [(ngModel)]="inputName2" (ngModelChange)="FilterByName2()"/>
-               <br>
-          </div>
-          <table class="table table-striped">
-            <thead>
-              <th>stock</th>
-              <th>nombre</th>
-              <th>Precio</th>
-              <th>Código</th>
-              <th></th>
-            </thead>
-            <tbody>
-               <tr *ngFor="let item2 of items2">
-                  
-                  <td>{{item2.stock}}</td>
-                  <td>{{item2.nombre}}</td>
-                  <td>{{item2.precio}}</td>
-                  <td>{{item2.codigo}}</td>
-                  <td><button type="button" class="btn btn-primary" (click)=agregar(item2)>Agregar producto</button></td>
-               </tr>
-            </tbody>
-          </table>
-            <div class="btn-toolbar" role="toolbar" style="margin: 0;">
-              <div class="btn-group">
-                 <label style="margin-top:10px">Página {{currentIndex2}}/{{pageNumber2}} </label>
-              </div>
-              <div class="btn-group pull-right">
-                 <ul class="pagination" >
-                    <li [ngClass]="{'disabled': (currentIndex2 == 1 || pageNumber2 == 0)}" ><a  (click)="prevPage2()">Atrás</a></li>
-                       <li *ngFor="let page2 of pagesIndex2"  [ngClass]="{'active': (currentIndex2 == page2)}">
-                          <a (click)="setPage2(page2)" >{{page2}} </a>
-                       </li>
-                    <li [ngClass]="{'disabled': (currentIndex2 == pageNumber2 || pageNumber2 == 0)}" ><a   (click)="nextPage2()">Siguiente</a></li>
-                 </ul>
-              </div>
-            </div>
-            
-        </div>
-      </div>
-
-    </div>
+    
   </div>
 </div>

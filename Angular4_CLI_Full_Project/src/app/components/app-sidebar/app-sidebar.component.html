@@ -48,6 +48,9 @@
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/pedido']"><i class="icon-note"></i> Crear</a>
           </li>
           <li class="nav-item" *ngxPermissionsOnly="[0]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/aprobar']"><i class="icon-arrow-down-circle"></i> Por aprobar</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/entrantes']"><i class="icon-arrow-down-circle"></i> Entrantes</a>
           </li>
           <li class="nav-item" *ngxPermissionsOnly="[0]">
