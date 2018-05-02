@@ -44,7 +44,13 @@ class CentroCostosController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $cc=new \App\CentroCostos;
+        $cc->fill($request->all());
+
+        if($cc->save())
+            return response()->json(['status'=>'ok', 'CentroCostos'=>$cc], 200);
+        else
+            return response()->json(['error'=>'No se pudo crear cc'], 404); 
     }
 
     /**
@@ -56,7 +62,7 @@ class CentroCostosController extends Controller
     public function show($id)
     {
         //cargar un proveedor
-        $proveedor = \App\Proveedor::with('productos')->find($id);
+        $proveedor = \App\Proveedor::find($id);
 
         if(count($proveedor)==0){
             return response()->json(['error'=>'No existe el proveedor con id '.$id], 404);          
@@ -87,7 +93,14 @@ class CentroCostosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        //cargar un proveedor
+        $cc=\App\CentroCostos::where('id',$id)->first();;
+        $cc->fill($request->all());
+
+        if($cc->save())
+            return response()->json(['status'=>'ok', 'CentroCostos'=>$cc], 200);
+        else
+            return response()->json(['error'=>'No se pudo crear cc'], 404); 
     }
 
     /**
@@ -99,20 +112,17 @@ class CentroCostosController extends Controller
     public function destroy($id)
     {
         // Comprobamos si el proveedor que nos están pasando existe o no.
-        $proveedor=\App\Proveedor::find($id);
+        $cc=\App\CentroCostos::find($id);
 
-        if (count($proveedor)==0)
+        if (count($cc)==0)
         {
             // Devolvemos error codigo http 404
             return response()->json(['error'=>'No existe el proveedor con id '.$id], 404);
         } 
        
         //Eliminar las relaciones(productos) en la tabla pivote
-        $proveedor->productos()->detach();
+        $cc->delete();
 
-        // Eliminamos el proveedor.
-        $proveedor->delete();
-
-        return response()->json(['status'=>'ok', 'message'=>'Se ha eliminado correctamente el proveedor.'], 200);
+        return response()->json(['status'=>'ok', 'message'=>'Se ha eliminado correctamente el cc.'], 200);
     }
 }

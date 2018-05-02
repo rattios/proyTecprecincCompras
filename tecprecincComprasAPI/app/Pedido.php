@@ -61,5 +61,10 @@ class Pedido extends Model
         // 1 pedido puede tener varios presupuestos
         return $this->belongsTo('App\CentroCostos', 'centro_costos_id');
     }
+    public function contratos()
+    {
+        // 1 pedido puede tener varios presupuestos
+        return $this->belongsTo('App\Contratos', 'contrato_id');
+    }
 
 }

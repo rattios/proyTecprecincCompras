@@ -18,7 +18,7 @@ class PedidoController extends Controller
     public function index()
     {
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::with('solicitud')->with('centro_costos')->with('usuario.departamento')->get();
+        $pedidos = \App\Pedido::with('solicitud')->with('centro_costos')->with('contratos')->with('usuario.departamento')->get();
 
 
         if(count($pedidos) == 0){
@@ -42,6 +42,7 @@ class PedidoController extends Controller
             for ($i=0; $i < count($pedidos) ; $i++) { 
                 for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
                     $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                    $pedidos[$i]->solicitud[$j]->contratos=$pedidos[$i]->contratos;
                 } 
             }
 
@@ -51,7 +52,7 @@ class PedidoController extends Controller
     public function index0()
     {
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::where('estado', 0)->with('solicitud')->with('centro_costos')->with('usuario.departamento')->get();
+        $pedidos = \App\Pedido::where('estado', 0)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
 
 
         if(count($pedidos) == 0){
@@ -73,6 +74,7 @@ class PedidoController extends Controller
             for ($i=0; $i < count($pedidos) ; $i++) { 
                 for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
                     $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                    $pedidos[$i]->solicitud[$j]->contratos=$pedidos[$i]->contratos;
                 } 
             }
 
@@ -82,7 +84,7 @@ class PedidoController extends Controller
     public function index1()
     {
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::where('estado', 1)->with('solicitud')->with('centro_costos')->with('usuario.departamento')->get();
+        $pedidos = \App\Pedido::where('estado', 1)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
 
 
         if(count($pedidos) == 0){
@@ -106,6 +108,7 @@ class PedidoController extends Controller
             for ($i=0; $i < count($pedidos) ; $i++) { 
                 for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
                     $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                    $pedidos[$i]->solicitud[$j]->contratos=$pedidos[$i]->contratos;
                 } 
             }
 
@@ -115,7 +118,7 @@ class PedidoController extends Controller
     public function index2()
     {
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::where('estado', 2)->with('solicitud')->with('centro_costos')->with('usuario.departamento')->get();
+        $pedidos = \App\Pedido::where('estado', 2)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
 
 
         if(count($pedidos) == 0){
@@ -139,6 +142,7 @@ class PedidoController extends Controller
             for ($i=0; $i < count($pedidos) ; $i++) { 
                 for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
                     $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                    $pedidos[$i]->solicitud[$j]->contratos=$pedidos[$i]->contratos;
                 } 
             }
 
@@ -148,7 +152,7 @@ class PedidoController extends Controller
     public function index4()
     {
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::where('estado', 4)->with('solicitud')->with('centro_costos')->with('usuario.departamento')->get();
+        $pedidos = \App\Pedido::where('estado', 4)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
 
 
         if(count($pedidos) == 0){
@@ -172,6 +176,7 @@ class PedidoController extends Controller
             for ($i=0; $i < count($pedidos) ; $i++) { 
                 for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
                     $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                    $pedidos[$i]->solicitud[$j]->contratos=$pedidos[$i]->contratos;
                 } 
             }
 

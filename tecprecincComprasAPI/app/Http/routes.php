@@ -143,8 +143,16 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/mensajes/departamento/{departamento_id}','MensajeController@mensajesDep');
 
         Route::get('/centro_costos','CentroCostosController@index');
+        Route::post('/centro_costos','CentroCostosController@store');
+        Route::put('/centro_costos/{id}','CentroCostosController@update');
+        Route::delete('/centro_costos/{id}','CentroCostosController@destroy');
         
         Route::get('/contratos','ContratosController@index');
+        Route::post('/contratos','ContratosController@store');
+        Route::put('/contratos/{id}','ContratosController@update');
+        Route::delete('/contratos/{id}','ContratosController@destroy');
+
+        Route::get('/usuarios','UsuariosController@usuarios');
 
 
     Route::group(['middleware' => 'jwt-auth'], function(){

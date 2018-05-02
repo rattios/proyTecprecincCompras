@@ -50,12 +50,20 @@ export const routes: Routes = [
         loadChildren: './views/proveedores/proveedores.module#ProveedoresModule'
       },
       {
+        path: 'usuarios',
+        loadChildren: './views/usuarios/usuarios.module#UsuariosModule'
+      },
+      {
         path: 'pedidos',
         loadChildren: './views/pedidos/pedidos.module#pedidosModule'
       },
       {
         path: 'stock',
         loadChildren: './views/stock/stock.module#stockModule'
+      },
+      {
+        path: 'cc',
+        loadChildren: './views/cc/cc.module#ccModule'
       },
       {
         path: 'categorias',

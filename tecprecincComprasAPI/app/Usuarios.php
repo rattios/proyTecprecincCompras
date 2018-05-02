@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Contratos extends Model
+class Usuarios extends Model
 {
 	/**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'contratos';
+    protected $table = 'usuarios';
 
     // Eloquent asume que cada tabla tiene una clave primaria con una columna llamada id.
     // Si éste no fuera el caso entonces hay que indicar cuál es nuestra clave primaria en la tabla:
@@ -24,7 +24,9 @@ class Contratos extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre', 'cliente', 'vigencia','created_at', 'centro_costos_id'];
+    protected $fillable = ['user', 'password', 'email',
+         'nombre', 'apellido', 'telefono', 'rol',
+        'codigo_verificacion','departamento_id','created_at'];
 
     /**
      * The attributes excluded from the model's JSON form.

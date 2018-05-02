@@ -5,6 +5,11 @@ import { RutaService } from '../../../services/ruta.service';
 
 import 'rxjs/add/operator/toPromise';
 
+import { DatepickerOptions } from 'ng2-datepicker';
+import * as frLocale from 'date-fns/locale/fr';
+import * as esLocale from 'date-fns/locale/es';
+ 
+
 @Component({
   templateUrl: 'centroCostos.component.html'
 })
@@ -12,52 +17,39 @@ export class centroCostosComponent {
 
   public prov: any;
   public stock: any;
-  public proveedores: any;
+  public cc: any;
   public productos: any;
-  public proveedor: any='';
+  public centroCosto: any='';
   public loading=true;
   public verDatos=false;
   public success=false;
   public fail=false;
   public crear=false;
+
+  public options: DatepickerOptions = {
+    displayFormat: 'DD/MM/YYYY',
+    barTitleFormat: 'MMMM YYYY',
+    dayNamesFormat: 'dd',
+    firstCalendarDay: 0,
+    locale: esLocale,
+  };
+
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
       this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'proveedores')
+      this.http.get(this.ruta.get_ruta()+'centro_costos')
            .toPromise()
            .then(
            data => {
              this.prov=data;
-               this.proveedores=this.prov.proveedores;
-              console.log(this.proveedores);
-              this.productList = this.proveedores;
+               this.cc=this.prov.CentroCostos;
+              console.log(this.cc);
+              this.productList = this.cc;
               this.filteredItems = this.productList;
               this.init();
-              this.loading=false;
-            },
-           msg => { 
-             console.log(msg);
-             this.loading=false;
-           });
-
-      this.http.get(this.ruta.get_ruta()+'stock')
-           .toPromise()
-           .then(
-           data => {
-             this.prov=data;
-               this.stock=this.prov.productos;
-              console.log(this.stock);
-              for (var i = 0; i < this.stock.length; i++) {
-                if(this.stock.habilitado=="SI"){
-                  this.stock.habilitado=true;
-                }
-              }
-              this.productList2 = this.stock;
-              this.filteredItems2 = this.productList2;
-              this.init2();
               this.loading=false;
             },
            msg => { 
@@ -68,28 +60,30 @@ export class centroCostosComponent {
 
     ver(item){
       if(item==0) {
-        this.proveedor={
-          calificacion:null,
-          cuit:"",
-          email:"",
-          estado:"",
-          fax:"",
-          habilitado:"NO",
-          habilitado2: false,
-          motivo:"",
-          id:0,
-          nombre_fantacia:"",
-          productos:[],
-          razon_social:"",
-          telefono:"",
-          direccion: "",
-          formaPago: "",
-          telefonos: []
+        this.centroCosto={
+          codigo:"",
+          descripcion:"",
+          habilitado:"",
+          desde:new Date(),
+          hasta:new Date(),
         };
         this.crear=true;
         console.log(item);
       }else{
-        this.proveedor=item;
+        this.centroCosto={
+          id:item.id,
+          codigo:item.codigo,
+          descripcion:item.descripcion,
+          habilitado:item.habilitado,
+          desde:item.desde,
+          hasta:item.hasta,
+        };
+        if(this.centroCosto.desde==null) {
+          this.centroCosto.desde=new Date();
+        }
+        if(this.centroCosto.hasta==null) {
+          this.centroCosto.hasta=new Date();
+        }
         this.crear=false;
         console.log(item);
       }
@@ -101,43 +95,36 @@ export class centroCostosComponent {
     }
     agregar(item){
       if(!this.checkProductos(item)) {
-       this.proveedor.productos.push(item);
+       this.centroCosto.productos.push(item);
       }
     }
     checkProductos(item){
       var band=false;
-      for (var i = 0; i < this.proveedor.productos.length; i++) {
-        if(this.proveedor.productos[i].id==item.id) {
+      for (var i = 0; i < this.centroCosto.productos.length; i++) {
+        if(this.centroCosto.productos[i].id==item.id) {
           band=true;
         }
       }
       return band;
     }
     eliminarProducto(it){
-      for (var i = 0; i < this.proveedor.productos.length; i++) {
-        if(this.proveedor.productos[i].id==it.id) {
-          this.proveedor.productos.splice(i, 1);
+      for (var i = 0; i < this.centroCosto.productos.length; i++) {
+        if(this.centroCosto.productos[i].id==it.id) {
+          this.centroCosto.productos.splice(i, 1);
         }
       }
     }
 
-    crearProveedor(){
+    crearcentroCosto(){
       
       var send={
-        productos:JSON.stringify(this.proveedor.productos),
-        razon_social:this.proveedor.razon_social,
-        nombre_fantacia: this.proveedor.nombre_fantacia,
-        cuit: this.proveedor.cuit,
-        telefono: this.proveedor.telefono,
-        email: this.proveedor.email,
-        estado: this.proveedor.estado,
-        habilitado: this.proveedor.habilitado,
-        motivo: this.proveedor.motivo,
-        direccion: this.proveedor.direccion,
-        formaPago: this.proveedor.formaPago,
-        telefonos: JSON.stringify(this.proveedor.telefonos)
-      }
-      this.http.post(this.ruta.get_ruta()+'proveedores',send)
+          codigo:this.centroCosto.codigo,
+          descripcion:this.centroCosto.descripcion,
+          habilitado:this.centroCosto.habilitado,
+          desde:this.centroCosto.desde,
+          hasta:this.centroCosto.hasta,
+        };
+      this.http.post(this.ruta.get_ruta()+'centro_costos',send)
            .toPromise()
            .then(
            data => {
@@ -149,22 +136,22 @@ export class centroCostosComponent {
               }, 4000);
 
               this.loading=true;
-              this.http.get(this.ruta.get_ruta()+'proveedores')
-                   .toPromise()
-                   .then(
-                   data => {
-                     this.prov=data;
-                       this.proveedores=this.prov.proveedores;
-                      console.log(this.proveedores);
-                      this.productList = this.proveedores;
-                      this.filteredItems = this.productList;
-                      this.init();
-                      this.loading=false;
-                    },
-                   msg => { 
-                     console.log(msg);
-                     this.loading=false;
-                   });
+              this.http.get(this.ruta.get_ruta()+'centro_costos')
+                 .toPromise()
+                 .then(
+                 data => {
+                   this.prov=data;
+                     this.cc=this.prov.CentroCostos;
+                    console.log(this.cc);
+                    this.productList = this.cc;
+                    this.filteredItems = this.productList;
+                    this.init();
+                    this.loading=false;
+                  },
+                 msg => { 
+                   console.log(msg);
+                   this.loading=false;
+                 });
              
 
             },
@@ -183,21 +170,14 @@ export class centroCostosComponent {
     editar(){
       
       var send={
-        productos:JSON.stringify(this.proveedor.productos),
-        razon_social:this.proveedor.razon_social,
-        nombre_fantacia: this.proveedor.nombre_fantacia,
-        cuit: this.proveedor.cuit,
-        telefono: this.proveedor.telefono,
-        email: this.proveedor.email,
-        estado: this.proveedor.estado,
-        habilitado: this.proveedor.habilitado,
-        motivo: this.proveedor.motivo,
-        direccion: this.proveedor.direccion,
-        formaPago: this.proveedor.formaPago,
-        telefonos: JSON.stringify(this.proveedor.telefonos)
-      }
+          codigo:this.centroCosto.codigo,
+          descripcion:this.centroCosto.descripcion,
+          habilitado:this.centroCosto.habilitado,
+          desde:this.centroCosto.desde,
+          hasta:this.centroCosto.hasta,
+        };
       console.log(send);
-      this.http.put(this.ruta.get_ruta()+'proveedores/'+this.proveedor.id,send)
+      this.http.put(this.ruta.get_ruta()+'centro_costos/'+this.centroCosto.id,send)
            .toPromise()
            .then(
            data => {
@@ -208,7 +188,22 @@ export class centroCostosComponent {
                 this.success=false;
               }, 4000);
              
-
+              this.http.get(this.ruta.get_ruta()+'centro_costos')
+                 .toPromise()
+                 .then(
+                 data => {
+                   this.prov=data;
+                     this.cc=this.prov.CentroCostos;
+                    console.log(this.cc);
+                    this.productList = this.cc;
+                    this.filteredItems = this.productList;
+                    this.init();
+                    this.loading=false;
+                  },
+                 msg => { 
+                   console.log(msg);
+                   this.loading=false;
+                 });
             },
            msg => { 
              console.log(msg);

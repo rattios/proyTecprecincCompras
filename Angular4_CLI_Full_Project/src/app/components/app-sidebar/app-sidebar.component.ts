@@ -1,4 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,10 +7,14 @@ import { Component, ElementRef } from '@angular/core';
 })
 export class AppSidebar {
 
-  constructor(private el: ElementRef) { }
+  constructor(private permissionsService: NgxPermissionsService, private el: ElementRef) { }
 
   //wait for the component to render completely
   ngOnInit(): void {
+    const perm = [localStorage.getItem('tecprecinc_rol')];
+
+    this.permissionsService.loadPermissions(perm);
+    
     var nativeElement: HTMLElement = this.el.nativeElement,
     parentElement: HTMLElement = nativeElement.parentElement;
     // move all children out of the element

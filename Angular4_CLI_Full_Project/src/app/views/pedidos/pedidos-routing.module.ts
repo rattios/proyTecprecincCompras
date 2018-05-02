@@ -17,7 +17,7 @@ const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Pedidos'
+      title: 'Solicitudes'
     },
     children: [
       {

@@ -10,6 +10,7 @@
       <li class="nav-title">
         Menú
       </li>
+
       <!-- <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Components</a>
         <ul class="nav-dropdown-items">
@@ -43,25 +44,25 @@
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-layers"></i> Solicitudes</a>
         <ul class="nav-dropdown-items">
-          <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/pedido']"><i class="icon-note"></i> Crear</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/entrantes']"><i class="icon-arrow-down-circle"></i> Entrantes</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/encurso']"><i class="icon-clock"></i> En curso</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/entregados']"><i class="icon-check"></i> Entregadas</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/cancelados']"><i class="icon-close"></i> Canceladas</a>
           </li>
           <!-- <li class="nav-item">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/mis-pedidos']"><i class="icon-docs"></i> Mis solicitudes</a>
           </li> -->
-          <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/todos-pedidos']"><i class="icon-layers"></i> Todos las solicitudes</a>
           </li>
         </ul>
@@ -69,10 +70,10 @@
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-shuffle"></i> Transferencias</a>
         <ul class="nav-dropdown-items">
-          <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class=" icon-action-redo"></i> Transferencia pura</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class="icon-action-undo"></i> Transferencia devolución</a>
           </li>
         </ul>
@@ -80,38 +81,38 @@
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-doc"></i> Presupuestos</a>
         <ul class="nav-dropdown-items">
-          <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/presupuestos']"><i class="icon-note"></i> Crear un presupuesto</a>
           </li>
         </ul>
       </li>
 
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0]">
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-drawer"></i> Stock/Productos</a>
         <ul class="nav-dropdown-items">
-          <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/stock']"><i class="icon-list"></i> Todos los productos</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/uso']"><i class="icon-briefcase"></i> Bienes de uso</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/consumo']"><i class="icon-chemistry"></i> Bienes de cosumo</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/servicio']"><i class="icon-basket-loaded"></i> Servicios</a>
           </li>
         </ul>
       </li>
 
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0]">
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-notebook"></i> Centro de costos/Contratos</a>
         <ul class="nav-dropdown-items">
-          <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class="fa fa-building-o"></i> Centro de costos</a>
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/cc/centroCostos']"><i class="fa fa-building-o"></i> Centro de costos</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class="fa fa-file-word-o"></i> Contratos</a>
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/cc/contratos']"><i class="fa fa-file-word-o"></i> Contratos</a>
           </li>
         </ul>
       </li>
@@ -136,14 +137,18 @@
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/categorias']"><i class="icon-calculator"></i> Categorias</a>
       </li> -->
       
-      <li class="nav-item">
+      <li class="nav-item" *ngxPermissionsOnly="[0]">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/usuarios']"><i class="fa fa-user"></i> Usuarios</a>
+      </li>
+
+      <li class="nav-item" *ngxPermissionsOnly="[0]">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/proveedores']"><i class="icon-wrench"></i> Proveedores</a>
       </li>
       
-      <li class="nav-item">
+      <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/mensajes']"><i class="icon-bubbles"></i> Mensajes</a>
       </li>
-
+      <!--
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Components</a>
         <ul class="nav-dropdown-items">
@@ -184,7 +189,7 @@
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/icons/simple-line-icons']"><i class="icon-star"></i> Simple Line Icons</a>
           </li>
         </ul>
-      </li>
+      </li -->
 
        <li class="divider"></li>
       <!-- <li class="nav-title">
@@ -213,6 +218,8 @@
       <li class="nav-item">
         <a class="nav-link nav-link-danger" href="http://coreui.io/pro/angular/"><i class="icon-layers"></i> Try CoreUI <strong>PRO</strong></a>
       </li> -->
+
+
     </ul> 
   </nav>
   <app-sidebar-footer></app-sidebar-footer>

@@ -6,24 +6,44 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
-class ContratosController extends Controller
+class UsuariosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
         //cargar todos los proveedores con los productos que ofrecen
-        $contratos = \App\Contratos::all();
+        $Usuarios = DB::select("SELECT * FROM  `destinos` WHERE `estado_destino`=3 AND `fecha_destino` BETWEEN '".$dateFull." 00:00:00' AND '".$dateFull." 23:59:59'");
 
-        if(count($contratos) == 0){
-            return response()->json(['error'=>'No existen contratos.'], 404);          
+        if(count($CentroCostos) == 0){
+            return response()->json(['error'=>'No existen CentroCostos.'], 404);          
         }else{
-            return response()->json(['status'=>'ok', 'contratos'=>$contratos], 200);
+            return response()->json(['status'=>'ok', 'CentroCostos'=>$CentroCostos], 200);
         }
+    }
+
+    public function usuarios(Request $request)
+    {
+    	$rol=$request->input('rol');
+    	$departamento_id=$request->input('departamento_id');
+
+    	if ($rol==0 && $departamento_id==1) {
+    		$usuarios = DB::select("SELECT * FROM  `usuarios` WHERE 1");
+    		for ($i=0; $i < count($usuarios); $i++) { 
+    			$usuarios[$i]->departamentos=[];
+    			$d=DB::select("SELECT * FROM `departamentos` WHERE `id`=".$usuarios[$i]->departamento_id);
+    			for ($j=0; $j < count($d); $j++) { 
+    				array_push($usuarios[$i]->departamentos,$d[$j]);
+    			}
+    			
+    		}
+    		return $usuarios;
+    	}else if ($rol==1) {
+    		$sql="SELECT * FROM  `usuarios` WHERE `rol`=".$rol." AND `departamento_id`=".$departamento_id."";
+    		$usuarios = DB::select($sql);
+    		return $usuarios;
+    	}
     }
 
     /**
@@ -44,11 +64,11 @@ class ContratosController extends Controller
      */
     public function store(Request $request)
     {
-        $cc=new \App\contratos;
+        $cc=new \App\CentroCostos;
         $cc->fill($request->all());
 
         if($cc->save())
-            return response()->json(['status'=>'ok', 'contratos'=>$cc], 200);
+            return response()->json(['status'=>'ok', 'CentroCostos'=>$cc], 200);
         else
             return response()->json(['error'=>'No se pudo crear cc'], 404); 
     }
@@ -94,11 +114,11 @@ class ContratosController extends Controller
     public function update(Request $request, $id)
     {
         //cargar un proveedor
-        $cc=\App\contratos::where('id',$id)->first();;
+        $cc=\App\CentroCostos::where('id',$id)->first();;
         $cc->fill($request->all());
 
         if($cc->save())
-            return response()->json(['status'=>'ok', 'contratos'=>$cc], 200);
+            return response()->json(['status'=>'ok', 'CentroCostos'=>$cc], 200);
         else
             return response()->json(['error'=>'No se pudo crear cc'], 404); 
     }
@@ -112,7 +132,7 @@ class ContratosController extends Controller
     public function destroy($id)
     {
         // Comprobamos si el proveedor que nos están pasando existe o no.
-        $cc=\App\contratos::find($id);
+        $cc=\App\CentroCostos::find($id);
 
         if (count($cc)==0)
         {
@@ -126,4 +146,3 @@ class ContratosController extends Controller
         return response()->json(['status'=>'ok', 'message'=>'Se ha eliminado correctamente el cc.'], 200);
     }
 }
-

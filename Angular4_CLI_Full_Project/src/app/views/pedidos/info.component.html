@@ -24,8 +24,129 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
-
+<div id="prin" [hidden]="true">
+	<div class="row">
+	<div class="col-lg-12">
+      	<div class="row">
+      		<div class="col-lg-12">
+      			<div class="">
+      				<div class="row">
+      					<div class="col-sm-3">
+      						<img src="http://www.tecprecincsrl.com.ar/e/wp-content/themes/tecprecinc/images/logo.png" style="width: 210px; position: absolute;">
+	      				</div>
+	      			</div>
+	      			<div class="row">
+	      				<div class="col-sm-5">
+      						
+	      				</div>
+	      				<div class="col-sm-6" style="border:2px solid; text-align:center">
+	      					<h4>SOLICITUD DE COMPRAS</h4>
+	      				</div>
+	      				<div class="col-sm-1">
+	      				</div>
+      				</div>
+      				<br><br><br>
+      				<div class="row" style="border:2px solid;">
+      					<div class="row col-lg-12">
+      						<div class="col-sm-4">
+      							<strong >Solicitud: </strong>{{informacion.id}}
+      						</div>
+      						<div class="col-sm-4">
+      							
+      						</div>
+      						<div class="col-sm-4">
+      							<strong>Fecha de alta: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
+      						</div>	
+      					</div>
+      					<br><br>
+      					<div class="row col-lg-12">
+	      					<div class="col-sm-4">
+	      						<strong>Solicitante: </strong>{{informacion.usuario.nombre}}
+		      				</div>
+		      				<div class="col-sm-4">
+		      					<strong>Departamento: </strong>{{informacion.usuario.departamento.nombre}}
+		      				</div>
+		      				<div class="col-sm-4">
+		      					
+		      				</div>
+	      				</div>
+      				</div>
+      			</div>
+      		</div>	
+      	</div>
+      	<br>
+      	<div class="row" >
+      		<div class="col-lg-12">
+      			<div class="">
+      				<div class="row">
+      					<table class="table table-bordered table-striped table-sm" style="border:2px solid #000000 !important;">
+				            <thead>
+				              <tr>
+				              	<th>Código</th>
+				                <th>Cantidad</th>
+				                <th>Nombre</th>
+				                <th>Centro de costos</th>
+				                <th>Contrato</th>
+				                <th *ngIf="informacion.estado==0">En Stock</th>
+				              </tr>
+				            </thead>
+				            <tbody>
+				              <tr *ngFor="let item of informacion.solicitud">
+				              	<td>{{item.codigo}}</td>
+				                <td>{{item.pivot.cantidad}}</td>
+				                <td>{{item.nombre}}</td>
+				                <td>{{item.centro_costos.descripcion}}</td>
+				                <td>{{item.contratos.nombre}}</td>
+				                <td *ngIf="informacion.estado==0">{{item.stock}}</td>
+				              </tr>
+				            </tbody>
+				          </table>
+      				</div>
+      			</div>
+      		</div>	
+      	</div>
+      	<div class="row" >
+      		<div class="col-lg-12">
+      			<div class="row" style="border:2px solid;">
+  					<div class="row col-lg-12">
+  						<div class="col-sm-4">
+  							<strong >OBSERVACIONES: </strong>
+  							<br><br><br><br>
+  						</div>
+  						<div class="col-sm-4">
+  							
+  						</div>
+  						<div class="col-sm-4">
+  							<strong>Fecha de alta: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
+  						</div>	
+  					</div>
+  					<div class="row col-lg-12" style="border-top:2px solid; border-bottom:2px solid; margin-left: 0.05%;">
+      					<div class="col-sm-5">
+      						<p style="font-weight: bold; font-size: smaller; margin: 5px;">Fecha de recepción de la solicitud:</p> 
+	      				</div>
+	      				<div class="col-sm-4">
+	      					<p style="font-weight: bold; font-size: smaller; margin: 5px;">Responsable de la compra:</p> 
+	      				</div>
+	      				<div class="col-sm-3">
+	      					<p style="font-weight: bold; font-size: smaller; margin: 5px;">Firma:</p>
+	      				</div>
+      				</div>
+      				<div class="row col-lg-12">
+      					<div class="col-sm-6">
+      						<strong>OBSERVACIÓN DE LA RECEPCIÓN: </strong>
+      						<br><br><br><br><br>
+	      				</div>
+	      				<div class="col-sm-2">
+	      				</div>
+	      				<div class="col-sm-4">
+	      				</div>
+      				</div>
+  				</div>
+      		</div>
+      	</div>
+    </div>	
+</div>
+</div>
 <div class="row">
 	<div class="col-lg-12">
       	<div class="row">
@@ -45,7 +166,7 @@
 	      					<strong>Usuario: </strong>{{informacion.usuario.nombre}}
 	      				</div>
 	      				<div class="col-lg-4">
-	      					<strong>Fecha: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
+	      					<strong>Fecha de alta: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
 	      				</div>
       				</div>
       			</div>
@@ -63,7 +184,8 @@
 				                <th>Cantidad</th>
 				                <th>Nombre</th>
 				                <th>Centro de costos</th>
-				                <th *ngIf="informacion.estado==1">En Stock</th>
+				                <th>Contrato</th>
+				                <th *ngIf="informacion.estado==0">En Stock</th>
 				                <th *ngIf="informacion.estado!=0">Estatus</th>
 				                <th *ngIf="informacion.estado==1">Acción</th>
 				              </tr>
@@ -74,7 +196,8 @@
 				                <td>{{item.pivot.cantidad}}</td>
 				                <td>{{item.nombre}}</td>
 				                <td>{{item.centro_costos.descripcion}}</td>
-				                <td *ngIf="informacion.estado==1">{{item.stock}}</td>
+				                <td>{{item.contratos.nombre}}</td>
+				                <td *ngIf="informacion.estado==0">{{item.stock}}</td>
 				                <td *ngIf="informacion.estado!=0">
 				                  <span [ngClass]="['badge', 'badge-success']" *ngIf="item.pivot.aprobado">Aprobado</span>
 				                  <span [ngClass]="['badge', 'badge-success']" *ngIf="item.pivot.entregado">Entregado</span>
@@ -122,4 +245,8 @@
       		</div>	
       	</div>
     </div>	
+</div>
+
+<div style="text-align:right">
+	<button type="button" class="btn btn-outline-secondary btn-sm" (click)=print()><i class="fa fa-print">  Imprimir</i></button>
 </div>

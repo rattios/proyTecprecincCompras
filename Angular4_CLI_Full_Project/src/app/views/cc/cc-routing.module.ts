@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { contratosComponent } from './contratos/contratos.component';
 import { centroCostosComponent } from './centroCostos/centroCostos.component';
 
-const routes: Routes = [
+const routes: Routes = [  
   {
     path: 'contratos',
     component: contratosComponent,
@@ -25,4 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ccModule {}
+export class ccRoutingModule {}

@@ -27,14 +27,15 @@ export class LoginComponent {
           data => { // Success
             console.log(data);
             this.result=data;
-            console.log(this.result.token);
+            console.log(this.result.user.departamento_id);
             localStorage.setItem('tecprecinc_token', this.result.token);
             localStorage.setItem('tecprecinc_nombre', this.result.user.nombre);
             localStorage.setItem('tecprecinc_usuario_id', this.result.user.id);
             localStorage.setItem('tecprecinc_departamento_id', this.result.user.departamento_id);
-            localStorage.setItem('tecprecinc_nombre', this.result.user.nombre);
+            localStorage.setItem('tecprecinc_apellido', this.result.user.apellido);
             localStorage.setItem('tecprecinc_rol', this.result.user.rol);
             this.router.navigate(['proveedores'], {});
+            console.log(localStorage.getItem('tecprecinc_departamento_id'));
          },
           msg => { // Error
           	console.log(msg);
