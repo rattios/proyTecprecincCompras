@@ -25,7 +25,7 @@ export class aprobarComponent {
 
    ngOnInit(): void {
 
-      this.http.get(this.ruta.get_ruta()+'aprobar')
+      this.http.get(this.ruta.get_ruta()+'aprobar?usuario_id='+localStorage.getItem('tecprecinc_usuario_id'))
            .toPromise()
            .then(
            data => {
@@ -58,7 +58,7 @@ export class aprobarComponent {
       this.pedidos1=[];
       this.pedidos2=[];
       this.pedidos3=[];
-      this.http.get(this.ruta.get_ruta()+'aprobar')
+      this.http.get(this.ruta.get_ruta()+'aprobar?usuario_id='+localStorage.getItem('tecprecinc_usuario_id'))
            .toPromise()
            .then(
            data => {

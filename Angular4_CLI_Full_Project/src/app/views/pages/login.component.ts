@@ -34,7 +34,10 @@ export class LoginComponent {
             localStorage.setItem('tecprecinc_departamento_id', this.result.user.departamento_id);
             localStorage.setItem('tecprecinc_apellido', this.result.user.apellido);
             localStorage.setItem('tecprecinc_rol', this.result.user.rol);
-            this.router.navigate(['proveedores'], {});
+            setTimeout(()=>{    //<<<---    using ()=> syntax
+                  this.router.navigate(['proveedores'], {});
+             },10);
+            
             console.log(localStorage.getItem('tecprecinc_departamento_id'));
          },
           msg => { // Error

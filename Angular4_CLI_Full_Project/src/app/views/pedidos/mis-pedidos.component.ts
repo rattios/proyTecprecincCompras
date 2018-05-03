@@ -42,7 +42,7 @@ export class misPedidosComponent {
                   this.pedidos1.push(this.pedidos[i]);
                 }else if(this.pedidos[i].estado==2) {
                   this.pedidos2.push(this.pedidos[i]);
-                }else if(this.pedidos[i].estado==3) {
+                }else if(this.pedidos[i].estado==4) {
                   this.pedidos3.push(this.pedidos[i]);
                 }
               }

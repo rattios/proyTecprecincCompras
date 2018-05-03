@@ -49,37 +49,49 @@ class PedidoController extends Controller
             return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
         } 
     }
-    public function aprobar()
+    public function aprobar(Request $request)
     {
+        $usuario= \App\User::find($request->input('usuario_id'));
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::where('estado', 0)->where('aprobar', 0)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
+        if ($usuario->rol==1) {
+            $departamento=$usuario->departamento_id;
+            $pedidos = \App\Pedido::where('estado', 0)->where('aprobar', 0)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
 
-
-        if(count($pedidos) == 0){
-            return response()->json(['status'=>'ok', 'pedidos'=>[]], 200);          
-        }else{
-
-            $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
-
-            for ($i=0; $i < count($pedidos) ; $i++) { 
-                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
-                    for ($k=0; $k < count($categorias); $k++) { 
-                        if ($pedidos[$i]->solicitud[$j]->categoria_id == $categorias[$k]->id ) {
-                            $pedidos[$i]->solicitud[$j]->categoria = $categorias[$k];
-                        }
-                    }
+            $auxPedidos=[];
+            for ($i=0; $i < count($pedidos); $i++) { 
+                if ($pedidos[$i]->usuario->departamento->id==$departamento) {
+                   array_push($auxPedidos,$pedidos[$i]);
                 }
             }
 
-            for ($i=0; $i < count($pedidos) ; $i++) { 
-                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
-                    $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
-                    $pedidos[$i]->solicitud[$j]->contratos=$pedidos[$i]->contratos;
-                } 
-            }
+            $pedidos=$auxPedidos;
+            if(count($pedidos) == 0){
+                return response()->json(['status'=>'ok', 'pedidos'=>[]], 200);          
+            }else{
 
-            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
-        } 
+                $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
+
+                for ($i=0; $i < count($pedidos) ; $i++) { 
+                    for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                        for ($k=0; $k < count($categorias); $k++) { 
+                            if ($pedidos[$i]->solicitud[$j]->categoria_id == $categorias[$k]->id ) {
+                                $pedidos[$i]->solicitud[$j]->categoria = $categorias[$k];
+                            }
+                        }
+                    }
+                }
+
+                for ($i=0; $i < count($pedidos) ; $i++) { 
+                    for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                        $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                        $pedidos[$i]->solicitud[$j]->contratos=$pedidos[$i]->contratos;
+                    } 
+                }
+
+                return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
+            } 
+        }
+        
     }
     public function index0()
     {

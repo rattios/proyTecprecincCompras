@@ -47,8 +47,8 @@
           <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/pedido']"><i class="icon-note"></i> Crear</a>
           </li>
-          <li class="nav-item" *ngxPermissionsOnly="[0]">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/aprobar']"><i class="icon-arrow-down-circle"></i> Por aprobar</a>
+          <li class="nav-item" *ngxPermissionsOnly="[1]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/aprobar']"><i class="fa fa-check"></i> Por aprobar</a>
           </li>
           <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/entrantes']"><i class="icon-arrow-down-circle"></i> Entrantes</a>
@@ -62,9 +62,9 @@
           <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/cancelados']"><i class="icon-close"></i> Canceladas</a>
           </li>
-          <!-- <li class="nav-item">
+          <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/mis-pedidos']"><i class="icon-docs"></i> Mis solicitudes</a>
-          </li> -->
+          </li> 
           <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/todos-pedidos']"><i class="icon-layers"></i> Todos las solicitudes</a>
           </li>
