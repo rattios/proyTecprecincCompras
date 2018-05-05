@@ -122,6 +122,61 @@ class DashboardController extends Controller
         
     }
 
+    public function dashboard(Request $request)
+    {
+        $usuarios = DB::select("SELECT `id`,`departamento_id`, `nombre`,`rol` FROM `usuarios` WHERE 1");
+        $departamentos = DB::select("SELECT `id`,`nombre` FROM `departamentos` WHERE 1");
+        $pedidos = DB::select("SELECT `estado`, `usuario_id`, `created_at` FROM `pedidos` WHERE 1");
+        $ultimosPedidos = DB::select("SELECT * FROM `pedidos` ORDER BY `pedidos`.`id` DESC LIMIT 10");
+        $proveedores = DB::select("SELECT `id`,`razon_social` FROM `proveedores` WHERE 1");
+        $productos = DB::select("SELECT `nombre` FROM `productos` WHERE 1");
+        $stocks = DB::select("SELECT `nombre`,`stock` FROM `stock` WHERE 1");
+        $stockdepartamentos = DB::select("SELECT `stock`,`departamento_id`  FROM `stockdepartamentos` WHERE 1");
+        $centro_costos = DB::select("SELECT `descripcion` FROM `centro_costos` WHERE 1");
+        $contratos = DB::select("SELECT `nombre` FROM `contratos` WHERE 1");
+        
+        
+        $pedidoDepartamentos=[];
+        for ($k=0; $k < count($departamentos); $k++) { 
+            $departamentos[$k]->countPedidos=0;
+            for ($i=0; $i < count($usuarios); $i++) {
+                for ($j=0; $j < count($pedidos); $j++) { 
+                    if ($usuarios[$i]->id==$pedidos[$j]->usuario_id && $departamentos[$k]->id==$usuarios[$i]->departamento_id) {
+                        $departamentos[$k]->countPedidos=$departamentos[$k]->countPedidos+1;
+                    }
+                } 
+            }           
+        }
+        for ($i=0; $i < count($departamentos); $i++) { 
+            $departamentos[$i]->countProductos=0;
+            for ($j=0; $j < count($stockdepartamentos); $j++) { 
+                if ($departamentos[$i]->id==$stockdepartamentos[$j]->departamento_id) {
+                    $departamentos[$i]->countProductos=$departamentos[$i]->countProductos+$stockdepartamentos[$j]->stock;
+                }
+            }
+        }
+
+        $countStocks=0;
+        for ($i=0; $i < count($stocks); $i++) { 
+          $countStocks=$countStocks+ $stocks[$i]->stock;
+        }
+        return response()->json(['status'=>'ok',
+            'usuarios'=>count($usuarios),
+            'departamentos'=>$departamentos,
+            'proveedores'=>count($proveedores),
+            'productos'=>count($productos),
+            'stocks'=>$countStocks,
+            'stockdepartamentos'=>count($stockdepartamentos),
+            'centro_costos'=>count($centro_costos),
+            'contratos'=>count($contratos),
+            'countpedidos'=>count($pedidos),
+            'pedidos'=>$pedidos,
+            'ultimosPedidos'=>$ultimosPedidos
+                ], 200);
+
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      *

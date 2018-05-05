@@ -69,7 +69,7 @@ class StockDepartamentoController extends Controller
                 ->where('departamento_id', $request->input('departamento_id'))->get();
 
         if(count($productoEnDep)==0){
-            return response()->json(['error'=>'Ya exite ese producto en el departamento.')], 409);          
+            return response()->json(['error'=>'Ya exite ese producto en el departamento.'], 409);          
         } 
 
         //Creamos el producto en el departamento

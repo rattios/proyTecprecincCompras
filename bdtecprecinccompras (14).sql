@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 24-04-2018 a las 05:53:11
--- Versión del servidor: 10.1.30-MariaDB
--- Versión de PHP: 7.1.14
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 04-05-2018 a las 21:43:36
+-- Versión del servidor: 10.1.26-MariaDB
+-- Versión de PHP: 7.1.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -204,7 +204,8 @@ INSERT INTO `centro_costos` (`id`, `codigo`, `descripcion`, `habilitado`, `desde
 (39, '38', 'NO USAR ', NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (40, '39', 'NO USAR ', NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (41, '40', 'NO USAR ', NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(42, '41', 'NO USAR ', NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(42, '41', 'NO USAR ', NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(43, '', 'Sin centro costos', NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -225,6 +226,33 @@ CREATE TABLE `compras` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `contratos`
+--
+
+CREATE TABLE `contratos` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `cliente` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `vigencia` date NOT NULL,
+  `centro_costos_id` int(11) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `contratos`
+--
+
+INSERT INTO `contratos` (`id`, `nombre`, `cliente`, `vigencia`, `centro_costos_id`, `updated_at`, `created_at`) VALUES
+(1, 'Sin contrato', '', '0000-00-00', 43, '2018-04-26 01:12:04', '2018-04-25 04:30:00'),
+(2, 'prueba 2', 'cliente 27', '2018-04-24', 1, '2018-04-26 00:57:25', '2018-04-25 04:30:00'),
+(3, 'prueba 1', 'prueba 1', '0000-00-00', 1, '2018-04-26 01:40:57', '2018-04-26 00:57:46'),
+(4, 'prueba 2', 'prueba2', '2018-04-26', 1, '2018-04-26 01:40:54', '2018-04-26 00:59:36'),
+(5, 'prueba 3', 'prueba 3', '2018-04-26', 43, '2018-04-26 01:12:25', '2018-04-26 01:12:25');
 
 -- --------------------------------------------------------
 
@@ -345,7 +373,9 @@ CREATE TABLE `pedidos` (
   `id` int(10) UNSIGNED NOT NULL,
   `estado` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `usuario_id` int(10) UNSIGNED NOT NULL,
-  `centro_costos_id` int(11) DEFAULT NULL,
+  `centro_costos_id` int(11) NOT NULL DEFAULT '43',
+  `contrato_id` int(11) NOT NULL DEFAULT '1',
+  `aprobar` int(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -354,16 +384,18 @@ CREATE TABLE `pedidos` (
 -- Volcado de datos para la tabla `pedidos`
 --
 
-INSERT INTO `pedidos` (`id`, `estado`, `usuario_id`, `centro_costos_id`, `created_at`, `updated_at`) VALUES
-(21, '2', 5, 1, '2018-02-27 00:08:22', '2018-02-27 00:08:59'),
-(22, '2', 5, 2, '2018-02-27 00:09:22', '2018-02-27 00:54:51'),
-(23, '2', 5, 4, '2018-02-27 00:55:48', '2018-04-22 22:05:39'),
-(24, '1', 5, 5, '2018-02-27 03:15:40', '2018-02-27 03:15:50'),
-(25, '1', 5, 6, '2018-02-28 00:02:23', '2018-02-28 00:03:24'),
-(29, '4', 3, 2, '2018-04-19 23:18:21', '2018-04-22 22:27:32'),
-(30, '4', 3, 3, '2018-04-22 22:43:59', '2018-04-22 22:49:53'),
-(31, '0', 3, 3, '2018-04-22 22:50:05', '2018-04-22 22:50:05'),
-(32, '0', 3, 37, '2018-04-22 23:34:28', '2018-04-22 23:34:28');
+INSERT INTO `pedidos` (`id`, `estado`, `usuario_id`, `centro_costos_id`, `contrato_id`, `aprobar`, `created_at`, `updated_at`) VALUES
+(21, '2', 5, 1, 1, 0, '2018-02-27 00:08:22', '2018-02-27 00:08:59'),
+(22, '2', 5, 2, 1, 0, '2018-02-27 00:09:22', '2018-02-27 00:54:51'),
+(23, '1', 5, 3, 1, 0, '2018-02-27 00:55:48', '2018-02-27 00:56:10'),
+(24, '1', 5, 4, 1, 0, '2018-02-27 03:15:40', '2018-02-27 03:15:50'),
+(25, '1', 5, 5, 1, 0, '2018-02-28 00:02:23', '2018-02-28 00:03:24'),
+(26, '4', 5, 1, 1, 1, '2018-04-25 04:32:25', '2018-05-03 03:59:02'),
+(27, '4', 5, 43, 1, 0, '2018-04-25 04:38:54', '2018-04-26 01:14:48'),
+(28, '1', 5, 43, 2, 0, '2018-04-25 05:12:25', '2018-04-25 05:12:25'),
+(29, '1', 5, 42, 3, 0, '2018-04-25 05:13:06', '2018-04-25 05:13:06'),
+(30, '0', 3, 1, 3, 1, '2018-05-02 21:16:53', '2018-05-03 03:41:45'),
+(31, '0', 5, 1, 2, 0, '2018-05-03 03:40:15', '2018-05-03 03:40:15');
 
 -- --------------------------------------------------------
 
@@ -396,19 +428,16 @@ INSERT INTO `pedido_stock` (`id`, `pedido_id`, `stock_id`, `cantidad`, `aprobado
 (22, 21, 1, 2, 0, 1, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (23, 21, 2, 2, 0, 1, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (24, 22, 1, 1, 0, 1, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(25, 23, 2, 1, 0, 1, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(25, 23, 2, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (26, 24, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (27, 25, 1, 1, 0, 1, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (28, 25, 2, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (29, 26, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (30, 27, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(31, 27, 2, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(32, 28, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(33, 29, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(34, 30, 2, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(35, 30, 3, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(36, 31, 3, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(37, 32, 10, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(31, 28, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(32, 29, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(33, 30, 6, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(34, 31, 4, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -4502,7 +4531,7 @@ CREATE TABLE `stock` (
 
 INSERT INTO `stock` (`id`, `nombre`, `codigo`, `precio`, `stock`, `peps`, `valor_reposicion`, `stock_min`, `partida_parcial`, `categoria_id`, `rubro_id`, `tipo_id`, `proveedor_id`, `created_at`, `updated_at`) VALUES
 (1, ' Alcohol Iodado', '2951', 10.00, 9, 0.00, 0.00, 5, NULL, 88, 1, 2, NULL, '2018-01-26 06:02:30', '2018-02-28 00:04:17'),
-(2, ' Apósito (para acolchado de heridas o vendajes compresivos)', '2949', 45.00, 2, 0.00, 0.00, 0, NULL, 84, 6, 2, NULL, '2018-01-26 06:02:30', '2018-02-26 16:49:10'),
+(2, ' Apósito (para acolchado de heridas o vendajes compresivos)', '2949', 45.00, 3, 0.00, 0.00, 0, NULL, 84, 6, 2, NULL, '2018-01-26 06:02:30', '2018-02-26 16:49:10'),
 (3, ' Ficha Macho 2P + T x 16amp (Domiciliaria) .-', '3471', 0.00, 0, 0.00, 0.00, 0, NULL, 18, 10, 2, NULL, '2018-01-26 06:02:30', '2018-02-19 05:26:34'),
 (4, ' Ficha Macho 2P + T x 32amp (Domiciliaria) .-', '2733', 1.08, 9, 0.00, 0.00, 0, NULL, 18, 9, 2, NULL, '2018-01-26 06:02:30', '2018-02-19 05:26:22'),
 (5, ' Gabinete p/ mang y elem seg. BWG-16, puerta ciega y cerr. aldaba. 170x100x22 cm. Div. int. 60cm sup y 114 cm entre 2 est. div. vertical 49 cm. Gancho', '3021', 0.00, 0, 0.00, 0.00, 0, NULL, 46, 0, 0, NULL, '2018-01-26 06:02:30', '2018-01-26 06:02:30'),
@@ -8022,7 +8051,7 @@ CREATE TABLE `stockdepartamentos` (
 
 INSERT INTO `stockdepartamentos` (`id`, `stock_id`, `stock`, `stock_min`, `departamento_id`, `created_at`, `updated_at`) VALUES
 (4, 1, 2, 0, 3, '2018-02-27 00:08:54', '2018-02-28 00:04:30'),
-(5, 2, 3, 0, 3, '2018-02-27 00:08:56', '2018-04-22 22:05:02');
+(5, 2, 2, 0, 3, '2018-02-27 00:08:56', '2018-02-27 00:08:56');
 
 -- --------------------------------------------------------
 
@@ -8124,12 +8153,14 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id`, `user`, `password`, `email`, `nombre`, `apellido`, `telefono`, `rol`, `codigo_verificacion`, `departamento_id`, `created_at`, `updated_at`) VALUES
 (1, 'Rafael', '$2y$10$ewNAU/1tzVzD6uWgXbAPTegezFGyPQmNDxghLiskGCy0//wRlsChu', 'petitrafi@gmail.com', 'Rafael', 'Sanchez', '555555', 0, NULL, 1, '2018-02-05 15:06:19', '2018-02-05 15:06:19'),
 (2, 'stalin', '$2y$10$il.tPETfkTpX5Ydn9iJCQurG7vM7TYvJ4ydBokpWv7sUQIArwCWXC', 'e.rangeld@hotmail.com', 'eimar', 'rangel', '04147428420', 0, NULL, 1, '2018-02-05 15:02:31', '2018-02-05 15:02:31'),
-(3, 'compras', '$2y$10$WNNdSNQUPPOLZOZGTeCjfei2rSAEahexx.0rM.JK3.1DQLVcaxmmS', 'compras@tecprecinc.com', 'Compras', 'Tecprecinc', '555-555-555', 1, NULL, 1, '2018-02-25 19:59:32', '2018-02-25 19:59:32'),
+(3, 'compras', '$2y$10$WNNdSNQUPPOLZOZGTeCjfei2rSAEahexx.0rM.JK3.1DQLVcaxmmS', 'compras@tecprecinc.com', 'Compras', 'Tecprecinc', '555-555-555', 0, NULL, 1, '2018-02-25 19:59:32', '2018-02-25 19:59:32'),
 (4, 'ventas', '$2y$10$kMV3fS6bIx0Zp8HFts//5uTTyjSH32D7iAgluG6Ioazz/wCae/xZy', 'ventas@tecprecinc.com', 'Ventas', 'Tecprecinc', '555-555-555', 1, NULL, 2, '2018-02-25 20:00:25', '2018-02-25 20:00:25'),
 (5, 'rrhh', '$2y$10$GKw6GF/pHkbMCoYQTnEQV.NHgykAeoVJQbP/J5mKzZltdnXb3Ta4C', 'rrhh@tecprecinc.com', 'RRHH', 'Tecprecinc', '555-555-555', 1, NULL, 3, '2018-02-25 20:01:09', '2018-02-25 20:01:09'),
 (6, 'operaciones', '$2y$10$8vMcdLXiRHdwJrfnjj8TkuTvFcyOnj8QxcrMWzkEpEMNSR/MFSEsK', 'operaciones@tecprecinc.com', 'Operaciones', 'Tecprecinc', '555-555-555', 1, NULL, 4, '2018-02-25 20:01:50', '2018-02-25 20:01:50'),
 (7, 'calidad', '$2y$10$/8LXWHPD861qm8SqZnACo.4.hvAHPrarxvHkofMc1vN7sJbMQ716m', 'calidad@tecprecinc.com', 'Calidad', 'Tecprecinc', '555-555-555', 1, NULL, 5, '2018-02-25 20:02:28', '2018-02-25 20:02:28'),
-(8, 'obras', '$2y$10$NuddD28remI3f..uAr8IDOqn/jgd3LDlQQr98ipZlhf3bYWn/YIgC', 'obras@tecprecinc.com', 'Obras', 'Tecprecinc', '555-555-555', 1, NULL, 6, '2018-02-25 20:02:57', '2018-02-25 20:02:57');
+(8, 'obras', '$2y$10$NuddD28remI3f..uAr8IDOqn/jgd3LDlQQr98ipZlhf3bYWn/YIgC', 'obras@tecprecinc.com', 'Obras', 'Tecprecinc', '555-555-555', 1, NULL, 6, '2018-02-25 20:02:57', '2018-02-25 20:02:57'),
+(9, 'usuariocompras', '$2y$10$WNNdSNQUPPOLZOZGTeCjfei2rSAEahexx.0rM.JK3.1DQLVcaxmmS', 'usuariocompras@tecprecinc.com', 'usuario compras', 'Tecprecinc', '555-555-555', 2, NULL, 1, '2018-05-01 04:30:00', '2018-05-01 04:30:00'),
+(10, 'joseperez', '$2y$10$YNvs0Cjti56MwBtLi3wgk.Tjd51zBkrDccIkrILKUyS/4g4LQfgI2', 'joseperez@tecprecinc.com', 'jose', 'perez', '55-55-555', 2, NULL, 5, '2018-05-02 16:53:33', '2018-05-02 19:42:11');
 
 --
 -- Índices para tablas volcadas
@@ -8159,6 +8190,12 @@ ALTER TABLE `compras`
   ADD KEY `compras_presupuesto_id_foreign` (`presupuesto_id`),
   ADD KEY `compras_pedido_id_foreign` (`pedido_id`),
   ADD KEY `compras_proveedor_id_foreign` (`proveedor_id`);
+
+--
+-- Indices de la tabla `contratos`
+--
+ALTER TABLE `contratos`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `controlesrecepcion`
@@ -8294,115 +8331,101 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `categorias`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
-
 --
 -- AUTO_INCREMENT de la tabla `centro_costos`
 --
 ALTER TABLE `centro_costos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+--
+-- AUTO_INCREMENT de la tabla `contratos`
+--
+ALTER TABLE `contratos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `controlesrecepcion`
 --
 ALTER TABLE `controlesrecepcion`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `departamentos`
 --
 ALTER TABLE `departamentos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
 --
 -- AUTO_INCREMENT de la tabla `mensajes`
 --
 ALTER TABLE `mensajes`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
-
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT de la tabla `pedido_stock`
 --
 ALTER TABLE `pedido_stock`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
-
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT de la tabla `presupuestos`
 --
 ALTER TABLE `presupuestos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3489;
-
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1231;
-
 --
 -- AUTO_INCREMENT de la tabla `proveedores_productos`
 --
 ALTER TABLE `proveedores_productos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `rubros`
 --
 ALTER TABLE `rubros`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
 --
 -- AUTO_INCREMENT de la tabla `stock`
 --
 ALTER TABLE `stock`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3489;
-
 --
 -- AUTO_INCREMENT de la tabla `stockdepartamentos`
 --
 ALTER TABLE `stockdepartamentos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT de la tabla `stock_permisos_departs`
 --
 ALTER TABLE `stock_permisos_departs`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT de la tabla `tipos`
 --
 ALTER TABLE `tipos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT de la tabla `transferencias`
 --
 ALTER TABLE `transferencias`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- Restricciones para tablas volcadas
 --
