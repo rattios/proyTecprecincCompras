@@ -1,12 +1,51 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Router } from '@angular/router';
+import { HttpClient, HttpParams  } from '@angular/common/http';
+import 'rxjs/add/operator/toPromise';
+import { RutaService } from '../../services/ruta.service';
+
 
 @Component({
   templateUrl: 'dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
 
-  // constructor( ) { }
+  public loading=true;
+  public datos:any;
+  public departamentos:any=[];
+  constructor(private http: HttpClient, private ruta: RutaService) { }
+
+
+  ngOnInit(): void {
+      this.loading=true;
+
+      // generate random values for mainChart
+    for (let i = 0; i <= this.mainChartElements; i++) {
+      this.mainChartData1.push(this.random(50, 200));
+      this.mainChartData2.push(this.random(80, 100));
+      this.mainChartData3.push(65);
+    }
+
+    this.http.get(this.ruta.get_ruta()+'dashboard')
+         .toPromise()
+         .then(
+         data => {
+           this.datos=data;
+            console.log(this.datos);
+           //this.departamentos=this.datos.departamentos;
+           for (var i = 0; i < this.datos.departamentos.length; ++i) {
+             if(this.datos.departamentos[i].nombre!='Compras') {
+               this.departamentos.push(this.datos.departamentos[i]);
+             }
+           }
+            this.loading=false;
+          },
+         msg => { 
+           console.log(msg);
+           this.loading=false;
+         });
+  }
 
   public brandPrimary = '#20a8d8';
   public brandSuccess = '#4dbd74';
@@ -462,12 +501,5 @@ export class DashboardComponent implements OnInit {
   public sparklineChartType = 'line';
 
 
-  ngOnInit(): void {
-    // generate random values for mainChart
-    for (let i = 0; i <= this.mainChartElements; i++) {
-      this.mainChartData1.push(this.random(50, 200));
-      this.mainChartData2.push(this.random(80, 100));
-      this.mainChartData3.push(65);
-    }
-  }
+  
 }
