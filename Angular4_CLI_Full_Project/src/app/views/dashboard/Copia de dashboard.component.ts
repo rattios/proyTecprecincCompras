@@ -14,7 +14,6 @@ export class DashboardComponent implements OnInit {
   public loading=true;
   public datos:any;
   public departamentos:any=[];
-  public ultimosPedidos:any=[];
   public pieChartLabels: string[] = ['Principal', 'Secundario','Departamentos'];
   public pieChartData: number[] = [1, 1,1];
   public pieChartType = 'pie';
@@ -38,7 +37,6 @@ export class DashboardComponent implements OnInit {
            this.datos=data;
             console.log(this.datos);
            //this.departamentos=this.datos.departamentos;
-           this.ultimosPedidos=this.datos.ultimosPedidos;
            for (var i = 0; i < this.datos.departamentos.length; ++i) {
              if(this.datos.departamentos[i].nombre!='Compras') {
                this.departamentos.push(this.datos.departamentos[i]);

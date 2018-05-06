@@ -126,7 +126,8 @@ class DashboardController extends Controller
     {
         $usuarios = DB::select("SELECT `id`,`departamento_id`, `nombre`,`rol` FROM `usuarios` WHERE 1");
         $departamentos = DB::select("SELECT `id`,`nombre` FROM `departamentos` WHERE 1");
-        $pedidos = DB::select("SELECT `estado`, `usuario_id`, `created_at` FROM `pedidos` WHERE 1");
+        $pedidos = DB::select("SELECT `estado`, `usuario_id`, `created_at`, `aprobar` FROM `pedidos` WHERE 1");
+        $transferencias=DB::select("SELECT `id` FROM `transferencias` WHERE `estado`=1");
         $ultimosPedidos = DB::select("SELECT * FROM `pedidos` ORDER BY `pedidos`.`id` DESC LIMIT 10");
         $proveedores = DB::select("SELECT `id`,`razon_social` FROM `proveedores` WHERE 1");
         $productos = DB::select("SELECT `nombre` FROM `productos` WHERE 1");
@@ -135,6 +136,29 @@ class DashboardController extends Controller
         $centro_costos = DB::select("SELECT `descripcion` FROM `centro_costos` WHERE 1");
         $contratos = DB::select("SELECT `nombre` FROM `contratos` WHERE 1");
         
+        for ($i=0; $i < count($ultimosPedidos); $i++) { 
+            $ultimosPedidos[$i]->usuario=[];
+            $ultimosPedidos[$i]->departamento=[];
+            $ultimosPedidos[$i]->cantidad=0;
+            $ultimosPedidos[$i]->centro_costos='';
+            for ($j=0; $j < count($usuarios); $j++) { 
+                if ($ultimosPedidos[$i]->usuario_id==$usuarios[$j]->id) {
+                    $ultimosPedidos[$i]->usuario=$usuarios[$j];
+                    for ($k=0; $k < count($departamentos); $k++) { 
+                        if ($usuarios[$j]->departamento_id==$departamentos[$k]->id) {
+                            $ultimosPedidos[$i]->departamento=$departamentos[$k];
+                        }
+                    }
+                }
+            }
+            $ps = DB::select("SELECT `cantidad` FROM `pedido_stock` WHERE `pedido_id`=".$ultimosPedidos[$i]->id);
+            for ($cs=0; $cs < count($ps); $cs++) { 
+                $ultimosPedidos[$i]->cantidad=$ultimosPedidos[$i]->cantidad+$ps[$cs]->cantidad;
+            }
+            $cc = DB::select("SELECT `descripcion` FROM `centro_costos` WHERE `id`=".$ultimosPedidos[$i]->centro_costos_id);
+            $ultimosPedidos[$i]->centro_costos=$cc[0];
+            
+        }
         
         $pedidoDepartamentos=[];
         for ($k=0; $k < count($departamentos); $k++) { 
@@ -160,9 +184,26 @@ class DashboardController extends Controller
         for ($i=0; $i < count($stocks); $i++) { 
           $countStocks=$countStocks+ $stocks[$i]->stock;
         }
+
+        $estado0=0;
+        $estado1=0;
+        $estado2=0;
+        $estado4=0;
+        for ($i=0; $i < count($pedidos); $i++) { 
+            if ($pedidos[$i]->estado==0 && $pedidos[$i]->aprobar==1) {
+                $estado0++;
+            }else if ($pedidos[$i]->estado==1) {
+                $estado1++;
+            }else if ($pedidos[$i]->estado==2) {
+                $estado2++;
+            }else if ($pedidos[$i]->estado==4) {
+                $estado4++;
+            }
+        }
         return response()->json(['status'=>'ok',
             'usuarios'=>count($usuarios),
             'departamentos'=>$departamentos,
+            'countDepartamentos'=>count($departamentos),
             'proveedores'=>count($proveedores),
             'productos'=>count($productos),
             'stocks'=>$countStocks,
@@ -170,8 +211,12 @@ class DashboardController extends Controller
             'centro_costos'=>count($centro_costos),
             'contratos'=>count($contratos),
             'countpedidos'=>count($pedidos),
-            'pedidos'=>$pedidos,
-            'ultimosPedidos'=>$ultimosPedidos
+            'ultimosPedidos'=>$ultimosPedidos,
+            'estado0'=>$estado0,
+            'estado1'=>$estado1,
+            'estado2'=>$estado2,
+            'estado4'=>$estado4,
+            'transferencias'=>count($transferencias)
                 ], 200);
 
         
