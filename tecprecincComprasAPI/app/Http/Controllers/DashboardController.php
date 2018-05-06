@@ -254,7 +254,13 @@ class DashboardController extends Controller
             $cantidadP=0;
         }
         
-        
+        for ($i=0; $i < count($ejeX); $i++) { 
+            $ejeX[$i]=$this->mes(explode("-", $ejeX[$i]));
+        }
+        for ($i=0; $i < count($ejeXt); $i++) { 
+            $ejeXt[$i]=$this->mes(explode("-", $ejeXt[$i]));
+        }
+
         return response()->json(['status'=>'ok',
             'usuarios'=>count($usuarios),
             'departamentos'=>$departamentos,
@@ -280,6 +286,34 @@ class DashboardController extends Controller
 
     }
 
+    public function mes($arreglo)
+    {
+        if ($arreglo[0]=='01') {
+           return $arreglo[1].'-Enero'; 
+        }else if ($arreglo[0]=='02') {
+            return $arreglo[1].'-Febrero';
+        }else if ($arreglo[0]=='03') {
+            return $arreglo[1].'-Marzo';
+        }else if ($arreglo[0]=='04') {
+            return $arreglo[1].'-Abril';
+        }else if ($arreglo[0]=='05') {
+            return $arreglo[1].'-Mayo';
+        }else if ($arreglo[0]=='06') {
+            return $arreglo[1].'-Junio';
+        }else if ($arreglo[0]=='07') {
+            return $arreglo[1].'-Julio';
+        }else if ($arreglo[0]=='08') {
+            return $arreglo[1].'-Agosto';
+        }else if ($arreglo[0]=='09') {
+            return $arreglo[1].'-Septiembre';
+        }else if ($arreglo[0]=='10') {
+            return $arreglo[1].'-Octubre';
+        }else if ($arreglo[0]=='11') {
+            return $arreglo[1].'-Noviembre';
+        }else if ($arreglo[0]=='12') {
+            return $arreglo[1].'-Diciembre';
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *

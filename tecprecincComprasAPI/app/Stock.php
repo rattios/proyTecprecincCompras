@@ -25,7 +25,7 @@ class Stock extends Model
      * @var array
      */
     protected $fillable = ['nombre', 'codigo', 'precio',
-			'stock', 'peps', 'valor_reposicion',
+			'stock','stock2', 'peps', 'valor_reposicion',
 			'stock_min', 'partida_parcial', 'categoria_id','tipo_id','rubro_id',
 			'proveedor_id'];
 

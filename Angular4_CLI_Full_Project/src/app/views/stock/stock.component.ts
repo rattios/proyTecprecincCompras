@@ -61,6 +61,7 @@ export class stockComponent {
           precio:0,
           rubro_id:0,
           stock:0,
+          stock2:0,
           stock_min:0,
           tipo_id:0
         };
@@ -123,6 +124,8 @@ export class stockComponent {
             for (var i = 0; i < this.productList.length; ++i) {
 
               if (this.productList[i].stock==this.inputName) {
+                 this.filteredItems.push(this.productList[i]);
+              }else if (this.productList[i].stock2==this.inputName) {
                  this.filteredItems.push(this.productList[i]);
               }else if (this.productList[i].nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);

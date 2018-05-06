@@ -41,10 +41,16 @@
       				<div class="row">
       					<div class="col-lg-4">
 	      					<div class="form-group">
-				                <label>Cantidad en Stock:</label>
+				                <label>Cantidad en Stock Principal:</label>
 				                <input type="number" class="form-control" id="stock" placeholder="" [(ngModel)]="informacion.stock">
 				            </div>
 	      				</div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                        <label>Cantidad en Stock Secundario:</label>
+                        <input type="number" class="form-control" id="stock2" placeholder="" [(ngModel)]="informacion.stock2">
+                    </div>
+                </div>
       					<div class="col-lg-4">
 	      					<div class="form-group">
 				                <label>Stock mínimo:</label>

@@ -48,7 +48,7 @@ class StockController extends Controller
         }*/
 
 
-        $produc=DB::select("SELECT id,nombre,codigo,stock,categoria_id,tipo_id,rubro_id,precio,stock_min FROM  `stock` WHERE 1 ");
+        $produc=DB::select("SELECT id,nombre,codigo,stock,stock2,categoria_id,tipo_id,rubro_id,precio,stock_min FROM  `stock` WHERE 1 ");
 
         $departs=DB::select("SELECT id,nombre FROM  `departamentos` WHERE 1 ");
 
@@ -101,7 +101,7 @@ class StockController extends Controller
         }*/
 
 
-        $produc=DB::select("SELECT id,nombre,codigo,stock,categoria_id,tipo_id,rubro_id,precio,stock_min FROM  `stock` WHERE 1 ");
+        $produc=DB::select("SELECT id,nombre,codigo,stock,stock2,categoria_id,tipo_id,rubro_id,precio,stock_min FROM  `stock` WHERE 1 ");
 
         $departs=DB::select("SELECT id,nombre FROM  `departamentos` WHERE 1 ");
 
@@ -146,7 +146,7 @@ class StockController extends Controller
     {
 
 
-        $produc=DB::select("SELECT id,nombre,codigo,stock,categoria_id,tipo_id,rubro_id,precio,stock_min FROM  `stock` WHERE 1 ");
+        $produc=DB::select("SELECT id,nombre,codigo,stock,stock2,categoria_id,tipo_id,rubro_id,precio,stock_min FROM  `stock` WHERE 1 ");
 
         $departs=DB::select("SELECT id,nombre FROM  `departamentos` WHERE 1 ");
 
@@ -344,6 +344,7 @@ class StockController extends Controller
         $codigo=$request->input('codigo');
         $precio=$request->input('precio');
         $stock=$request->input('stock'); // num existencias
+        $stock2=$request->input('stock2'); // num existencias
         $peps=$request->input('peps');
         $valor_reposicion=$request->input('valor_reposicion');
         $stock_min=$request->input('stock_min');
@@ -409,6 +410,12 @@ class StockController extends Controller
         if ($stock != null && $stock!='')
         {
             $producto->stock = $stock;
+            $bandera=true;
+        }
+
+        if ($stock2 != null && $stock2!='')
+        {
+            $producto->stock2 = $stock2;
             $bandera=true;
         }
 

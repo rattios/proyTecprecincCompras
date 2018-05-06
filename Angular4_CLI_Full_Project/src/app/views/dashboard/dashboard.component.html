@@ -1,235 +1,238 @@
-<div class="animated fadeIn" *ngIf="!loading">
-  
-   <div class="row">
-    <div class="col-sm-6 col-lg-2" *ngFor="let d of departamentos">        
-      <div class="social-box"  style="border-radius: 20px" *ngIf="d.nombre!='Compras'">
-        <i style="font-size: larger; font-size: 15px; font-weight: bolder; font-style: initial; background:#4875b4; white-space: nowrap; color:#fff">{{d.nombre}}</i>
-        <ul>
-          <li>
-            <strong>{{d.countPedidos}}</strong>
-            <span>Pedidos</span>
-          </li>
-          <li>
-            <strong>{{d.countProductos}}</strong>
-            <span>Inventario</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-6 col-lg-3">
-      <div class="card" style="border-radius: 20px">
-        <div class="card-body p-0 clearfix">
-          <i class="icon-arrow-down-circle bg-primary p-4 font-2xl mr-3 float-left"></i>
-          <div class="h5 text-primary mb-0 pt-3">{{datos.estado0}}</div>
-          <div class="text-muted text-uppercase font-weight-bold font-xs">Entrantes</div>
+<div class="animated fadeIn" >
+  <img src="../assets/img/template.gif" style="position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;z-index: 99;width: 135px;margin-left: 50%;" *ngIf="loading">
+  <div *ngIf="!loading">
+    
+    <div class="row">
+      <div class="col-sm-6 col-lg-2" *ngFor="let d of departamentos">        
+        <div class="social-box"  style="border-radius: 20px" *ngIf="d.nombre!='Compras'">
+          <i style="font-size: larger; font-size: 15px; font-weight: bolder; font-style: initial; background:#4875b4; white-space: nowrap; color:#fff">{{d.nombre}}</i>
+          <ul>
+            <li>
+              <strong>{{d.countPedidos}}</strong>
+              <span>Pedidos</span>
+            </li>
+            <li>
+              <strong>{{d.countProductos}}</strong>
+              <span>Inventario</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-    <!--/.col-->
-    <div class="col-6 col-lg-3">
-      <div class="card" style="border-radius: 20px">
-        <div class="card-body p-0 clearfix">
-          <i class="icon-clock bg-info p-4 font-2xl mr-3 float-left"></i>
-          <div class="h5 text-info mb-0 pt-3">{{datos.estado1}}</div>
-          <div class="text-muted text-uppercase font-weight-bold font-xs">En curso</div>
+    <div class="row">
+      <div class="col-6 col-lg-3">
+        <div class="card" style="border-radius: 20px">
+          <div class="card-body p-0 clearfix">
+            <i class="icon-arrow-down-circle bg-primary p-4 font-2xl mr-3 float-left"></i>
+            <div class="h5 text-primary mb-0 pt-3">{{datos.estado0}}</div>
+            <div class="text-muted text-uppercase font-weight-bold font-xs">Entrantes</div>
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+      <div class="col-6 col-lg-3">
+        <div class="card" style="border-radius: 20px">
+          <div class="card-body p-0 clearfix">
+            <i class="icon-clock bg-info p-4 font-2xl mr-3 float-left"></i>
+            <div class="h5 text-info mb-0 pt-3">{{datos.estado1}}</div>
+            <div class="text-muted text-uppercase font-weight-bold font-xs">En curso</div>
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+      <div class="col-6 col-lg-3">
+        <div class="card" style="border-radius: 20px">
+          <div class="card-body p-0 clearfix">
+            <i class="icon-check bg-warning p-4 font-2xl mr-3 float-left"></i>
+            <div class="h5 text-warning mb-0 pt-3">{{datos.estado2}}</div>
+            <div class="text-muted text-uppercase font-weight-bold font-xs">Entregadas</div>
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+      <div class="col-6 col-lg-3">
+        <div class="card" style="border-radius: 20px">
+          <div class="card-body p-0 clearfix">
+            <i class="icon-close bg-danger p-4 font-2xl mr-3 float-left"></i>
+            <div class="h5 text-danger mb-0 pt-3">{{datos.estado4}}</div>
+            <div class="text-muted text-uppercase font-weight-bold font-xs">Canceladas</div>
+          </div>
         </div>
       </div>
     </div>
-    <!--/.col-->
-    <div class="col-6 col-lg-3">
-      <div class="card" style="border-radius: 20px">
-        <div class="card-body p-0 clearfix">
-          <i class="icon-check bg-warning p-4 font-2xl mr-3 float-left"></i>
-          <div class="h5 text-warning mb-0 pt-3">{{datos.estado2}}</div>
-          <div class="text-muted text-uppercase font-weight-bold font-xs">Entregadas</div>
-        </div>
-      </div>
-    </div>
-    <!--/.col-->
-    <div class="col-6 col-lg-3">
-      <div class="card" style="border-radius: 20px">
-        <div class="card-body p-0 clearfix">
-          <i class="icon-close bg-danger p-4 font-2xl mr-3 float-left"></i>
-          <div class="h5 text-danger mb-0 pt-3">{{datos.estado4}}</div>
-          <div class="text-muted text-uppercase font-weight-bold font-xs">Canceladas</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- <div class="row">
-    <div class="card-group" style="width: -webkit-fill-available">
-      <div class="card" *ngFor="let d of departamentos">
-        <div class="card-body" >
-          <div class="mb-0" style="font-size: 16px;text-align: center !important;font-weight: bold; color: #29aaca; white-space: nowrap;">{{d.nombre}}</div>
-          <br>
-          <div class="row" style="text-align: center;">
-            <div class="col-sm-6" style="border-right: 1px solid;color: #e4e5e6; border-top: 1px solid; padding-top: 7px;">
-              <strong class="h3 mb-0" style="color:#000">{{d.countPedidos}}</strong>
-              <span style="text-transform: uppercase;font-size: 11px;float: left;color: #a4b7c1 !important; font-weight: bold">Pedidos</span>
+    <!-- <div class="row">
+      <div class="card-group" style="width: -webkit-fill-available">
+        <div class="card" *ngFor="let d of departamentos">
+          <div class="card-body" >
+            <div class="mb-0" style="font-size: 16px;text-align: center !important;font-weight: bold; color: #29aaca; white-space: nowrap;">{{d.nombre}}</div>
+            <br>
+            <div class="row" style="text-align: center;">
+              <div class="col-sm-6" style="border-right: 1px solid;color: #e4e5e6; border-top: 1px solid; padding-top: 7px;">
+                <strong class="h3 mb-0" style="color:#000">{{d.countPedidos}}</strong>
+                <span style="text-transform: uppercase;font-size: 11px;float: left;color: #a4b7c1 !important; font-weight: bold">Pedidos</span>
+              </div>
+              <div class="col-sm-6" style="text-align: center; color:#e4e5e6; border-top: 1px solid; padding-top: 7px;">
+                <strong class="h3 mb-0" style="color:#000">{{d.countProductos}}</strong>
+                <span style="text-transform: uppercase;font-size: 11px;float: left;color: #a4b7c1; font-weight: bold">Inventario</span>
+              </div>  
             </div>
-            <div class="col-sm-6" style="text-align: center; color:#e4e5e6; border-top: 1px solid; padding-top: 7px;">
-              <strong class="h3 mb-0" style="color:#000">{{d.countProductos}}</strong>
-              <span style="text-transform: uppercase;font-size: 11px;float: left;color: #a4b7c1; font-weight: bold">Inventario</span>
-            </div>  
           </div>
         </div>
       </div>
-    </div>
-  </div> -->
-  <div class="row">
-    <div class="col-6 col-lg-4">
-      <div class="card" style="border-radius: 20px">
-        <div class="h5 mb-0" style="text-align: center; margin-top: 5%;">Inventario</div>
+    </div> -->
+    <div class="row">
+      <div class="col-6 col-lg-4">
+        <div class="card" style="border-radius: 20px">
+          <div class="h5 mb-0" style="text-align: center; margin-top: 5%;">Inventario</div>
+          <div class="card-body">
+            <div class="chart-wrapper">
+              <canvas baseChart class="chart"
+              [data]="pieChartData"
+              [labels]="pieChartLabels"
+              [chartType]="pieChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-4">
+        <div class="card" style="border-radius: 20px">
+          <div class="h5 mb-0" style="text-align: center; margin-top: 5%;">Solicitudes</div>
+          <div class="card-body">
+            <div class="chart-wrapper">
+              <canvas baseChart class="chart"
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColours"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-4">
+        <div class="card" style="border-radius: 20px">
+        <div class="h5 mb-0" style="text-align: center; margin-top: 5%;">Transferencias</div>
         <div class="card-body">
           <div class="chart-wrapper">
             <canvas baseChart class="chart"
-            [data]="pieChartData"
-            [labels]="pieChartLabels"
-            [chartType]="pieChartType"
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
             (chartHover)="chartHovered($event)"
             (chartClick)="chartClicked($event)"></canvas>
           </div>
         </div>
       </div>
+      </div>
     </div>
-    <div class="col-6 col-lg-4">
-      <div class="card" style="border-radius: 20px">
-        <div class="h5 mb-0" style="text-align: center; margin-top: 5%;">Solicitudes</div>
+
+
+
+    <div class="card-group">
+      <div class="card">
         <div class="card-body">
-          <div class="chart-wrapper">
-            <canvas baseChart class="chart"
-            [datasets]="lineChartData"
-            [labels]="lineChartLabels"
-            [options]="lineChartOptions"
-            [colors]="lineChartColours"
-            [legend]="lineChartLegend"
-            [chartType]="lineChartType"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>
+          <div class="h1 text-muted text-right mb-4">
+            <i class="fa fa-shopping-bag"></i>
           </div>
+          <div class="h4 mb-0">{{datos.productos}}</div>
+          <small class="text-muted text-uppercase font-weight-bold">Productos</small>
+          
         </div>
       </div>
-    </div>
-    <div class="col-6 col-lg-4">
-      <div class="card" style="border-radius: 20px">
-      <div class="h5 mb-0" style="text-align: center; margin-top: 5%;">Transferencias</div>
-      <div class="card-body">
-        <div class="chart-wrapper">
-          <canvas baseChart class="chart"
-          [datasets]="barChartData"
-          [labels]="barChartLabels"
-          [options]="barChartOptions"
-          [legend]="barChartLegend"
-          [chartType]="barChartType"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"></canvas>
-        </div>
-      </div>
-    </div>
-    </div>
-  </div>
-
-
-
-  <div class="card-group">
-    <div class="card">
-      <div class="card-body">
-        <div class="h1 text-muted text-right mb-4">
-          <i class="fa fa-shopping-bag"></i>
-        </div>
-        <div class="h4 mb-0">{{datos.productos}}</div>
-        <small class="text-muted text-uppercase font-weight-bold">Productos</small>
-        
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <div class="h1 text-muted text-right mb-4">
-          <i class="fa fa-building"></i>
-        </div>
-        <div class="h4 mb-0">{{datos.countDepartamentos}}</div>
-        <small class="text-muted text-uppercase font-weight-bold">Departamentos</small>
-        
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <div class="h1 text-muted text-right mb-4">
-          <i class="fa fa-users"></i>
-        </div>
-        <div class="h4 mb-0">{{datos.proveedores}}</div>
-        <small class="text-muted text-uppercase font-weight-bold">Proveedores</small>
-        
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <div class="h1 text-muted text-right mb-4">
-          <i class="fa fa-building-o"></i>
-        </div>
-        <div class="h4 mb-0">{{datos.centro_costos}}</div>
-        <small class="text-muted text-uppercase font-weight-bold">Centro costos</small>
-        
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <div class="h1 text-muted text-right mb-4">
-          <i class="fa fa-edit"></i>
-        </div>
-        <div class="h4 mb-0">{{datos.contratos}}</div>
-        <small class="text-muted text-uppercase font-weight-bold">Contratos</small>
-        
-      </div>
-    </div>
-  </div>
-
-
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card"  style="border-radius: 20px">
+      <div class="card">
         <div class="card-body">
+          <div class="h1 text-muted text-right mb-4">
+            <i class="fa fa-building"></i>
+          </div>
+          <div class="h4 mb-0">{{datos.countDepartamentos}}</div>
+          <small class="text-muted text-uppercase font-weight-bold">Departamentos</small>
           
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="h1 text-muted text-right mb-4">
+            <i class="fa fa-users"></i>
+          </div>
+          <div class="h4 mb-0">{{datos.proveedores}}</div>
+          <small class="text-muted text-uppercase font-weight-bold">Proveedores</small>
           
-          <br>
-          <div class="table-responsive"></div>
-          <table class="table table-responsive table-hover table-outline mb-0">
-            <thead class="thead-default">
-              <tr>
-                <th class="text-center">ID</th>
-                <th>USUARIO</th>
-                <th>DEPARTAMENTO</th>
-                <th class="text-center">CANTIDAD</th>
-                <th>CENTRO DE COSTO</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let u of ultimosPedidos">
-                <td class="text-center">
-                  {{u.id}}
-                </td>
-                <td>
-                  {{u.usuario.nombre}}
-                </td>
-                <td>
-                  {{u.departamento.nombre}}
-                </td>
-                <td class="text-center">
-                  {{u.cantidad}}
-                </td>
-                <td>
-                  {{u.centro_costos.descripcion}}
-                </td>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="h1 text-muted text-right mb-4">
+            <i class="fa fa-building-o"></i>
+          </div>
+          <div class="h4 mb-0">{{datos.centro_costos}}</div>
+          <small class="text-muted text-uppercase font-weight-bold">Centro costos</small>
+          
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="h1 text-muted text-right mb-4">
+            <i class="fa fa-edit"></i>
+          </div>
+          <div class="h4 mb-0">{{datos.contratos}}</div>
+          <small class="text-muted text-uppercase font-weight-bold">Contratos</small>
+          
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card"  style="border-radius: 20px">
+          <div class="card-body">
+            
+            
+            <br>
+            <div class="table-responsive"></div>
+            <table class="table table-responsive table-hover table-outline mb-0">
+              <thead class="thead-default">
+                <tr>
+                  <th class="text-center">ID</th>
+                  <th>USUARIO</th>
+                  <th>DEPARTAMENTO</th>
+                  <th class="text-center">CANTIDAD</th>
+                  <th>CENTRO DE COSTO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let u of ultimosPedidos">
+                  <td class="text-center">
+                    {{u.id}}
+                  </td>
+                  <td>
+                    {{u.usuario.nombre}}
+                  </td>
+                  <td>
+                    {{u.departamento.nombre}}
+                  </td>
+                  <td class="text-center">
+                    {{u.cantidad}}
+                  </td>
+                  <td>
+                    {{u.centro_costos.descripcion}}
+                  </td>
+                  
+                </tr>
                 
-              </tr>
-              
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-    </div><!--/.col-->
-  </div><!--/.row-->
+      </div><!--/.col-->
+    </div><!--/.row-->
+  </div>
 </div>

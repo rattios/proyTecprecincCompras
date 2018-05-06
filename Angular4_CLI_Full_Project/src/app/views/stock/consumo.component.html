@@ -14,8 +14,9 @@
           </div>
           <table class="table table-striped">
             <thead>
-              <th>stock</th>
-              <th>nombre</th>
+              <th>Nombre</th>
+              <th>Principal</th>
+              <th>Secundario</th>
               <th>Precio</th>
               <th>Código</th>
               <!--<th>Categoria</th>
@@ -24,8 +25,9 @@
             <tbody>
                <tr *ngFor="let item of items">
                   
-                  <td>{{item.stock}}</td>
                   <td>{{item.nombre}}</td>
+                  <td>{{item.stock}}</td>
+                  <td>{{item.stock2}}</td>
                   <td>{{item.precio}}</td>
                   <td>{{item.codigo}}</td>
                   <!--<td>{{item.categoria}}</td>
