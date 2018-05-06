@@ -20,6 +20,20 @@ export class DashboardComponent implements OnInit {
   public pieChartData: number[] = [1, 1,1];
   public pieChartType = 'pie';
 
+  // barChart
+  public barChartOptions: any = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
+  public barChartLabels: string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartType = 'bar';
+  public barChartLegend = true;
+
+  public barChartData: any[] = [
+    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
+    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+  ];
+
   public lineChartData: Array<any> = [
     {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
     {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'},
@@ -86,12 +100,14 @@ export class DashboardComponent implements OnInit {
                this.departamentos.push(this.datos.departamentos[i]);
              }
            }
+           this.barChartLabels= this.datos.ejeXt;
+           this.barChartData= [{data: this.datos.ejeYt, label: 'Últimas transferencias'}];
 
            this.pieChartData = [this.datos.stocks, 5000,this.datos.stockdepartamentos];
-           this.lineChartData = [
-              {data: this.datos.ejeY, label: 'Solicitudes'},
-            ];
-            this.lineChartLabels= this.datos.ejeX;
+
+           this.lineChartData = [{data: this.datos.ejeY, label: 'Últimas Solicitudes'}];
+           this.lineChartLabels= this.datos.ejeX;
+
            this.loading=false;
           },
          msg => { 

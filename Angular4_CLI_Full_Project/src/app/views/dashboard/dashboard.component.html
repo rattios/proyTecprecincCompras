@@ -79,7 +79,7 @@
     </div>
   </div> -->
   <div class="row">
-    <div class="col-6 col-lg-6">
+    <div class="col-6 col-lg-4">
       <div class="card" style="border-radius: 20px">
         <div class="h5 mb-0" style="text-align: center; margin-top: 5%;">Inventario</div>
         <div class="card-body">
@@ -94,7 +94,7 @@
         </div>
       </div>
     </div>
-    <div class="col-6 col-lg-6">
+    <div class="col-6 col-lg-4">
       <div class="card" style="border-radius: 20px">
         <div class="h5 mb-0" style="text-align: center; margin-top: 5%;">Solicitudes</div>
         <div class="card-body">
@@ -111,6 +111,23 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="col-6 col-lg-4">
+      <div class="card" style="border-radius: 20px">
+      <div class="h5 mb-0" style="text-align: center; margin-top: 5%;">Transferencias</div>
+      <div class="card-body">
+        <div class="chart-wrapper">
+          <canvas baseChart class="chart"
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [legend]="barChartLegend"
+          [chartType]="barChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 

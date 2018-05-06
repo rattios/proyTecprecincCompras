@@ -137,7 +137,8 @@ class DashboardController extends Controller
         $usuarios = DB::select("SELECT `id`,`departamento_id`, `nombre`,`rol` FROM `usuarios` WHERE 1");
         $departamentos = DB::select("SELECT `id`,`nombre` FROM `departamentos` WHERE 1");
         $pedidos = DB::select("SELECT `estado`, `usuario_id`, `created_at`, `aprobar` FROM `pedidos` WHERE 1");
-        $transferencias=DB::select("SELECT `id` FROM `transferencias` WHERE `estado`=1");
+        $transferencias=DB::select("SELECT `id`,`created_at` FROM `transferencias` WHERE `estado`=1");
+        $ultimosTransferencias=DB::select("SELECT `id`,`created_at` FROM `transferencias` WHERE `estado`=1 ORDER BY `id` DESC LIMIT 10");
         $ultimosPedidos = DB::select("SELECT * FROM `pedidos` ORDER BY `pedidos`.`id` DESC LIMIT 15");
         $proveedores = DB::select("SELECT `id`,`razon_social` FROM `proveedores` WHERE 1");
         $productos = DB::select("SELECT `nombre` FROM `productos` WHERE 1");
@@ -148,6 +149,8 @@ class DashboardController extends Controller
         $eje=[];
         $ejeX=[];
         $ejeY=[];
+        $ejeXt=[];
+        $ejeYt=[];
         for ($i=0; $i < count($ultimosPedidos); $i++) { 
             $ultimosPedidos[$i]->usuario=[];
             $ultimosPedidos[$i]->departamento=[];
@@ -175,8 +178,13 @@ class DashboardController extends Controller
             if ($this->fechaIgual($f,$ejeX)) {
                 array_push($ejeX,$f);
             }
-
             
+        }
+        for ($i=0; $i < count($ultimosTransferencias); $i++) { 
+            $f=substr($ultimosTransferencias[$i]->created_at, 5,5);
+            if ($this->fechaIgual($f,$ejeXt)) {
+                array_push($ejeXt,$f);
+            }
         }
         
         $pedidoDepartamentos=[];
@@ -232,6 +240,19 @@ class DashboardController extends Controller
             //array_push($eje,array('ejeX' => $ejeX[$i],'ejeY' => $cantidad));
             $cantidadP=0;
         }
+
+        $ejeXt=array_reverse($ejeXt);
+        $cantidadP=0;
+        for ($i=0; $i < count($ejeXt); $i++) { 
+            for ($j=0; $j < count($ultimosTransferencias); $j++) { 
+                if (substr($ultimosTransferencias[$j]->created_at, 5,5)==$ejeXt[$i]) {
+                    $cantidadP=$cantidadP+1;
+                }
+            }
+             array_push($ejeYt,$cantidadP);
+            //array_push($eje,array('ejeX' => $ejeX[$i],'ejeY' => $cantidad));
+            $cantidadP=0;
+        }
         
         
         return response()->json(['status'=>'ok',
@@ -253,6 +274,8 @@ class DashboardController extends Controller
             'transferencias'=>count($transferencias),
             'ejeX'=>$ejeX,
             'ejeY'=>$ejeY,
+            'ejeXt'=>$ejeXt,
+            'ejeYt'=>$ejeYt,
                 ], 200);
 
     }
