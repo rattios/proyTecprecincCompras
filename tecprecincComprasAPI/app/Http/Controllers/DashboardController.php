@@ -122,25 +122,38 @@ class DashboardController extends Controller
         
     }
 
+    public function fechaIgual($aComparar, $arreglo)
+    {
+        for ($i=0; $i < count($arreglo); $i++) { 
+            if ($arreglo[$i]==$aComparar) {
+
+                return false;
+            }
+        }
+        return true;
+    }
     public function dashboard(Request $request)
     {
         $usuarios = DB::select("SELECT `id`,`departamento_id`, `nombre`,`rol` FROM `usuarios` WHERE 1");
         $departamentos = DB::select("SELECT `id`,`nombre` FROM `departamentos` WHERE 1");
         $pedidos = DB::select("SELECT `estado`, `usuario_id`, `created_at`, `aprobar` FROM `pedidos` WHERE 1");
         $transferencias=DB::select("SELECT `id` FROM `transferencias` WHERE `estado`=1");
-        $ultimosPedidos = DB::select("SELECT * FROM `pedidos` ORDER BY `pedidos`.`id` DESC LIMIT 10");
+        $ultimosPedidos = DB::select("SELECT * FROM `pedidos` ORDER BY `pedidos`.`id` DESC LIMIT 15");
         $proveedores = DB::select("SELECT `id`,`razon_social` FROM `proveedores` WHERE 1");
         $productos = DB::select("SELECT `nombre` FROM `productos` WHERE 1");
         $stocks = DB::select("SELECT `nombre`,`stock` FROM `stock` WHERE 1");
         $stockdepartamentos = DB::select("SELECT `stock`,`departamento_id`  FROM `stockdepartamentos` WHERE 1");
         $centro_costos = DB::select("SELECT `descripcion` FROM `centro_costos` WHERE 1");
         $contratos = DB::select("SELECT `nombre` FROM `contratos` WHERE 1");
-        
+        $eje=[];
+        $ejeX=[];
+        $ejeY=[];
         for ($i=0; $i < count($ultimosPedidos); $i++) { 
             $ultimosPedidos[$i]->usuario=[];
             $ultimosPedidos[$i]->departamento=[];
             $ultimosPedidos[$i]->cantidad=0;
             $ultimosPedidos[$i]->centro_costos='';
+            
             for ($j=0; $j < count($usuarios); $j++) { 
                 if ($ultimosPedidos[$i]->usuario_id==$usuarios[$j]->id) {
                     $ultimosPedidos[$i]->usuario=$usuarios[$j];
@@ -157,6 +170,12 @@ class DashboardController extends Controller
             }
             $cc = DB::select("SELECT `descripcion` FROM `centro_costos` WHERE `id`=".$ultimosPedidos[$i]->centro_costos_id);
             $ultimosPedidos[$i]->centro_costos=$cc[0];
+            
+            $f=substr($ultimosPedidos[$i]->created_at, 5,5);
+            if ($this->fechaIgual($f,$ejeX)) {
+                array_push($ejeX,$f);
+            }
+
             
         }
         
@@ -200,6 +219,21 @@ class DashboardController extends Controller
                 $estado4++;
             }
         }
+
+        $ejeX=array_reverse($ejeX);
+        $cantidadP=0;
+        for ($i=0; $i < count($ejeX); $i++) { 
+            for ($j=0; $j < count($ultimosPedidos); $j++) { 
+                if (substr($ultimosPedidos[$j]->created_at, 5,5)==$ejeX[$i]) {
+                    $cantidadP=$cantidadP+1;
+                }
+            }
+             array_push($ejeY,$cantidadP);
+            //array_push($eje,array('ejeX' => $ejeX[$i],'ejeY' => $cantidad));
+            $cantidadP=0;
+        }
+        
+        
         return response()->json(['status'=>'ok',
             'usuarios'=>count($usuarios),
             'departamentos'=>$departamentos,
@@ -216,10 +250,11 @@ class DashboardController extends Controller
             'estado1'=>$estado1,
             'estado2'=>$estado2,
             'estado4'=>$estado4,
-            'transferencias'=>count($transferencias)
+            'transferencias'=>count($transferencias),
+            'ejeX'=>$ejeX,
+            'ejeY'=>$ejeY,
                 ], 200);
 
-        
     }
 
     /**

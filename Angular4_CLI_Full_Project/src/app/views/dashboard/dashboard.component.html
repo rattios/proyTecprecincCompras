@@ -94,7 +94,26 @@
         </div>
       </div>
     </div>
+    <div class="col-6 col-lg-6">
+      <div class="card" style="border-radius: 20px">
+        <div class="h5 mb-0" style="text-align: center; margin-top: 5%;">Solicitudes</div>
+        <div class="card-body">
+          <div class="chart-wrapper">
+            <canvas baseChart class="chart"
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [colors]="lineChartColours"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
 
 
   <div class="card-group">
@@ -166,7 +185,7 @@
                 <th class="text-center">ID</th>
                 <th>USUARIO</th>
                 <th>DEPARTAMENTO</th>
-                <th>CANTIDAD</th>
+                <th class="text-center">CANTIDAD</th>
                 <th>CENTRO DE COSTO</th>
               </tr>
             </thead>
