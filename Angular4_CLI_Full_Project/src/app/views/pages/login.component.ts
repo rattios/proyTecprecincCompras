@@ -35,7 +35,11 @@ export class LoginComponent {
             localStorage.setItem('tecprecinc_apellido', this.result.user.apellido);
             localStorage.setItem('tecprecinc_rol', this.result.user.rol);
             setTimeout(()=>{    //<<<---    using ()=> syntax
-                  this.router.navigate(['proveedores'], {});
+                if(this.result.user.rol==0) {
+                  this.router.navigate(['dashboard'], {});
+                }else{
+                  this.router.navigate(['pedidos/pedido'], {});
+                }
              },10);
             
             console.log(localStorage.getItem('tecprecinc_departamento_id'));

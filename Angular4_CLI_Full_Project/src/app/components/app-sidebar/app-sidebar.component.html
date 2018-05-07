@@ -8,7 +8,7 @@
       <li class="nav-title">
         Menú
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngxPermissionsOnly="[0]">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']"><i class="icon-speedometer"></i> Dashboard <!-- <span class="badge badge-info">NEW</span> --></a>
       </li>
       <!-- <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
