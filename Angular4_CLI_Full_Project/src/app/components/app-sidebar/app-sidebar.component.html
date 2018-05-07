@@ -3,14 +3,14 @@
   <app-sidebar-form></app-sidebar-form>
   <nav class="sidebar-nav">
     <ul class="nav">
-     <!-- <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']"><i class="icon-speedometer"></i> Dashboard <span class="badge badge-info">NEW</span></a>
-      </li> -->
+       
       <li class="divider"></li>
       <li class="nav-title">
         Menú
       </li>
-
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']"><i class="icon-speedometer"></i> Dashboard <!-- <span class="badge badge-info">NEW</span> --></a>
+      </li>
       <!-- <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Components</a>
         <ul class="nav-dropdown-items">
@@ -90,20 +90,35 @@
         </ul>
       </li>
 
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0]">
-        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-drawer"></i> Stock/Productos</a>
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1]">
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="fa fa-database"></i> Inventarios</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item" *ngxPermissionsOnly="[0]">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/stock']"><i class="icon-list"></i> Todos los productos</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/inventario/principal']"><i class="icon-list"></i> Stock principal</a>
           </li>
           <li class="nav-item" *ngxPermissionsOnly="[0]">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/uso']"><i class="icon-briefcase"></i> Bienes de uso</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/inventario/secundario']"><i class="fa fa-list"></i> Stock secundario</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/inventario/stockDepartamento']"><i class="fa fa-list"></i> Stock del departamento</a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0]">
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-drawer"></i> Productos</a>
+        <ul class="nav-dropdown-items">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/productos/stock']"><i class="icon-list"></i> Todos los productos</a>
           </li>
           <li class="nav-item" *ngxPermissionsOnly="[0]">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/consumo']"><i class="icon-chemistry"></i> Bienes de cosumo</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/productos/uso']"><i class="icon-briefcase"></i> Bienes de uso</a>
           </li>
           <li class="nav-item" *ngxPermissionsOnly="[0]">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock/servicio']"><i class="icon-basket-loaded"></i> Servicios</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/productos/consumo']"><i class="icon-chemistry"></i> Bienes de cosumo</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/productos/servicio']"><i class="icon-basket-loaded"></i> Servicios</a>
           </li>
         </ul>
       </li>
@@ -148,10 +163,10 @@
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/proveedores']"><i class="icon-wrench"></i> Proveedores</a>
       </li>
       
-      <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
+      <!--<li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/mensajes']"><i class="icon-bubbles"></i> Mensajes</a>
       </li>
-      <!--
+      
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Components</a>
         <ul class="nav-dropdown-items">

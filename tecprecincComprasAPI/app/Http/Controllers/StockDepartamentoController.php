@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 
 class StockDepartamentoController extends Controller
 {
@@ -23,6 +24,30 @@ class StockDepartamentoController extends Controller
             return response()->json(['error'=>'No existen productos en el stock de los departamentos.'], 404);          
         }else{
             return response()->json(['productos'=>$productos], 200);
+        } 
+    }
+
+    public function StockDepartamento(Request $request)
+    {
+        $departamento_id=$request->input('departamento_id');
+        $productos=[];
+        $stockdepartamentos=DB::select("SELECT * FROM `stockdepartamentos` WHERE `departamento_id`=".$departamento_id);
+       for ($i=0; $i < count($stockdepartamentos); $i++) { 
+           //$stockdepartamentos[$i]->productos=$productos;
+           $stockdepartamentos[$i]->nombre='';
+           $stockdepartamentos[$i]->codigo='';
+           $p=DB::select("SELECT `nombre`,`codigo` FROM `stock` WHERE `id`=".$stockdepartamentos[$i]->stock_id);
+            for ($j=0; $j < count($p); $j++) { 
+                //array_push($stockdepartamentos[$i]->productos,$p[$j]);
+                $stockdepartamentos[$i]->nombre=$p[0]->nombre;
+                $stockdepartamentos[$i]->codigo=$p[0]->codigo;
+            }
+        }
+        
+        if(count($stockdepartamentos) == 0){
+            return response()->json(['error'=>'No existen productos en el stock de los departamentos.'], 404);          
+        }else{
+            return response()->json(['productos'=>$stockdepartamentos], 200);
         } 
     }
 

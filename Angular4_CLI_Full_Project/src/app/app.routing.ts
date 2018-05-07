@@ -58,8 +58,12 @@ export const routes: Routes = [
         loadChildren: './views/pedidos/pedidos.module#pedidosModule'
       },
       {
-        path: 'stock',
-        loadChildren: './views/stock/stock.module#stockModule'
+        path: 'inventario',
+        loadChildren: './views/inventario/stock.module#stockModule'
+      },
+      {
+        path: 'productos',
+        loadChildren: './views/productos/stock.module#stockModule'
       },
       {
         path: 'cc',

@@ -121,6 +121,7 @@ Route::group(  ['middleware' =>'cors'], function(){
 
         Route::get('/prestock','PrestockController@index');
         //----Pruebas StockController
+        Route::get('/stockDepar','StockDepartamentoController@StockDepartamento');
         Route::get('/stockDepartamento','StockDepartamentoController@index');
         Route::post('/stockDepartamento','StockDepartamentoController@store');
         Route::put('/stockDepartamento/{id}','StockDepartamentoController@update');
