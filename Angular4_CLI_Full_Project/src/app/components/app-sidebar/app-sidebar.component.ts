@@ -11,8 +11,9 @@ export class AppSidebar {
 
   //wait for the component to render completely
   ngOnInit(): void {
+    
     const perm = [localStorage.getItem('tecprecinc_rol')];
-
+    this.permissionsService.flushPermissions();
     this.permissionsService.loadPermissions(perm);
     
     var nativeElement: HTMLElement = this.el.nativeElement,

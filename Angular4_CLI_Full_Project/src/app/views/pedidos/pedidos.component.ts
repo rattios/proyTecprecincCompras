@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import { HttpClient, HttpParams  } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../services/ruta.service';
 
@@ -28,10 +28,13 @@ export class pedidosComponent {
 
    ngOnInit(): void {
       this.loading=true;
-
-
-      this.http.get(this.ruta.get_ruta()+'stock_centro_costos')
-           .toPromise()
+      let headers = new HttpHeaders();
+      headers = headers.append("Authorization", "Bearer " + localStorage.getItem('tecprecinc_token'));
+      //headers = headers.append("Content-Type", "application/json");
+    
+      this.http.get(this.ruta.get_ruta()+'stock/permitido', {
+            headers: headers
+        }).toPromise()
            .then(
            data => {
              this.prov=data;

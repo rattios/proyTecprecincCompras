@@ -21,8 +21,11 @@ class StockController extends Controller
          if ($currentUser) {       
        
              $dep = \App\Departamento::with('permisos_productos')->find($currentUser->departamento_id);        
+             $productos = $dep->permisos_productos;
+
+             $centrocostos = \App\CentroCostos::with('contratos')->get();
        
-             return response()->json(['departamento'=>$dep], 200);     
+             return response()->json(['productos'=>$productos, 'centrocostos'=>$centrocostos], 200);     
          }else{        
              return response()->json(['error'=>'Usuario no encontrado.'], 404);        
          }     
