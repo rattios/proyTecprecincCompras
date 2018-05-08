@@ -84,6 +84,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/productos/{id}','ProductoController@show');
         Route::get('/productos/{id}/categoria','ProductoController@productoCategoria');
         Route::get('/productos/{id}/proveedores','ProductoController@productoProveedores');
+        Route::get('/productos/sincronizar/tablas','ProductoController@sincronizar');
         
         //----Pruebas PedidoController
         Route::get('/pedidos','PedidoController@index');

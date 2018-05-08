@@ -27,7 +27,7 @@ class Stock extends Model
     protected $fillable = ['nombre', 'codigo', 'precio',
 			'stock','stock2', 'peps', 'valor_reposicion',
 			'stock_min', 'partida_parcial', 'categoria_id','tipo_id','rubro_id',
-			'proveedor_id'];
+			'proveedor_id', 'producto_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -63,6 +63,13 @@ class Stock extends Model
     public function permisos_departs(){
         // 1 un producto del stock puede ser visto por muchos departamentos
         return $this->belongsToMany('\App\Departamento','stock_permisos_departs','stock_id','departamento_id')/*->withTimestamps()*/; 
+    }
+
+    // Relación de stock con producto:
+    public function producto()
+    {
+        // 1 producto del stock pertenece a un producto
+        return $this->belongsTo('App\Producto', 'producto_id');
     }
 
 
