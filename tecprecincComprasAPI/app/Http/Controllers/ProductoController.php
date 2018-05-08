@@ -231,4 +231,21 @@ class ProductoController extends Controller
 
         return response()->json(['status'=>'ok', 'message'=>'Se ha eliminado correctamente el producto.'], 200);
     }
+
+    /*Cargar un producto con los proveedores que lo ofrecen*/
+    public function productoProveedores($id)
+    {
+        //cargar un producto con sus proveedores 
+        $producto = \App\Producto::with('proveedores')->find($id);
+
+        if(count($producto)==0){
+            return response()->json(['error'=>'No existe el producto con id '.$id], 404);          
+        }else{
+
+            //cargar la servicios del categoria
+            //$producto->categoria = $producto->categoria()->get();
+
+            return response()->json(['producto'=>$producto], 200);
+        } 
+    }
 }

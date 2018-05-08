@@ -83,6 +83,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::delete('/productos/{id}','ProductoController@destroy');
         Route::get('/productos/{id}','ProductoController@show');
         Route::get('/productos/{id}/categoria','ProductoController@productoCategoria');
+        Route::get('/productos/{id}/proveedores','ProductoController@productoProveedores');
         
         //----Pruebas PedidoController
         Route::get('/pedidos','PedidoController@index');
