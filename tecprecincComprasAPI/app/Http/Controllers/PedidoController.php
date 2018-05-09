@@ -524,38 +524,65 @@ class PedidoController extends Controller
         //vienes de consumo
         else if ($picking->tipo_id == 1) {
             
-            //Descontar del stock
-            $descontar = $picking->stock - $picking->pivot->cantidad;
+            if ($picking->almacen == 'principal') {
+                //Descontar del stock principal
+                $descontar = $picking->stock - $picking->pivot->cantidad;
 
-            DB::table('stock')
-                ->where('id', $picking->id)
-                ->update(['stock' => $descontar]);
+                DB::table('stock')
+                    ->where('id', $picking->id)
+                    ->update(['stock' => $descontar]);
 
+                $picking->stock = $descontar;
+            }
+            else{
+                //Descontar del stock secundario
+                $descontar = $picking->stock2 - $picking->pivot->cantidad;
+
+                DB::table('stock')
+                    ->where('id', $picking->id)
+                    ->update(['stock2' => $descontar]);
+
+                $picking->stock2 = $descontar;
+            }
+            
             DB::table('pedido_stock')
                 ->where('pedido_id', $picking->pivot->pedido_id)
                 ->where('stock_id', $picking->pivot->stock_id)
                 ->update(['entregado' => 1]);
-
-            $picking->stock = $descontar;
+            
             $picking->pivot->entregado = 1;
 
             return response()->json(['message'=>'Se ha descontado la cantidad solicitada del stock.', 'picking'=>$picking], 200);
 
         //vienes de uso
         }else if($picking->tipo_id == 2){
-            
-            $descontar = $picking->stock - $picking->pivot->cantidad;
 
-            DB::table('stock')
-                ->where('id', $picking->id)
-                ->update(['stock' => $descontar]);
+            if ($picking->almacen == 'principal') {
+                //Descontar del stock principal
+                $descontar = $picking->stock - $picking->pivot->cantidad;
+
+                DB::table('stock')
+                    ->where('id', $picking->id)
+                    ->update(['stock' => $descontar]);
+                }
+
+                $picking->stock = $descontar;
+            else{
+                //Descontar del stock secundario
+                $descontar = $picking->stock2 - $picking->pivot->cantidad;
+
+                DB::table('stock')
+                    ->where('id', $picking->id)
+                    ->update(['stock2' => $descontar]);
+
+                $picking->stock2 = $descontar;
+            }
 
             DB::table('pedido_stock')
                 ->where('pedido_id', $picking->pivot->pedido_id)
                 ->where('stock_id', $picking->pivot->stock_id)
                 ->update(['entregado' => 1]);
 
-            $picking->stock = $descontar;
             $picking->pivot->entregado = 1;
 
             //verificar si no existe el producto en el departamento para crearlo
