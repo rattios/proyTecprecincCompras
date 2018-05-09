@@ -249,21 +249,4 @@ class ProductoController extends Controller
         } 
     }
 
-    public function sincronizar()
-    { 
-        $productos = \App\Producto::all();
-        $stocks = \App\Stock::all();
-
-        for ($i=0; $i < count($productos) ; $i++) { 
-            $productos[$i]->codigo = $stocks[$i]->codigo;
-            $productos[$i]->precio = $stocks[$i]->precio;
-            $productos[$i]->save();
-
-            $stocks[$i]->producto_id = $productos[$i]->id;
-            $stocks[$i]->save();
-         } 
-
-         return 1;
-        
-    }
 }
