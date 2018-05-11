@@ -106,6 +106,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::put('/proveedores/{id}','ProveedorController@update');
         Route::delete('/proveedores/{id}','ProveedorController@destroy');
         Route::get('/proveedores/{id}','ProveedorController@show');
+        Route::get('/proveedores/{id}/categorias','ProveedorController@proveedorCats');
 
         //----Pruebas StockController
         Route::get('/stock','StockController@index');

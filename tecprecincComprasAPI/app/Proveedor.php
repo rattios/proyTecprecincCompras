@@ -56,4 +56,12 @@ class Proveedor extends Model
         // 1 proveedor puede tener varios productos en el stock(almacen)
         return $this->hasMany('App\Stock', 'proveedor_id');
     }
+
+    // Relación de proveedor con categorias:
+    public function categorias()
+    {
+        // 1 proveedor puede tener varias categorias
+        return $this->belongsToMany('\App\Categoria','proveedores_categorias','proveedor_id','categoria_id')
+            /*->withTimestamps()*/; 
+    }
 }

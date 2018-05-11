@@ -95,6 +95,18 @@ class ProveedorController extends Controller
             } 
         }
 
+        if ($request->input('categorias')) {
+            //Verificar que todas las categorias existen
+            $categorias = json_decode($request->input('categorias'));
+            for ($i=0; $i < count($categorias) ; $i++) { 
+                $aux6 = \App\Categoria::find($categorias[$i]->id);
+                if(count($aux6) == 0){
+                   // Devolvemos un código 409 Conflict. 
+                    return response()->json(['error'=>'No existe la categoria con id '.$categorias[$i]->id], 409);
+                }   
+            } 
+        }
+
         $nuevoProveedor=new \App\Proveedor;
         //$nuevoProveedor=$request->all();
         $nuevoProveedor->razon_social=$request->input('razon_social');
@@ -118,6 +130,16 @@ class ProveedorController extends Controller
                        
                 }
             }
+
+            if ($request->input('categorias')) {
+                //Crear las relaciones en la tabla pivote
+                for ($i=0; $i < count($categorias) ; $i++) { 
+
+                    $nuevoProveedor->categorias()->attach($categorias[$i]->id);
+                       
+                }
+            }
+
             
             return response()->json(['status'=>'ok', 'proveedor'=>$nuevoProveedor], 200);
         }else{
@@ -189,6 +211,7 @@ class ProveedorController extends Controller
         $motivo=$request->input('motivo');      
         $direccion=$request->input('direccion');      
         $forma_pago=$request->input('forma_pago');
+        $categorias=$request->input('categorias');
 
         // Creamos una bandera para controlar si se ha modificado algún dato.
         $bandera = false;
@@ -312,6 +335,22 @@ class ProveedorController extends Controller
              $bandera=true;        
          }
 
+         if ($categorias != null && $categorias!='')
+        {
+            //Eliminar las relaciones(categorias) en la tabla pivote
+            $proveedor->categorias()->detach();
+
+            //Crear las nuevas relaciones en la tabla pivote
+            $categorias = json_decode($request->input('categorias'));
+            
+            for ($i=0; $i < count($categorias) ; $i++) { 
+
+                $proveedor->categorias()->attach($categorias[$i]->id);       
+            }
+            
+            $bandera=true;
+        }
+
         if ($bandera)
         {
             // Almacenamos en la base de datos el registro.
@@ -354,5 +393,20 @@ class ProveedorController extends Controller
         $proveedor->delete();
 
         return response()->json(['status'=>'ok', 'message'=>'Se ha eliminado correctamente el proveedor.'], 200);
+    }
+
+    /*Retorna un proveedor id con sus categorias asociadas*/
+    public function proveedorCats($id)
+    {
+        //cargar un proveedor
+        $proveedor = \App\Proveedor::with('categorias.productos')->find($id);
+
+        if(count($proveedor)==0){
+            return response()->json(['error'=>'No existe el proveedor con id '.$id], 404);          
+        }else{
+
+            //$proveedor->productos = $proveedor->productos;
+            return response()->json(['proveedor'=>$proveedor], 200);
+        }
     }
 }
