@@ -1,0 +1,26 @@
+<div class="row">
+	<div class="col-lg-12">
+		<br>
+      	 <strong>Cantidad solicitada:</strong> {{producto.pivot.cantidad}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Producto:</strong> {{producto.nombre}}
+      	<br><br>
+      	<table class="table table-striped">
+        	<thead>
+        		<th>Almacén</th>
+        		<th>En stock</th>
+            <th></th>
+        	</thead>
+        	<tbody>
+           		<tr>
+           			<td>Principal</td>
+                <td>{{producto.stock}}</td>
+              	<td style="text-align:right"><button type="button" class="btn btn-success" (click)=picking(producto,1)>Picking</button></td>
+           		</tr> 
+              <tr>
+                <td>Secundario</td>
+                <td>{{producto.stock2}}</td>
+                <td style="text-align:right"><button type="button" class="btn btn-success" (click)=picking(producto,2)>Picking</button></td>
+              </tr>
+        	</tbody>
+      	</table>
+    </div>	
+</div>

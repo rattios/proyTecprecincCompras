@@ -136,6 +136,7 @@ export class ProveedoresComponent {
         formaPago: this.proveedor.formaPago,
         telefonos: JSON.stringify(this.proveedor.telefonos)
       }
+      console.log(send);
       this.http.post(this.ruta.get_ruta()+'proveedores',send)
            .toPromise()
            .then(
@@ -162,6 +163,7 @@ export class ProveedoresComponent {
                     },
                    msg => { 
                      console.log(msg);
+
                      this.loading=false;
                    });
              
@@ -170,6 +172,7 @@ export class ProveedoresComponent {
            msg => { 
              console.log(msg);
              this.fail=true;
+             console.log(msg.error);
               setTimeout(() => {  
                 this.fail=false;
               }, 4000);

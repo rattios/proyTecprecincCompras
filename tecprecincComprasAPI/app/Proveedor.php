@@ -26,8 +26,7 @@ class Proveedor extends Model
      */
     protected $fillable = ['razon_social', 'nombre_fantacia', 'cuit',
 		'telefono', 'fax', 'email',
-		'habilitado', 'estado', 'calificacion',
-        'motivo', 'direccion', 'forma_pago'];
+		'habilitado', 'estado', 'calificacion', 'direccion', 'forma_pago'];
 
     /**
      * The attributes excluded from the model's JSON form.

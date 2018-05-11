@@ -32,7 +32,7 @@ export class pedidosComponent {
       headers = headers.append("Authorization", "Bearer " + localStorage.getItem('tecprecinc_token'));
       //headers = headers.append("Content-Type", "application/json");
     
-      this.http.get(this.ruta.get_ruta()+'stock/permitido', {
+      this.http.get(this.ruta.get_ruta()+'stock/permitido?token='+localStorage.getItem('tecprecinc_token'), {
             headers: headers
         }).toPromise()
            .then(
@@ -61,6 +61,7 @@ export class pedidosComponent {
       if(!this.checkProductos(item)) {
         item.cantidad=1;
         item.producto_id=item.id;
+        item.centro_costos_id=43;
         this.productosSeleccionados.push(item);
       }
       

@@ -12,7 +12,7 @@
           </alert>
         </div>
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-7">
           <div class="card" *ngIf="!loading">
             <div class="card-header">
               <i class="fa fa-align-justify"></i>  <label class="labels" style="font-size: 18px; font-weight: bold">Busca y agrega los productos a solicitar </label>
@@ -59,7 +59,7 @@
             </div>   
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-5">
           <div class="card">
             <div class="card-header">
               <i class="fa fa-align-justify"></i>  <label class="labels" style="font-size: 18px; font-weight: bold">Información de la solicitud </label>
@@ -77,7 +77,7 @@
                     <th>Cantidad</th>
                     <th>Nombre</th>
                     <th>Código</th>
-                    <th></th>
+                    <th>Centro de costos</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -86,12 +86,16 @@
                       <td><input type="number" min="1" class="form-control" id="cantidad" [(ngModel)]="item.cantidad"></td>
                       <td>{{item.nombre}}</td>
                       <td>{{item.codigo}}</td>
-                      <td></td>
+                      <td>
+                        <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="item.centro_costos_id" (change)="cc($event)">
+                          <option *ngFor="let cc of centroCostos" [value]="cc.id">{{cc.descripcion}}</option>
+                        </select>
+                      </td>
                       <td><button type="button" class="btn btn-danger" (click)=delProductos(item)>X</button></td>
                    </tr>
                 </tbody>
               </table>  
-              <div class="form-group row">
+              <!-- <div class="form-group row">
                 <div class="row">
                   <div class="col-md-12">
                     <label class="label" for="select">Centro de costos</label>
@@ -110,7 +114,7 @@
                     </select>
                   </div>
                 </div>
-              </div> 
+              </div> --> 
             </div>
             <div class="card-footer">
               <button type="submit" class="btn btn-sm btn-primary" (click)=enviar()><i class="fa fa-dot-circle-o"></i> Enviar pedido</button>

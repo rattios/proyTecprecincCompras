@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild} from '@angular/core';
 import {CommonModule, NgClass} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
@@ -30,8 +30,17 @@ export class infoComponent {
       }
     }
 
-    
-    picking(item){
+    public aPicking:any;
+    public showPicking:any;
+    selectPicking(item){
+      item.departamento=this.informacion.usuario.departamento;
+      //item.informacion=this.informacion;
+      console.log(item);
+      this.aPicking=item;
+      this.showPicking=true;
+    }
+
+    /*picking(item){
       item.departamento=this.informacion.usuario.departamento;
       console.log(item);
       //alert(JSON.stringify(item));
@@ -59,11 +68,15 @@ export class infoComponent {
              console.log(msg);
              
            });
-    }
+    }*/
 
     transferencia(item){
       this.aTransferir=item;
       this.showTransferencia=true;
+    }
+    public largeModal2;
+    cerrar2(){
+      console.log(this.largeModal2);
     }
 
     print(){

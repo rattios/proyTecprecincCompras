@@ -46,7 +46,7 @@ class Pedido extends Model
         return $this->belongsToMany('\App\Stock','pedido_stock','pedido_id','stock_id')
             ->withPivot('cantidad','aprobado','entregado',
                 'f_entrega','tipo_entrega','devuelto',
-                'cancelado','pendiente','observaciones')/*->withTimestamps()*/; 
+                'cancelado','pendiente','observaciones','centro_costos_id')/*->withTimestamps()*/; 
     }
 
     // Relación de pedido con presupuestos:

@@ -30,7 +30,8 @@ export class aprobarComponent {
            .then(
            data => {
              this.prov=data;
-               this.pedidos=this.prov.pedidos;
+             console.log(this.prov.centrocostos);
+              this.pedidos=this.prov.pedidos;
               console.log(this.pedidos);
               for (var i = 0; i < this.pedidos.length; i++) {
                 if(this.pedidos[i].estado==0) {
@@ -41,6 +42,16 @@ export class aprobarComponent {
                   this.pedidos2.push(this.pedidos[i]);
                 }else if(this.pedidos[i].estado==3) {
                   this.pedidos3.push(this.pedidos[i]);
+                }
+              }
+              for (var i = 0; i < this.pedidos.length; i++) {
+                for (var j = 0; j < this.pedidos[i].solicitud.length; j++) {
+                  for (var k = 0; k < this.prov.centrocostos.length; k++) {
+                    if(this.pedidos[i].solicitud[j].pivot.centro_costos_id==this.prov.centrocostos[k].id) {
+                      this.pedidos[i].solicitud[j].pivot.nombre_centro_costo=this.prov.centrocostos[k].descripcion;
+                      //alert(this.pedidos[i].solicitud[j].pivot.centro_costos_id);
+                    }
+                  }
                 }
               }
               this.loading=false;

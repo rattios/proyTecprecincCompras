@@ -43,6 +43,17 @@ export class encursoComponent {
                   this.pedidos3.push(this.pedidos[i]);
                 }
               }
+
+              for (var i = 0; i < this.pedidos.length; i++) {
+                for (var j = 0; j < this.pedidos[i].solicitud.length; j++) {
+                  for (var k = 0; k < this.prov.centrocostos.length; k++) {
+                    if(this.pedidos[i].solicitud[j].pivot.centro_costos_id==this.prov.centrocostos[k].id) {
+                      this.pedidos[i].solicitud[j].pivot.nombre_centro_costo=this.prov.centrocostos[k].descripcion;
+                      //alert(this.pedidos[i].solicitud[j].pivot.centro_costos_id);
+                    }
+                  }
+                }
+              }
               this.loading=false;
             },
            msg => { 

@@ -24,6 +24,25 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div bsModal #largeModal2="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Picking</h4>
+        <button type="button" class="close" (click)="largeModal2.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-picking [producto]="aPicking" [informacion]="informacion" *ngIf="showPicking"></app-picking>
+        <div style="text-align:right">
+        	<button type="button" class="btn btn-secondary" (click)="largeModal2.hide()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="prin" [hidden]="true">
 	<div class="row">
 	<div class="col-lg-12">
@@ -86,8 +105,6 @@
 				                <th>Cantidad</th>
 				                <th>Nombre</th>
 				                <th>Centro de costos</th>
-				                <th>Contrato</th>
-				                <th *ngIf="informacion.estado==0">En Stock</th>
 				              </tr>
 				            </thead>
 				            <tbody>
@@ -95,13 +112,12 @@
 				              	<td>{{item.codigo}}</td>
 				                <td>{{item.pivot.cantidad}}</td>
 				                <td>{{item.nombre}}</td>
-				                <td>{{item.centro_costos.descripcion}}</td>
-				                <td>{{item.contratos.nombre}}</td>
-				                <td *ngIf="informacion.estado==0">{{item.stock}}</td>
+				                <td>{{item.pivot.nombre_centro_costo}}</td>
 				              </tr>
 				            </tbody>
 				          </table>
       				</div>
+      				
       			</div>
       		</div>	
       	</div>
@@ -184,8 +200,6 @@
 				                <th>Cantidad</th>
 				                <th>Nombre</th>
 				                <th>Centro de costos</th>
-				                <th>Contrato</th>
-				                <th *ngIf="informacion.estado==0">En Stock</th>
 				                <th *ngIf="informacion.estado!=0">Estatus</th>
 				                <th *ngIf="informacion.estado==1">Acción</th>
 				              </tr>
@@ -195,9 +209,7 @@
 				              	<td>{{item.codigo}}</td>
 				                <td>{{item.pivot.cantidad}}</td>
 				                <td>{{item.nombre}}</td>
-				                <td>{{item.centro_costos.descripcion}}</td>
-				                <td>{{item.contratos.nombre}}</td>
-				                <td *ngIf="informacion.estado==0">{{item.stock}}</td>
+				                <td>{{item.pivot.nombre_centro_costo}}</td>
 				                <td *ngIf="informacion.estado!=0">
 				                  <span [ngClass]="['badge', 'badge-success']" *ngIf="item.pivot.aprobado">Aprobado</span>
 				                  <span [ngClass]="['badge', 'badge-success']" *ngIf="item.pivot.entregado">Entregado</span>
@@ -222,13 +234,13 @@
 					                	</div>
 					                	<div *ngIf="!item.pivot.aprobado && !item.pivot.entregado && !item.pivot.cancelado && !item.pivot.devuelto">
 						                	<div *ngIf="(item.stock-item.pivot.cantidad)>0">
-						                		<button type="button" class="btn btn-outline-success btn-sm" (click)=picking(item)>Picking</button>
-							                	<button type="button" class="btn btn-outline-primary btn-sm" (click)="transferencia(item);largeModal.show()">Transferencia</button>
+						                		<button type="button" class="btn btn-outline-success btn-sm" (click)="selectPicking(item);largeModal2.show()">Picking</button>
+							                	<button type="button" class="btn btn-outline-primary btn-sm" >Pedir Presupuesto</button>
 							                	<button type="button" class="btn btn-outline-info btn-sm" (click)=pedirAProveedor(item)>Pedir a proveedor</button>
 							                	<button type="button" class="btn btn-outline-danger btn-sm" (click)=cancelar(item)>Cancelar</button>
 						                	</div>
 						                	<div *ngIf="(item.stock-item.pivot.cantidad)<0">
-							                	<button type="button" class="btn btn-outline-primary btn-sm" (click)="transferencia(item);largeModal.show()">Transferencia</button>
+							                	<button type="button" class="btn btn-outline-primary btn-sm" >Pedir Presupuesto</button>
 							                	<button type="button" class="btn btn-outline-info btn-sm" (click)=pedirAProveedor(item)>Pedir a proveedor</button>
 							                	<button type="button" class="btn btn-outline-danger btn-sm" (click)=cancelar(item)>Cancelar</button>
 						                	</div>
@@ -239,7 +251,14 @@
 				              </tr>
 				            </tbody>
 				          </table>
-				          
+				          <div class="row">
+				          	<div class="col-lg-12">
+				          		<div class="form-group">
+								  <label for="comment">Observaciones:</label>
+								  <textarea class="form-control" rows="5" cols="150"></textarea>
+								</div>
+					        </div>
+				          </div>
       				</div>
       			</div>
       		</div>	

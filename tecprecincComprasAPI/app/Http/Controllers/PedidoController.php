@@ -53,10 +53,9 @@ class PedidoController extends Controller
     {
         $usuario= \App\User::find($request->input('usuario_id'));
         //cargar todos los pedidos
-        if ($usuario->rol==1) {
+        if ($usuario->rol==1 || $usuario->rol==0) {
             $departamento=$usuario->departamento_id;
             $pedidos = \App\Pedido::where('estado', 0)->where('aprobar', 0)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
-
             $auxPedidos=[];
             for ($i=0; $i < count($pedidos); $i++) { 
                 if ($pedidos[$i]->usuario->departamento->id==$departamento) {
@@ -88,7 +87,8 @@ class PedidoController extends Controller
                     } 
                 }
 
-                return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
+                $centrocostos = \App\CentroCostos::with('contratos')->get();
+                return response()->json(['status'=>'ok', 'pedidos'=>$pedidos, 'centrocostos'=>$centrocostos], 200);
             } 
         }
         
@@ -121,8 +121,8 @@ class PedidoController extends Controller
                     $pedidos[$i]->solicitud[$j]->contratos=$pedidos[$i]->contratos;
                 } 
             }
-
-            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
+            $centrocostos = \App\CentroCostos::with('contratos')->get();
+            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos, 'centrocostos'=>$centrocostos], 200);
         } 
     }
     public function index1()
@@ -155,8 +155,8 @@ class PedidoController extends Controller
                     $pedidos[$i]->solicitud[$j]->contratos=$pedidos[$i]->contratos;
                 } 
             }
-
-            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
+            $centrocostos = \App\CentroCostos::with('contratos')->get();
+            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos, 'centrocostos'=>$centrocostos], 200);
         } 
     }
     public function index2()
@@ -190,7 +190,8 @@ class PedidoController extends Controller
                 } 
             }
 
-            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
+            $centrocostos = \App\CentroCostos::with('contratos')->get();
+            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos, 'centrocostos'=>$centrocostos], 200);
         } 
     }
     public function index4()
@@ -224,7 +225,8 @@ class PedidoController extends Controller
                 } 
             }
 
-            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos], 200);
+            $centrocostos = \App\CentroCostos::with('contratos')->get();
+            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos, 'centrocostos'=>$centrocostos], 200);
         } 
     }
 
@@ -364,7 +366,8 @@ class PedidoController extends Controller
                     'devuelto' => 0,
                     'cancelado' => 0,
                     //'pendiente' => $solicitud[$i]->pendiente,
-                    'observaciones' => $observacionX
+                    'observaciones' => $observacionX,
+                    'centro_costos_id' => $solicitud[$i]->centro_costos_id
                 ]);
                    
             }
@@ -534,7 +537,7 @@ class PedidoController extends Controller
 
                 $picking->stock = $descontar;
             }
-            else{
+            else if($picking->almacen == 'secundario'){
                 //Descontar del stock secundario
                 $descontar = $picking->stock2 - $picking->pivot->cantidad;
 
@@ -564,10 +567,10 @@ class PedidoController extends Controller
                 DB::table('stock')
                     ->where('id', $picking->id)
                     ->update(['stock' => $descontar]);
-                }
+                
 
                 $picking->stock = $descontar;
-            else{
+            }else{
                 //Descontar del stock secundario
                 $descontar = $picking->stock2 - $picking->pivot->cantidad;
 

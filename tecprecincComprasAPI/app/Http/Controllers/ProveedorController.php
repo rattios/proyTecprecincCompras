@@ -94,9 +94,21 @@ class ProveedorController extends Controller
                 }   
             } 
         }
-           
 
-        if($nuevoProveedor=\App\Proveedor::create($request->all())){
+        $nuevoProveedor=new \App\Proveedor;
+        //$nuevoProveedor=$request->all();
+        $nuevoProveedor->razon_social=$request->input('razon_social');
+        $nuevoProveedor->nombre_fantacia=$request->input('nombre_fantacia');
+        $nuevoProveedor->cuit=$request->input('cuit');
+        $nuevoProveedor->telefono=$request->input('telefono');
+        $nuevoProveedor->fax=$request->input('fax');
+        $nuevoProveedor->email=$request->input('email');
+        $nuevoProveedor->habilitado=$request->input('habilitado');
+        $nuevoProveedor->estado=$request->input('estado');
+        $nuevoProveedor->calificacion=$request->input('calificacion');
+        $nuevoProveedor->direccion=$request->input('direccion');
+        $nuevoProveedor->forma_pago=$request->input('forma_pago');
+        if( $nuevoProveedor->save() ){
 
             if ($request->input('productos')) {
                 //Crear las relaciones en la tabla pivote

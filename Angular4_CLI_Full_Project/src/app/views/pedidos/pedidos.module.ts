@@ -37,6 +37,8 @@ import { tablaInfoCanceladosComponent } from './cancelados/tablaInfoCancelados.c
 import { transferenciasPuraComponent } from './transferencias/transferenciasPura.component';
 import { transferenciasInfoComponent } from './transferencias/transferenciasInfo.component';
 
+import { pickingComponent } from './picking.component';
+
 @NgModule({
   imports: [
     pedidosRoutingModule,
@@ -70,7 +72,8 @@ import { transferenciasInfoComponent } from './transferencias/transferenciasInfo
     canceladosComponent,
     tablaInfoCanceladosComponent,
     transferenciasPuraComponent,
-    transferenciasInfoComponent
+    transferenciasInfoComponent,
+    pickingComponent
 	]
 })
 export class pedidosModule { }
