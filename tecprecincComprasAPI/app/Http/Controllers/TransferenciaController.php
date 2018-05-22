@@ -419,4 +419,90 @@ class TransferenciaController extends Controller
             }
         } 
     }
+
+    /*
+    Manejo de transferencia para el departamento de compras,
+    de stock principal a secundario o viceversa
+    */
+    /*
+    NOTA: 
+        Emisor: 
+        departamento_id 100 -> stock principal
+        departamento_id 101 -> stock secundario
+    */
+    public function transferencia(Request $request)
+    {
+        // Primero comprobaremos si estamos recibiendo todos los campos.
+        if ( !$request->input('cantidad_transf') ||
+            !$request->input('stock_id') ||
+            !$request->input('departamento_id') 
+        )
+        {
+            // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
+            return response()->json(['error'=>'Faltan datos necesarios para el proceso de alta.'],422);
+        } 
+
+        //validaciones sobre el producto en el stock central
+        $producto=\App\Stock::find($request->input('stock_id'));
+
+        if (count($producto)==0)
+        {
+            // Devolvemos error codigo http 404
+            return response()->json(['error'=>'No existe el producto con id '.$request->input('stock_id').' en el stock.'], 404);
+        }
+
+        //emisor es stock principal
+        if ($request->input('departamento_id') == 100) {
+            if ($producto->stock <= 0) {
+                // Devolvemos un código 409 Conflict. 
+                return response()->json(['error'=>'No se puede generar una transferencia con el stock pricipal en cero.'], 409);
+            }else{
+                //Descontar del stock del pricipal la cantidad a transferir
+                $descontar = $producto->stock - $request->input('cantidad_transf');
+
+                //Aumentar el stock secundario con la catidad a transferir
+                $aumentar = $producto->stock2 + $request->input('cantidad_transf');
+
+                $producto->stock = $descontar;
+                $producto->stock2 = $aumentar;
+                $producto->save();
+            }
+        }
+        //emisor es stock secundario
+        else if ($request->input('departamento_id') == 101){
+            if ($producto->stock2 <= 0) {
+                // Devolvemos un código 409 Conflict. 
+                return response()->json(['error'=>'No se puede generar una transferencia con el stock secundario en cero.'], 409);
+            }else{
+                //Descontar del stock del secundario la cantidad a transferir
+                $descontar = $producto->stock2 - $request->input('cantidad_transf');
+
+                //Aumentar el stock principal con la catidad a transferir
+                $aumentar = $producto->stock + $request->input('cantidad_transf');
+
+                $producto->stock2 = $descontar;
+                $producto->stock = $aumentar;
+                $producto->save();
+            }
+        } 
+
+            
+        if($nuevaTransf=\App\Transferencia::create([
+            'estado'=> 1,
+            'cantidad_transf'=> $request->input('cantidad_transf'),
+            'stock_id'=> $request->input('stock_id'),
+            'departamento_id'=> 1,
+            'tipo'=> 1
+        ]))
+        {
+
+           return response()->json(['message'=>'Transferencia creada con éxito.',
+             'Transferencia'=>$nuevaTransf], 200);
+        }else{
+            return response()->json(['error'=>'Error al crear la transferencia.'], 500);
+        }
+        
+
+          
+    }
 }
