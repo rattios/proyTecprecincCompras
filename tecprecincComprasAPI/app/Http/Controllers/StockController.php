@@ -19,13 +19,56 @@ class StockController extends Controller
          $currentUser = JWTAuth::parseToken()->authenticate();     
        
          if ($currentUser) {       
-       
-             $dep = \App\Departamento::with('permisos_productos')->find($currentUser->departamento_id);        
-             $productos = $dep->permisos_productos;
+            if ($currentUser->rol!=0) {
 
-             $centrocostos = \App\CentroCostos::with('contratos')->get();
+                 $dep = \App\Departamento::with('permisos_productos')->find($currentUser->departamento_id);        
+                 $productos = $dep->permisos_productos;
+
+                 $centrocostos = \App\CentroCostos::with('contratos')->get();
+           
+                 return response()->json(['productos'=>$productos, 'centrocostos'=>$centrocostos], 200);  
+            }else if($currentUser->rol==0){
+                $centrocostos = \App\CentroCostos::with('contratos')->get();
+                $productos=DB::select("SELECT id,nombre,codigo,stock,stock2,categoria_id,tipo_id,rubro_id,precio,stock_min,stock2_min FROM  `stock` WHERE 1 ");
+
+                 return response()->json(['productos'=>$productos, 'centrocostos'=>$centrocostos], 200); 
+            } 
+         }else{        
+             return response()->json(['error'=>'Usuario no encontrado.'], 404);        
+         }     
        
-             return response()->json(['productos'=>$productos, 'centrocostos'=>$centrocostos], 200);     
+     }
+
+     public function stockTransferencias()      
+     {     
+       
+         $currentUser = JWTAuth::parseToken()->authenticate();     
+       
+         if ($currentUser) {       
+            if ($currentUser->rol!=0) {
+
+                $departamento_id=$currentUser->departamento_id;
+                $productos=[];
+                $stockdepartamentos=DB::select("SELECT * FROM `stockdepartamentos` WHERE `departamento_id`=".$departamento_id);
+                for ($i=0; $i < count($stockdepartamentos); $i++) { 
+                   //$stockdepartamentos[$i]->productos=$productos;
+                   $stockdepartamentos[$i]->nombre='';
+                   $stockdepartamentos[$i]->codigo='';
+                   $p=DB::select("SELECT `nombre`,`codigo` FROM `stock` WHERE `id`=".$stockdepartamentos[$i]->stock_id);
+                    for ($j=0; $j < count($p); $j++) { 
+                        //array_push($stockdepartamentos[$i]->productos,$p[$j]);
+                        $stockdepartamentos[$i]->nombre=$p[0]->nombre;
+                        $stockdepartamentos[$i]->codigo=$p[0]->codigo;
+                    }
+                }
+                $departamentos = DB::select('select * from `departamentos`');
+                 return response()->json(['productos'=>$stockdepartamentos, 'departamentos'=>$departamentos], 200);  
+            }else if($currentUser->rol==0){
+                $departamentos = DB::select('select * from `departamentos`');
+                $productos=DB::select("SELECT id,nombre,codigo,stock,stock2,categoria_id,tipo_id,rubro_id,precio,stock_min,stock2_min FROM  `stock` WHERE 1 ");
+
+                 return response()->json(['productos'=>$productos, 'departamentos'=>$departamentos], 200); 
+            } 
          }else{        
              return response()->json(['error'=>'Usuario no encontrado.'], 404);        
          }     
@@ -51,7 +94,7 @@ class StockController extends Controller
         }*/
 
 
-        $produc=DB::select("SELECT id,nombre,codigo,stock,stock2,categoria_id,tipo_id,rubro_id,precio,stock_min FROM  `stock` WHERE 1 ");
+        $produc=DB::select("SELECT id,nombre,codigo,stock,stock2,categoria_id,tipo_id,rubro_id,precio,stock_min,stock2_min FROM  `stock` WHERE 1 ");
 
         $departs=DB::select("SELECT id,nombre FROM  `departamentos` WHERE 1 ");
 
@@ -80,7 +123,7 @@ class StockController extends Controller
                 }
             }
         }
-
+        
 
         if(count($produc) == 0){
             return response()->json(['error'=>'No existen productos en el stock.'], 404);          
@@ -104,7 +147,7 @@ class StockController extends Controller
         }*/
 
 
-        $produc=DB::select("SELECT id,nombre,codigo,stock,stock2,categoria_id,tipo_id,rubro_id,precio,stock_min FROM  `stock` WHERE 1 ");
+        $produc=DB::select("SELECT id,nombre,codigo,stock,stock2,categoria_id,tipo_id,rubro_id,precio,stock_min,stock2_min FROM  `stock` WHERE 1 ");
 
         $departs=DB::select("SELECT id,nombre FROM  `departamentos` WHERE 1 ");
 
@@ -149,7 +192,7 @@ class StockController extends Controller
     {
 
 
-        $produc=DB::select("SELECT id,nombre,codigo,stock,stock2,categoria_id,tipo_id,rubro_id,precio,stock_min FROM  `stock` WHERE 1 ");
+        $produc=DB::select("SELECT id,nombre,codigo,stock,stock2,categoria_id,tipo_id,rubro_id,precio,stock_min,stock2_min FROM  `stock` WHERE 1 ");
 
         $departs=DB::select("SELECT id,nombre FROM  `departamentos` WHERE 1 ");
 
@@ -351,6 +394,7 @@ class StockController extends Controller
         $peps=$request->input('peps');
         $valor_reposicion=$request->input('valor_reposicion');
         $stock_min=$request->input('stock_min');
+        $stock2_min=$request->input('stock2_min');
         $partida_parcial=$request->input('partida_parcial');
         $categoria_id=$request->input('categoria_id');
         $tipo_id=$request->input('tipo_id');
@@ -437,6 +481,12 @@ class StockController extends Controller
         if ($stock_min != null && $stock_min!='')
         {
             $producto->stock_min = $stock_min;
+            $bandera=true;
+        }
+
+        if ($stock_min2 != null && $stock_min2!='')
+        {
+            $producto->stock_min2 = $stock_min2;
             $bandera=true;
         }
 

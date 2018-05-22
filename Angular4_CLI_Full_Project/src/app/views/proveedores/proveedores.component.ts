@@ -19,6 +19,8 @@ export class ProveedoresComponent {
   public success=false;
   public fail=false;
   public crear=false;
+  public formaPago: any='';
+  public formas: any=[{ nombre:'Efectivo'},{ nombre:'Cheque'},{ nombre:'Tarjeta Débito'},{ nombre:'Tranferencia'},{ nombre:'Tarjeta crédito' }];
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
@@ -82,12 +84,23 @@ export class ProveedoresComponent {
           razon_social:"",
           telefono:"",
           direccion: "",
-          formaPago: "",
+          calle:"",
+          nro:"",
+          ciudad:"",
+          provincia:"",
+          pais:"",
+          forma_pago: [],
           telefonos: []
         };
         this.crear=true;
         console.log(item);
       }else{
+        if(item.forma_pago==null) {
+         item.forma_pago=[];
+        }else{
+           item.forma_pago=JSON.parse(item.forma_pago);
+        }
+
         this.proveedor=item;
         this.crear=false;
         console.log(item);
@@ -97,6 +110,30 @@ export class ProveedoresComponent {
     }
     volver(){
       this.verDatos=false;
+    }
+
+    addFp(){
+      console.log(this.formaPago);
+      if(!this.checkFp(this.formaPago)) {
+      this.proveedor.forma_pago.push({nombre:this.formaPago});
+      }
+    }
+    checkFp(item){
+        var band=false;
+        for (var i = 0; i < this.proveedor.forma_pago.length; i++) {
+          if(this.proveedor.forma_pago[i].nombre==item) {
+            band=true;
+          }
+        }
+        return band;
+    }
+    eliminarfp(it){
+      console.log(it);
+      for (var i = 0; i < this.proveedor.forma_pago.length; i++) {
+        if(this.proveedor.forma_pago[i].nombre==it) {
+          this.proveedor.forma_pago.splice(i, 1);
+        }
+      }
     }
     agregar(item){
       if(!this.checkProductos(item)) {
@@ -133,7 +170,12 @@ export class ProveedoresComponent {
         habilitado: this.proveedor.habilitado,
         motivo: this.proveedor.motivo,
         direccion: this.proveedor.direccion,
-        formaPago: this.proveedor.formaPago,
+        calle: this.proveedor.calle,
+        nro: this.proveedor.nro,
+        ciudad: this.proveedor.ciudad,
+        provincia: this.proveedor.provincia,
+        pais: this.proveedor.pais,
+        forma_pago: JSON.stringify(this.proveedor.forma_pago),
         telefonos: JSON.stringify(this.proveedor.telefonos)
       }
       console.log(send);
@@ -195,7 +237,12 @@ export class ProveedoresComponent {
         habilitado: this.proveedor.habilitado,
         motivo: this.proveedor.motivo,
         direccion: this.proveedor.direccion,
-        formaPago: this.proveedor.formaPago,
+        calle: this.proveedor.calle,
+        nro: this.proveedor.nro,
+        ciudad: this.proveedor.ciudad,
+        provincia: this.proveedor.provincia,
+        pais: this.proveedor.pais,
+        forma_pago: JSON.stringify(this.proveedor.forma_pago),
         telefonos: JSON.stringify(this.proveedor.telefonos)
       }
       console.log(send);

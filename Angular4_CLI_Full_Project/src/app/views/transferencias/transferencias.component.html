@@ -1,0 +1,123 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="col-lg-12">
+        <img src="../assets/img/template.gif" style="position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;z-index: 99;width: 135px;margin-top: 15%;" *ngIf="loading">
+        <div style="width: 100%">
+          <alert type="success" *ngIf="success" style="position: fixed;width: calc(100% - 262px);z-index: 99;top: 65px;text-align: center;">
+            <strong>Actualizado con éxito</strong> 
+          </alert>
+          <alert type="danger" *ngIf="fail" style="position: fixed;width: calc(100% - 262px);z-index: 99;top: 65px;text-align: center;">
+            <strong>Ha ocurrido un Error!</strong> 
+          </alert>
+        </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card" *ngIf="!loading">
+            <div class="card-header">
+              <i class="fa fa-align-justify"></i>  <label class="labels" style="font-size: 18px; font-weight: bold">Busca el producto a transferir </label>
+            </div>
+            <div class="card-body">
+              <div class="form-group form-black label-floating is-empty">
+                   <label class="labels" style="font-size: 16px; font-weight: bold">Buscar: </label>
+                  <input  class="form-control" type="text"  id="inputName" [(ngModel)]="inputName" (ngModelChange)="FilterByName()"/>
+                   <br>
+              </div>
+              <table class="table table-striped">
+                <thead>
+                  <th>stock</th>
+                  <th>nombre</th>
+                  
+                  <th>Código</th>
+                  <th></th>
+                </thead>
+                <tbody>
+                   <tr *ngFor="let item of items">
+                      
+                      <td>{{item.stock}}</td>
+                      <td>{{item.nombre}}</td>
+                      
+                      <td>{{item.codigo}}</td>
+                      <td><button type="button" class="btn btn-success" (click)="largeModal.show(); setProductos(item)">Transferir</button></td>
+                   </tr>
+                </tbody>
+              </table>
+                <div class="btn-toolbar" role="toolbar" style="margin: 0;">
+                  <div class="btn-group">
+                     <label style="margin-top:10px">Página {{currentIndex}}/{{pageNumber}} </label>
+                  </div>
+                  <div class="btn-group pull-right">
+                     <ul class="pagination" >
+                        <li [ngClass]="{'disabled': (currentIndex == 1 || pageNumber == 0)}" ><a  (click)="prevPage()">Atrás</a></li>
+                           <li *ngFor="let page of pagesIndex"  [ngClass]="{'active': (currentIndex == page)}">
+                              <a (click)="setPage(page)" >{{page}} </a>
+                           </li>
+                        <li [ngClass]="{'disabled': (currentIndex == pageNumber || pageNumber == 0)}" ><a   (click)="nextPage()">Siguiente</a></li>
+                     </ul>
+                  </div>
+                </div>
+            </div>   
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" *ngIf="seTransfirio">
+      <div class="modal-header">
+        <h4 class="modal-title">Selecciona el departamento a transferir</h4>
+        <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+                <strong>Cantidad:</strong>
+                <input type="text" class="form-control" style="width: 50px" id="cantidad" placeholder="" [(ngModel)]="cantidad" (change)="checkCantidad(cantidad)">
+              </div>
+            </div>
+          </div>
+        <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <strong>Producto a transferir:</strong>
+                <p>{{producto.nombre}}</p>
+            </div>
+          </div>
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <th>Departamento</th>
+            <th></th>
+          </thead>
+          <tbody>
+             <tr>
+                <td>Stock Principal</td>
+                <td style="text-align: right;"><button type="button" class="btn btn-success" (click)="enviar(100)">Transferir</button></td>
+             </tr>
+             <tr>
+                <td>Stock Secundario</td>
+                <td style="text-align: right;"><button type="button" class="btn btn-success" (click)="enviar(101)">Transferir</button></td>
+             </tr>
+             <tr *ngFor="let item of departamentos">
+                
+                <td>{{item.nombre}}</td>
+                
+                <td style="text-align: right;"><button type="button" class="btn btn-success" (click)="enviar(item.id)">Transferir</button></td>
+             </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="largeModal.hide()">Cerrar</button>
+      </div>
+    </div><!-- /.modal-content -->
+    <div class="modal-content" *ngIf="!seTransfirio" style="text-align: center">
+      <h2>¡Se transfirió con éxito!</h2>
+    </div>
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

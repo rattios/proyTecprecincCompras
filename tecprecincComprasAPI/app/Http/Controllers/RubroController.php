@@ -27,7 +27,7 @@ class RubroController extends Controller
             //cargar todos los rubros
             return \App\Rubro::all();
         });
-
+        //return $rubros;
         if(count($rubros) == 0){
             return response()->json(['error'=>'No existen rubros.'], 404);          
         }else{

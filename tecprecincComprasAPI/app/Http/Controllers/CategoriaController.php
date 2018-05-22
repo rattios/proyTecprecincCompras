@@ -30,7 +30,7 @@ class CategoriaController extends Controller
             //cargar todos las categorias
             return \App\Categoria::with('tipo')->with('rubro')->get();
         });
-
+        //return $categorias; 
         if(count($categorias) == 0){
             return response()->json(['error'=>'No existen categorías.'], 404);          
         }else{

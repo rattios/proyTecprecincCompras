@@ -113,16 +113,60 @@
                 </div>
               </div><!--/.row-->
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                   <div class="form-group">
                     <label for="ccnumber">Dirección</label>
                     <input type="text" class="form-control" id="direccion" placeholder="" [(ngModel)]="proveedor.direccion">
                   </div>
                 </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="ccnumber">Calle</label>
+                    <input type="text" class="form-control" id="calle" placeholder="" [(ngModel)]="proveedor.calle">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="ccnumber">Nro</label>
+                    <input type="text" class="form-control" id="nro" placeholder="" [(ngModel)]="proveedor.nro">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="ccnumber">Ciudad</label>
+                    <input type="text" class="form-control" id="ciudad" placeholder="" [(ngModel)]="proveedor.ciudad">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="ccnumber">Provincia</label>
+                    <input type="text" class="form-control" id="provincia" placeholder="" [(ngModel)]="proveedor.provincia">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="ccnumber">País</label>
+                    <input type="text" class="form-control" id="pais" placeholder="" [(ngModel)]="proveedor.pais">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="ccnumber">Forma de pago</label>
-                    <input type="text" class="form-control" id="formaPago" placeholder="" [(ngModel)]="proveedor.formaPago">
+                    <label for="ccnumber">Seleccione las Formas de pago</label>
+                    <select id="formaPago" name="formaPago" class="form-control" [(ngModel)]="formaPago" (change)="addFp()">
+                      <option *ngFor="let f of formas" [value]="f.nombre">{{f.nombre}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="ccnumber">Formas de pago</label>
+                    <div *ngFor="let fp of proveedor.forma_pago">
+                      {{fp.nombre}} <button type="button" class="btn btn-danger" style="border-radius: 100px" (click)=eliminarfp(fp.nombre)>X</button>
+                    </div>
                   </div>
                 </div>
               </div><!--/.row-->

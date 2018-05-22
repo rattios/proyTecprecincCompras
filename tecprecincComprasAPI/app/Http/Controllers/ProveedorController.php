@@ -18,11 +18,12 @@ class ProveedorController extends Controller
     {
         //cargar todos los proveedores con los productos que ofrecen
         $proveedores = \App\Proveedor::with('productos')->get();
-
+        $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
+        //return $proveedores;
         if(count($proveedores) == 0){
             return response()->json(['error'=>'No existen proveedores.'], 404);          
         }else{
-            return response()->json(['status'=>'ok', 'proveedores'=>$proveedores], 200);
+            return response()->json(['status'=>'ok', 'proveedores'=>$proveedores, 'categorias'=>$categorias], 200);
         }
     }
 
@@ -119,7 +120,12 @@ class ProveedorController extends Controller
         $nuevoProveedor->estado=$request->input('estado');
         $nuevoProveedor->calificacion=$request->input('calificacion');
         $nuevoProveedor->direccion=$request->input('direccion');
-        $nuevoProveedor->forma_pago=$request->input('forma_pago');
+        $nuevoProveedor->forma_pago=$request->input('forma_pago'); 
+        $nuevoProveedor->calle=$request->input('calle');
+        $nuevoProveedor->nro=$request->input('nro');
+        $nuevoProveedor->ciudad=$request->input('ciudad');
+        $nuevoProveedor->provincia=$request->input('provincia');
+        $nuevoProveedor->pais=$request->input('pais');
         if( $nuevoProveedor->save() ){
 
             if ($request->input('productos')) {
@@ -212,6 +218,11 @@ class ProveedorController extends Controller
         $direccion=$request->input('direccion');      
         $forma_pago=$request->input('forma_pago');
         $categorias=$request->input('categorias');
+        $calle=$request->input('calle');
+        $nro=$request->input('nro');
+        $ciudad=$request->input('ciudad');
+        $provincia=$request->input('provincia');
+        $pais=$request->input('pais');
 
         // Creamos una bandera para controlar si se ha modificado algún dato.
         $bandera = false;
@@ -327,7 +338,36 @@ class ProveedorController extends Controller
          {     
              $proveedor->direccion = $direccion;       
              $bandera=true;        
-         }     
+         }//'calle','nro','ciudad','provincia','pais' 
+
+         if ($calle != null && $calle!='')     
+         {     
+             $proveedor->calle = $calle;       
+             $bandera=true;        
+         }    
+         if ($nro != null && $nro!='')     
+         {     
+             $proveedor->nro = $nro;       
+             $bandera=true;        
+         }
+
+         if ($ciudad != null && $ciudad!='')     
+         {     
+             $proveedor->ciudad = $ciudad;       
+             $bandera=true;        
+         }
+
+         if ($provincia != null && $provincia!='')     
+         {     
+             $proveedor->provincia = $provincia;       
+             $bandera=true;        
+         }
+
+         if ($pais != null && $pais!='')     
+         {     
+             $proveedor->pais = $pais;       
+             $bandera=true;        
+         }    
        
          if ($forma_pago != null && $forma_pago!='')       
          {     

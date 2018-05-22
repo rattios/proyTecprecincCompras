@@ -66,6 +66,10 @@ export const routes: Routes = [
         loadChildren: './views/productos/stock.module#stockModule'
       },
       {
+        path: 'transferencias',
+        loadChildren: './views/transferencias/transferencias.module#transferenciasModule'
+      },
+      {
         path: 'cc',
         loadChildren: './views/cc/cc.module#ccModule'
       },

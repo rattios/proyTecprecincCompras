@@ -105,4 +105,19 @@ export class infoComponent {
          alert(JSON.stringify(msg));
        });
     }
+
+    checkNegativo(item){
+      if(item>=0) {
+        this.informacion.stock_min=item;
+      }else{
+        this.informacion.stock_min=0;
+      }
+    }
+    checkNegativo2(item){
+      if(item>=0) {
+        this.informacion.stock2_min=item;
+      }else{
+        this.informacion.stock2_min=0;
+      }
+    }
 }

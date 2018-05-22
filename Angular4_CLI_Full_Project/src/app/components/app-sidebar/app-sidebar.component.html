@@ -74,11 +74,15 @@
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-shuffle"></i> Transferencias</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/transferencias/transferencia']"><i class="icon-note"></i> Realizar Transferencia</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class=" icon-action-redo"></i> Transferencia pura</a>
           </li>
           <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/transferencias_pura']"><i class="icon-action-undo"></i> Transferencia devolución</a>
           </li>
+          
         </ul>
       </li>
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>

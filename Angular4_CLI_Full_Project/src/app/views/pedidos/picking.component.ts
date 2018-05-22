@@ -13,6 +13,8 @@ export class pickingComponent {
   public pedidos: any;
   public productos: any;
   public proveedor: any='';
+  public showP1=true;
+  public showP2=true;
 
   public departamentos:any;
   @Input() producto:any;
@@ -30,7 +32,7 @@ export class pickingComponent {
     }
 
     picking(item,tipo){
-      
+      console.log(item);
       if(tipo==1) {
         item.almacen='principal';
         console.log(item);
@@ -53,6 +55,9 @@ export class pickingComponent {
                    this.informacion.solicitud[i]=rec.picking;
                  }
                }
+               this.producto.stock=this.producto.stock-item.pivot.cantidad;
+               this.showP1=false;
+               this.showP2=false;
                alert('éxito');
               },
              msg => { 
@@ -81,6 +86,9 @@ export class pickingComponent {
                    this.informacion.solicitud[i]=rec.picking;
                  }
                }
+               this.producto.stock2=this.producto.stock-item.pivot.cantidad;
+               this.showP1=false;
+               this.showP2=false;
                alert('éxito');
               },
              msg => { 

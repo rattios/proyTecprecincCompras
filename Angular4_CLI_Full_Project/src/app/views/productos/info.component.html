@@ -14,9 +14,39 @@
 	      					<button type="button" class="btn btn-success"  (click)=volver()>volver</button>
 	      				</div>
       				</div>
-      				<br>
       				
       				<br>
+              <div class="row" style="text-align: left">
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;Categorias:</label>
+              </div>
+              <div class="row">
+                
+                <div class="col-lg-4">
+                  
+                  <div style="text-align: center">
+                        <select id="categoria" name="categoria" class="form-control" [(ngModel)]="informacion.categoria_id" >
+                          <option *ngFor="let cate of categorias" [value]="cate.id">{{cate.nombre}}</option>
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-lg-4">
+                    
+                  <div style="text-align: center">
+                        <select id="tipo" name="tipo" class="form-control" [(ngModel)]="informacion.tipo_id" >
+                          <option *ngFor="let tipo of tipos" [value]="tipo.id">{{tipo.nombre}}</option>
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-lg-4">
+                    
+                      <div style="text-align: center">
+                        <select id="rubro" name="rubro" class="form-control" [(ngModel)]="informacion.rubro_id" >
+                          <option *ngFor="let rubro of rubros" [value]="rubro.id">{{rubro.nombre}}</option>
+                        </select>
+                      </div>
+                </div>  
+              </div>
+              <br><br>
       				<div class="row">
       					<div class="col-lg-8">
 	      					<div class="form-group">
@@ -32,31 +62,37 @@
 	      				</div>
 	      				<div class="col-lg-2">
 	      					<div class="form-group">
-				                <label>Precio:</label>
+				                <label>Precio Unitario:</label>
 				                <input type="number" class="form-control" id="precio" placeholder="" [(ngModel)]="informacion.precio">
 				            </div>
 	      				</div>
       				</div>
       				<br>
       				<div class="row">
-      					<div class="col-lg-4">
+      					<div class="col-lg-3">
 	      					<div class="form-group">
 				                <label>Cantidad en Stock Principal:</label>
-				                <input type="number" class="form-control" id="stock" placeholder="" [(ngModel)]="informacion.stock">
+				                <input type="number" class="form-control" id="stock" placeholder="" [(ngModel)]="informacion.stock" [disabled]="true">
 				            </div>
 	      				</div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                   <div class="form-group">
                         <label>Cantidad en Stock Secundario:</label>
-                        <input type="number" class="form-control" id="stock2" placeholder="" [(ngModel)]="informacion.stock2">
+                        <input type="number" class="form-control" id="stock2" placeholder="" [(ngModel)]="informacion.stock2" [disabled]="true">
                     </div>
                 </div>
-      					<div class="col-lg-4">
+      					<div class="col-lg-3">
 	      					<div class="form-group">
-				                <label>Stock mínimo:</label>
-				                <input type="text" class="form-control" id="stock_min" placeholder="" [(ngModel)]="informacion.stock_min">
+				                <label>Stock mínimo Principal:</label>
+				                <input type="text" class="form-control" id="stock_min" placeholder="" [(ngModel)]="informacion.stock_min" (change)="checkNegativo(informacion.stock_min)">
 				            </div>
 	      				</div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                        <label>Stock mínimo secundario:</label>
+                        <input type="text" class="form-control" id="stock2_min" placeholder="" [(ngModel)]="informacion.stock2_min" (change)="checkNegativo2(informacion.stock2_min)">
+                    </div>
+                </div>
 	      				<div class="col-lg-4">
 	      					
 	      				</div>
@@ -66,37 +102,8 @@
       		</div>	
       	</div>
       	<br>
-      	<div class="row" style="text-align: left">
-      		<label>&nbsp;&nbsp;&nbsp;&nbsp;Categorias:</label>
-      	</div>
-      	<div class="row">
-      		
-      		<div class="col-lg-4">
-      			
-      			<div style="text-align: center">
-                  <select id="categoria" name="categoria" class="form-control" [(ngModel)]="informacion.categoria_id" >
-                    <option *ngFor="let cate of categorias" [value]="cate.id">{{cate.nombre}}</option>
-                  </select>
-                </div>
-            </div>
-            <div class="col-lg-4">
-            	
-      			<div style="text-align: center">
-                  <select id="tipo" name="tipo" class="form-control" [(ngModel)]="informacion.tipo_id" >
-                    <option *ngFor="let tipo of tipos" [value]="tipo.id">{{tipo.nombre}}</option>
-                  </select>
-                </div>
-            </div>
-            <div class="col-lg-4">
-            	
-                <div style="text-align: center">
-                  <select id="rubro" name="rubro" class="form-control" [(ngModel)]="informacion.rubro_id" >
-                    <option *ngFor="let rubro of rubros" [value]="rubro.id">{{rubro.nombre}}</option>
-                  </select>
-                </div>
-      		</div>	
-      	</div>
-      	<br><br><br><strong>Lo pueden ver los departamentos de:</strong><br><br>
+      	
+      	<br><strong>Lo pueden ver los departamentos de:</strong><br><br>
       	<div class="row" style="text-align:center">
       		<div *ngFor="let depart of departamentos" >
 	      		<div class="col-lg-3">

@@ -30,7 +30,7 @@ class TipoController extends Controller
             //cargar todos los tipos
             return \App\Tipo::all();
         });
-
+        //return $tipos;
         if(count($tipos) == 0){
             return response()->json(['error'=>'No existen tipos.'], 404);          
         }else{

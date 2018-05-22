@@ -13,12 +13,12 @@
            		<tr>
            			<td>Principal</td>
                 <td>{{producto.stock}}</td>
-              	<td style="text-align:right"><button type="button" class="btn btn-success" (click)=picking(producto,1)>Picking</button></td>
+              	<td style="text-align:right"><button type="button" class="btn btn-success" (click)=picking(producto,1) *ngIf="showP1">Picking</button></td>
            		</tr> 
               <tr>
                 <td>Secundario</td>
                 <td>{{producto.stock2}}</td>
-                <td style="text-align:right"><button type="button" class="btn btn-success" (click)=picking(producto,2)>Picking</button></td>
+                <td style="text-align:right"><button type="button" class="btn btn-success" (click)=picking(producto,2) *ngIf="showP2">Picking</button></td>
               </tr>
         	</tbody>
       	</table>
