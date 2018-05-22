@@ -497,7 +497,7 @@ class TransferenciaController extends Controller
         {
 
            return response()->json(['message'=>'Transferencia creada con éxito.',
-             'Transferencia'=>$nuevaTransf], 200);
+             'transferencia'=>$nuevaTransf], 200);
         }else{
             return response()->json(['error'=>'Error al crear la transferencia.'], 500);
         }
@@ -589,7 +589,7 @@ class TransferenciaController extends Controller
             }
             
             
-            if($nuevaTransf=\App\Transferencia::create([
+            if($nuevaDev=\App\Transferencia::create([
                 'estado'=> 1,
                 'cantidad_transf'=> $request->input('cantidad_transf'),
                 'stock_id'=> $request->input('stock_id'),
@@ -609,7 +609,7 @@ class TransferenciaController extends Controller
                 ]);
 
                return response()->json(['message'=>'Devolución creada con éxito.',
-                 'Transferencia'=>$nuevaTransf], 200);
+                 'devolucion'=>$nuevaDev], 200);
             }else{
                 return response()->json(['error'=>'Error al crear la devolución.'], 500);
             }
