@@ -21,7 +21,7 @@
     </div>
     <div class="row">
       <div class="col-6 col-lg-3">
-        <div class="card" style="border-radius: 20px">
+        <div class="card" style="border-radius: 20px" [routerLink]="['/pedidos/entrantes']">
           <div class="card-body p-0 clearfix">
             <i class="icon-arrow-down-circle bg-primary p-4 font-2xl mr-3 float-left"></i>
             <div class="h5 text-primary mb-0 pt-3">{{datos.estado0}}</div>
@@ -31,7 +31,7 @@
       </div>
       <!--/.col-->
       <div class="col-6 col-lg-3">
-        <div class="card" style="border-radius: 20px">
+        <div class="card" style="border-radius: 20px" [routerLink]="['/pedidos/encurso']">
           <div class="card-body p-0 clearfix">
             <i class="icon-clock bg-info p-4 font-2xl mr-3 float-left"></i>
             <div class="h5 text-info mb-0 pt-3">{{datos.estado1}}</div>
@@ -41,7 +41,7 @@
       </div>
       <!--/.col-->
       <div class="col-6 col-lg-3">
-        <div class="card" style="border-radius: 20px">
+        <div class="card" style="border-radius: 20px" [routerLink]="['/pedidos/entregados']">
           <div class="card-body p-0 clearfix">
             <i class="icon-check bg-warning p-4 font-2xl mr-3 float-left"></i>
             <div class="h5 text-warning mb-0 pt-3">{{datos.estado2}}</div>
@@ -51,7 +51,7 @@
       </div>
       <!--/.col-->
       <div class="col-6 col-lg-3">
-        <div class="card" style="border-radius: 20px">
+        <div class="card" style="border-radius: 20px" [routerLink]="['/pedidos/cancelados']">
           <div class="card-body p-0 clearfix">
             <i class="icon-close bg-danger p-4 font-2xl mr-3 float-left"></i>
             <div class="h5 text-danger mb-0 pt-3">{{datos.estado4}}</div>
@@ -82,7 +82,7 @@
     </div> -->
     <div class="row">
       <div class="col-6 col-lg-4">
-        <div class="card" style="border-radius: 20px">
+        <div class="card" style="border-radius: 20px" [routerLink]="['/inventario/principal']">
           <div class="h5 mb-0" style="text-align: center; margin-top: 5%;">Inventario</div>
           <div class="card-body">
             <div class="chart-wrapper">
@@ -97,7 +97,7 @@
         </div>
       </div>
       <div class="col-6 col-lg-4">
-        <div class="card" style="border-radius: 20px">
+        <div class="card" style="border-radius: 20px" [routerLink]="['/pedidos/aprobar']">
           <div class="h5 mb-0" style="text-align: center; margin-top: 5%;">Solicitudes</div>
           <div class="card-body">
             <div class="chart-wrapper">
@@ -115,7 +115,7 @@
         </div>
       </div>
       <div class="col-6 col-lg-4">
-        <div class="card" style="border-radius: 20px">
+        <div class="card" style="border-radius: 20px" [routerLink]="['/transferencias/transferencia']">
         <div class="h5 mb-0" style="text-align: center; margin-top: 5%;">Transferencias</div>
         <div class="card-body">
           <div class="chart-wrapper">
@@ -136,7 +136,7 @@
 
 
     <div class="card-group">
-      <div class="card">
+      <div class="card" [routerLink]="['/productos/stock']">
         <div class="card-body">
           <div class="h1 text-muted text-right mb-4">
             <i class="fa fa-shopping-bag"></i>
@@ -156,7 +156,7 @@
           
         </div>
       </div>
-      <div class="card">
+      <div class="card" [routerLink]="['/proveedores']">
         <div class="card-body">
           <div class="h1 text-muted text-right mb-4">
             <i class="fa fa-users"></i>
@@ -166,7 +166,7 @@
           
         </div>
       </div>
-      <div class="card">
+      <div class="card" [routerLink]="['/cc/centroCostos']">
         <div class="card-body">
           <div class="h1 text-muted text-right mb-4">
             <i class="fa fa-building-o"></i>
@@ -176,7 +176,7 @@
           
         </div>
       </div>
-      <div class="card">
+      <div class="card" [routerLink]="['/cc/contratos']">
         <div class="card-body">
           <div class="h1 text-muted text-right mb-4">
             <i class="fa fa-edit"></i>
