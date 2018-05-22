@@ -501,8 +501,121 @@ class TransferenciaController extends Controller
         }else{
             return response()->json(['error'=>'Error al crear la transferencia.'], 500);
         }
-        
+                
+    }
+
+    /*
+    Manejo de devoluciones de un departamento_id hacia el departamento de compras
+    */
+    /*
+    NOTA: 
+        Receptor: 
+        almacen 1 -> stock principal
+        almacen 2 -> stock secundario
+    */
+    public function devolucion(Request $request)
+    {
+        // Primero comprobaremos si estamos recibiendo todos los campos.
+        if ( !$request->input('cantidad_transf') ||
+            !$request->input('stock_id') ||
+            !$request->input('departamento_id') ||
+            !$request->input('almacen') 
+        )
+        {
+            // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
+            return response()->json(['error'=>'Faltan datos necesarios para el proceso de alta.'],422);
+        } 
+
+        // Comprobamos si el departamento_id que nos están pasando existe o no.
+        $departamento = \App\Departamento::find($request->input('departamento_id'));
+        if(count($departamento)==0){
+            return response()->json(['error'=>'No existe el departamento con id '.$request->input('departamento_id')], 404);          
+        }
+
+        // Comprobamos si el stock_id que nos están pasando existe o no en el stock del departamento.
+        $stock_dep = \App\StockDepartamento::where('stock_id', $request->input('stock_id'))
+            ->where('departamento_id', $request->input('departamento_id'))->get();
+        if(count($stock_dep)==0){
+            return response()->json(['error'=>'No existe el producto con id '.$request->input('stock_id').' en el stock del departamento.'], 404);          
+        }
+
+        if($stock_dep[0]->stock <= 0){
+           // Devolvemos un código 409 Conflict. 
+            return response()->json(['error'=>'No se puede generar una devolución con el stock del departamento en cero.'], 409);
+        }
+
+        //validaciones sobre el producto en el stock central
+        $producto=\App\Stock::find($request->input('stock_id'));
+
+        if (count($producto)==0)
+        {
+            // Devolvemos error codigo http 404
+            return response()->json(['error'=>'No existe el producto con id '.$request->input('stock_id').' en el stock central.'], 404);
+        }
+
+        if (!$producto->tipo_id || $producto->tipo_id == 0)
+        {
+            // Devolvemos error codigo http 404
+            return response()->json(['error'=>'El producto a devolver debe tener un tipo asociado.'], 404);
+        }else{
+            $tipo_producto=\App\Tipo::find($producto->tipo_id);
+        } 
+
+        if($tipo_producto->nombre == 'CONSUMO'){
+            return response()->json(['error'=>'El proceso de devolución no esta implementado para vienes de consumo.'],409);
+        }
+        else if($tipo_producto->nombre == 'USO'){
+
+            //Descontar del stock del departamento la cantidad a devolver
+            $descontar = $stock_dep[0]->stock - $request->input('cantidad_transf');
+
+            DB::table('stockdepartamentos')
+                ->where('id', $stock_dep[0]->id)
+                ->update(['stock' => $descontar]);
+
+            //Aumentar el stock central con la catidad a devolver
+            //Almacen principal
+            if ($request->input('almacen') == 1) {
+                $aumentar = $producto->stock + $request->input('cantidad_transf');
+
+                $producto->stock = $aumentar;
+                $producto->save();
+            //Almacen secundario
+            }else if ($request->input('almacen') == 2){
+                $aumentar = $producto->stock2 + $request->input('cantidad_transf');
+
+                $producto->stock2 = $aumentar;
+                $producto->save();
+            }
+            
+            
+            if($nuevaTransf=\App\Transferencia::create([
+                'estado'=> 1,
+                'cantidad_transf'=> $request->input('cantidad_transf'),
+                'stock_id'=> $request->input('stock_id'),
+                'departamento_id'=> $request->input('departamento_id'),
+                'tipo' => 2,
+                'almacen'=> $request->input('almacen')
+            ]))
+            {
+                /*Aqui crear el msg para informar al departamento de compras que tiene una nueva devolución*/
+                $nuevoMsg=\App\Mensaje::create([
+                    'estado'=> 1,
+                    'tipo'=> 1,
+                    'asunto'=> 'Nueva Devolución',
+                    'msg'=> 'Tienes una nueva devolución.',
+                    /*'adjunto'=> 'adjunto',*/
+                    'departamento_id'=> 1
+                ]);
+
+               return response()->json(['message'=>'Devolución creada con éxito.',
+                 'Transferencia'=>$nuevaTransf], 200);
+            }else{
+                return response()->json(['error'=>'Error al crear la devolución.'], 500);
+            }
+        }
 
           
     }
+
 }
