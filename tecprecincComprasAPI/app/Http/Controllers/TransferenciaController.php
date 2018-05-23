@@ -725,13 +725,13 @@ class TransferenciaController extends Controller
             //Descontar el stock central con la catidad a transferir
             //Almacen principal
             if ($request->input('almacen') == 1) {
-                $descontar = $producto->stock + $request->input('cantidad_transf');
+                $descontar = $producto->stock - $request->input('cantidad_transf');
 
                 $producto->stock = $descontar;
                 $producto->save();
             //Almacen secundario
             }else if ($request->input('almacen') == 2){
-                $descontar = $producto->stock2 + $request->input('cantidad_transf');
+                $descontar = $producto->stock2 - $request->input('cantidad_transf');
 
                 $producto->stock2 = $descontar;
                 $producto->save();
