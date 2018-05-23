@@ -37,7 +37,7 @@ class Transferencia extends Model
     // Relación de transferencia con departamento:
     public function departamento()
     {
-        // 1 transferencia pertenece a un (se genera para un) departamento
+        // 1 transferencia pertenece a un departamento
         return $this->belongsTo('App\Departamento', 'departamento_id');
     }
 
@@ -53,5 +53,12 @@ class Transferencia extends Model
     {
         // 1 transferencia pertenece se relaciona con un producto de stock central
         return $this->belongsTo('App\Stock', 'stock_id');
+    }
+
+    // Relación de transferencia patrimonial con departamento:
+    public function receptor()
+    {
+        // 1 transferencia  patrimonial pertenece a un (se genera para un) departamento receptor
+        return $this->belongsTo('App\Departamento', 'receptor_id');
     }
 }

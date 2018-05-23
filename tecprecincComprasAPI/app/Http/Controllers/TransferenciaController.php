@@ -764,9 +764,53 @@ class TransferenciaController extends Controller
                 return response()->json(['error'=>'Error al crear la transferencia.'], 500);
             }
         }
-
-          
+     
     }
+
+    public function indexTranfPuras()
+    {
+        
+        //cargar todas las transferencias puras
+        $transferencias = \App\Transferencia::where('tipo', 1)->get();
+
+        if(count($transferencias) == 0){
+            return response()->json(['error'=>'No existen transferencias puras.'], 404);          
+        }else{
+
+            return response()->json(['transferencias'=>$transferencias], 200);
+        }    
+    }
+
+    public function indexDevoluciones()
+    {
+        
+        //cargar todas las devoluciones 
+        $devoluciones = \App\Transferencia::with('departamento')
+            ->where('tipo', 2)->get();
+
+        if(count($devoluciones) == 0){
+            return response()->json(['error'=>'No existen devoluciones.'], 404);          
+        }else{
+
+            return response()->json(['devoluciones'=>$devoluciones], 200);
+        }    
+    }
+
+    public function indexTranfPatri()
+    {
+        
+        //cargar todas las transferencias patrimoniales
+        $transferencias = \App\Transferencia::with('receptor')
+            ->where('tipo', 3)->get();
+
+        if(count($transferencias) == 0){
+            return response()->json(['error'=>'No existen transferencias patrimoniales.'], 404);          
+        }else{
+
+            return response()->json(['transferencias'=>$transferencias], 200);
+        }    
+    }
+
 
 
 }
