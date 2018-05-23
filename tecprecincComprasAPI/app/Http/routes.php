@@ -141,7 +141,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::post('/transferencias/aprobar/{id}','TransferenciaController@aprobarTrasf');
         Route::post('/transferencias/pura','TransferenciaController@transferencia');
         Route::post('/transferencias/devolucion','TransferenciaController@devolucion');
-        Route::post('/transferencias/patrimonial','TransferenciaController@transferenciaDos');
+        Route::post('/transferencias/patrimonial','TransferenciaController@transferenciaPatrimonial');
 
         //----Pruebas MensajeController
         Route::get('/mensajes','MensajeController@index');
