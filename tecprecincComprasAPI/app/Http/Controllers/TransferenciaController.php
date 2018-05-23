@@ -488,7 +488,7 @@ class TransferenciaController extends Controller
 
             
         if($nuevaTransf=\App\Transferencia::create([
-            'estado'=> 1,
+            'estado'=> 2,
             'cantidad_transf'=> $request->input('cantidad_transf'),
             'stock_id'=> $request->input('stock_id'),
             'departamento_id'=> 1,
@@ -590,7 +590,7 @@ class TransferenciaController extends Controller
             
             
             if($nuevaDev=\App\Transferencia::create([
-                'estado'=> 1,
+                'estado'=> 2,
                 'cantidad_transf'=> $request->input('cantidad_transf'),
                 'stock_id'=> $request->input('stock_id'),
                 'departamento_id'=> $request->input('departamento_id'),
@@ -617,5 +617,151 @@ class TransferenciaController extends Controller
 
           
     }
+
+    /*
+    Manejo de transferencia del departamento de compras
+    a cualquier otro departamento
+    */
+    /*
+    NOTA: 
+        Almacen: 
+        departamento_id 100 -> stock principal
+        departamento_id 101 -> stock secundario
+    */
+    public function transferenciaPatrimonial(Request $request)
+    {
+        // Primero comprobaremos si estamos recibiendo todos los campos.
+        if ( !$request->input('cantidad_transf') ||
+            !$request->input('stock_id') ||
+            !$request->input('departamento_id') ||
+            !$request->input('almacen') ||
+            !$request->input('receptor_id') 
+        )
+        {
+            // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
+            return response()->json(['error'=>'Faltan datos necesarios para el proceso de alta.'],422);
+        } 
+
+        // Comprobamos si el receptor_id que nos están pasando existe o no.
+        $departamento = \App\Departamento::find($request->input('receptor_id'));
+        if(count($departamento)==0){
+            return response()->json(['error'=>'No existe el departamento con id '.$request->input('receptor_id')], 404);          
+        }
+
+        // Comprobamos si el stock_id que nos están pasando existe o no en el stock del departamento receptor.
+        $stock_dep = \App\StockDepartamento::where('stock_id', $request->input('stock_id'))
+            ->where('departamento_id', $request->input('receptor_id'))->get();
+        if(count($stock_dep)==0){
+            $bandera = false;          
+        }else{
+            $bandera = true; 
+        }
+
+        // Comprobamos si el departamento_id (emisor) que nos están pasando existe o no.
+        $departamento = \App\Departamento::find($request->input('departamento_id'));
+        if(count($departamento)==0){
+            return response()->json(['error'=>'No existe el departamento con id '.$request->input('departamento_id')], 404);          
+        }
+
+        //validaciones sobre el producto en el stock central
+        $producto=\App\Stock::find($request->input('stock_id'));
+
+        if (count($producto)==0)
+        {
+            // Devolvemos error codigo http 404
+            return response()->json(['error'=>'No existe el producto con id '.$request->input('stock_id').' en el stock central.'], 404);
+        }
+
+        //almacen emisor es stock principal
+        if ($request->input('almacen') == 1) {
+            if ($producto->stock <= 0) {
+                // Devolvemos un código 409 Conflict. 
+                return response()->json(['error'=>'No se puede generar una transferencia con el stock pricipal en cero.'], 409);
+            }
+        }
+        //almacen emisor es stock secundario
+        else if ($request->input('almacen') == 2){
+            if ($producto->stock2 <= 0) {
+                // Devolvemos un código 409 Conflict. 
+                return response()->json(['error'=>'No se puede generar una transferencia con el stock secundario en cero.'], 409);
+            }
+        } 
+
+        if (!$producto->tipo_id || $producto->tipo_id == 0)
+        {
+            // Devolvemos error codigo http 404
+            return response()->json(['error'=>'El producto a transferir debe tener un tipo asociado.'], 404);
+        }else{
+            $tipo_producto=\App\Tipo::find($producto->tipo_id);
+        } 
+
+        if($tipo_producto->nombre == 'CONSUMO'){
+            return response()->json(['error'=>'El proceso de transferencia no esta implementado para vienes de consumo.'],409);
+        }
+        else if($tipo_producto->nombre == 'USO'){
+
+            if ($bandera) {
+                //Aumentar del stock del departamento la cantidad a transferir
+                $aumentar = $stock_dep[0]->stock + $request->input('cantidad_transf');
+
+                DB::table('stockdepartamentos')
+                    ->where('id', $stock_dep[0]->id)
+                    ->update(['stock' => $aumentar]);
+            }else{
+                $NewProdEnDep = new \App\StockDepartamento;
+                $NewProdEnDep->stock_id = $request->input('stock_id');
+                $NewProdEnDep->stock = $request->input('cantidad_transf');
+                $NewProdEnDep->stock_min = 0;
+                $NewProdEnDep->departamento_id = $request->input('receptor_id');
+                $NewProdEnDep->save()
+            }
+            
+
+            //Descontar el stock central con la catidad a transferir
+            //Almacen principal
+            if ($request->input('almacen') == 1) {
+                $descontar = $producto->stock + $request->input('cantidad_transf');
+
+                $producto->stock = $descontar;
+                $producto->save();
+            //Almacen secundario
+            }else if ($request->input('almacen') == 2){
+                $descontar = $producto->stock2 + $request->input('cantidad_transf');
+
+                $producto->stock2 = $descontar;
+                $producto->save();
+            }
+            
+            
+            if($nuevaTransf=\App\Transferencia::create([
+                'estado'=> 2,
+                'cantidad_transf'=> $request->input('cantidad_transf'),
+                'stock_id'=> $request->input('stock_id'),
+                'departamento_id'=> $request->input('departamento_id'),
+                'tipo' => 2,
+                'almacen'=> $request->input('almacen'),
+                'receptor_id'=> $request->input('receptor_id')
+            ]))
+            {
+                /*Aqui crear el msg para informar al departamento receptor que tiene una nueva transferencia*/
+                $nuevoMsg=\App\Mensaje::create([
+                    'estado'=> 1,
+                    'tipo'=> 1,
+                    'asunto'=> 'Nueva Transferencia',
+                    'msg'=> 'Tienes una nueva transferencia.',
+                    /*'adjunto'=> 'adjunto',*/
+                    'departamento_id'=> 1
+                ]);
+
+               return response()->json(['message'=>'Transferencia creada con éxito.',
+                 'transferencia'=>$nuevaTransf], 200);
+            }else{
+                return response()->json(['error'=>'Error al crear la transferencia.'], 500);
+            }
+        }
+
+          
+    }
+
 
 }
