@@ -718,7 +718,7 @@ class TransferenciaController extends Controller
                 $NewProdEnDep->stock = $request->input('cantidad_transf');
                 $NewProdEnDep->stock_min = 0;
                 $NewProdEnDep->departamento_id = $request->input('receptor_id');
-                $NewProdEnDep->save()
+                $NewProdEnDep->save();
             }
             
 
