@@ -453,6 +453,8 @@ class TransferenciaController extends Controller
 
         //emisor es stock principal
         if ($request->input('departamento_id') == 100) {
+            //Almacen de destino
+            $almacen = 2;
             if ($producto->stock <= 0) {
                 // Devolvemos un código 409 Conflict. 
                 return response()->json(['error'=>'No se puede generar una transferencia con el stock pricipal en cero.'], 409);
@@ -470,6 +472,8 @@ class TransferenciaController extends Controller
         }
         //emisor es stock secundario
         else if ($request->input('departamento_id') == 101){
+            //Almacen de destino
+            $almacen = 1;
             if ($producto->stock2 <= 0) {
                 // Devolvemos un código 409 Conflict. 
                 return response()->json(['error'=>'No se puede generar una transferencia con el stock secundario en cero.'], 409);
@@ -492,7 +496,8 @@ class TransferenciaController extends Controller
             'cantidad_transf'=> $request->input('cantidad_transf'),
             'stock_id'=> $request->input('stock_id'),
             'departamento_id'=> 1,
-            'tipo'=> 1
+            'tipo'=> 1,
+            'almacen'=> $almacen
         ]))
         {
 
@@ -738,7 +743,7 @@ class TransferenciaController extends Controller
                 'cantidad_transf'=> $request->input('cantidad_transf'),
                 'stock_id'=> $request->input('stock_id'),
                 'departamento_id'=> $request->input('departamento_id'),
-                'tipo' => 2,
+                'tipo' => 3,
                 'almacen'=> $request->input('almacen'),
                 'receptor_id'=> $request->input('receptor_id')
             ]))
