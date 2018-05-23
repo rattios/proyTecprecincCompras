@@ -771,7 +771,7 @@ class TransferenciaController extends Controller
     {
         
         //cargar todas las transferencias puras
-        $transferencias = \App\Transferencia::where('tipo', 1)->get();
+        $transferencias = \App\Transferencia::where('tipo', 1)->orderBy('id', 'desc')->get();
 
         if(count($transferencias) == 0){
             return response()->json(['error'=>'No existen transferencias puras.'], 404);          
@@ -786,7 +786,7 @@ class TransferenciaController extends Controller
         
         //cargar todas las devoluciones 
         $devoluciones = \App\Transferencia::with('departamento')
-            ->where('tipo', 2)->get();
+            ->where('tipo', 2)->orderBy('id', 'desc')->get();
 
         if(count($devoluciones) == 0){
             return response()->json(['error'=>'No existen devoluciones.'], 404);          
@@ -801,7 +801,7 @@ class TransferenciaController extends Controller
         
         //cargar todas las transferencias patrimoniales
         $transferencias = \App\Transferencia::with('receptor')
-            ->where('tipo', 3)->get();
+            ->where('tipo', 3)->orderBy('id', 'desc')->get();
 
         if(count($transferencias) == 0){
             return response()->json(['error'=>'No existen transferencias patrimoniales.'], 404);          
