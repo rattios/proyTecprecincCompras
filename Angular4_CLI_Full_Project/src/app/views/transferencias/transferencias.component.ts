@@ -16,8 +16,10 @@ export class transferenciasComponent {
   public stock: any;
   public productos: any;
   public departamentos: any;
+  public departamentosRespaldo: any;
   public proveedor: any='';
   public departamento=localStorage.getItem('tecprecinc_nombre');
+  public departamento_id=localStorage.getItem('tecprecinc_departamento_id');
   public template:'http://localhost/template.gif';
   public loading=true;
   public success=false;
@@ -36,7 +38,7 @@ export class transferenciasComponent {
       let headers = new HttpHeaders();
       headers = headers.append("Authorization", "Bearer " + localStorage.getItem('tecprecinc_token'));
       //headers = headers.append("Content-Type", "application/json");
-    
+      console.log(this.departamento_id);
       this.http.get(this.ruta.get_ruta()+'stock/transferencias?token='+localStorage.getItem('tecprecinc_token'), {
             headers: headers
         }).toPromise()
@@ -44,9 +46,9 @@ export class transferenciasComponent {
            data => {
              this.prov=data;
            	  this.stock=this.prov.productos;
-              this.departamentos=this.prov.departamentos;
+              this.departamentosRespaldo=this.prov.departamentos;
               console.log(this.stock);
-              console.log(this.departamentos);
+              console.log(this.departamentosRespaldo);
               this.productList = this.stock;
               this.filteredItems = this.productList;
               this.init();
@@ -61,15 +63,38 @@ export class transferenciasComponent {
     }
 
     setProductos(item){
+      this.seTransfirio=true;
       console.log(item);
-      this.cantidad=0;
+      this.cantidad=1;
       this.producto=item;
     }
-
+    bienUso(item){
+      if(item.tipo_id!=2) {
+        alert('Este producto no es un bien de uso y no se puede transferir!');
+      }
+    }
+    restaurarDepartamentos(){
+      this.departamentos=this.departamentosRespaldo;
+    }
+    setDepartamentos(item){
+      this.http.get(this.ruta.get_ruta()+'pedidos/ubicar/'+item.id)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.departamentos=data;
+             this.departamentos=this.departamentos.departamentos;
+            },
+           msg => { 
+             this.departamentos=[];
+             console.log(msg);
+             
+           });
+    }
     checkCantidad(cantidad){
       console.log(cantidad);
       if(this.cantidad>=0) {
-        if(this.producto.stock<cantidad) {
+        if(this.producto.stock<cantidad && this.producto.stock2<cantidad) {
           alert('La cantidad no puede ser mayor a la del stock.');
           this.cantidad=0;
         }
@@ -78,7 +103,9 @@ export class transferenciasComponent {
       }
     }
     
-    enviar(depar){
+    transferir(depar){
+      this.seTransfirio=true;
+
       if(this.cantidad>0) {
         console.log(depar);
         var enviar = {
@@ -89,7 +116,7 @@ export class transferenciasComponent {
         console.log(enviar);
 
         setTimeout(() => {
-          this.http.post(this.ruta.get_ruta()+'transferencias',enviar)
+          this.http.post(this.ruta.get_ruta()+'/transferencias/pura',enviar)
            .toPromise()
            .then(
            data => {
@@ -97,11 +124,13 @@ export class transferenciasComponent {
               this.success=true;
               setTimeout(() => {  
                 this.success=false;
-              }, 4000);
+              }, 1000);
               this.seTransfirio=false;
+              this.ngOnInit();
             },
            msg => { 
              console.log(msg);
+             console.log(msg.error);
              this.fail=true;
               setTimeout(() => {  
                 this.fail=false;
@@ -114,7 +143,93 @@ export class transferenciasComponent {
       }
         
     }
+
+    devolver(depar,almacen){
+      this.seTransfirio=true;
+      if(this.cantidad>0) {
+        console.log(depar);
+        var enviar = {
+          cantidad_transf:this.cantidad,
+          stock_id:this.producto.id,
+          departamento_id:depar,
+          almacen:almacen
+        }
+        console.log(enviar);
+
+        setTimeout(() => {
+          this.http.post(this.ruta.get_ruta()+'/transferencias/devolucion',enviar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+              this.success=true;
+              setTimeout(() => {  
+                this.success=false;
+              }, 4000);
+              this.seTransfirio=false;
+              this.ngOnInit();
+            },
+           msg => { 
+             console.log(msg);
+             console.log(msg.error);
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
+             
+           });
+        }, 1000);
+      }else{
+        alert('La cantidad debe ser mayor a cero.');
+      }
+        
+    }
+    public depart:any;
+    seleccionar(depar){
+      this.depart=depar;
+    }
     
+    enviar(almacen){
+      this.seTransfirio=true;
+      if(this.cantidad>0) {
+        console.log(almacen);
+        var enviar = {
+          cantidad_transf:this.cantidad,
+          stock_id:this.producto.id,
+          departamento_id:this.departamento_id,
+          almacen:almacen,
+          receptor_id:this.depart
+        }
+        console.log(enviar);
+
+        setTimeout(() => {
+          this.http.post(this.ruta.get_ruta()+'/transferencias/patrimonial',enviar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+              this.success=true;
+              setTimeout(() => {  
+                this.success=false;
+              }, 4000);
+              this.seTransfirio=false;
+              this.ngOnInit();
+            },
+           msg => { 
+             console.log(msg);
+             console.log(msg.error);
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
+             
+           });
+        }, 1000);
+      }else{
+        alert('La cantidad debe ser mayor a cero.');
+      }
+        
+    }
 
     //-------------------------------------------------------------------------------------------------------------------------
    
