@@ -136,15 +136,16 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::post('/transferencias','TransferenciaController@store');
         Route::put('/transferencias/{id}','TransferenciaController@update');
         Route::delete('/transferencias/{id}','TransferenciaController@destroy');
+        Route::get('/transferencias/index/pura','TransferenciaController@indexTranfPuras');
+        Route::get('/transferencias/index/devolucion','TransferenciaController@indexDevoluciones');
+        Route::get('/transferencias/index/patrimonial','TransferenciaController@indexTranfPatri');
         Route::get('/transferencias/{id}','TransferenciaController@show');
         Route::get('/transferencias/departamento/{departamento_id}','TransferenciaController@transfsDep');
         Route::post('/transferencias/aprobar/{id}','TransferenciaController@aprobarTrasf');
         Route::post('/transferencias/pura','TransferenciaController@transferencia');
         Route::post('/transferencias/devolucion','TransferenciaController@devolucion');
         Route::post('/transferencias/patrimonial','TransferenciaController@transferenciaPatrimonial');
-        Route::get('/transferencias/pura','TransferenciaController@indexTranfPuras');
-        Route::get('/transferencias/devolucion','TransferenciaController@indexDevoluciones');
-        Route::get('/transferencias/patrimonial','TransferenciaController@indexTranfPatri');
+
 
         //----Pruebas MensajeController
         Route::get('/mensajes','MensajeController@index');
