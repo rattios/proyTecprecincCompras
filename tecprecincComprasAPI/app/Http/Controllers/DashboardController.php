@@ -137,8 +137,8 @@ class DashboardController extends Controller
         $usuarios = DB::select("SELECT `id`,`departamento_id`, `nombre`,`rol` FROM `usuarios` WHERE 1");
         $departamentos = DB::select("SELECT `id`,`nombre` FROM `departamentos` WHERE 1");
         $pedidos = DB::select("SELECT `estado`, `usuario_id`, `created_at`, `aprobar` FROM `pedidos` WHERE 1");
-        $transferencias=DB::select("SELECT `id`,`created_at` FROM `transferencias` WHERE `estado`=1");
-        $ultimosTransferencias=DB::select("SELECT `id`,`created_at` FROM `transferencias` WHERE `estado`=1 ORDER BY `id` DESC LIMIT 10");
+        $transferencias=DB::select("SELECT `id`,`created_at` FROM `transferencias` WHERE `estado`=2");
+        $ultimosTransferencias=DB::select("SELECT `id`,`created_at` FROM `transferencias` WHERE `estado`=2 ORDER BY `id` DESC LIMIT 10");
         $ultimosPedidos = DB::select("SELECT * FROM `pedidos` ORDER BY `pedidos`.`id` DESC LIMIT 15");
         $proveedores = DB::select("SELECT `id`,`razon_social` FROM `proveedores` WHERE 1");
         $productos = DB::select("SELECT `nombre` FROM `productos` WHERE 1");

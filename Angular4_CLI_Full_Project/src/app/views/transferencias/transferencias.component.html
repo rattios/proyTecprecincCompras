@@ -202,8 +202,9 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-5">
+        <div class="row" *ngIf="!selecAlmacen">
+          <div class="col-sm-12">
+            
             <table class="table table-striped">
               <thead>
                 <th>Departamento</th>
@@ -218,10 +219,13 @@
               </tbody>
             </table>
           </div>
-          <div class="col-sm-1">
-            =>
-          </div>
-          <div class="col-sm-5">
+        </div>
+        <div class="row" *ngIf="selecAlmacen">
+          <div class="col-sm-12">
+            <div style="text-align: right;">
+               <button type="button" class="btn btn-primary" (click)="unSelecAlmacen()">Volver</button>
+            </div>
+            <br>
             <table class="table table-striped">
               <thead>
                 <th>Almacen</th>

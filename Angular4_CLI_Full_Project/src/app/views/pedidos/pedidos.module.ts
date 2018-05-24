@@ -51,9 +51,9 @@ import { pickingComponent } from './picking.component';
     ModalModule.forRoot(),
   ],
   declarations: [ 
-  	pedidosComponent,
-  	misPedidosComponent,
-  	todosPedidosComponent,
+      pedidosComponent,
+      misPedidosComponent,
+      todosPedidosComponent,
     infoComponent,
     tablaInfoComponent,
     misTablaInfoComponent,
@@ -74,6 +74,6 @@ import { pickingComponent } from './picking.component';
     transferenciasPuraComponent,
     transferenciasInfoComponent,
     pickingComponent
-	]
+    ]
 })
 export class pedidosModule { }

@@ -1,0 +1,357 @@
+<div class="row" *ngIf="informacion[0].tipo==1">
+	<div class="col-lg-12">
+      	<br>
+      	<div class="row">
+      		<div class="col-lg-12">
+      			<div class="">
+      				<div class="row">
+      					<table class="table table-striped">
+				            <thead>
+				              <tr>
+				              	<th></th>
+				                <th>Cantidad</th>
+				                <th>Producto</th>
+				                <th>Remitente</th>
+				                <th>Destino</th>
+				                <th>Tipo</th>
+				                <th>Estado</th>
+				                <th>Fecha</th>
+				                <th></th>
+				              </tr>
+				            </thead>
+				            <tbody>
+				              <tr *ngFor="let item of informacion">
+				              	<td></td>
+				                <td>{{item.cantidad_transf}}</td>
+				                <td>{{item.stock_central.nombre}}</td>
+				                <td>{{item.nombreAlmacen}}</td>
+				                <td>{{item.nombreAlmacenDestino}}</td>
+				                <td>{{item.nombreTipo}}</td>
+				                <td>{{item.nombreEstado}}</td>
+				                <td>{{item.created_at | date : "d/MM/yyyy"}}</td>
+				                <td><button type="button" class="btn btn-outline-secondary btn-sm" (click)="aImprimir(item)"><i class="fa fa-print">  Imprimir</i></button></td>
+				              </tr>
+				            </tbody>
+				          </table>
+      				</div>
+      			</div>
+      		</div>	
+      	</div>
+    </div>	
+</div>
+
+<div class="row" *ngIf="informacion[0].tipo==2">
+	<div class="col-lg-12">
+      	<br>
+      	<div class="row">
+      		<div class="col-lg-12">
+      			<div class="">
+      				<div class="row">
+      					<table class="table table-striped">
+				            <thead>
+				              <tr>
+				              	<th></th>
+				                <th>Cantidad</th>
+				                <th>Producto</th>
+				                <th>Remitente</th>
+				                <th>Destino</th>
+				                <th>Tipo</th>
+				                <th>Estado</th>
+				                <th>Fecha</th>
+				                <th></th>
+				              </tr>
+				            </thead>
+				            <tbody>
+				              <tr *ngFor="let item of informacion">
+				              	<td></td>
+				                <td>{{item.cantidad_transf}}</td>
+				                <td>{{item.stock_central.nombre}}</td>
+				                <td>{{item.nombreAlmacen}}</td>
+				                <td>{{item.nombreAlmacenDestino}}</td>
+				                <td>{{item.nombreTipo}}</td>
+				                <td>{{item.nombreEstado}}</td>
+				                <td>{{item.created_at | date : "d/MM/yyyy"}}</td>
+				                <td><button type="button" class="btn btn-outline-secondary btn-sm" (click)="aImprimir(item)"><i class="fa fa-print">  Imprimir</i></button></td>
+				              </tr>
+				            </tbody>
+				          </table>
+      				</div>
+      			</div>
+      		</div>	
+      	</div>
+    </div>	
+</div>
+
+<div class="row" *ngIf="informacion[0].tipo==3">
+	<div class="col-lg-12">
+      	<br>
+      	<div class="row">
+      		<div class="col-lg-12">
+      			<div class="">
+      				<div class="row">
+      					<table class="table table-striped">
+				            <thead>
+				              <tr>
+				              	<th></th>
+				                <th>Cantidad</th>
+				                <th>Producto</th>
+				                <th>Remitente</th>
+				                <th>Destino</th>
+				                <th>Tipo</th>
+				                <th>Estado</th>
+				                <th>Fecha</th>
+				                <th></th>
+				              </tr>
+				            </thead>
+				            <tbody>
+				              <tr *ngFor="let item of informacion">
+				              	<td></td>
+				                <td>{{item.cantidad_transf}}</td>
+				                <td>{{item.stock_central.nombre}}</td>
+				                <td>{{item.nombreAlmacen}}</td>
+				                <td>{{item.nombreAlmacenDestino}}</td>
+				                <td>{{item.nombreTipo}}</td>
+				                <td>{{item.nombreEstado}}</td>
+				                <td>{{item.created_at | date : "d/MM/yyyy"}}</td>
+				                <td><button type="button" class="btn btn-outline-secondary btn-sm" (click)="aImprimir(item)"><i class="fa fa-print">  Imprimir Traslado</i></button> <button type="button" class="btn btn-outline-secondary btn-sm" (click)="aImprimirActa(item)"><i class="fa fa-print">  Imprimir Acta de asignación</i></button></td>
+				              </tr>
+				            </tbody>
+				          </table>
+      				</div>
+      			</div>
+      		</div>	
+      	</div>
+    </div>	
+</div>
+
+<div id="prin" [hidden]="true">
+	<div class="row">
+		<div class="col-lg-12">
+	      	<div class="row">
+	      		<div class="col-lg-12">
+	      			<div class="">
+	      				<div class="row">
+	      					<div class="col-sm-3">
+	      						<img src="http://www.tecprecincsrl.com.ar/e/wp-content/uploads/2018/02/logo.png" style="width: 210px; position: absolute;">
+		      				</div>
+		      			</div>
+		      			<div class="row">
+		      				<div class="col-sm-5">
+	      						
+		      				</div>
+		      				<div class="col-sm-6" style="border:2px solid; text-align:center">
+		      					<h4>TRASLADO NRO. {{transf.id}}</h4>
+		      				</div>
+		      				<div class="col-sm-1">
+		      				</div>
+	      				</div>
+	      				<br><br><br>
+	      				<!-- <div class="row" style="border:2px solid;">
+	      				</div> -->
+	      			</div>
+	      		</div>	
+	      	</div>
+	      	<br>
+	      	<div class="row" >
+	      		<div class="col-lg-12">
+	      			Fecha: {{transf.created_at}}
+	      		</div>	
+	      	</div>
+	      	<br><br>
+	      	<div class="row" >
+	      		<div class="col-lg-12">
+	      			Déposito de origen: {{transf.nombreAlmacen}}<br>
+	      			Dirección: <br>
+	      			Teléfono: <br>
+	      		</div>	
+	      	</div>
+	      	<br><br>
+	      	<div class="row" >
+	      		<div class="col-lg-12">
+	      			Déposito de destino: {{transf.nombreAlmacenDestino}}<br>
+	      			Dirección: <br>
+	      			Teléfono: <br>
+	      		</div>	
+	      	</div>
+	      	<br><br>
+	      	<div class="row" >
+	      		<div class="col-lg-12">
+	      			Detalle:<br><br>
+	      			<table class="table table-striped" style="border:2px solid;">
+			            <thead>
+			              <tr>
+			              	<th></th>
+			                <th>idProducto</th>
+			                <th>Producto</th>
+			                <th>Cantidad</th>
+			                <th></th>
+			              </tr>
+			            </thead>
+			            <tbody>
+			              <tr >
+			              	<td></td>
+			                <td>{{transf.stock_central.codigo}}</td>
+			                <td>{{transf.stock_central.nombre}}</td>
+			                <td>{{transf.cantidad_transf}}</td>
+			                <td></td>
+			              </tr>
+			            </tbody>
+			          </table>
+	      		</div>	
+	      	</div>
+	      	<br><br><br><br>
+	      	
+	      	<div class="row col-lg-12" style=" margin-left: 0.05%;">
+	      		<div class="col-sm-1">
+	      		</div>
+					<div class="col-sm-5">
+						<p style="font-weight: bold; margin: 5px; border-top: 1px solid; text-align: center;">Emitió</p> 
+  				</div>
+  				<div class="col-sm-5">
+  					<p style="font-weight: bold; margin: 5px; border-top: 1px solid; text-align: center;">Recibió</p> 
+  				</div>
+  				<div class="col-sm-1">
+	      		</div>
+			</div>
+	    </div>	
+	</div>
+</div>
+
+<div id="prin2" [hidden]="true">
+	<div class="row">
+		<div class="col-lg-12">
+	      	<div class="row">
+	      		<div class="col-lg-12">
+	      			<div class="">
+	      				<div class="row">
+	      					<div class="col-sm-3">
+	      						<img src="http://www.tecprecincsrl.com.ar/e/wp-content/uploads/2018/02/logo.png" style="width: 210px; position: absolute;">
+		      				</div>
+		      			</div>
+		      			<div class="row">
+		      				<div class="col-sm-5">
+	      						
+		      				</div>
+		      				<div class="col-sm-6" style="text-align:center">
+		      					<p>OFICINA DE PATRIMONIO</p>
+		      				</div>
+		      				<div class="col-sm-1">
+		      				</div>
+	      				</div>
+		      			<div class="row">
+		      				<div class="col-sm-5">
+	      						
+		      				</div>
+		      				<div class="col-sm-6" style="border:2px solid; text-align:center">
+		      					<h5>ACTA DE ASIGNACIÓN DE NÚMERO DE INVENTARIO</h5>
+		      				</div>
+		      				<div class="col-sm-1">
+		      				</div>
+	      				</div>
+	      				<br><br>
+	      				<!-- <div class="row" style="border:2px solid;">
+	      				</div> -->
+	      			</div>
+	      		</div>	
+	      	</div>
+	      	<br>
+	      	<div class="row" >
+	      		<div class="col-lg-12">
+	      			Fecha: {{transf.created_at}}<br>
+	      			ACTA Nro: {{transf.id}}<br>
+	      			Unidad: {{transf.receptor.nombre}}<br>
+	      			Responsable: {{transf.receptor.nombre}}<br>
+	      		</div>	
+	      	</div>
+	      	<br>
+	      	<br>
+	      	<div class="row" >
+	      		<div class="col-lg-12">
+	      			Detalle:<br><br>
+	      			<table class="table table-striped" style="border:2px solid; font-size: 12px;">
+			            <thead>
+			              <tr>
+			              	<th style="font-size: 12px;"></th>
+			                <th style="font-size: 12px;">Nro. Inv</th>
+			                <th style="font-size: 12px;"></th>
+			                <th style="font-size: 12px;">Descripción</th>
+			                <th style="font-size: 12px;">Origen del Bien</th>
+			                <th style="font-size: 12px;"></th>
+			              </tr>
+			            </thead>
+			            <tbody>
+			              <tr >
+			              	<td style="font-size: 12px;"></td>
+			                <td style="font-size: 12px;">{{transf.stock_central.codigo}}</td>
+			                <td style="font-size: 12px;"></td>
+			                <td style="font-size: 12px;">{{transf.stock_central.nombre}}</td>
+			                <td style="font-size: 12px;">{{transf.nombreAlmacen}}</td>
+			                <td style="font-size: 12px;"></td>
+			              </tr>
+			            </tbody>
+			          </table>
+	      		</div>	
+	      	</div>
+	      	<br>
+	      	<div class="row" >
+	      		<div class="col-lg-12" style="text-align: center;">
+	      			CONFORMIDAD DE ASIGNACIÓN DE NÚMERO DE INVENTARIO
+	      		</div>	
+	      	</div>
+	      	<br>
+	      	
+	      	<div class="row col-lg-12" style=" margin-left: 0.05%;">
+	      		<div class="col-sm-1">
+	      		</div>
+				<div class="col-sm-4" >
+					<p style="font-size: 12px;">RESPONSABLE DE LA OFICINA DE PATRIMONIO</p>
+					<div style="border: 1px solid">
+						<p style="font-weight: bold; margin: 5px;  text-align: left;margin-top: 25px;font-size: 12px;">Firma:............................</p>
+						<p style="font-weight: bold; margin: 5px; text-align: left; margin-bottom: 25px;font-size: 12px;">Aclaración:.....................</p>
+					</div>
+						  
+  				</div>
+  				<div class="col-sm-2">
+	      		</div>
+  				<div class="col-sm-4">
+  					<p style="text-align:center;font-size: 12px;">RECIBIÓ CONFORME <br><br></p>
+  					<div style="border: 1px solid">
+  						<p style="font-weight: bold; margin: 5px; text-align: left;margin-top: 25px;font-size: 12px;">Firma:............................</p> 
+  						<p style="font-weight: bold; margin: 5px; text-align: left; margin-bottom: 25px;font-size: 12px;">Aclaración:.....................</p> 
+  					</div>
+  					
+  				</div>
+  				<div class="col-sm-1">
+	      		</div>
+			</div>
+			<br>
+			<div class="row col-lg-12" style=" margin-left: 0.05%;">
+	      		<div class="col-sm-1">
+	      		</div>
+				<div class="col-sm-4" style="">
+					<div style="border: 1px solid; margin-left: 35px;margin-right: 35px;">
+						<br><br><br><br><br>
+					</div>
+					<p style="text-align:center; font-size: 12px;">SELLO OFICINA DE PATRIMONIO</p>
+						  
+  				</div>
+  				<div class="col-sm-2">
+	      		</div>
+  				<div class="col-sm-4" style="">
+  					<div style="border: 1px solid; margin-left: 35px;margin-right: 35px;">
+  						<br><br><br><br><br>
+  					</div>
+  					<p style="text-align:center;font-size: 12px;">SELLO RECIBIÓ CONFORME</p>
+  						
+  				</div>
+  				<div class="col-sm-1">
+	      		</div>
+			</div>
+
+	    </div>	
+	</div>
+</div>
+
+<div style="text-align:right">
+	
+</div>

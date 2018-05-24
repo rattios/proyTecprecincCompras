@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {CommonModule, NgClass} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
@@ -6,17 +6,32 @@ import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
 import { RutaService } from '../../services/ruta.service';
 
 @Component({
-  selector: 'app-info',
-  templateUrl: 'info.component.html'
+  selector: 'app-trans-info',
+  templateUrl: 'transInfo.component.html'
 })
-export class infoComponent {
-  public prov: any;
-  public pedidos: any;
-  public productos: any;
-  public proveedor: any='';
-  public showTransferencia=false;
-  public aTransferir:any;
+export class transInfoComponent {
 
+  public Responsable=localStorage.getItem('tecprecinc_nombre');
+  public transf:any={
+    id:'0',
+    cantidad_transf:1,
+    created_at:"2018-05-23 18:19:09",
+    departamento_id:1,
+    estado:2,
+    nombreAlmacen:"Almacen Principal",
+    nombreAlmacenDestino:"Almacen Secundario",
+    nombreEstado:"Completado",
+    nombreTipo:"Transferencia pura",
+    receptor_id:null,
+    tipo:1,
+    stock_central:{
+      codigo:1,
+      nombre:1
+    },
+    receptor:{
+      nombre:''
+    }
+  };
   @Input() informacion:any;
 
   constructor(private http: HttpClient, private ruta: RutaService) {
@@ -25,61 +40,34 @@ export class infoComponent {
 
    ngOnInit(): void {
       console.log(this.informacion);
+      
       if(this.informacion!=undefined) {
        
       }
     }
-
-    public aPicking:any;
-    public showPicking:any;
-    selectPicking(item){
-      item.departamento=this.informacion.usuario.departamento;
-      //item.informacion=this.informacion;
-      console.log(item);
-      this.aPicking=item;
-      this.showPicking=true;
+  aImprimir(item){
+    console.log(item);
+    item.receptor={
+      nombre:''
     }
+    this.transf=item;
+    console.log(this.transf);
+    setTimeout(()=>{    
+          this.print();
+     },1000);
+    
+  }
+  aImprimirActa(item){
+    console.log(item);
 
-    /*picking(item){
-      item.departamento=this.informacion.usuario.departamento;
-      console.log(item);
-      //alert(JSON.stringify(item));
-      var send = {
-        picking: JSON.stringify(item)
-      }
-
-      this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
-           .toPromise()
-           .then(
-           data => {
-             console.log(data);
-             var rec:any;
-             rec=data;
-             console.log(this.informacion);
-             console.log(rec);
-             console.log(rec.picking);
-             for (var i = 0; i < this.informacion.solicitud.length; i++) {
-               if(this.informacion.solicitud[i].id==rec.picking.id) {
-                 this.informacion.solicitud[i]=rec.picking;
-               }
-             }
-            },
-           msg => { 
-             console.log(msg);
-             
-           });
-    }*/
-
-    transferencia(item){
-      this.aTransferir=item;
-      this.showTransferencia=true;
-    }
-    public largeModal2;
-    cerrar2(){
-      console.log(this.largeModal2);
-    }
-
-    print(){
+    this.transf=item;
+    console.log(this.transf);
+    setTimeout(()=>{    
+          this.print2();
+     },1000);
+    
+  }
+  print(){
     let printContents, popupWin;
     printContents = document.getElementById('prin').innerHTML;
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
@@ -201,4 +189,5 @@ export class infoComponent {
     );
     popupWin.document.close();
   }
+    
 }

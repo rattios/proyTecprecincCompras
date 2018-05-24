@@ -185,8 +185,14 @@ export class transferenciasComponent {
         
     }
     public depart:any;
+    public selecAlmacen=false;
     seleccionar(depar){
       this.depart=depar;
+      this.selecAlmacen=true;
+    }
+    unSelecAlmacen(depar){
+      this.depart=depar;
+      this.selecAlmacen=false;
     }
     
     enviar(almacen){

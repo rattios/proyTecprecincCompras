@@ -10,6 +10,13 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { transferenciasComponent } from './transferencias.component';
 import { transferenciasRoutingModule } from './transferencias-routing.module';
 
+import { transInfoComponent } from './transInfo.component';
+
+import { transferenciasPuraComponent } from './transferencias/transferenciasPura.component';
+import { devolucionesComponent } from './transferencias/devoluciones.component';
+import { transferenciasPatrimonialComponent } from './transferencias/transferenciasPatrimonial.component';
+import { transferenciasInfoComponent } from './transferencias/transferenciasInfo.component';
+
 @NgModule({
   imports: [
     transferenciasRoutingModule,
@@ -23,6 +30,11 @@ import { transferenciasRoutingModule } from './transferencias-routing.module';
   ],
   declarations: [ 
   	transferenciasComponent,
+    transInfoComponent,
+    transferenciasPuraComponent,
+    devolucionesComponent,
+    transferenciasPatrimonialComponent,
+    transferenciasInfoComponent
 	]
 })
 export class transferenciasModule { }

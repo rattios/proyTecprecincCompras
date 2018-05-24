@@ -12,7 +12,6 @@ import { encursoComponent } from './encurso/encurso.component';
 import { entregadosComponent } from './entregados/entregados.component';
 import { canceladosComponent } from './cancelados/cancelados.component';
 
-import { transferenciasPuraComponent } from './transferencias/transferenciasPura.component';
 
 const routes: Routes = [
   {
@@ -68,13 +67,6 @@ const routes: Routes = [
         component: canceladosComponent,
         data: {
           title: 'Cancelados'
-        }
-      },
-      {
-        path: 'transferencias_pura',
-        component: transferenciasPuraComponent,
-        data: {
-          title: 'Transferencias Pura'
         }
       },
       {
