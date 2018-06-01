@@ -270,7 +270,7 @@ class StockController extends Controller
     public function indexCategoriasServicio()
     {
         //cargar todos los productos en el stock
-        $productos = \App\Categoria::where('tipo_id',3)->where('id',3)->get();
+        $productos = \App\Stock::where('tipo_id',4)->get();
 
         if(count($productos) == 0){
             return response()->json(['error'=>'No existen productos en el stock Servicios.'], 404);          
@@ -305,6 +305,8 @@ class StockController extends Controller
             return response()->json(['error'=>'Faltan datos necesarios para el proceso de alta.'],422);
         } */
 
+        $permisos_departs=$request->input('permisos_departs');
+
         // Comprobamos si la categoria que nos están pasando existe o no.
         $categoria = \App\Categoria::find($request->input('categoria_id'));
         if(count($categoria)==0){
@@ -333,8 +335,24 @@ class StockController extends Controller
             }
         }
 
+        
+
         //Creamos el producto
         $producto = \App\Stock::create($request->all());
+
+        if ($permisos_departs) {
+            $permisos_departs = json_decode($request->input('permisos_departs'));
+
+            //Eliminar las relaciones(permisos) en la tabla pivote
+            $producto->permisos_departs()->detach();
+
+            //Agregar las nuevas relaciones(permisos) en la tabla pivote
+            for ($i=0; $i < count($permisos_departs) ; $i++) { 
+                  $producto->permisos_departs()->attach($permisos_departs[$i]->id);
+            }
+
+            $bandera=true; 
+        }
 
         return response()->json(['status'=>'ok', 'message'=>'Producto creado con éxito.',
                  'producto'=>$producto], 200);
@@ -484,9 +502,9 @@ class StockController extends Controller
             $bandera=true;
         }
 
-        if ($stock_min2 != null && $stock_min2!='')
+        if ($stock2_min != null && $stock2_min!='')
         {
-            $producto->stock_min2 = $stock_min2;
+            $producto->stock2_min = $stock2_min;
             $bandera=true;
         }
 

@@ -52,7 +52,7 @@ export class infoComponent {
     }
 
     volver(){
-      this.parent.atras();
+      this.parent.atras(0);
     }
     checkAdd(id){
      console.log(id);
@@ -89,6 +89,24 @@ export class infoComponent {
       }
     }
 
+    crear(){
+      this.informacion.permisos_departs=JSON.stringify(this.permisos_departs);
+      console.log(this.informacion);
+      this.http.post(this.ruta.get_ruta()+'stock',this.informacion)
+       .toPromise()
+       .then(
+       data => {
+          console.log(data);
+
+          alert('exito');
+          this.parent.atras(1);
+        },
+       msg => { 
+         console.log(msg);
+         console.log(msg.error);
+       });
+    }
+
     editar(){
       this.informacion.permisos_departs=JSON.stringify(this.permisos_departs);
       console.log(this.informacion);
@@ -99,10 +117,11 @@ export class infoComponent {
           console.log(data);
 
           alert('exito');
+          this.parent.atras(1);
         },
        msg => { 
          console.log(msg);
-         alert(JSON.stringify(msg));
+         console.log(msg.error);
        });
     }
 

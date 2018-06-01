@@ -112,6 +112,39 @@
         </ul>
       </li>
 
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1]">
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="fa fa-building-o"></i> Departamentos</a>
+        <ul class="nav-dropdown-items">
+          <!-- <li class="nav-item" *ngxPermissionsOnly="[0]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/principal']"><i class="icon-list"></i> Stock principal</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/secundario']"><i class="fa fa-list"></i> Stock secundario</a>
+          </li> -->
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/compras']"><i class="fa fa-building"></i> Compras</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/administracion']"><i class="fa fa-building-o"></i> Administración</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/calidad']"><i class="fa fa-building"></i> Calidad</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/mantenimiento']"><i class="fa fa-building-o"></i> Mantenimiento</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/operaciones']"><i class="fa fa-building"></i> Operaciones</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/rrhh']"><i class="fa fa-building-o"></i> RRHH</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/ventas']"><i class="fa fa-building"></i> Ventas</a>
+          </li>
+        </ul>
+      </li>
+
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0]">
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-drawer"></i> Productos</a>
         <ul class="nav-dropdown-items">

@@ -26,13 +26,14 @@ export class servicioComponent {
              this.prov=data;
            	  this.stock=this.prov.productos;
               console.log(this.stock);
-              for (var i = 0; i < this.stock.length; i++) {
+              /*for (var i = 0; i < this.stock.length; i++) {
                 for (var j = 0; j < this.stock[i].stock.length; j++) {
                     this.stock[i].stock[j].categoria=this.stock[i].nombre;
                     this.preProductos.push(this.stock[i].stock[j]);
                 }
               }
-              this.productList = this.preProductos;
+              this.productList = this.preProductos;*/
+              this.productList = this.stock;
               this.filteredItems = this.productList;
               this.init();
             },

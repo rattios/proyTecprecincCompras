@@ -1,109 +1,49 @@
-import { Component } from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { Component, OnInit, Input } from '@angular/core';
+import {CommonModule, NgClass} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../services/ruta.service';
 
 @Component({
-  templateUrl: 'stock.component.html'
+  selector: 'app-info-departamento',
+  templateUrl: 'info_departamento.component.html'
 })
-export class stockComponent {
+export class info_departamentoComponent {
+
+  @Input() informacion:any;
   public prov: any;
   public stock: any;
-  public productos: any;
-  public proveedor: any='';
   public loading=true;
-  public verProduc=false;
-  public producSelec:any;
-  public categoria: any;
-  public categorias: any;
-  public rubros: any;
-  public tipos: any;
-  public departamentos: any;
-  public cod=0;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
-   ngOnInit(): void {
-     this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'todos')
-           .toPromise()
-           .then(
-           data => {
-             this.prov=data;
-           	  this.stock=this.prov.productos;
+  ngOnInit(): void {
+    console.log(this.informacion);
+    this.http.get(this.ruta.get_ruta()+'stockDepar?departamento_id='+this.informacion)
+     .toPromise()
+     .then(
+     data => {
+       this.prov=data;
+         this.stock=this.prov.productos;
 
-              this.categorias=this.prov.categorias;
-              this.rubros=this.prov.rubros;
-              this.tipos=this.prov.tipos;
-              this.departamentos=this.prov.departamentos;
+       
 
-              console.log(this.stock);
-              this.productList = this.stock;
-              this.filteredItems = this.productList;
-              this.init();
-              this.loading=false;
-            },
-           msg => { 
-             console.log(msg);
-             this.loading=false;
-           });
-      
-    }
-    getCodigo(){
-      this.cod= Math.floor((Math.random() * 100000) + 1);
-      for (var i = 0; i < this.stock.length; i++) {
-        if(this.stock[i].codigo==this.cod) {
-          this.cod=this.getCodigo();
-        }
-      }
-      return this.cod;
-    }
-    ver(item){
-      if(item==0) {
-        this.producSelec={
-          categoria_id:0,
-          codigo:this.getCodigo(),
-          departamentos:[],
-          id:0,
-          nombre:"",
-          precio:0,
-          rubro_id:0,
-          stock:0,
-          stock2:0,
-          stock_min:0,
-          stock2_min:0,
-          tipo_id:0
-        };
-        console.log(item);
-        this.verProduc=true;
-      }else{
-    	  this.producSelec=item;
-        this.verProduc=true;
-      }
-    }
-    atras(band){
-      if(band==0) {
-        this.verProduc=false;
-      }else if(band==1){
-        this.verProduc=false;
-        this.ngOnInit();
-      }
-      
-    }
-    getCategorias(){
-      return this.categorias;
-    }
-    getTipos(){
-      return this.tipos;
-    }
-    getRubros(){
-      return this.rubros;
-    }
-    getDepartamentos(){
-      return this.departamentos;
-    }
+        console.log(this.stock);
+        this.productList = this.stock;
+        this.filteredItems = this.productList;
+        this.init();
+        this.loading=false;
+      },
+     msg => { 
+       console.log(msg);
+       this.loading=false;
+     });
+  }
+
+   volver(){
+    
+   }
 
     //-------------------------------------------------------------------------------------------------------------------------
    
@@ -191,5 +131,7 @@ export class stockComponent {
     setPage(index : number){
          this.currentIndex = index;
          this.refreshItems();
-    }
+    }  
 }
+
+

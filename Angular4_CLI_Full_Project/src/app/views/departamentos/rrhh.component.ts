@@ -5,9 +5,9 @@ import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../services/ruta.service';
 
 @Component({
-  templateUrl: 'stock.component.html'
+  templateUrl: 'rrhh.component.html'
 })
-export class stockComponent {
+export class rrhhComponent {
   public prov: any;
   public stock: any;
   public productos: any;
@@ -20,24 +20,20 @@ export class stockComponent {
   public rubros: any;
   public tipos: any;
   public departamentos: any;
-  public cod=0;
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
      this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'todos')
+      this.http.get(this.ruta.get_ruta()+'stockDepar?departamento_id='+localStorage.getItem('tecprecinc_departamento_id'))
            .toPromise()
            .then(
            data => {
              this.prov=data;
            	  this.stock=this.prov.productos;
 
-              this.categorias=this.prov.categorias;
-              this.rubros=this.prov.rubros;
-              this.tipos=this.prov.tipos;
-              this.departamentos=this.prov.departamentos;
+             
 
               console.log(this.stock);
               this.productList = this.stock;
@@ -49,31 +45,20 @@ export class stockComponent {
              console.log(msg);
              this.loading=false;
            });
-      
     }
-    getCodigo(){
-      this.cod= Math.floor((Math.random() * 100000) + 1);
-      for (var i = 0; i < this.stock.length; i++) {
-        if(this.stock[i].codigo==this.cod) {
-          this.cod=this.getCodigo();
-        }
-      }
-      return this.cod;
-    }
+
     ver(item){
       if(item==0) {
         this.producSelec={
           categoria_id:0,
-          codigo:this.getCodigo(),
+          codigo:"",
           departamentos:[],
           id:0,
           nombre:"",
           precio:0,
           rubro_id:0,
           stock:0,
-          stock2:0,
           stock_min:0,
-          stock2_min:0,
           tipo_id:0
         };
         console.log(item);
@@ -83,14 +68,8 @@ export class stockComponent {
         this.verProduc=true;
       }
     }
-    atras(band){
-      if(band==0) {
-        this.verProduc=false;
-      }else if(band==1){
-        this.verProduc=false;
-        this.ngOnInit();
-      }
-      
+    atras(){
+      this.verProduc=false;
     }
     getCategorias(){
       return this.categorias;
