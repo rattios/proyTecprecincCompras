@@ -24,7 +24,7 @@ class Departamento extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre', 'codigo'];
+    protected $fillable = ['nombre', 'codigo','telefono'];
 
     /**
      * The attributes excluded from the model's JSON form.

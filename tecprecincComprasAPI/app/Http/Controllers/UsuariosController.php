@@ -42,8 +42,28 @@ class UsuariosController extends Controller
     	}else if ($rol==1) {
     		$sql="SELECT * FROM  `usuarios` WHERE `rol`=".$rol." AND `departamento_id`=".$departamento_id."";
     		$usuarios = DB::select($sql);
+            for ($i=0; $i < count($usuarios); $i++) { 
+                $usuarios[$i]->departamentos=[];
+                $d=DB::select("SELECT * FROM `departamentos` WHERE `id`=".$usuarios[$i]->departamento_id);
+                for ($j=0; $j < count($d); $j++) { 
+                    array_push($usuarios[$i]->departamentos,$d[$j]);
+                }
+                
+            }
     		return $usuarios;
-    	}
+    	}else if ($rol==10) {
+            $sql="SELECT * FROM  `usuarios` WHERE `departamento_id`=".$departamento_id."";
+            $usuarios = DB::select($sql);
+            for ($i=0; $i < count($usuarios); $i++) { 
+                $usuarios[$i]->departamentos=[];
+                $d=DB::select("SELECT * FROM `departamentos` WHERE `id`=".$usuarios[$i]->departamento_id);
+                for ($j=0; $j < count($d); $j++) { 
+                    array_push($usuarios[$i]->departamentos,$d[$j]);
+                }
+                
+            }
+            return $usuarios;
+        }
     }
 
     /**

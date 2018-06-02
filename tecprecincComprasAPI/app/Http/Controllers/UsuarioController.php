@@ -20,13 +20,13 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //DB::enableQueryLog();
 
         //cargar todos los usuarios con su departamento
         //Consulta Eloquent
-        $usuarios = \App\User::with('departamento')->get();
+        
         
         //Consulta Raw SQL
         //$usuarios = DB::select('select * from `usuarios`');
@@ -60,6 +60,30 @@ class UsuarioController extends Controller
             $usuarios = Cache::get('usuarios');
             return response()->json(['status'=>'con cache', 'usuarios'=>$usuarios], 200);
          }*/
+         return 1;
+         $usuarios = \App\User::with('departamento')->get();
+         return $usuarios;
+            return response()->json(['status'=>'ok', 'usuarios'=>$usuarios], 200);
+
+        if ($request->input('departamento_id')==1) {
+            $usuarios = \App\User::where('departamento_id',1)->with('departamento')->get();
+        }if ($request->input('departamento_id')==2) {
+            $usuarios = \App\User::where('departamento_id',2)->with('departamento')->get();
+        }if ($request->input('departamento_id')==3) {
+            $usuarios = \App\User::where('departamento_id',3)->with('departamento')->get();
+        }if ($request->input('departamento_id')==4) {
+            $usuarios = \App\User::where('departamento_id',4)->with('departamento')->get();
+        }if ($request->input('departamento_id')==5) {
+            $usuarios = \App\User::where('departamento_id',5)->with('departamento')->get();
+            return response()->json(['status'=>'ok', 'usuarios'=>$usuarios], 200);
+        }if ($request->input('departamento_id')==6) {
+            $usuarios = \App\User::where('departamento_id',6)->with('departamento')->get();
+        }if ($request->input('departamento_id')==7) {
+            $usuarios = \App\User::where('departamento_id',7)->with('departamento')->get();
+        }else{
+            $usuarios = \App\User::with('departamento')->get();
+        }
+        
 
         if(count($usuarios) == 0){
             return response()->json(['error'=>'No existen usuarios.'], 404);          

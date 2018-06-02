@@ -20,6 +20,10 @@ export class stock2Component {
   public rubros: any;
   public tipos: any;
   public departamentos: any;
+  public info:any={
+    nombre:'',
+    telefono:''
+  }
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
@@ -48,6 +52,18 @@ export class stock2Component {
              console.log(msg);
              this.loading=false;
            });
+      this.http.get(this.ruta.get_ruta()+'almacen/2')
+           .toPromise()
+           .then(
+           data => {
+             this.info=data;
+              this.info=this.info.Almacen;
+              this.loading=false;
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+           });
     }
 
     ver(item){
@@ -70,6 +86,35 @@ export class stock2Component {
     	  this.producSelec=item;
         this.verProduc=true;
       }
+    }
+    public success:any;
+    public fail:any;
+    editar(){
+      
+      var send={
+        nombre:this.info.nombre,
+        telefono: this.info.telefono
+      }
+      console.log(send);
+      this.http.put(this.ruta.get_ruta()+'almacen/2',send)
+           .toPromise()
+           .then(
+           data => {
+            
+              console.log(data);
+              this.success=true;
+              setTimeout(() => {  
+                this.success=false;
+              }, 4000);
+            },
+           msg => { 
+             console.log(msg);
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
+
+           });
     }
     atras(){
       this.verProduc=false;

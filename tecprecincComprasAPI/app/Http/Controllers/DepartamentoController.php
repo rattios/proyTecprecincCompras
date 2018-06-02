@@ -76,7 +76,8 @@ class DepartamentoController extends Controller
         //Consulta Raw SQL
         $departamento = DB::select('select * from `departamentos` where `nombre` = ? or `codigo` = ?', [
             $request->input('nombre'),
-            $request->input('codigo')
+            $request->input('codigo'),
+            $request->input('telefono')
             ]);
 
         if(count($departamento)!=0){
@@ -156,11 +157,18 @@ class DepartamentoController extends Controller
         // Listado de campos recibidos teóricamente.
         $nombre=$request->input('nombre');
         $codigo=$request->input('codigo');
+        $telefono=$request->input('telefono');
 
         // Creamos una bandera para controlar si se ha modificado algún dato.
         $bandera = false;
 
         // Actualización parcial de campos.
+        if ($telefono != null && $telefono!='')
+        {
+            $departamento->telefono = $telefono;
+            $bandera=true;
+        }
+
         if ($nombre != null && $nombre!='')
         {
             $aux = \App\Departamento::where('nombre', $request->input('nombre'))

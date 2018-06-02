@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { stockComponent } from './stock.component';
 import { stock2Component } from './stock2.component';
@@ -17,7 +18,8 @@ import { info2Component } from './info2.component';
     ChartsModule,
     HttpClientModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    TabsModule.forRoot(),
   ],
   declarations: [ 
   	stockComponent,

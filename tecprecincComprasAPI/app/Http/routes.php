@@ -39,7 +39,8 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/departamentos/{id}','DepartamentoController@show');
 
         //----Pruebas UsuarioController
-        Route::get('/usuarios','UsuarioController@index');
+        Route::get('/usuarios','UsuariosController@usuarios');
+       // Route::get('/usuarios','UsuarioController@index');
         Route::get('/usuarios/pedidos','UsuarioController@usuariosPedidos');
         Route::post('/usuarios','UsuarioController@store');
         Route::put('/usuarios/{id}','UsuarioController@update');
@@ -165,7 +166,17 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::put('/contratos/{id}','ContratosController@update');
         Route::delete('/contratos/{id}','ContratosController@destroy');
 
-        Route::get('/usuarios','UsuariosController@usuarios');
+        Route::get('/almacen','AlmacenController@index');
+        Route::post('/almacen','AlmacenController@store'); 
+        Route::put('/almacen/{id}','AlmacenController@update');
+        Route::delete('/almacen/{id}','AlmacenController@destroy');
+        Route::get('/almacen/{id}','AlmacenController@show');
+
+        Route::get('/trazas','TrazasController@index');
+        Route::post('/trazas','TrazasController@store'); 
+        Route::put('/trazas/{id}','TrazasController@update');
+        Route::delete('/trazas/{id}','TrazasController@destroy');
+        Route::get('/trazas/{id}','TrazasController@show');
 
 
     Route::group(['middleware' => 'jwt-auth'], function(){

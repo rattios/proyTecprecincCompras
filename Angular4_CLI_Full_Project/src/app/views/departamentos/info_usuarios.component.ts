@@ -29,7 +29,7 @@ export class info_usuariosComponent {
    ngOnInit(): void {
       this.loading=true;
 
-      this.http.get(this.ruta.get_ruta()+'usuarios?rol='+localStorage.getItem('tecprecinc_rol')+"&departamento_id="+localStorage.getItem('tecprecinc_departamento_id'))
+      this.http.get(this.ruta.get_ruta()+'usuarios?rol='+10+"&departamento_id="+this.informacion)
            .toPromise()
            .then(
            data => {

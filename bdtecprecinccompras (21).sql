@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-05-2018 a las 08:59:20
+-- Tiempo de generación: 02-06-2018 a las 07:31:50
 -- Versión del servidor: 10.1.26-MariaDB
 -- Versión de PHP: 7.1.8
 
@@ -21,6 +21,26 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `bdtecprecinccompras`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `almacenes`
+--
+
+CREATE TABLE `almacenes` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `telefono` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `almacenes`
+--
+
+INSERT INTO `almacenes` (`id`, `nombre`, `telefono`) VALUES
+(1, 'Secundario', '06000001'),
+(2, 'Secundario', '06000002');
 
 -- --------------------------------------------------------
 
@@ -281,6 +301,7 @@ CREATE TABLE `departamentos` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `codigo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `telefono` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -289,14 +310,14 @@ CREATE TABLE `departamentos` (
 -- Volcado de datos para la tabla `departamentos`
 --
 
-INSERT INTO `departamentos` (`id`, `nombre`, `codigo`, `created_at`, `updated_at`) VALUES
-(1, 'Compras', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 'Ventas', '2', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 'RRHH', '3', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(4, 'Operaciones', '4', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(5, 'Calidad', '5', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(6, 'Mant. vehicular', '6', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(7, 'Administración', '7', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `departamentos` (`id`, `nombre`, `codigo`, `telefono`, `created_at`, `updated_at`) VALUES
+(1, 'Compras', '1', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 'Ventas', '2', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 'RRHH', '3', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 'Operaciones', '4', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 'Calidad', '5', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 'Mant. vehicular', '6', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(7, 'Administración', '7', '1234', '0000-00-00 00:00:00', '2018-06-01 20:33:41');
 
 -- --------------------------------------------------------
 
@@ -8111,7 +8132,10 @@ INSERT INTO `stock` (`id`, `nombre`, `codigo`, `precio`, `stock`, `stock2`, `pep
 (3485, 'Z?calo Bajo-Puerta', '13484', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 1, 0, 0, NULL, 3485, '2018-01-26 06:02:35', '2018-05-08 23:24:47'),
 (3486, 'Z?calo Bajo-Puerta', '13485', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 1, 0, 0, NULL, 3486, '2018-01-26 06:02:35', '2018-05-08 23:26:17'),
 (3487, 'Z?calo de relle ejecuci?n de 2/2 pisos por tornillo PR1-BSC2/2X21 PHOENIX', '13486', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 18, 0, 0, NULL, 3487, '2018-01-26 06:02:35', '2018-05-08 23:26:17'),
-(3488, 'VALVULA DE FONDO DRAGO', '13487', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 22, 0, 0, NULL, 3488, '2018-01-26 06:02:35', '2018-05-08 23:26:17');
+(3488, 'VALVULA DE FONDO DRAGO', '13487', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 22, 0, 0, NULL, 3488, '2018-01-26 06:02:35', '2018-05-08 23:26:17'),
+(3489, 'bien de uso de stalin', '57541', 1.00, 0, 0, 0.00, 0.00, 1, 1, NULL, 1, 1, 2, NULL, NULL, '2018-05-25 21:11:46', '2018-05-25 21:11:46'),
+(3490, 'comsumo stalin prueba', '78750', 1.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 1, 2, 1, NULL, NULL, '2018-05-25 21:50:42', '2018-05-25 21:50:42'),
+(3491, 'servicios stalin', '87232', 1.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 1, 1, 4, NULL, NULL, '2018-05-25 22:01:37', '2018-05-25 22:01:37');
 
 -- --------------------------------------------------------
 
@@ -8125,6 +8149,7 @@ CREATE TABLE `stockdepartamentos` (
   `stock` int(11) NOT NULL,
   `stock_min` int(11) DEFAULT NULL,
   `departamento_id` int(10) UNSIGNED NOT NULL,
+  `usuario_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -8133,14 +8158,14 @@ CREATE TABLE `stockdepartamentos` (
 -- Volcado de datos para la tabla `stockdepartamentos`
 --
 
-INSERT INTO `stockdepartamentos` (`id`, `stock_id`, `stock`, `stock_min`, `departamento_id`, `created_at`, `updated_at`) VALUES
-(4, 1, 7, 0, 3, '2018-02-27 00:08:54', '2018-05-21 17:22:21'),
-(5, 2, 2, 0, 3, '2018-02-27 00:08:56', '2018-05-10 00:01:46'),
-(6, 1, 4, 0, 4, '2018-05-07 02:44:44', '2018-05-07 02:44:44'),
-(7, 1, 3, 0, 1, '2018-05-21 18:32:06', '2018-05-21 19:01:32'),
-(8, 4, 1, 0, 1, '2018-05-21 19:07:04', '2018-05-21 19:07:04'),
-(9, 4, 1, 0, 4, '2018-05-24 00:49:57', '2018-05-24 00:49:57'),
-(10, 4, 1, 0, 6, '2018-05-24 00:54:49', '2018-05-24 00:54:49');
+INSERT INTO `stockdepartamentos` (`id`, `stock_id`, `stock`, `stock_min`, `departamento_id`, `usuario_id`, `created_at`, `updated_at`) VALUES
+(4, 1, 7, 0, 3, 1, '2018-02-27 00:08:54', '2018-05-21 17:22:21'),
+(5, 2, 2, 0, 3, 1, '2018-02-27 00:08:56', '2018-05-10 00:01:46'),
+(6, 1, 4, 0, 4, 1, '2018-05-07 02:44:44', '2018-05-07 02:44:44'),
+(7, 1, 3, 0, 1, 1, '2018-05-21 18:32:06', '2018-05-21 19:01:32'),
+(8, 4, 1, 0, 1, 1, '2018-05-21 19:07:04', '2018-05-21 19:07:04'),
+(9, 4, 1, 0, 4, 1, '2018-05-24 00:49:57', '2018-05-24 00:49:57'),
+(10, 4, 1, 0, 6, 1, '2018-05-24 00:54:49', '2018-05-24 00:54:49');
 
 -- --------------------------------------------------------
 
@@ -8161,8 +8186,13 @@ CREATE TABLE `stock_permisos_departs` (
 --
 
 INSERT INTO `stock_permisos_departs` (`id`, `stock_id`, `departamento_id`, `created_at`, `updated_at`) VALUES
-(11, 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(12, 1, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(13, 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(14, 1, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(15, 1, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(16, 3489, 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(17, 3489, 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(18, 3490, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(19, 3491, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -8244,6 +8274,32 @@ INSERT INTO `transferencias` (`id`, `estado`, `cantidad_transf`, `stock_id`, `de
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `trazas`
+--
+
+CREATE TABLE `trazas` (
+  `id` int(11) NOT NULL,
+  `stock_id` int(11) DEFAULT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `d_emisor_id` int(11) DEFAULT NULL,
+  `d_receptor_id` int(11) DEFAULT NULL,
+  `u_emisor_id` int(11) DEFAULT NULL,
+  `u_receptor_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `trazas`
+--
+
+INSERT INTO `trazas` (`id`, `stock_id`, `cantidad`, `d_emisor_id`, `d_receptor_id`, `u_emisor_id`, `u_receptor_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 2, 1, 2, '2018-06-01 04:30:00', '2018-06-01 04:30:00'),
+(2, 5, 1, 3, 4, 3, 4, '2018-06-01 04:30:00', '2018-06-01 04:30:00');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -8276,11 +8332,18 @@ INSERT INTO `usuarios` (`id`, `user`, `password`, `email`, `nombre`, `apellido`,
 (7, 'calidad', '$2y$10$/8LXWHPD861qm8SqZnACo.4.hvAHPrarxvHkofMc1vN7sJbMQ716m', 'calidad@tecprecinc.com', 'Calidad', 'Tecprecinc', '555-555-555', 1, NULL, 5, '2018-02-25 20:02:28', '2018-02-25 20:02:28'),
 (8, 'obras', '$2y$10$NuddD28remI3f..uAr8IDOqn/jgd3LDlQQr98ipZlhf3bYWn/YIgC', 'obras@tecprecinc.com', 'Obras', 'Tecprecinc', '555-555-555', 1, NULL, 6, '2018-02-25 20:02:57', '2018-02-25 20:02:57'),
 (9, 'usuariocompras', '$2y$10$WNNdSNQUPPOLZOZGTeCjfei2rSAEahexx.0rM.JK3.1DQLVcaxmmS', 'usuariocompras@tecprecinc.com', 'usuario compras', 'Tecprecinc', '555-555-555', 2, NULL, 1, '2018-05-01 04:30:00', '2018-05-01 04:30:00'),
-(10, 'joseperez', '$2y$10$YNvs0Cjti56MwBtLi3wgk.Tjd51zBkrDccIkrILKUyS/4g4LQfgI2', 'joseperez@tecprecinc.com', 'jose', 'perez', '55-55-555', 2, NULL, 5, '2018-05-02 16:53:33', '2018-05-02 19:42:11');
+(10, 'joseperez', '$2y$10$YNvs0Cjti56MwBtLi3wgk.Tjd51zBkrDccIkrILKUyS/4g4LQfgI2', 'joseperez@tecprecinc.com', 'jose', 'perez', '55-55-555', 2, NULL, 5, '2018-05-02 16:53:33', '2018-05-02 19:42:11'),
+(11, 'administracion', '$2y$10$FWoeruyRgs20vGGDKFxoQe8l1rhEGMAr1bUbe.dOOk0H5JF6XCAOq', 'administracion@tecprecinc.com', 'Supervisor', 'Administración', '000555', 1, NULL, 7, '2018-06-01 19:19:17', '2018-06-01 19:21:17');
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `almacenes`
+--
+ALTER TABLE `almacenes`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `categorias`
@@ -8438,6 +8501,12 @@ ALTER TABLE `transferencias`
   ADD KEY `transferencias_departamento_id_foreign` (`departamento_id`);
 
 --
+-- Indices de la tabla `trazas`
+--
+ALTER TABLE `trazas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -8450,6 +8519,11 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
+--
+-- AUTO_INCREMENT de la tabla `almacenes`
+--
+ALTER TABLE `almacenes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `categorias`
 --
@@ -8529,7 +8603,7 @@ ALTER TABLE `rubros`
 -- AUTO_INCREMENT de la tabla `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3489;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3492;
 --
 -- AUTO_INCREMENT de la tabla `stockdepartamentos`
 --
@@ -8539,7 +8613,7 @@ ALTER TABLE `stockdepartamentos`
 -- AUTO_INCREMENT de la tabla `stock_permisos_departs`
 --
 ALTER TABLE `stock_permisos_departs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT de la tabla `tipos`
 --
@@ -8551,10 +8625,15 @@ ALTER TABLE `tipos`
 ALTER TABLE `transferencias`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 --
+-- AUTO_INCREMENT de la tabla `trazas`
+--
+ALTER TABLE `trazas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- Restricciones para tablas volcadas
 --

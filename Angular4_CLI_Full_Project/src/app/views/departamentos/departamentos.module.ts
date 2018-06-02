@@ -13,6 +13,7 @@ import { operacionesComponent } from './operaciones.component';
 import { rrhhComponent } from './rrhh.component';
 import { ventasComponent } from './ventas.component';
 import { info_departamentoComponent } from './info_departamento.component';
+import { info_departamentosComponent } from './info_departamentos.component';
 import { info_usuariosComponent } from './info_usuarios.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
 // Tabs Component
@@ -37,7 +38,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     rrhhComponent,
     ventasComponent,
     info_departamentoComponent,
-    info_usuariosComponent
+    info_usuariosComponent,
+    info_departamentosComponent
    ]
 })
 export class departamentosModule { }
