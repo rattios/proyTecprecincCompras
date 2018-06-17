@@ -127,6 +127,14 @@ export class transferenciasComponent {
               }, 1000);
               this.seTransfirio=false;
               this.ngOnInit();
+              var departReceptor:any;
+              if(depar==100) {
+                departReceptor=101;
+              }else if(depar==101) {
+                departReceptor=100;
+              }
+              this.traxas(this.producto.id,this.cantidad,depar,departReceptor,localStorage.getItem('tecprecinc_usuario_id'),localStorage.getItem('tecprecinc_usuario_id'),0,'Transferencia entre almacenes');
+
             },
            msg => { 
              console.log(msg);
@@ -155,6 +163,12 @@ export class transferenciasComponent {
           almacen:almacen
         }
         console.log(enviar);
+        var departOrigen:any;
+        if(almacen==1){
+          departOrigen=100;
+        }else{
+          departOrigen=101;
+        }
 
         setTimeout(() => {
           this.http.post(this.ruta.get_ruta()+'/transferencias/devolucion',enviar)
@@ -162,12 +176,14 @@ export class transferenciasComponent {
            .then(
            data => {
              console.log(data);
+             this.getTrasnf=data;
               this.success=true;
               setTimeout(() => {  
                 this.success=false;
               }, 4000);
               this.seTransfirio=false;
               this.ngOnInit();
+               this.traxas(this.producto.id,this.cantidad,depar,departOrigen,'',localStorage.getItem('tecprecinc_usuario_id'),this.getTrasnf.devolucion.id,'Devolución');
             },
            msg => { 
              console.log(msg);
@@ -186,15 +202,41 @@ export class transferenciasComponent {
     }
     public depart:any;
     public selecAlmacen=false;
+    public empleados:any;
+    public empleado_id:any;
     seleccionar(depar){
       this.depart=depar;
+      console.log(this.depart);
       this.selecAlmacen=true;
+      this.http.get(this.ruta.get_ruta()+'usuarios?rol='+10+"&departamento_id="+this.depart)
+           .toPromise()
+           .then(
+           data => {
+              this.prov=data;
+              this.empleados=this.prov;
+              for (var i = 0; i < this.empleados.length; i++) {
+                if(this.empleados[i].rol==0) {
+                  this.empleados[i].nombreRol='ADMIN';
+                }else if(this.empleados[i].rol==1) {
+                  this.empleados[i].nombreRol='SUPERVISOR';
+                }else if(this.empleados[i].rol==2) {
+                  this.empleados[i].nombreRol='EMPLEADO';
+                }
+              }
+              console.log(this.empleados);
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+           });
+      //console.log(this.informacion);
+
     }
     unSelecAlmacen(depar){
       this.depart=depar;
       this.selecAlmacen=false;
     }
-    
+    public getTrasnf:any;
     enviar(almacen){
       this.seTransfirio=true;
       if(this.cantidad>0) {
@@ -207,19 +249,26 @@ export class transferenciasComponent {
           receptor_id:this.depart
         }
         console.log(enviar);
-
+        var departOrigen:any;
+        if(almacen==1){
+          departOrigen=100;
+        }else{
+          departOrigen=101;
+        }
         setTimeout(() => {
           this.http.post(this.ruta.get_ruta()+'/transferencias/patrimonial',enviar)
            .toPromise()
            .then(
            data => {
              console.log(data);
+             this.getTrasnf=data;
               this.success=true;
               setTimeout(() => {  
                 this.success=false;
               }, 4000);
               this.seTransfirio=false;
               this.ngOnInit();
+              this.traxas(this.producto.id,this.cantidad,departOrigen,this.depart,localStorage.getItem('tecprecinc_usuario_id'),this.empleado_id,this.getTrasnf.transferencia.id,'Transferencia patrimonial');
             },
            msg => { 
              console.log(msg);
@@ -235,6 +284,30 @@ export class transferenciasComponent {
         alert('La cantidad debe ser mayor a cero.');
       }
         
+    }
+    traxas(stock_id,cantidad,d_emisor_id,d_receptor_id,u_emisor_id,u_receptor_id,operacion_id,tipo){
+      var sendTraza={
+       stock_id:stock_id,
+       cantidad:cantidad,
+       d_emisor_id:d_emisor_id,
+       d_receptor_id:d_receptor_id,
+       u_emisor_id:u_emisor_id,
+       u_receptor_id:u_receptor_id,
+       operacion_id:operacion_id,
+       tipo:tipo
+      }
+      console.log(sendTraza);
+      this.http.post(this.ruta.get_ruta()+'trazas',sendTraza)
+       .toPromise()
+       .then(
+       data => {
+         console.log(data);
+         console.log('éxito al registrar la traza');
+        },
+       msg => { 
+         console.log(msg);
+         console.log('Error: '+JSON.stringify(msg));
+      });
     }
 
     //-------------------------------------------------------------------------------------------------------------------------

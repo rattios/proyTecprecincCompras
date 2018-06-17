@@ -3,6 +3,11 @@
 		<br>
       	 <strong>Cantidad solicitada:</strong> {{producto.pivot.cantidad}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Producto:</strong> {{producto.nombre}}
       	<br><br>
+        <strong>Empleado a entregar:</strong>
+        <select id="empleados" name="empleados" class="form-control" [(ngModel)]="empleado_id">
+          <option *ngFor="let cc of empleados" [value]="cc.id">{{cc.nombre}} {{cc.apellido}} - {{cc.nombreRol}}</option>
+        </select>
+        <br>
       	<table class="table table-striped">
         	<thead>
         		<th>Almacén</th>

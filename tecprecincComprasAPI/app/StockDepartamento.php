@@ -25,7 +25,7 @@ class StockDepartamento extends Model
      * @var array
      */
     protected $fillable = ['stock_id', 'stock',
-		'stock_min', 'departamento_id'];
+		'stock_min', 'departamento_id','usuario_id'];
 
     /**
      * The attributes excluded from the model's JSON form.

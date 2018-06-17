@@ -16,7 +16,7 @@ class TrazasController extends Controller
      */
     public function index()
     {
-        $Trazas = \App\Trazas::with('stock')->with('departamento_emisor')->with('usuario_emisor')->with('usuario_receptor')->get();
+        $Trazas = \App\Trazas::with('stock')->with('departamento_emisor')->with('departamento_receptor')->with('usuario_emisor')->with('usuario_receptor')->get();
 
         if(count($Trazas) == 0){
             return response()->json(['error'=>'No existen Trazas.'], 404);          
@@ -60,7 +60,7 @@ class TrazasController extends Controller
      */
     public function show($id)
     {
-        $Trazas = \App\Trazas::where('id',$id)->with('stock')->with('departamento_emisor')->with('usuario_emisor')->with('usuario_receptor')->get();
+        $Trazas = \App\Trazas::where('id',$id)->with('stock')->with('departamento_emisor')->with('departamento_receptor')->with('usuario_emisor')->with('usuario_receptor')->get();
 
         if(count($Trazas) == 0){
             return response()->json(['error'=>'No existen Trazas.'], 404);          

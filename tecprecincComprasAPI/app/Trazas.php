@@ -26,7 +26,7 @@ class trazas extends Model
      */
     //id    stock_id    cantidad    d_emisor_id d_receptor_id   u_emisor_id u_receptor_id   created_at  updated_at
 
-    protected $fillable = ['stock_id', 'cantidad', 'd_emisor_id', 'd_receptor_id', 'u_emisor_id', 'u_receptor_id', 'created_at', 'updated_at'];
+    protected $fillable = ['stock_id', 'cantidad', 'd_emisor_id', 'd_receptor_id', 'u_emisor_id', 'u_receptor_id', 'operacion_id', 'tipo', 'created_at', 'updated_at'];
 
     /**
      * The attributes excluded from the model's JSON form.

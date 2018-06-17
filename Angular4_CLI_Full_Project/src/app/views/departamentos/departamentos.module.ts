@@ -9,9 +9,11 @@ import { departamentosRoutingModule } from './departamentos-routing.module';
 import { administracionComponent } from './administracion.component';
 import { calidadComponent } from './calidad.component';
 import { mantenimientoComponent } from './mantenimiento.component';
-import { operacionesComponent } from './operaciones.component';
 import { rrhhComponent } from './rrhh.component';
 import { ventasComponent } from './ventas.component';
+import { catrielComponent } from './catriel.component';
+import { PHComponent } from './PH.component';
+import { RDLSComponent } from './RDLS.component';
 import { info_departamentoComponent } from './info_departamento.component';
 import { info_departamentosComponent } from './info_departamentos.component';
 import { info_usuariosComponent } from './info_usuarios.component';
@@ -34,9 +36,11 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     administracionComponent,
     calidadComponent,
     mantenimientoComponent,
-    operacionesComponent,
     rrhhComponent,
     ventasComponent,
+    catrielComponent,
+    PHComponent,
+    RDLSComponent,
     info_departamentoComponent,
     info_usuariosComponent,
     info_departamentosComponent

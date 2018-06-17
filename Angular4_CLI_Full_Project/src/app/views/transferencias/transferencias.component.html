@@ -226,18 +226,22 @@
                <button type="button" class="btn btn-primary" (click)="unSelecAlmacen()">Volver</button>
             </div>
             <br>
+            <strong>Selecciona a quien se le va asignar el producto:</strong>
+            <select id="empleados" name="empleados" class="form-control" [(ngModel)]="empleado_id">
+              <option *ngFor="let cc of empleados" [value]="cc.id">{{cc.nombre}} {{cc.apellido}} - {{cc.nombreRol}}</option>
+            </select><br>
             <table class="table table-striped">
               <thead>
-                <th>Almacen</th>
+                <th>Descontar de:</th>
                 <th></th>
               </thead>
               <tbody>
                  <tr>
-                    <td>Almacen Principal</td>
+                    <td>Almacén Principal</td>
                     <td style="text-align: right;"><button type="button" class="btn btn-success" (click)="enviar(1)">Transferir</button></td>
                  </tr>
                  <tr>
-                    <td>Almacen Secundario</td>
+                    <td>Almacén Secundario</td>
                     <td style="text-align: right;"><button type="button" class="btn btn-success" (click)="enviar(2)">Transferir</button></td>
                  </tr>
                  

@@ -95,8 +95,8 @@ export class DashboardComponent implements OnInit {
             console.log(this.datos);
            //this.departamentos=this.datos.departamentos;
            this.ultimosPedidos=this.datos.ultimosPedidos;
-           for (var i = 0; i < this.datos.departamentos.length; ++i) {
-             if(this.datos.departamentos[i].nombre!='Compras') {
+           for (var i = 0; i < this.datos.departamentos.length; i++) {
+             if(/*this.datos.departamentos[i].nombre!='Compras' &&*/ this.datos.departamentos[i].nombre!='Almacen Principal' && this.datos.departamentos[i].nombre!='Almacen Secundario') {
                this.departamentos.push(this.datos.departamentos[i]);
              }
            }

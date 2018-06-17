@@ -25,6 +25,9 @@ export class infoComponent {
 
    ngOnInit(): void {
       console.log(this.informacion);
+      for (var i = 0; i < this.informacion.solicitud.length; i++) {
+        this.informacion.solicitud[i].usuario=this.informacion.usuario;
+      }
       if(this.informacion!=undefined) {
        
       }

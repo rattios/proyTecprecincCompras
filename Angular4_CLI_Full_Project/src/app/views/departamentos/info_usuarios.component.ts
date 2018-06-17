@@ -124,32 +124,8 @@ export class info_usuariosComponent {
               }, 4000);
 
               this.loading=true;
-              this.http.get(this.ruta.get_ruta()+'usuarios?rol='+localStorage.getItem('tecprecinc_rol')+"&departamento_id="+localStorage.getItem('tecprecinc_departamento_id'))
-                 .toPromise()
-                 .then(
-                 data => {
-                   this.prov=data;
-                     this.proveedores=this.prov;
-                    for (var i = 0; i < this.proveedores.length; ++i) {
-                      if(this.proveedores[i].rol==0) {
-                        this.proveedores[i].nombreRol='ADMIN';
-                      }else if(this.proveedores[i].rol==1) {
-                        this.proveedores[i].nombreRol='SUPERVISOR';
-                      }else if(this.proveedores[i].rol==2) {
-                        this.proveedores[i].nombreRol='EMPLEADO';
-                      }
-                    }
-                    console.log(this.proveedores);
-                    this.productList = this.proveedores;
-                    this.filteredItems = this.productList;
-                    this.init();
-                    this.loading=false;
-                  },
-                 msg => { 
-                   console.log(msg);
-                   this.loading=false;
-                 });
-                   
+              
+              this.ngOnInit();   
 
             },
            msg => { 

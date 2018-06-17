@@ -143,7 +143,7 @@ class UsuarioController extends Controller
             ->orWhere('email', $request->input('email'))->get();
         if(count($aux)!=0){
            // Devolvemos un código 409 Conflict. 
-            return response()->json(['error'=>'Ya existe un usuario con esas credenciales.'], 409);
+            return response()->json(['error'=>'Ya existe un usuario con este email.'], 409);
         }
 
         $aux2 = \App\Departamento::find($request->input('departamento_id'));

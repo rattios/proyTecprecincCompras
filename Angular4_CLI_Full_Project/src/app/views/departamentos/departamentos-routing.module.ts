@@ -7,9 +7,11 @@ import { stockDepartamentoComponent } from './stockDepartamentos.component';
 import { administracionComponent } from './administracion.component';
 import { calidadComponent } from './calidad.component';
 import { mantenimientoComponent } from './mantenimiento.component';
-import { operacionesComponent } from './operaciones.component';
 import { rrhhComponent } from './rrhh.component';
 import { ventasComponent } from './ventas.component';
+import { catrielComponent } from './catriel.component';
+import { PHComponent } from './PH.component';
+import { RDLSComponent } from './RDLS.component';
 
 const routes: Routes = [
 
@@ -42,13 +44,6 @@ const routes: Routes = [
         }
       },
       {
-        path: 'operaciones',
-        component: operacionesComponent,
-        data: {
-          title: 'Stock de operaciones'
-        }
-      },
-      {
         path: 'rrhh',
         component: rrhhComponent,
         data: {
@@ -58,6 +53,27 @@ const routes: Routes = [
       {
         path: 'ventas',
         component: ventasComponent,
+        data: {
+          title: 'Stock de ventas'
+        }
+      },
+      {
+        path: 'catriel',
+        component: catrielComponent,
+        data: {
+          title: 'Stock de ventas'
+        }
+      },
+      {
+        path: 'ph',
+        component: PHComponent,
+        data: {
+          title: 'Stock de ventas'
+        }
+      },
+      {
+        path: 'rdls',
+        component: RDLSComponent,
         data: {
           title: 'Stock de ventas'
         }

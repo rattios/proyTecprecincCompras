@@ -598,7 +598,7 @@ class PedidoController extends Controller
                 $NewProdEnDep->stock = $picking->pivot->cantidad;
                 $NewProdEnDep->stock_min = 0;
                 $NewProdEnDep->departamento_id = $picking->departamento->id;
-
+                $NewProdEnDep->usuario_id = $picking->usuario->id;
                 if($NewProdEnDep->save()){
                    return response()->json(['message'=>'Se ha descontado la cantidad solicitada del stock.', 'picking'=>$picking], 200);
                 }else{
