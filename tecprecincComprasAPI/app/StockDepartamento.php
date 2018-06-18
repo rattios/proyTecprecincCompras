@@ -47,5 +47,12 @@ class StockDepartamento extends Model
 		// 1 stockDepartamento (producto) pertenece a un producto del stock
 		return $this->belongsTo('App\Stock', 'stock_id');
 	}
+
+    // Relación de stockDepartamentos con User:
+    public function usuario()
+    {
+        // 1 stockDepartamento (producto) pertenece a un usuario
+        return $this->belongsTo('App\User', 'usuario_id');
+    }
     
 }

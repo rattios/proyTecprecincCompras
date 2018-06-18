@@ -627,8 +627,10 @@ class PedidoController extends Controller
     /*buscar los departamentos que contien un stock_id(producto) y su stock(existencias) es mayor a cero*/
     public function ubicarProducto($stock_id)
     {
-        $departamentos = \App\StockDepartamento::with('departamento')->where('stock_id', $stock_id)
-                ->where('stock', '>', 0)->get();
+        $departamentos = \App\StockDepartamento::with('departamento')
+            ->with('usuario')
+            ->where('stock_id', $stock_id)
+            ->where('stock', '>', 0)->get();
 
         if (count($departamentos)==0)
         {
