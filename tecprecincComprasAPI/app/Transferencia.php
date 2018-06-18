@@ -61,4 +61,11 @@ class Transferencia extends Model
         // 1 transferencia  patrimonial pertenece a un (se genera para un) departamento receptor
         return $this->belongsTo('App\Departamento', 'receptor_id');
     }
+
+    // Relación de transferencia con usuarios:
+    public function usuario()
+    {
+        // 1 transferencia pertenece a un usuario
+        return $this->belongsTo('App\User', 'usuario_id');
+    }
 }

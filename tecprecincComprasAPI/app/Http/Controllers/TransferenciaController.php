@@ -602,14 +602,15 @@ class TransferenciaController extends Controller
                 $producto->save();
             }
             
-            
+            /*Nota: en este caso usuario_id es el usuario al cual se le esta descontando*/
             if($nuevaDev=\App\Transferencia::create([
                 'estado'=> 2,
                 'cantidad_transf'=> $request->input('cantidad_transf'),
                 'stock_id'=> $request->input('stock_id'),
                 'departamento_id'=> $request->input('departamento_id'),
                 'tipo' => 2,
-                'almacen'=> $request->input('almacen')
+                'almacen'=> $request->input('almacen'),
+                'usuario_id'=> $request->input('usuario_id')
             ]))
             {
                 /*Aqui crear el msg para informar al departamento de compras que tiene una nueva devolución*/
@@ -755,7 +756,7 @@ class TransferenciaController extends Controller
                 $producto->save();
             }
             
-            
+            /*Nota: en este caso usuario_id es el usuario que se le esta agregando*/
             if($nuevaTransf=\App\Transferencia::create([
                 'estado'=> 2,
                 'cantidad_transf'=> $request->input('cantidad_transf'),
@@ -805,6 +806,7 @@ class TransferenciaController extends Controller
         
         //cargar todas las devoluciones 
         $devoluciones = \App\Transferencia::with('departamento')
+            ->with('usuario')
             ->where('tipo', 2)->with('stockCentral')->orderBy('id', 'desc')->get();
 
         if(count($devoluciones) == 0){
@@ -820,6 +822,7 @@ class TransferenciaController extends Controller
         
         //cargar todas las transferencias patrimoniales
         $transferencias = \App\Transferencia::with('receptor')
+            ->with('usuario')
             ->where('tipo', 3)->with('stockCentral')->orderBy('id', 'desc')->get();
 
         if(count($transferencias) == 0){
