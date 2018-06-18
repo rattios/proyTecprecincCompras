@@ -524,7 +524,8 @@ class TransferenciaController extends Controller
         if ( !$request->input('cantidad_transf') ||
             !$request->input('stock_id') ||
             !$request->input('departamento_id') ||
-            !$request->input('almacen') 
+            !$request->input('almacen') ||
+            !$request->input('usuario_id') 
         )
         {
             // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
@@ -537,9 +538,17 @@ class TransferenciaController extends Controller
             return response()->json(['error'=>'No existe el departamento con id '.$request->input('departamento_id')], 404);          
         }
 
+        // Comprobamos si el usuario que nos están pasando existe o no.
+        $usuario = \App\User::find($request->input('usuario_id'));
+        if(count($usuario)==0){
+            return response()->json(['error'=>'No existe el usuario con id '.$request->input('usuario_id')], 404);          
+        }
+
         // Comprobamos si el stock_id que nos están pasando existe o no en el stock del departamento.
         $stock_dep = \App\StockDepartamento::where('stock_id', $request->input('stock_id'))
-            ->where('departamento_id', $request->input('departamento_id'))->get();
+            ->where('departamento_id', $request->input('departamento_id'))
+            ->where('usuario_id', $request->input('usuario_id'))
+            ->get();
         if(count($stock_dep)==0){
             return response()->json(['error'=>'No existe el producto con id '.$request->input('stock_id').' en el stock del departamento.'], 404);          
         }
