@@ -640,7 +640,8 @@ class TransferenciaController extends Controller
             !$request->input('stock_id') ||
             !$request->input('departamento_id') ||
             !$request->input('almacen') ||
-            !$request->input('receptor_id') 
+            !$request->input('receptor_id') ||
+            !$request->input('usuario_id') 
         )
         {
             // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
@@ -653,9 +654,16 @@ class TransferenciaController extends Controller
             return response()->json(['error'=>'No existe el departamento con id '.$request->input('receptor_id')], 404);          
         }
 
+        // Comprobamos si el usuario_id que nos están pasando existe o no.
+        $usuario = \App\User::find($request->input('usuario_id'));
+        if(count($usuario)==0){
+            return response()->json(['error'=>'No existe el usuario con id '.$request->input('usuario_id')], 404);          
+        }
         // Comprobamos si el stock_id que nos están pasando existe o no en el stock del departamento receptor.
         $stock_dep = \App\StockDepartamento::where('stock_id', $request->input('stock_id'))
-            ->where('departamento_id', $request->input('receptor_id'))->get();
+            ->where('departamento_id', $request->input('receptor_id'))
+            ->where('usuario_id', $request->input('usuario_id'))
+            ->get();
         if(count($stock_dep)==0){
             $bandera = false;          
         }else{
@@ -718,6 +726,7 @@ class TransferenciaController extends Controller
                 $NewProdEnDep->stock = $request->input('cantidad_transf');
                 $NewProdEnDep->stock_min = 0;
                 $NewProdEnDep->departamento_id = $request->input('receptor_id');
+                $NewProdEnDep->usuario_id = $request->input('usuario_id');
                 $NewProdEnDep->save();
             }
             
@@ -745,7 +754,8 @@ class TransferenciaController extends Controller
                 'departamento_id'=> $request->input('departamento_id'),
                 'tipo' => 3,
                 'almacen'=> $request->input('almacen'),
-                'receptor_id'=> $request->input('receptor_id')
+                'receptor_id'=> $request->input('receptor_id'),
+                'usuario_id'=> $request->input('usuario_id')
             ]))
             {
                 /*Aqui crear el msg para informar al departamento receptor que tiene una nueva transferencia*/
