@@ -25,7 +25,7 @@ class Transferencia extends Model
      * @var array
      */
     protected $fillable = ['estado', 'cantidad_transf', 'stock_id',
-        'departamento_id', 'tipo', 'almacen', 'receptor_id'];
+        'departamento_id', 'tipo', 'almacen', 'receptor_id','usuario_id'];
 
     /**
      * The attributes excluded from the model's JSON form.

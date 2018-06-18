@@ -84,6 +84,15 @@ export class transferenciasComponent {
              console.log(data);
              this.departamentos=data;
              this.departamentos=this.departamentos.departamentos;
+             for (var i = 0; i < this.departamentos.length; i++) {
+                if(this.departamentos[i].usuario.rol==0) {
+                  this.departamentos[i].usuario.nombreRol='ADMIN';
+                }else if(this.departamentos[i].usuario.rol==1) {
+                  this.departamentos[i].usuario.nombreRol='SUPERVISOR';
+                }else if(this.departamentos[i].usuario.rol==2) {
+                  this.departamentos[i].usuario.nombreRol='EMPLEADO';
+                }
+              }
             },
            msg => { 
              this.departamentos=[];
@@ -152,7 +161,7 @@ export class transferenciasComponent {
         
     }
 
-    devolver(depar,almacen){
+    devolver(depar,almacen,usuario){
       this.seTransfirio=true;
       if(this.cantidad>0) {
         console.log(depar);
@@ -160,6 +169,7 @@ export class transferenciasComponent {
           cantidad_transf:this.cantidad,
           stock_id:this.producto.id,
           departamento_id:depar,
+          usuario_id:usuario,
           almacen:almacen
         }
         console.log(enviar);
@@ -246,7 +256,8 @@ export class transferenciasComponent {
           stock_id:this.producto.id,
           departamento_id:this.departamento_id,
           almacen:almacen,
-          receptor_id:this.depart
+          receptor_id:this.depart,
+          usuario_id:this.empleado_id
         }
         console.log(enviar);
         var departOrigen:any;

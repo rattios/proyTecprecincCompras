@@ -152,6 +152,7 @@
           <thead>
             <th>En Stock</th>
             <th>Departamento</th>
+            <th>Usuario</th>
             <th>Transferir a</th>
             <th>Transferir a</th>
           </thead>
@@ -159,9 +160,9 @@
              <tr *ngFor="let item of departamentos">
                 <td>{{item.stock}}</td>
                 <td>{{item.departamento.nombre}}</td>
-                
-                <td style="text-align: right;"><button type="button" class="btn btn-primary" (click)="devolver(item.departamento_id,1)">Almacen principal</button></td>
-                <td style="text-align: right;"><button type="button" class="btn btn-secundary" (click)="devolver(item.departamento_id,2)">Almacen secundario</button></td>
+                <td>{{item.usuario.nombre}} - {{item.usuario.nombreRol}}</td>
+                <td style="text-align: right;"><button type="button" class="btn btn-primary" (click)="devolver(item.departamento_id,1,item.usuario.id)">Almacen principal</button></td>
+                <td style="text-align: right;"><button type="button" class="btn btn-secundary" (click)="devolver(item.departamento_id,2,item.usuario.id)">Almacen secundario</button></td>
              </tr>
           </tbody>
         </table>
