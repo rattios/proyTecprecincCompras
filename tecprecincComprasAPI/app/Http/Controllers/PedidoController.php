@@ -590,8 +590,11 @@ class PedidoController extends Controller
 
             //verificar si no existe el producto en el departamento para crearlo
             $productoEnDep = \App\StockDepartamento::where('stock_id', $picking->pivot->stock_id)
-                ->where('departamento_id', $picking->departamento->id)->get();
+                ->where('departamento_id', $picking->departamento->id)
+                ->where('usuario_id', $picking->usuario->id)
+                ->get();
 
+            //Si no existe lo creo:
             if(count($productoEnDep)==0){
                 $NewProdEnDep = new \App\StockDepartamento;
                 $NewProdEnDep->stock_id = $picking->pivot->stock_id;
