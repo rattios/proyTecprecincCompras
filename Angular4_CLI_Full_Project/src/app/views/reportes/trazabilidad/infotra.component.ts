@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {CommonModule, NgClass} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
+import { saveAs } from 'file-saver/FileSaver';
 import { RutaService } from '../../../services/ruta.service';
 import { trazabilidadComponent } from './trazabilidad.component';
 
@@ -136,6 +137,15 @@ export class infotraComponent {
        });
     }
 
+    public saveFile(){
+      console.log('exportar');
+      var blob = new Blob([document.getElementById('exportable').innerHTML], {
+              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          saveAs(blob, this.informacion.nombre+'.xls');
+           //FileSaver.saveAs(blob, CONFIG.ECOMMERCE_NOMBRE+".xls");
+      }
+
      //-------------------------------------------------------------------------------------------------------------------------
    
    filteredItems : any;
@@ -168,26 +178,35 @@ export class infotraComponent {
    }
    FilterByName(){
       this.filteredItems = [];
+      this.trazas = [];
       if(this.inputName != ""){
             for (var i = 0; i < this.productList.length; i++) {
               if (this.productList[i].operacion_id==this.inputName) {
                  this.filteredItems.push(this.productList[i]);
+                 this.trazas.push(this.productList[i]);
               }else if (this.productList[i].stock.nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
+                 this.trazas.push(this.productList[i]);
               }else if (this.productList[i].departamento_emisor.nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
+                 this.trazas.push(this.productList[i]);
               }else if (this.productList[i].usuario_emisor.nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
+                 this.trazas.push(this.productList[i]);
               }else if (this.productList[i].departamento_receptor.nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
+                 this.trazas.push(this.productList[i]);
               }else if (this.productList[i].usuario_receptor.nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
+                 this.trazas.push(this.productList[i]);
               }else if (this.productList[i].tipo.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
+                 this.trazas.push(this.productList[i]);
               }
             }
       }else{
          this.filteredItems = this.productList;
+         this.trazas = this.productList;
       }
       console.log(this.filteredItems);
       this.init();
