@@ -1,0 +1,160 @@
+<div class="row">
+	<div class="col-lg-12">
+      	<div class="row">
+      		<div class="col-lg-12">
+      			<div class="">
+      				<div class="row">
+      					<div class="col-lg-4">
+	      					<strong>ID de Producto: </strong>{{informacion.id}}
+	      				</div>
+	      				<div class="col-lg-4">
+	      					
+	      				</div>
+	      				<div class="col-lg-4" style="text-align: right">
+	      					<button type="button" class="btn btn-success"  (click)=volver()>volver</button>
+	      				</div>
+      				</div>
+      				<br>
+      				
+      				<br>
+      				<div class="row">
+      					<div class="col-lg-8">
+	      					<div class="form-group">
+				                <strong>Nombre: </strong>{{informacion.nombre}}
+				                <!--input type="text" class="form-control" id="nombre" placeholder="" [(ngModel)]="informacion.nombre"-->
+				            </div>
+	      				</div>
+	      				<div class="col-lg-2">
+	      					<div class="form-group">
+				                <strong>Código: </strong>{{informacion.codigo}}
+				                <!--input type="text" class="form-control" id="codigo" placeholder="" [(ngModel)]="informacion.codigo"-->
+				            </div>
+	      				</div>
+	      				<!--div class="col-lg-2">
+	      					<div class="form-group">
+				                <label>Precio:</label>
+				                <input type="number" class="form-control" id="precio" placeholder="" [(ngModel)]="informacion.precio">
+				            </div>
+	      				</div-->
+      				</div>
+      				<!--div class="row">
+      					<div class="col-lg-4">
+	      					<div class="form-group">
+				                <label>Cantidad en Stock Principal:</label>
+				                <input type="number" class="form-control" id="stock" placeholder="" [(ngModel)]="informacion.stock">
+				            </div>
+	      				</div>
+      					<div class="col-lg-4">
+	      					<div class="form-group">
+				                <label>Stock mínimo:</label>
+				                <input type="text" class="form-control" id="stock_min" placeholder="" [(ngModel)]="informacion.stock_min">
+				            </div>
+	      				</div>
+	      				<div class="col-lg-4">
+	      					
+	      				</div>
+	      				
+      				</div-->
+      			</div>
+      		</div>	
+      	</div>
+      	<!--div class="row" style="text-align: left">
+      		<label>&nbsp;&nbsp;&nbsp;&nbsp;Categorias:</label>
+      	</div>
+      	<div class="row">
+      		
+      		<div class="col-lg-4">
+      			
+      			<div style="text-align: center">
+                  <select id="categoria" name="categoria" class="form-control" [(ngModel)]="informacion.categoria_id" >
+                    <option *ngFor="let cate of categorias" [value]="cate.id">{{cate.nombre}}</option>
+                  </select>
+                </div>
+            </div>
+            <div class="col-lg-4">
+            	
+      			<div style="text-align: center">
+                  <select id="tipo" name="tipo" class="form-control" [(ngModel)]="informacion.tipo_id" >
+                    <option *ngFor="let tipo of tipos" [value]="tipo.id">{{tipo.nombre}}</option>
+                  </select>
+                </div>
+            </div>
+            <div class="col-lg-4">
+            	
+                <div style="text-align: center">
+                  <select id="rubro" name="rubro" class="form-control" [(ngModel)]="informacion.rubro_id" >
+                    <option *ngFor="let rubro of rubros" [value]="rubro.id">{{rubro.nombre}}</option>
+                  </select>
+                </div>
+      		</div>	
+      	</div>
+      	<br><br><br><strong>Lo pueden ver los departamentos de:</strong><br><br>
+      	<div class="row" style="text-align:center">
+      		<div *ngFor="let depart of departamentos" >
+	      		<div class="col-lg-3">
+	      			<label>{{depart.nombre}}:</label>
+		      			
+	      		</div>
+	      		<div class="col-lg-3">
+	      			<label class="switch switch-3d switch-secondary">
+			            <input type="checkbox" class="switch-input" [(ngModel)]="depart.bandera" (change)="checkAdd(depart.id)">
+			            <span class="switch-label"></span>
+			            <span class="switch-handle"></span>
+			        </label>
+			        &nbsp;&nbsp;&nbsp;
+	      		</div>
+      		</div>
+      	</div>
+
+      	<br><br>
+  		<div class="row">
+      		<div class="col-lg-12" style="text-align: center">
+      			<button type="button" class="btn btn-primary btn-lg" (click)="editar()" *ngIf="!crear">Guardar cambios</button>
+            <button type="button" class="btn btn-success btn-lg" (click)="crear()" *ngIf="crear">Crear producto</button>
+      		</div>
+  		</div-->
+      <div class="form-group form-black label-floating is-empty">
+                 <label class="labels" style="font-size: 18px; font-weight: bold">Buscar: </label>
+                <input  class="form-control" type="text"  id="inputName" [(ngModel)]="inputName" (ngModelChange)="FilterByName()"/>
+                 <br>
+              </div>
+              <table class="table table-striped">
+                <thead>
+                  <th>ID</th>
+                  <th>Cantidad</th>
+                  <th>Nombre</th>
+                  <th>Dto. Emisor</th>
+                  <th>Usuario emisor</th>
+                  <th>Dto. Receptor</th>
+                  <th>Usuario receptor</th>
+                  <th>Tipo</th>
+                </thead>
+                <tbody>
+                   <tr *ngFor="let item of items">
+                      <td>{{item.operacion_id}}</td>
+                      <td>{{item.cantidad}}</td>
+                      <td>{{item.stock.nombre}}</td>
+                      <td>{{item.departamento_emisor.nombre}}</td>
+                      <td>{{item.usuario_emisor.nombre}}</td>
+                      <td>{{item.departamento_receptor.nombre}}</td>
+                      <td>{{item.usuario_receptor.nombre}}</td>
+                      <td>{{item.tipo}}</td>
+                   </tr>
+                </tbody>
+              </table>
+                <div class="btn-toolbar" role="toolbar" style="margin: 0;">
+                  <div class="btn-group">
+                     <label style="margin-top:10px">Página {{currentIndex}}/{{pageNumber}} </label>
+                  </div>
+                  <div class="btn-group pull-right">
+                     <ul class="pagination" >
+                        <li [ngClass]="{'disabled': (currentIndex == 1 || pageNumber == 0)}" ><a  (click)="prevPage()">Atrás</a></li>
+                           <li *ngFor="let page of pagesIndex"  [ngClass]="{'active': (currentIndex == page)}">
+                              <a (click)="setPage(page)" >{{page}} </a>
+                           </li>
+                        <li [ngClass]="{'disabled': (currentIndex == pageNumber || pageNumber == 0)}" ><a   (click)="nextPage()">Siguiente</a></li>
+                     </ul>
+                  </div>
+                </div>
+    </div>	
+</div>

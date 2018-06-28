@@ -201,12 +201,30 @@
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/categorias']"><i class="icon-calculator"></i> Categorias</a>
       </li> -->
       
-      <li class="nav-item" *ngxPermissionsOnly="[0]">
-        <a class="nav-link" routerLinkActive="active" [routerLink]="['/usuarios']"><i class="fa fa-user"></i> Usuarios</a>
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1]">
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="fa fa-file-excel-o"></i> Reportes</a>
+        <ul class="nav-dropdown-items">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/reportes/inventario']"><i class="icon-list"></i> Inventario</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/reportes/trazabilidad']"><i class="icon-list"></i> Trazabilidad</a>
+          </li>
+          <!--li class="nav-item" *ngxPermissionsOnly="[0]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/inventario/secundario']"><i class="fa fa-list"></i> Stock secundario</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/inventario/stockDepartamento']"><i class="fa fa-list"></i> Stock del departamento</a>
+          </li-->
+        </ul>
       </li>
+      
 
       <li class="nav-item" *ngxPermissionsOnly="[0]">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/proveedores']"><i class="icon-wrench"></i> Proveedores</a>
+      </li>
+      <li class="nav-item" *ngxPermissionsOnly="[0]">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/usuarios']"><i class="fa fa-user"></i> Usuarios</a>
       </li>
       
       <!--<li class="nav-item" *ngxPermissionsOnly="[0,1,2]">

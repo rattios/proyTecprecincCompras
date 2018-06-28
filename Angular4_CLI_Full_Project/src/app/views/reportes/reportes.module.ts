@@ -11,6 +11,8 @@ import { stockDepartamentoComponent } from './stockDepartamentos.component';
 import { reportesRoutingModule } from './reportes-routing.module';
 import { infoComponent } from './info.component';
 import { info2Component } from './info2.component';
+import { trazabilidadComponent } from './trazabilidad/trazabilidad.component';
+import { infotraComponent } from './trazabilidad/infotra.component';
 
 @NgModule({
   imports: [
@@ -26,7 +28,9 @@ import { info2Component } from './info2.component';
     stock2Component,
     infoComponent,
     info2Component,
-    stockDepartamentoComponent
+    stockDepartamentoComponent,
+    trazabilidadComponent,
+    infotraComponent
    ]
 })
 export class reportesModule { }

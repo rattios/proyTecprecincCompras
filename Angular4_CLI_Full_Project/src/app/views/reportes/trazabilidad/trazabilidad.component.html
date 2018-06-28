@@ -4,13 +4,13 @@
       <img src="../assets/img/template.gif" style="position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;z-index: 99;width: 135px;margin-top: 15%;" *ngIf="loading">
       <div class="card" *ngIf="!loading">
         <div class="card-header">
-          <i class="fa fa-align-justify"></i>Reporte de inventario
+          <i class="fa fa-align-justify"></i>Trazabilidad
           <div style="text-align:right">
             <!--button type="button" class="btn btn-success" (click)="ver(0)">Agregar un producto</button-->
           </div>
         </div>
         <div class="card-body" *ngIf="verProduc">
-          <app-info [informacion]="producSelec" *ngIf="verProduc"></app-info>
+          <app-infotra [informacion]="producSelec" *ngIf="verProduc"></app-infotra>
         </div>
         <div class="card-body" *ngIf="!verProduc">
           <tabset>

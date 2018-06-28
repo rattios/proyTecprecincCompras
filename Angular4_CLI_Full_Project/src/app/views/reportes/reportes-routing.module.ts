@@ -4,14 +4,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { stockComponent } from './stock.component';
 import { stock2Component } from './stock2.component';
 import { stockDepartamentoComponent } from './stockDepartamentos.component';
+import { trazabilidadComponent } from './trazabilidad/trazabilidad.component';
+
 
 const routes: Routes = [
   
       {
-        path: 'principal',
+        path: 'inventario',
         component: stockComponent,
         data: {
-          title: 'Stock principal'
+          title: 'Inventario'
         }
       },
       {
@@ -26,6 +28,13 @@ const routes: Routes = [
         component: stockDepartamentoComponent,
         data: {
           title: 'Stock del departamento'
+        }
+      },
+      {
+        path: 'trazabilidad',
+        component: trazabilidadComponent,
+        data: {
+          title: 'Trazabilidad'
         }
       }
    
