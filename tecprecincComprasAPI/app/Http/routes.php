@@ -128,6 +128,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/stockDepar','StockDepartamentoController@StockDepartamento');
         Route::get('/stockDepartamento','StockDepartamentoController@index');
         Route::post('/stockDepartamento','StockDepartamentoController@store');
+        Route::get('/stockUsr','StockDepartamentoController@StockUsuario');
         Route::put('/stockDepartamento/{id}','StockDepartamentoController@update');
         Route::delete('/stockDepartamento/{id}','StockDepartamentoController@destroy');
         Route::get('/stockDepartamento/{id}','StockDepartamentoController@show');

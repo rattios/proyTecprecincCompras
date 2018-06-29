@@ -34,7 +34,7 @@ export class infoempleadosComponent {
    ngOnInit(): void {
       console.log(this.informacion);
       //http://localhost/proyTecprecincCompras/tecprecincComprasAPI/public/trazas/1
-      this.http.get(this.ruta.get_ruta()+'stockDepar?departamento_id='+this.informacion.id)
+      this.http.get(this.ruta.get_ruta()+'stockUsr?usuario_id='+this.informacion.id)
            .toPromise()
            .then(
            data => {
