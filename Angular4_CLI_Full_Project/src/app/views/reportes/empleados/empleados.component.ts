@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
-import { RutaService } from '../../services/ruta.service';
+import { saveAs } from 'file-saver/FileSaver';
+import { RutaService } from '../../../services/ruta.service';
 
 @Component({
-  templateUrl: 'stock.component.html'
+  templateUrl: 'empleados.component.html'
 })
-export class stockComponent {
+export class empleadosComponent {
   public prov: any;
   public stock: any;
   public productos: any;
@@ -30,20 +31,24 @@ export class stockComponent {
 
    ngOnInit(): void {
      this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'todos')
+      this.http.get(this.ruta.get_ruta()+'solo_usuarios')
            .toPromise()
            .then(
            data => {
              this.prov=data;
-           	  this.stock=this.prov.productos;
 
-              this.categorias=this.prov.categorias;
-              this.rubros=this.prov.rubros;
-              this.tipos=this.prov.tipos;
-              this.departamentos=this.prov.departamentos;
-
-              console.log(this.stock);
-              this.productList = this.stock;
+              this.departamentos=this.prov;
+              for (var i = 0; i < this.departamentos.length; ++i) {
+                if(this.departamentos[i].rol==0) {
+                  this.departamentos[i].nombreRol='ADMIN';
+                }else if(this.departamentos[i].rol==1) {
+                  this.departamentos[i].nombreRol='SUPERVISOR';
+                }else if(this.departamentos[i].rol==2) {
+                  this.departamentos[i].nombreRol='EMPLEADO';
+                }
+              }
+              console.log(this.departamentos);
+              this.productList = this.departamentos;
               this.filteredItems = this.productList;
               this.init();
               this.loading=false;
@@ -52,18 +57,7 @@ export class stockComponent {
              console.log(msg);
              this.loading=false;
            });
-      this.http.get(this.ruta.get_ruta()+'almacen/1')
-           .toPromise()
-           .then(
-           data => {
-             this.info=data;
-              this.info=this.info.Almacen;
-              this.loading=false;
-            },
-           msg => { 
-             console.log(msg);
-             this.loading=false;
-           });
+      
       
     }
 
@@ -133,6 +127,15 @@ export class stockComponent {
       return this.departamentos;
     }
 
+    public saveFile(){
+      console.log('exportar');
+      var blob = new Blob([document.getElementById('exportable').innerHTML], {
+              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          saveAs(blob,'usuarios.xls');
+           //FileSaver.saveAs(blob, CONFIG.ECOMMERCE_NOMBRE+".xls");
+      }
+
     //-------------------------------------------------------------------------------------------------------------------------
    
    filteredItems : any;
@@ -165,23 +168,35 @@ export class stockComponent {
    }
    FilterByName(){
       this.filteredItems = [];
+      this.departamentos = [];
+      
       if(this.inputName != ""){
             for (var i = 0; i < this.productList.length; ++i) {
 
-              if (this.productList[i].stock==this.inputName) {
+              if (this.productList[i].nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
-              }else if (this.productList[i].stock2==this.inputName) {
+                 this.departamentos.push(this.productList[i]);
+                 console.log('1');
+              }
+              else if (this.productList[i].email.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
-              }else if (this.productList[i].nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
+                 this.departamentos.push(this.productList[i]);
+                 console.log('2');
+              }
+              else if (this.productList[i].nombreRol.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
-              }else if (this.productList[i].precio==this.inputName) {
+                 this.departamentos.push(this.productList[i]);
+                 console.log('3');
+              }
+              else if (this.productList[i].departamento.nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
-              }else if (this.productList[i].codigo==this.inputName) {
-                 this.filteredItems.push(this.productList[i]);
+                 this.departamentos.push(this.productList[i]);
+                 console.log('4');
               }
             }
       }else{
          this.filteredItems = this.productList;
+         this.departamentos = this.productList;
       }
       console.log(this.filteredItems);
       this.init();

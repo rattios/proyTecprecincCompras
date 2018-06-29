@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
-import { RutaService } from '../../services/ruta.service';
+import { RutaService } from '../../../services/ruta.service';
 
 @Component({
-  templateUrl: 'stock2.component.html'
+  templateUrl: 'depart.component.html'
 })
-export class stock2Component {
+export class departComponent {
   public prov: any;
   public stock: any;
   public productos: any;
@@ -30,20 +30,16 @@ export class stock2Component {
 
    ngOnInit(): void {
      this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'todos')
+      this.http.get(this.ruta.get_ruta()+'departamentos')
            .toPromise()
            .then(
            data => {
              this.prov=data;
-           	  this.stock=this.prov.productos;
 
-              this.categorias=this.prov.categorias;
-              this.rubros=this.prov.rubros;
-              this.tipos=this.prov.tipos;
               this.departamentos=this.prov.departamentos;
 
-              console.log(this.stock);
-              this.productList = this.stock;
+              console.log(this.departamentos);
+              this.productList = this.departamentos;
               this.filteredItems = this.productList;
               this.init();
               this.loading=false;
@@ -52,18 +48,8 @@ export class stock2Component {
              console.log(msg);
              this.loading=false;
            });
-      this.http.get(this.ruta.get_ruta()+'almacen/2')
-           .toPromise()
-           .then(
-           data => {
-             this.info=data;
-              this.info=this.info.Almacen;
-              this.loading=false;
-            },
-           msg => { 
-             console.log(msg);
-             this.loading=false;
-           });
+      
+      
     }
 
     ver(item){
@@ -76,7 +62,7 @@ export class stock2Component {
           nombre:"",
           precio:0,
           rubro_id:0,
-          stock2:0,
+          stock:0,
           stock_min:0,
           tipo_id:0
         };
@@ -96,7 +82,7 @@ export class stock2Component {
         telefono: this.info.telefono
       }
       console.log(send);
-      this.http.put(this.ruta.get_ruta()+'almacen/2',send)
+      this.http.put(this.ruta.get_ruta()+'almacen/1',send)
            .toPromise()
            .then(
            data => {

@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
-import { RutaService } from '../../services/ruta.service';
+import { saveAs } from 'file-saver/FileSaver';
+import { RutaService } from '../../../services/ruta.service';
 
 @Component({
-  templateUrl: 'stockDepartamentos.component.html'
+  templateUrl: 'stock.component.html'
 })
-export class stockDepartamentoComponent {
+export class stockComponent {
   public prov: any;
   public stock: any;
   public productos: any;
@@ -20,20 +21,27 @@ export class stockDepartamentoComponent {
   public rubros: any;
   public tipos: any;
   public departamentos: any;
+  public info:any={
+    nombre:'',
+    telefono:''
+  }
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
    ngOnInit(): void {
      this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'stockDepar?departamento_id='+localStorage.getItem('tecprecinc_departamento_id'))
+      this.http.get(this.ruta.get_ruta()+'todos')
            .toPromise()
            .then(
            data => {
              this.prov=data;
            	  this.stock=this.prov.productos;
 
-             
+              this.categorias=this.prov.categorias;
+              this.rubros=this.prov.rubros;
+              this.tipos=this.prov.tipos;
+              this.departamentos=this.prov.departamentos;
 
               console.log(this.stock);
               this.productList = this.stock;
@@ -45,6 +53,19 @@ export class stockDepartamentoComponent {
              console.log(msg);
              this.loading=false;
            });
+      this.http.get(this.ruta.get_ruta()+'almacen/1')
+           .toPromise()
+           .then(
+           data => {
+             this.info=data;
+              this.info=this.info.Almacen;
+              this.loading=false;
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+           });
+      
     }
 
     ver(item){
@@ -68,6 +89,54 @@ export class stockDepartamentoComponent {
         this.verProduc=true;
       }
     }
+    setCategorias(){
+      console.log(this.categoria);
+      this.filteredItems = [];
+      this.stock = [];
+      if(this.categoria != ""){
+            for (var i = 0; i < this.productList.length; i++) {
+
+              if (this.productList[i].categoria_id==this.categoria) {
+                 this.filteredItems.push(this.productList[i]);
+                 this.stock.push(this.productList[i]);
+                 console.log(this.productList[i]);
+              }
+            }
+      }else{
+         this.filteredItems = this.productList;
+         this.stock = this.productList;
+      }
+      this.init();
+    }
+    public success:any;
+    public fail:any;
+    editar(){
+      
+      var send={
+        nombre:this.info.nombre,
+        telefono: this.info.telefono
+      }
+      console.log(send);
+      this.http.put(this.ruta.get_ruta()+'almacen/1',send)
+           .toPromise()
+           .then(
+           data => {
+            
+              console.log(data);
+              this.success=true;
+              setTimeout(() => {  
+                this.success=false;
+              }, 4000);
+            },
+           msg => { 
+             console.log(msg);
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
+
+           });
+    }
     atras(){
       this.verProduc=false;
     }
@@ -82,6 +151,15 @@ export class stockDepartamentoComponent {
     }
     getDepartamentos(){
       return this.departamentos;
+    }
+
+    public saveFile(){
+      console.log('exportar');
+      var blob = new Blob([document.getElementById('exportable').innerHTML], {
+              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          saveAs(blob, 'inventario.xls');
+           //FileSaver.saveAs(blob, CONFIG.ECOMMERCE_NOMBRE+".xls");
     }
 
     //-------------------------------------------------------------------------------------------------------------------------
@@ -116,23 +194,30 @@ export class stockDepartamentoComponent {
    }
    FilterByName(){
       this.filteredItems = [];
+      this.stock = [];
       if(this.inputName != ""){
             for (var i = 0; i < this.productList.length; ++i) {
 
               if (this.productList[i].stock==this.inputName) {
                  this.filteredItems.push(this.productList[i]);
+                 this.stock.push(this.productList[i]);
               }else if (this.productList[i].stock2==this.inputName) {
                  this.filteredItems.push(this.productList[i]);
+                 this.stock.push(this.productList[i]);
               }else if (this.productList[i].nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
+                 this.stock.push(this.productList[i]);
               }else if (this.productList[i].precio==this.inputName) {
                  this.filteredItems.push(this.productList[i]);
+                 this.stock.push();
               }else if (this.productList[i].codigo==this.inputName) {
                  this.filteredItems.push(this.productList[i]);
+                 this.stock.push(this.productList[i]);
               }
             }
       }else{
          this.filteredItems = this.productList;
+         this.stock = this.productList;
       }
       console.log(this.filteredItems);
       this.init();

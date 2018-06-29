@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { stockComponent } from './stock.component';
-import { stock2Component } from './stock2.component';
-import { stockDepartamentoComponent } from './stockDepartamentos.component';
+import { stockComponent } from './inventario/stock.component';
 import { trazabilidadComponent } from './trazabilidad/trazabilidad.component';
-
+import { departComponent } from './departamentos/depart.component';
+import { empleadosComponent } from './empleados/empleados.component';
 
 const routes: Routes = [
   
@@ -17,24 +16,24 @@ const routes: Routes = [
         }
       },
       {
-        path: 'secundario',
-        component: stock2Component,
-        data: {
-          title: 'Stock secundario'
-        }
-      },
-      {
-        path: 'stockDepartamento',
-        component: stockDepartamentoComponent,
-        data: {
-          title: 'Stock del departamento'
-        }
-      },
-      {
         path: 'trazabilidad',
         component: trazabilidadComponent,
         data: {
           title: 'Trazabilidad'
+        }
+      },
+      {
+        path: 'departamentos',
+        component: departComponent,
+        data: {
+          title: 'Departamentos'
+        }
+      },
+      {
+        path: 'empleados',
+        component: empleadosComponent,
+        data: {
+          title: 'Empleados'
         }
       }
    

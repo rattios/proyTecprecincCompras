@@ -60,7 +60,7 @@ class UsuarioController extends Controller
             $usuarios = Cache::get('usuarios');
             return response()->json(['status'=>'con cache', 'usuarios'=>$usuarios], 200);
          }*/
-         return 1;
+         
          $usuarios = \App\User::with('departamento')->get();
          return $usuarios;
             return response()->json(['status'=>'ok', 'usuarios'=>$usuarios], 200);

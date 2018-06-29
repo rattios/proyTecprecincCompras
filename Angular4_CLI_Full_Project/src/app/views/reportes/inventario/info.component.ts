@@ -2,14 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import {CommonModule, NgClass} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
-import { RutaService } from '../../services/ruta.service';
-import { stock2Component } from './stock2.component';
+import { RutaService } from '../../../services/ruta.service';
+import { stockComponent } from './stock.component';
 
 @Component({
-  selector: 'app-info2',
-  templateUrl: 'info2.component.html'
+  selector: 'app-info',
+  templateUrl: 'info.component.html'
 })
-export class info2Component {
+export class infoComponent {
   public prov: any;
   public pedidos: any;
   public productos: any;
@@ -22,7 +22,7 @@ export class info2Component {
   public departamentos:any;
   public permisos_departs:any=[];
   public isCrear=false;
-  constructor(private http: HttpClient, private ruta: RutaService, private parent: stock2Component) {
+  constructor(private http: HttpClient, private ruta: RutaService, private parent: stockComponent) {
 
   }
 

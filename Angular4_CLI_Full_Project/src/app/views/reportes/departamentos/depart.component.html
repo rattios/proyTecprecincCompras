@@ -4,17 +4,17 @@
       <img src="../assets/img/template.gif" style="position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;z-index: 99;width: 135px;margin-top: 15%;" *ngIf="loading">
       <div class="card" *ngIf="!loading">
         <div class="card-header">
-          <i class="fa fa-align-justify"></i>Reporte de inventario
+          <i class="fa fa-align-justify"></i>Reportes por departamentos
           <div style="text-align:right">
             <!--button type="button" class="btn btn-success" (click)="ver(0)">Agregar un producto</button-->
           </div>
         </div>
         <div class="card-body" *ngIf="verProduc">
-          <app-info [informacion]="producSelec" *ngIf="verProduc"></app-info>
+          <app-infodepart [informacion]="producSelec" *ngIf="verProduc"></app-infodepart>
         </div>
         <div class="card-body" *ngIf="!verProduc">
           <tabset>
-            <tab heading="Stock">
+            <tab heading="Departamentos">
               <div class="form-group form-black label-floating is-empty">
                  <label class="labels" style="font-size: 18px; font-weight: bold">Buscar: </label>
                 <input  class="form-control" type="text"  id="inputName" [(ngModel)]="inputName" (ngModelChange)="FilterByName()"/>
@@ -22,21 +22,14 @@
               </div>
               <table class="table table-striped">
                 <thead>
+                  <th></th>
                   <th>Nombre</th>
-                  <th>Stock principal</th>
-                  <th>Stock secundario</th>
-                  <th>Precio</th>
-                  <th>Código</th>
                   <th></th>
                 </thead>
                 <tbody>
                    <tr *ngFor="let item of items">
-                      
+                      <td></td>
                       <td>{{item.nombre}}</td>
-                      <td>{{item.stock}}</td>
-                      <td>{{item.stock2}}</td>
-                      <td>{{item.precio}}</td>
-                      <td>{{item.codigo}}</td>
                       <td><button type="button" class="btn btn-success" (click)=ver(item)>Ir</button></td>
                    </tr>
                 </tbody>

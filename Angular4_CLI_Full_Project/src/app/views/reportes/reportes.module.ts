@@ -5,14 +5,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
-import { stockComponent } from './stock.component';
-import { stock2Component } from './stock2.component';
-import { stockDepartamentoComponent } from './stockDepartamentos.component';
+import { stockComponent } from './inventario/stock.component';
 import { reportesRoutingModule } from './reportes-routing.module';
-import { infoComponent } from './info.component';
-import { info2Component } from './info2.component';
+import { infoComponent } from './inventario/info.component';
 import { trazabilidadComponent } from './trazabilidad/trazabilidad.component';
 import { infotraComponent } from './trazabilidad/infotra.component';
+import { departComponent } from './departamentos/depart.component';
+import { infodepartComponent } from './departamentos/infodepart.component';
+import { empleadosComponent } from './empleados/empleados.component';
+import { infoempleadosComponent } from './empleados/infoempleados.component';
 
 @NgModule({
   imports: [
@@ -25,12 +26,13 @@ import { infotraComponent } from './trazabilidad/infotra.component';
   ],
   declarations: [ 
   	stockComponent,
-    stock2Component,
     infoComponent,
-    info2Component,
-    stockDepartamentoComponent,
     trazabilidadComponent,
-    infotraComponent
+    infotraComponent,
+    departComponent,
+    infodepartComponent,
+    empleadosComponent,
+    infoempleadosComponent
    ]
 })
 export class reportesModule { }

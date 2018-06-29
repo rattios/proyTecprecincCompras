@@ -40,7 +40,7 @@ Route::group(  ['middleware' =>'cors'], function(){
 
         //----Pruebas UsuarioController
         Route::get('/usuarios','UsuariosController@usuarios');
-       // Route::get('/usuarios','UsuarioController@index');
+        Route::get('/solo_usuarios','UsuarioController@index');
         Route::get('/usuarios/pedidos','UsuarioController@usuariosPedidos');
         Route::post('/usuarios','UsuarioController@store');
         Route::put('/usuarios/{id}','UsuarioController@update');
