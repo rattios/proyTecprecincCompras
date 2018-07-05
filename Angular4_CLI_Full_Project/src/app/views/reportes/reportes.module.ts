@@ -4,6 +4,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { MatDatepickerModule, MatNativeDateModule, DateAdapter } from '@angular/material';
+import { DateFormat } from './date-format';
 
 import { stockComponent } from './inventario/stock.component';
 import { reportesRoutingModule } from './reportes-routing.module';
@@ -23,6 +25,8 @@ import { infoempleadosComponent } from './empleados/infoempleados.component';
     CommonModule,
     FormsModule,
     TabsModule.forRoot(),
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   declarations: [ 
   	stockComponent,
@@ -33,6 +37,14 @@ import { infoempleadosComponent } from './empleados/infoempleados.component';
     infodepartComponent,
     empleadosComponent,
     infoempleadosComponent
-   ]
+   ],
+   providers: [
+     { provide: DateAdapter, useClass: DateFormat },
+     MatNativeDateModule,
+   ],
 })
-export class reportesModule { }
+export class reportesModule {
+  constructor(private dateAdapter:DateAdapter<Date>) {
+    dateAdapter.setLocale('en-in'); // DD/MM/YYYY
+  }
+}

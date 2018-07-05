@@ -3,23 +3,6 @@
   <div *ngIf="!loading">
     
     <div class="row">
-      <div class="col-sm-6 col-lg-2" *ngFor="let d of departamentos">        
-        <div class="social-box"  style="border-radius: 20px">
-          <i style="font-size: larger; font-size: 15px; font-weight: bolder; font-style: initial; background:#4875b4; white-space: nowrap; color:#fff">{{d.nombre}}</i>
-          <ul>
-            <li>
-              <strong>{{d.countPedidos}}</strong>
-              <span>Pedidos</span>
-            </li>
-            <li>
-              <strong>{{d.countProductos}}</strong>
-              <span>Inventario</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="row">
       <div class="col-6 col-lg-3">
         <div class="card" style="border-radius: 20px" [routerLink]="['/pedidos/entrantes']">
           <div class="card-body p-0 clearfix">
@@ -133,7 +116,23 @@
       </div>
     </div>
 
-
+    <div class="row">
+      <div class="col-sm-6 col-lg-2" *ngFor="let d of departamentos">        
+        <div class="social-box"  style="border-radius: 20px">
+          <i style="font-size: larger; font-size: 15px; font-weight: bolder; font-style: initial; background:#4875b4; white-space: nowrap; color:#fff">{{d.nombre}}</i>
+          <ul>
+            <li>
+              <strong>{{d.countPedidos}}</strong>
+              <span>Pedidos</span>
+            </li>
+            <li>
+              <strong>{{d.countProductos}}</strong>
+              <span>Inventario</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
     <div class="card-group">
       <div class="card" [routerLink]="['/productos/stock']">

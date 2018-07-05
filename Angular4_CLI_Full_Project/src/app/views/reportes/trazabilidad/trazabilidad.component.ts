@@ -3,6 +3,9 @@ import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../../services/ruta.service';
+import {MatDatepicker} from '@angular/material/datepicker';
+import {DateAdapter} from '@angular/material';
+
 
 @Component({
   templateUrl: 'trazabilidad.component.html'
@@ -20,6 +23,8 @@ export class trazabilidadComponent {
   public rubros: any;
   public tipos: any;
   public departamentos: any;
+  public inicioD:any=new Date();
+  public finD:any=new Date();
   public info:any={
     nombre:'',
     telefono:''
@@ -52,19 +57,12 @@ export class trazabilidadComponent {
              console.log(msg);
              this.loading=false;
            });
-      this.http.get(this.ruta.get_ruta()+'almacen/1')
-           .toPromise()
-           .then(
-           data => {
-             this.info=data;
-              this.info=this.info.Almacen;
-              this.loading=false;
-            },
-           msg => { 
-             console.log(msg);
-             this.loading=false;
-           });
       
+    }
+
+    buscar(){
+      console.log(this.inicioD);
+      console.log(this.finD);
     }
 
     ver(item){

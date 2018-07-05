@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {CommonModule, NgClass} from '@angular/common';
+import { Component, OnInit, Input,Pipe, PipeTransform } from '@angular/core';
+import {CommonModule, NgClass, DatePipe } from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { saveAs } from 'file-saver/FileSaver';
@@ -24,6 +24,8 @@ export class infotraComponent {
   public permisos_departs:any=[];
   public isCrear=false;
   public trazas:any;
+  public inicioD:any=new Date();
+  public finD:any=new Date();
   public emisor:any={
     nombre:''
   };
@@ -32,9 +34,20 @@ export class infotraComponent {
   }
 
    ngOnInit(): void {
+     var principio:any= new Date();
+     var mes:any=principio.getMonth()+1; 
+     var anio:any=principio.getYear()+1900;
+     principio=mes+"-01-"+anio;
+     principio=new Date(principio);
+     this.inicioD=principio;
+     console.log(principio);
+
       console.log(this.informacion);
+      var datePipe = new DatePipe("en-US");
+      console.log(datePipe.transform(new Date(), 'dd/MM/yyyy'));
+      //this.setDob = datePipe.transform(userdate, 'dd/MM/yyyy');
       //http://localhost/proyTecprecincCompras/tecprecincComprasAPI/public/trazas/1
-      this.http.get(this.ruta.get_ruta()+'trazas/'+this.informacion.id)
+      this.http.get(this.ruta.get_ruta()+'trazas/'+this.informacion.id+'?inicio='+datePipe.transform(principio, 'dd-MM-yyyy')+'&fin='+datePipe.transform(new Date(), 'dd-MM-yyyy'))
            .toPromise()
            .then(
            data => {
@@ -80,6 +93,36 @@ export class infotraComponent {
           }
         }
       }
+    }
+    buscar(){
+      console.log(this.inicioD);
+      console.log(this.finD);
+      var datePipe = new DatePipe("en-US");
+      this.http.get(this.ruta.get_ruta()+'trazas/'+this.informacion.id+'?inicio='+datePipe.transform(this.inicioD, 'dd-MM-yyyy')+'&fin='+datePipe.transform(this.finD, 'dd-MM-yyyy'))
+           .toPromise()
+           .then(
+           data => {
+             this.trazas=data;
+              this.trazas=this.trazas.Trazas;
+              console.log(this.trazas);
+              for (var i = 0; i < this.trazas.length; i++) {
+                if(this.trazas[i].departamento_emisor==null) {
+                  this.trazas[i].departamento_emisor=this.emisor;
+                }
+                if(this.trazas[i].usuario_emisor==null) {
+                  this.trazas[i].usuario_emisor=this.emisor;
+                }
+                
+              }
+              this.productList = this.trazas;
+              this.filteredItems = this.productList;
+              this.init();
+             // this.loading=false;
+            },
+           msg => { 
+             console.log(msg);
+             //this.loading=false;
+           });
     }
 
     volver(){

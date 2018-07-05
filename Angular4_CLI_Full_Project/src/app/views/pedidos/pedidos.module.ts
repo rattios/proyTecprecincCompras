@@ -39,6 +39,8 @@ import { transferenciasInfoComponent } from './transferencias/transferenciasInfo
 
 import { pickingComponent } from './picking.component';
 
+import { presupuestosComponent } from './presupuesto.component';
+
 @NgModule({
   imports: [
     pedidosRoutingModule,

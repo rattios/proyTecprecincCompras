@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DateTime;
+use DB;
 
 class TrazasController extends Controller
 {
@@ -58,14 +60,18 @@ class TrazasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
-        $Trazas = \App\Trazas::where('stock_id',$id)->with('stock')->with('departamento_emisor')->with('departamento_receptor')->with('usuario_emisor')->with('usuario_receptor')->orderBy('id', 'DESC')->get();
-
-        if(count($Trazas) == 0){
+        $from=new DateTime($request->input('inicio'));
+        //return $from->format('Y-m-d H:i:s');
+        $to=new DateTime($request->input('fin'));
+        $Trazas = \App\Trazas::where('stock_id',$id)->with('stock')->with('departamento_emisor')->with('departamento_receptor')->with('usuario_emisor')->with('usuario_receptor')->whereRaw("created_at >= ? AND created_at <= ?", array($from->format('Y-m-d') ." 00:00:00", $to->format('Y-m-d')." 23:59:59"))/*where(DB::raw('DATE_FORMAT(created_at,"%d/%m/%Y")'), '>=', $request->input('inicio'))
+            ->where(DB::raw('DATE_FORMAT(created_at,"%d/%m/%Y")'), '<=', $request->input('fin'))*/->orderBy('id', 'DESC')->get();
+        //return $Trazas;
+        if(!$Trazas){
             return response()->json(['error'=>'No existen Trazas.'], 404);          
         }else{
-            return response()->json(['status'=>'ok', 'Trazas'=>$Trazas], 200);
+            return response()->json(['status'=>'ok', 'from'=>$from->format('Y-m-d H:i:s'),'to'=>$to->format('Y-m-d H:i:s'),'Trazas'=>$Trazas], 200);
         }
     }
 

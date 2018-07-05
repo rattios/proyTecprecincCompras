@@ -15,7 +15,23 @@
 	      				</div>
       				</div>
       				<br>
-      				
+      				<div class="row">
+                <div class="col-sm-5" style="text-align: center">
+                  <label class="labels" style="font-size: 18px; font-weight: bold">Inicio: </label>
+                  <input matInput [matDatepicker]="inicio" placeholder="Choose a date" [(ngModel)]="inicioD">
+                  <mat-datepicker-toggle matSuffix [for]="inicio"></mat-datepicker-toggle>
+                  <mat-datepicker #inicio></mat-datepicker>
+                </div>
+                <div class="col-sm-5" style="text-align: center">
+                  <label class="labels" style="font-size: 18px; font-weight: bold">Fin: </label>
+                  <input matInput [matDatepicker]="fin" placeholder="Choose a date" [(ngModel)]="finD">
+                  <mat-datepicker-toggle matSuffix [for]="fin"></mat-datepicker-toggle>
+                  <mat-datepicker #fin></mat-datepicker>
+                </div>
+                <div class="col-sm-1" style="text-align: center"> 
+                  <button type="button" class="btn btn-primary" (click)=buscar()>Buscar</button>
+                </div>
+              </div>
       				<br>
       				<div class="row">
       					<div class="col-lg-8">
@@ -115,7 +131,7 @@
   		</div-->
 
       <div class="form-group form-black label-floating is-empty">
-                 <label class="labels" style="font-size: 18px; font-weight: bold">Buscar: </label>
+                 <label class="labels" style="font-size: 18px; font-weight: bold">Filtrar: </label>
                 <input  class="form-control" type="text"  id="inputName" [(ngModel)]="inputName" (ngModelChange)="FilterByName()"/>
                  <br>
               </div>
@@ -146,7 +162,7 @@
                         <td>{{item.departamento_receptor.nombre}}</td>
                         <td>{{item.usuario_receptor.nombre}}</td>
                         <td>{{item.tipo}}</td>
-                        <th>{{item.created_at  | date:'dd-MM-yyyy hh:mm:ss'}}</th>
+                        <th>{{item.created_at  | date:'dd-MM-yyyy HH:MM:ss'}}</th>
                      </tr>
                   </tbody>
                 </table>
@@ -191,7 +207,7 @@
                         <td>{{item.departamento_receptor.nombre}}</td>
                         <td>{{item.usuario_receptor.nombre}}</td>
                         <td>{{item.tipo}}</td>
-                        <th>{{item.created_at}}</th>
+                        <th>{{item.created_at  | date:'dd-MM-yyyy HH:MM:ss'}}</th>
                      </tr>
                   </tbody>
                 </table>

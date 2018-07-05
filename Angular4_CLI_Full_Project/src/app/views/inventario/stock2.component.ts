@@ -58,11 +58,11 @@ export class stock2Component {
            data => {
              this.info=data;
               this.info=this.info.Almacen;
-              this.loading=false;
+              //this.loading=false;
             },
            msg => { 
              console.log(msg);
-             this.loading=false;
+             //this.loading=false;
            });
     }
 
