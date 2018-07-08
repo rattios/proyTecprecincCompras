@@ -11,6 +11,7 @@ import 'rxjs/add/operator/toPromise';
 export class LoginComponent {
   public usuario:any;
   public result:any;
+  public loading:any=false;
   constructor(private http: HttpClient, private router: Router, private ruta: RutaService) {
   	this.usuario={
   		user:'',
@@ -21,6 +22,7 @@ export class LoginComponent {
   login(){
   	console.log(this.usuario);
   	console.log(this.ruta.get_ruta()+'login/web');
+    this.loading=true;
   	this.http.post(this.ruta.get_ruta()+'login/web', this.usuario)
         .toPromise()
         .then(
@@ -40,13 +42,15 @@ export class LoginComponent {
                 }else{
                   this.router.navigate(['pedidos/pedido'], {});
                 }
+                this.loading=false;
              },10);
             
             console.log(localStorage.getItem('tecprecinc_departamento_id'));
          },
           msg => { // Error
           	console.log(msg);
-          	alert(JSON.stringify(msg));
+            this.loading=false;
+          	//alert(JSON.stringify(msg));
           }
         );
 		//

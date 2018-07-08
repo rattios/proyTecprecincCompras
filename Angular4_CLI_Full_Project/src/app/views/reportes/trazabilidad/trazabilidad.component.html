@@ -14,6 +14,55 @@
         </div>
         <div class="card-body" *ngIf="!verProduc">
           <tabset>
+            <tab heading="Trazas">
+              
+              <div class="row">
+                <div class="col-sm-5" style="text-align: center">
+                  <label class="labels" style="font-size: 18px; font-weight: bold">Inicio: </label>
+                  <input matInput [matDatepicker]="inicio2" placeholder="Choose a date" [(ngModel)]="inicioD2">
+                  <mat-datepicker-toggle matSuffix [for]="inicio2"></mat-datepicker-toggle>
+                  <mat-datepicker #inicio2></mat-datepicker>
+                </div>
+                <div class="col-sm-5" style="text-align: center">
+                  <label class="labels" style="font-size: 18px; font-weight: bold">Fin: </label>
+                  <input matInput [matDatepicker]="fin2" placeholder="Choose a date" [(ngModel)]="finD2">
+                  <mat-datepicker-toggle matSuffix [for]="fin2"></mat-datepicker-toggle>
+                  <mat-datepicker #fin2></mat-datepicker>
+                </div>
+                <div class="col-sm-1" style="text-align: center"> 
+                  <button type="button" class="btn btn-primary" (click)=buscar()>Buscar</button>
+                </div>
+              </div>
+              <br><br><br>
+              <div id="exportable" [hidden]="false">
+                <table class="table table-striped" id="exportable">
+                  <thead>
+                    <th>ID</th>
+                    <th>Cantidad</th>
+                    <th>Nombre</th>
+                    <th>Dto. Emisor</th>
+                    <th>Usuario emisor</th>
+                    <th>Dto. Receptor</th>
+                    <th>Usuario receptor</th>
+                    <th>Tipo</th>
+                    <th>Fecha</th>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let item of trazas">
+                        <td>{{item.operacion_id}}</td>
+                        <td>{{item.cantidad}}</td>
+                        <td>{{item.stock.nombre}}</td>
+                        <td>{{item.departamento_emisor.nombre}}</td>
+                        <td>{{item.usuario_emisor.nombre}}</td>
+                        <td>{{item.departamento_receptor.nombre}}</td>
+                        <td>{{item.usuario_receptor.nombre}}</td>
+                        <td>{{item.tipo}}</td>
+                        <th>{{item.created_at  | date:'dd-MM-yyyy HH:MM:ss'}}</th>
+                     </tr>
+                  </tbody>
+                </table>
+              </div>
+            </tab>
             <tab heading="Stock">
               
               <div class="form-group form-black label-floating is-empty">

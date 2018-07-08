@@ -16,14 +16,17 @@ class TrazasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $Trazas = \App\Trazas::with('stock')->with('departamento_emisor')->with('departamento_receptor')->with('usuario_emisor')->with('usuario_receptor')->get();
+        $from=new DateTime($request->input('inicio'));
+        $to=new DateTime($request->input('fin'));
 
-        if(count($Trazas) == 0){
+        $Trazas = \App\Trazas::with('stock')->with('departamento_emisor')->with('departamento_receptor')->with('usuario_emisor')->with('usuario_receptor')->whereRaw("created_at >= ? AND created_at <= ?", array($from->format('Y-m-d') ." 00:00:00", $to->format('Y-m-d')." 23:59:59"))->orderBy('id', 'DESC')->get();
+        //return $Trazas;
+        if(!$Trazas){
             return response()->json(['error'=>'No existen Trazas.'], 404);          
         }else{
-            return response()->json(['status'=>'ok', 'Trazas'=>$Trazas], 200);
+            return response()->json(['status'=>'ok', 'from'=>$from->format('Y-m-d H:i:s'),'to'=>$to->format('Y-m-d H:i:s'),'Trazas'=>$Trazas], 200);
         }
     }
 

@@ -49,7 +49,7 @@ export class presupuestoComponent {
               this.productList = this.proveedores;
               this.filteredItems = this.productList;
               this.init();
-              //this.loading=false;
+              this.loading=false;
             },
            msg => { 
              console.log(msg);
@@ -81,10 +81,44 @@ export class presupuestoComponent {
   seleccionar(item){
     this.proveedor=item;
   }
-
-  enviarPresupuesto(){
-    console.log(this.proveedor);
+  public itemsPresupuesto:any=[];
+  add(item){
+    if(!this.checkProductos(item)) {
+     item.cantidad=1;
+     this.itemsPresupuesto.push(item);
+    }
   }
+  checkProductos(item){
+      var band=false;
+      for (var i = 0; i < this.itemsPresupuesto.length; i++) {
+        if(this.itemsPresupuesto[i].id==item.id) {
+          band=true;
+        }
+      }
+      return band;
+    }
+    eliminarProducto(it){
+      for (var i = 0; i < this.itemsPresupuesto.length; i++) {
+        if(this.itemsPresupuesto[i].id==it.id) {
+          this.itemsPresupuesto.splice(i, 1);
+        }
+      }
+    }
+    public aEnviar:any={
+      pedido_id:0,
+      proveedor_id:0,
+      productos:[]
+    };
+    enviarPresupuesto(){
+      if(this.itemsPresupuesto.length>0) {
+        this.aEnviar.proveedor_id=this.proveedor.id;
+        this.aEnviar.productos=this.itemsPresupuesto;
+        console.log(this.aEnviar);
+      }
+      console.log(this.aEnviar);
+    }
+
+
 
 
      //-------------------------------------------------------------------------------------------------------------------------

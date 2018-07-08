@@ -44,7 +44,7 @@ export class infotraComponent {
 
       console.log(this.informacion);
       var datePipe = new DatePipe("en-US");
-      console.log(datePipe.transform(new Date(), 'dd/MM/yyyy'));
+      console.log(datePipe.transform(new Date(), 'dd-MM-yyyy'));
       //this.setDob = datePipe.transform(userdate, 'dd/MM/yyyy');
       //http://localhost/proyTecprecincCompras/tecprecincComprasAPI/public/trazas/1
       this.http.get(this.ruta.get_ruta()+'trazas/'+this.informacion.id+'?inicio='+datePipe.transform(principio, 'dd-MM-yyyy')+'&fin='+datePipe.transform(new Date(), 'dd-MM-yyyy'))
@@ -77,10 +77,7 @@ export class infotraComponent {
       }else{
         this.isCrear=false;
       }
-      this.categorias=this.parent.getCategorias();
-      this.tipos=this.parent.getTipos();
-      this.rubros=this.parent.getRubros();
-      this.departamentos=this.parent.getDepartamentos();
+
       if(this.informacion!=undefined) {
        
       }
