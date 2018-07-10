@@ -110,6 +110,7 @@ export class ProveedoresComponent {
     }
     volver(){
       this.verDatos=false;
+      this.proveedor.forma_pago=JSON.stringify(this.proveedor.forma_pago);
     }
 
     addFp(){

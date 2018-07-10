@@ -52,6 +52,11 @@
             </div>
             <div class="card-body" *ngIf="!loading">
               <div class="row">
+                <div class="col-sm-3">
+                  <img src="http://www.tecprecincsrl.com.ar/e/wp-content/uploads/2018/02/logo.png" style="width: 210px;">
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-lg-8">
                   <label>Proveedor:</label><strong> {{proveedor.razon_social}}</strong>
                 </div>
@@ -83,7 +88,7 @@
 
               <div class="row">
                 <div class="col-lg-12" style="text-align:center">
-                  <button type="button" class="btn btn-success" (click)=enviarPresupuesto()>Enviar presupuesto</button>
+                  <button type="button" class="btn btn-success" (click)="enviarPresupuesto();saveFile()">Enviar presupuesto</button>
                 </div>
               </div>
 
@@ -91,7 +96,65 @@
           </div>
         </div>
       </div>
+      <div class="row">
+         <div [hidden]="true" id="exportable">
+          <div class="card" >
+            <!--div class="card-header">
+              <i class="fa fa-align-justify"></i> Presupuesto
+            </div-->
+            <div class="card-body" *ngIf="!loading">
+              <div class="row">
+                <div class="col-sm-3">
+                  <img src="http://www.tecprecincsrl.com.ar/e/wp-content/uploads/2018/02/logo.png" style="width: 210px;">
+                </div>
+                <div class="col-sm-7" style="text-align: right;">
+                  Presupuesto: Nº 1044
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12" style="text-align: center">
+                  <h4>SOLICITUD DE PRESUPUESTO</h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-8">
+                  <label>Proveedor:</label><strong> {{proveedor.razon_social}}</strong>
+                </div>
+              </div>
 
+              <br>
+              <div class="row">
+                <div class="col-lg-12">
+                  <strong>Productos:</strong>
+                  <br>
+                  <table class="table table-bordered">
+                    <thead>
+                      <th>Cantidad</th>
+                      <th>Nombre</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let it of itemsPresupuesto">
+                          <td>{{it.cantidad}}</td>
+                          <td>{{it.nombre}}</td>
+                          
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <br><br>
+
+              <div class="row">
+                <div class="col-lg-12" style="text-align:center">
+                  ___________________________
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
