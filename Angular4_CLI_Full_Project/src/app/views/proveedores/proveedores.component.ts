@@ -186,11 +186,15 @@ export class ProveedoresComponent {
            data => {
             
               console.log(data);
+              this.proveedor=data;
+              this.proveedor=this.proveedor.proveedor;
+              this.proveedor.forma_pago=JSON.parse(this.proveedor.forma_pago);
+              this.proveedor.productos=[];
               this.success=true;
               setTimeout(() => {  
                 this.success=false;
               }, 4000);
-
+              this.crear=false;
               this.loading=true;
               this.http.get(this.ruta.get_ruta()+'proveedores')
                    .toPromise()
@@ -257,7 +261,22 @@ export class ProveedoresComponent {
               setTimeout(() => {  
                 this.success=false;
               }, 4000);
-             
+              this.http.get(this.ruta.get_ruta()+'proveedores')
+                    .toPromise()
+                    .then(
+                    data => {
+                      this.prov=data;
+                        this.proveedores=this.prov.proveedores;
+                       console.log(this.proveedores);
+                       this.productList = this.proveedores;
+                       this.filteredItems = this.productList;
+                        this.init();
+                       this.loading=false;
+                     },
+                    msg => { 
+                       console.log(msg); 
+                      this.loading=false;
+                     });
 
             },
            msg => { 

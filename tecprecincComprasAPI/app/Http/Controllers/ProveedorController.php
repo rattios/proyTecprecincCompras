@@ -201,6 +201,7 @@ class ProveedorController extends Controller
     public function update(Request $request, $id)
     {
         // Comprobamos si el proveedor que nos están pasando existe o no.
+
         $proveedor=\App\Proveedor::find($id);
 
         if (count($proveedor)==0)
@@ -234,91 +235,69 @@ class ProveedorController extends Controller
         $bandera = false;
 
         // Actualización parcial de campos.
-        if ($razon_social != null && $razon_social!='')
-        {
-            $aux1 = \App\Proveedor::where('razon_social', $request->input('razon_social'))
-                ->where('id', '<>', $proveedor->id)->get();
-            if(count($aux1) != 0){
-               // Devolvemos un código 409 Conflict. 
-                return response()->json(['error'=>'Ya existe otro proveedor con el nombre(razón social) '.$request->input('razon_social')], 409);
-            } 
+        //if ($razon_social != null && $razon_social!='')
+        //{
 
             $proveedor->razon_social = $razon_social;
             $bandera=true;
-        }
+        //}
 
-        if ($nombreFantacia != null && $nombreFantacia!='')
-        {
-            $aux1 = \App\Proveedor::where('nombreFantacia', $request->input('nombreFantacia'))
-                ->where('id', '<>', $proveedor->id)->get();
-            if(count($aux1) != 0){
-               // Devolvemos un código 409 Conflict. 
-                return response()->json(['error'=>'Ya existe otro proveedor con el nombre fantacia '.$request->input('nombreFantacia')], 409);
-            } 
-
+        //if ($nombreFantacia != null && $nombreFantacia!='')
+        //{
+            
             $proveedor->nombreFantacia = $nombreFantacia;
             $bandera=true;
-        }
+        //}
 
-        if ($cuit != null && $cuit!='')
-        {
-            $aux1 = \App\Proveedor::where('cuit', $request->input('cuit'))
-                ->where('id', '<>', $proveedor->id)->get();
-            if(count($aux1) != 0){
-               // Devolvemos un código 409 Conflict. 
-                return response()->json(['error'=>'Ya existe otro proveedor con el cuit '.$request->input('cuit')], 409);
-            } 
-
+        //if ($cuit != null && $cuit!='')
+        //{
+            
             $proveedor->cuit = $cuit;
             $bandera=true;
-        }
+        //}
 
-        if ($telefono != null && $telefono!='')
-        {
+        //if ($telefono != null && $telefono!='')
+        //{
             $proveedor->telefono = $telefono;
             $bandera=true;
-        }
+        //}
 
-        if ($fax != null && $fax!='')
-        {
+        //if ($fax != null && $fax!='')
+        //{
             $proveedor->fax = $fax;
             $bandera=true;
-        }
+        //}
 
-        if ($email != null && $email!='')
-        {
-            $aux1 = \App\Proveedor::where('email', $request->input('email'))
-                ->where('id', '<>', $proveedor->id)->get();
-            if(count($aux1) != 0){
-               // Devolvemos un código 409 Conflict. 
-                return response()->json(['error'=>'Ya existe otro proveedor con el email '.$request->input('email')], 409);
-            } 
+        //if ($email != null && $email!='')
+        //{
+           
 
             $proveedor->email = $email;
             $bandera=true;
-        }
+        //}
 
-        if ($habilitado != null && $habilitado!='')
-        {
+        //if ($habilitado != null && $habilitado!='')
+        //{
             $proveedor->habilitado = $habilitado;
             $bandera=true;
-        }
+        //}
 
-        if ($estado != null && $estado!='')
-        {
+        //if ($estado != null && $estado!='')
+        //{
             $proveedor->estado = $estado;
             $bandera=true;
-        }
+        //}
 
-        if ($calificacion != null && $calificacion!='')
-        {
+        //if ($calificacion != null && $calificacion!='')
+        //{
             $proveedor->calificacion = $calificacion;
             $bandera=true;
-        }
+        //}
 
         if ($productos != null && $productos!='')
         {
             //Eliminar las relaciones(productos) en la tabla pivote
+
             $proveedor->productos()->detach();
 
             //Crear las nuevas relaciones en la tabla pivote
@@ -334,54 +313,54 @@ class ProveedorController extends Controller
             
             $bandera=true;
         }
-        if ($motivo != null && $motivo!='')     
-         {     
+        //if ($motivo != null && $motivo!='')     
+         //{     
              $proveedor->motivo = $motivo;     
              $bandera=true;        
-         }     
+         //}     
        
-         if ($direccion != null && $direccion!='')     
-         {     
+         //if ($direccion != null && $direccion!='')     
+         //{     
              $proveedor->direccion = $direccion;       
              $bandera=true;        
-         }//'calle','nro','ciudad','provincia','pais' 
+         //}//'calle','nro','ciudad','provincia','pais' 
 
-         if ($calle != null && $calle!='')     
-         {     
+         //if ($calle != null && $calle!='')     
+         //{     
              $proveedor->calle = $calle;       
              $bandera=true;        
-         }    
-         if ($nro != null && $nro!='')     
-         {     
+         //}    
+         //if ($nro != null && $nro!='')     
+         //{     
              $proveedor->nro = $nro;       
              $bandera=true;        
-         }
+         //}
 
-         if ($ciudad != null && $ciudad!='')     
-         {     
+         //if ($ciudad != null && $ciudad!='')     
+         //{     
              $proveedor->ciudad = $ciudad;       
              $bandera=true;        
-         }
+         //}
 
-         if ($provincia != null && $provincia!='')     
-         {     
+         //if ($provincia != null && $provincia!='')     
+         //{     
              $proveedor->provincia = $provincia;       
              $bandera=true;        
-         }
+         //}
 
-         if ($pais != null && $pais!='')     
-         {     
+         //if ($pais != null && $pais!='')     
+         //{     
              $proveedor->pais = $pais;       
              $bandera=true;        
-         }    
+         //}    
        
-         if ($forma_pago != null && $forma_pago!='')       
-         {     
+       //  if ($forma_pago != null && $forma_pago!='')       
+         //{     
              $proveedor->forma_pago = $forma_pago;     
              $bandera=true;        
-         }
+         //}
 
-         if ($categorias != null && $categorias!='')
+        if ($categorias != null && $categorias!='')
         {
             //Eliminar las relaciones(categorias) en la tabla pivote
             $proveedor->categorias()->detach();
@@ -396,11 +375,14 @@ class ProveedorController extends Controller
             
             $bandera=true;
         }
-
+        $bandera=true;
         if ($bandera)
         {
             // Almacenamos en la base de datos el registro.
-            if ($proveedor->save()) {
+            $proveedor->fill($request->all());
+
+        if($proveedor->save()){
+            //if ($proveedor->save()) {
                 return response()->json(['status'=>'ok','message'=>'Proveedor editado con éxito.', 'proveedor'=>$proveedor], 200);
             }else{
                 return response()->json(['error'=>'Error al actualizar el proveedor.'], 500);

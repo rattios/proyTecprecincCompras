@@ -70,7 +70,7 @@
           </li>
         </ul>
       </li>
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1]">
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-shuffle"></i> Transferencias</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item" *ngxPermissionsOnly="[0,1]">
@@ -79,19 +79,19 @@
           <li class="nav-item" *ngxPermissionsOnly="[0,1]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/transferencias/transferenciaspura']"><i class=" icon-action-redo"></i> Transferencias</a>
           </li>
-          <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/transferencias/devoluciones']"><i class="icon-action-undo"></i> Devoluciones</a>
           </li>
-          <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/transferencias/transferenciaspatrimonial']"><i class="icon-action-redo"></i> Transferir Bienes Patrimoniales</a>
           </li>
           
         </ul>
       </li>
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1]">
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-doc"></i> Presupuestos</a>
         <ul class="nav-dropdown-items">
-          <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/presupuestos/presupuestos']"><i class="icon-note"></i> Crear un presupuesto</a>
           </li>
         </ul>
