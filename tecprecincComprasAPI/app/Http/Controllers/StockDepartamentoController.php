@@ -41,15 +41,41 @@ class StockDepartamentoController extends Controller
                 //array_push($stockdepartamentos[$i]->productos,$p[$j]);
                 $stockdepartamentos[$i]->nombre=$p[0]->nombre;
                 $stockdepartamentos[$i]->codigo=$p[0]->codigo;
+                $aux=DB::select("SELECT `id`,`nombre` FROM `usuarios` WHERE `id`=".$stockdepartamentos[$i]->usuario_id);
+                $stockdepartamentos[$i]->usuario=$aux[0];
+            }
+        }
+        $productos=[];
+        for ($i=0; $i < count($stockdepartamentos); $i++) { 
+            if ($this->check_repetidos($stockdepartamentos[$i],$productos)) {
+                $stockdepartamentos[$i]->totales=0;
+                array_push($productos,$stockdepartamentos[$i]);
+            }
+        }
+
+        for ($i=0; $i < count($stockdepartamentos); $i++) { 
+            for ($j=0; $j < count($productos); $j++) { 
+                if ($productos[$j]->stock_id==$stockdepartamentos[$i]->stock_id) {
+                    $productos[$j]->totales=$productos[$j]->totales+$stockdepartamentos[$i]->stock;
+                }
             }
         }
         
         if(count($stockdepartamentos) == 0){
-            return response()->json(['error'=>'No existen productos en el stock de los departamentos.'], 404);          
+           // return response()->json(['error'=>'No existen productos en el stock de los departamentos.'], 404);          
         }else{
-            return response()->json(['productos'=>$stockdepartamentos], 200);
+            return response()->json(['productos'=>$stockdepartamentos,'general'=>$productos], 200);
         } 
     }
+    function check_repetidos($item,$array){
+        for ($i=0; $i < count($array); $i++) { 
+            if($array[$i]->stock_id==$item->stock_id){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public function StockUsuario(Request $request)
     {
         $departamento_id=$request->input('usuario_id');

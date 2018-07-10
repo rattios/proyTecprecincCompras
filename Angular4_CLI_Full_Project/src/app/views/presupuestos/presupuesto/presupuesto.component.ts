@@ -11,8 +11,10 @@ export class presupuestoComponent {
   public prov: any;
   public stock: any;
   public proveedores: any;
+  public proveedores2: any;
   public productos: any;
   public loading=true;
+  public loading2=true;
   public proveedor: any={
           calificacion:null,
           cuit:"",
@@ -44,7 +46,8 @@ export class presupuestoComponent {
            .then(
            data => {
              this.prov=data;
-               this.proveedores=this.prov.proveedores;
+              this.proveedores=this.prov.proveedores;
+              this.proveedores2=this.prov.proveedores;
               console.log(this.proveedores);
               this.productList = this.proveedores;
               this.filteredItems = this.productList;
@@ -81,12 +84,45 @@ export class presupuestoComponent {
   seleccionar(item){
     this.proveedor=item;
   }
+  setProveedores(){
+    console.log(this.proveedores2);
+    this.proveedores=this.proveedores2;
+    this.productList = this.proveedores;
+    this.filteredItems = this.productList;
+    this.init();
+  }
   public itemsPresupuesto:any=[];
   add(item){
     if(!this.checkProductos(item)) {
      item.cantidad=1;
      this.itemsPresupuesto.push(item);
     }
+  }
+  set(item){
+    this.http.get(this.ruta.get_ruta()+'productos/'+item.id+'/proveedores')
+           .toPromise()
+           .then(
+           data => {
+              console.log(data);
+              this.prov=data;
+              this.proveedores=this.prov.producto.proveedores;
+              for (var i = 0; i < this.proveedores.length; i++) {
+                for (var j = 0; j < this.proveedores2.length; j++) {
+                  if(this.proveedores[i].razon_social==this.proveedores2[j].razon_social) {
+                    this.proveedores[i]=this.proveedores2[j];
+                  }
+                }
+              }
+              console.log(this.proveedores);
+              this.productList = this.proveedores;
+              this.filteredItems = this.productList;
+              this.init();
+              this.loading=false;
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+           });
   }
   checkProductos(item){
       var band=false;

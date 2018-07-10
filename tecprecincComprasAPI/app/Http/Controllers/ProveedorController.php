@@ -20,6 +20,12 @@ class ProveedorController extends Controller
         $proveedores = \App\Proveedor::with('productos')->get();
         $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
         //return $proveedores;
+
+        for ($i=0; $i < count($proveedores); $i++) { 
+            for ($j=0; $j < count($proveedores[$i]->productos); $j++) { 
+                $proveedores[$i]->productos[$j]->producto_id=$proveedores[$i]->productos[$j]->pivot->producto_id;
+            }
+        }
         if(count($proveedores) == 0){
             return response()->json(['error'=>'No existen proveedores.'], 404);          
         }else{
@@ -323,7 +329,7 @@ class ProveedorController extends Controller
 
                 //$proveedor->productos()->attach($productos[$i]->producto_id, ['precio' => $productos[$i]->precio]);
 
-                $proveedor->productos()->attach($productos[$i]->id);       
+                $proveedor->productos()->attach($productos[$i]->producto_id);       
             }
             
             $bandera=true;

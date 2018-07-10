@@ -94,7 +94,7 @@ class StockController extends Controller
         }*/
 
 
-        $produc=DB::select("SELECT id,nombre,codigo,stock,stock2,categoria_id,tipo_id,rubro_id,precio,stock_min,stock2_min FROM  `stock` WHERE 1 ");
+        $produc=DB::select("SELECT id,nombre,codigo,stock,stock2,categoria_id,tipo_id,rubro_id,precio,stock_min,stock2_min,producto_id  FROM  `stock` WHERE 1 ");
 
         $departs=DB::select("SELECT id,nombre FROM  `departamentos` WHERE 1 ");
 
@@ -336,10 +336,14 @@ class StockController extends Controller
         }
 
         
+        $productos = $categoria->productos()->create($request->all());
 
         //Creamos el producto
         $producto = \App\Stock::create($request->all());
 
+        $producto->producto_id=$productos->id;
+        $producto->save();
+        
         if ($permisos_departs) {
             $permisos_departs = json_decode($request->input('permisos_departs'));
 

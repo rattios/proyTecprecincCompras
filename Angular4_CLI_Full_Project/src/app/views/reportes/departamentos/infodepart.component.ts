@@ -24,6 +24,7 @@ export class infodepartComponent {
   public permisos_departs:any=[];
   public isCrear=false;
   public trazas:any;
+  public general:any;
   public emisor:any={
     nombre:''
   };
@@ -39,8 +40,10 @@ export class infodepartComponent {
            .then(
            data => {
              this.depart=data;
+             this.general=data;
+             console.log(data);
               this.depart=this.depart.productos;
-              console.log(this.depart);
+              this.general=this.general.general;
 
               this.productList = this.depart;
               this.filteredItems = this.productList;

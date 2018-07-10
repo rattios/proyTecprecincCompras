@@ -39,22 +39,24 @@
               </div>
               <button type="button" class="btn btn-primary" style="float: right;" (click)="saveFile()">Exportar&nbsp;<i class="fa fa-file-excel-o"></i></button>
               <br>
-              <div >
+              <div>
                 <table class="table table-striped">
                   <thead>
                     <th>Cantidad</th>
                     <th>Nombre</th>
                     <th>Codigo</th>
+                    <th>Usuario</th>
                   </thead>
                   <tbody>
                      <tr *ngFor="let item of items">
                         <td>{{item.stock}}</td>
                         <td>{{item.nombre}}</td>
                         <td>{{item.codigo}}</td>
+                        <td>{{item.usuario.nombre}}</td>
                      </tr>
                   </tbody>
                 </table>
-              </div>
+              
                 <div class="btn-toolbar" role="toolbar" style="margin: 0;">
                   <div class="btn-group">
                      <label style="margin-top:10px">Página {{currentIndex}}/{{pageNumber}} </label>
@@ -69,6 +71,26 @@
                      </ul>
                   </div>
                 </div>
+              </div>
+              <br>
+              <div>
+                <h4>Total por productos</h4>
+                <table class="table table-striped">
+                  <thead>
+                    <th>Cantidad</th>
+                    <th>Nombre</th>
+                    <th>Codigo</th>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let item of general">
+                        <td>{{item.totales}}</td>
+                        <td>{{item.nombre}}</td>
+                        <td>{{item.codigo}}</td>
+                     </tr>
+                  </tbody>
+                </table>
+              </div>
+                
 
             <div id="exportable" [hidden]="true">
                 
@@ -80,6 +102,21 @@
                   </thead>
                   <tbody>
                      <tr *ngFor="let item of items">
+                        <td>{{item.totales}}</td>
+                        <td>{{item.nombre}}</td>
+                        <td>{{item.codigo}}</td>
+                     </tr>
+                  </tbody>
+                </table>
+
+                <table class="table table-striped">
+                  <thead>
+                    <th>Cantidad</th>
+                    <th>Nombre</th>
+                    <th>Codigo</th>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let item of general">
                         <td>{{item.stock}}</td>
                         <td>{{item.nombre}}</td>
                         <td>{{item.codigo}}</td>
