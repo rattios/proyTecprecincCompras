@@ -11,7 +11,7 @@ class Presupuesto extends Model
      *
      * @var string
      */
-    protected $table = 'presupuestos';
+    protected $table = 'presupuesto';
 
     //public $timestamps = false;
 
@@ -24,8 +24,8 @@ class Presupuesto extends Model
      *
      * @var array
      */
-    protected $fillable = ['pedido_id', 'proveedor_id','estado',
-    	'f_envio', 'f_respuesta','f_entrega', 'documento'];
+    protected $fillable = [/*'pedido_id',*/'proveedor_id', 'productos','observaciones','estado'/*,
+    	'f_envio', 'f_respuesta','f_entrega', 'documento','observaciones','productos'*/];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -34,12 +34,7 @@ class Presupuesto extends Model
      */
     //protected $hidden = [];
 
-    // Relación de presupuesto con pedido:
-	public function pedido()
-	{
-		// 1 presupuesto pertenece a un pedido
-		return $this->belongsTo('App\Pedido', 'pedido_id');
-	}
+
 
 	// Relación de presupuesto con proveedor:
 	public function proveedor()

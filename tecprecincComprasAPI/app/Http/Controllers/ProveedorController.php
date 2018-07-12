@@ -212,7 +212,7 @@ class ProveedorController extends Controller
 
         // Listado de campos recibidos teóricamente.
         $razon_social=$request->input('razon_social'); 
-        $nombreFantacia=$request->input('nombre_fantacia'); 
+        $nombre_fantacia=$request->input('nombre_fantacia'); 
         $cuit=$request->input('cuit'); 
         $telefono=$request->input('telefono');
         $fax=$request->input('fax');
@@ -242,10 +242,10 @@ class ProveedorController extends Controller
             $bandera=true;
         //}
 
-        //if ($nombreFantacia != null && $nombreFantacia!='')
+        //if ($nombre_fantacia != null && $nombre_fantacia!='')
         //{
             
-            $proveedor->nombreFantacia = $nombreFantacia;
+            $proveedor->nombre_fantacia = $nombre_fantacia;
             $bandera=true;
         //}
 

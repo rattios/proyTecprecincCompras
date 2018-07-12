@@ -57,8 +57,22 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-4">
                   <label>Proveedor:</label><strong> {{proveedor.razon_social}}</strong>
+                </div>
+                <div class="col-lg-4">
+                  <label>Nombre fantacia:</label><strong> {{proveedor.nombre_fantacia}}</strong>
+                </div>
+                <div class="col-lg-4">
+                  <label>Cuit:</label><strong> {{proveedor.cuit}}</strong>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <label>Teléfono:</label><strong> {{proveedor.telefono}}</strong>
+                </div>
+                <div class="col-lg-4">
+                  <label>Email:</label><strong> {{proveedor.email}}</strong>
                 </div>
               </div>
 
@@ -84,11 +98,22 @@
                 </div>
               </div>
 
-              <br><br>
+              <br>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="comment">Observaciones:</label>
+                    <textarea class="form-control" rows="5" cols="150" [(ngModel)]="observaciones"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <br>
 
               <div class="row">
                 <div class="col-lg-12" style="text-align:center">
-                  <button type="button" class="btn btn-success" (click)="enviarPresupuesto();saveFile()">Enviar presupuesto</button>
+                  <button type="button" class="btn btn-success" (click)="enviarPresupuesto();">Enviar presupuesto</button>
                 </div>
               </div>
 
@@ -108,7 +133,7 @@
                   <img src="http://www.tecprecincsrl.com.ar/e/wp-content/uploads/2018/02/logo.png" style="width: 210px;">
                 </div>
                 <div class="col-sm-7" style="text-align: right;">
-                  Presupuesto: Nº 1044
+                  Presupuesto: Nº {{enviado.id}}
                 </div>
               </div>
               <div class="row">
@@ -117,8 +142,22 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-4">
                   <label>Proveedor:</label><strong> {{proveedor.razon_social}}</strong>
+                </div>
+                <div class="col-lg-4">
+                  <label>Nombre fantacia:</label><strong> {{proveedor.nombre_fantacia}}</strong>
+                </div>
+                <div class="col-lg-4">
+                  <label>Cuit:</label><strong> {{proveedor.cuit}}</strong>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <label>Teléfono:</label><strong> {{proveedor.telefono}}</strong>
+                </div>
+                <div class="col-lg-4">
+                  <label>Email:</label><strong> {{proveedor.email}}</strong>
                 </div>
               </div>
 
@@ -133,7 +172,7 @@
                       <th>Nombre</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let it of itemsPresupuesto">
+                        <tr *ngFor="let it of enviado.productos">
                           <td>{{it.cantidad}}</td>
                           <td>{{it.nombre}}</td>
                           
@@ -143,11 +182,27 @@
                 </div>
               </div>
 
-              <br><br>
+              <br>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <strong>Observaciones:</strong>
+                      {{observaciones}}
+                  </div>
+                </div>
+              </div>
+
+              <br>
 
               <div class="row">
                 <div class="col-lg-12" style="text-align:center">
                   ___________________________
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12" style="text-align:center">
+                  Firma
                 </div>
               </div>
 

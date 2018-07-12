@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 import { presupuestoComponent } from './presupuesto/presupuesto.component';
-
+import { presupuestosComponent } from './presupuestos/presupuestos.component';
 
 
 const routes: Routes = [
@@ -14,8 +14,15 @@ const routes: Routes = [
     },
     children: [
       {
-        path: 'presupuestos',
+        path: 'presupuesto',
         component: presupuestoComponent,
+        data: {
+          title: 'Presupuesto'
+        }
+      },
+      {
+        path: 'presupuestos',
+        component: presupuestosComponent,
         data: {
           title: 'Presupuesto'
         }

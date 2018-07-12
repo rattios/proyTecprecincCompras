@@ -179,6 +179,13 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::delete('/trazas/{id}','TrazasController@destroy');
         Route::get('/trazas/{id}','TrazasController@show');
 
+        Route::get('/presupuesto','PresupuestoController@index');
+        Route::post('/presupuesto','PresupuestoController@store'); 
+        Route::put('/presupuesto/{id}','PresupuestoController@update');
+        Route::delete('/presupuesto/{id}','PresupuestoController@destroy');
+        Route::get('/presupuesto/{id}','PresupuestoController@show');
+
+
 
     Route::group(['middleware' => 'jwt-auth'], function(){
 

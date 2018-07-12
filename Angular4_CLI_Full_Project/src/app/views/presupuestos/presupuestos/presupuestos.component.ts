@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { Component, OnInit, Input,Pipe, PipeTransform } from '@angular/core';
+import {CommonModule, NgClass, DatePipe } from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { saveAs } from 'file-saver/FileSaver';
 import { RutaService } from '../../../services/ruta.service';
+import {MatDatepicker} from '@angular/material/datepicker';
+import {DateAdapter} from '@angular/material';
+
 
 @Component({
-  templateUrl: 'presupuesto.component.html'
+  templateUrl: 'presupuestos.component.html'
 })
-export class presupuestoComponent {
+export class presupuestosComponent {
   public prov: any;
   public stock: any;
   public proveedores: any;
@@ -34,87 +37,38 @@ export class presupuestoComponent {
           formaPago: "",
           telefonos: []
         };
-        
+  public inicioD2:any=new Date();
+  public finD2:any=new Date();
+
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
 
   ngOnInit(): void {
+    var principio:any= new Date();
+    var mes:any=principio.getMonth()+1; 
+    var anio:any=principio.getYear()+1900;
+    principio=mes+"-01-"+anio;
+    principio=new Date(principio);
+    this.inicioD2=principio;
+    console.log(principio);
+    var datePipe = new DatePipe("en-US");
+    console.log(datePipe.transform(new Date(), 'dd-MM-yyyy'));
     this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'proveedores')
+      this.http.get(this.ruta.get_ruta()+'presupuesto?inicio='+datePipe.transform(principio, 'dd-MM-yyyy')+'&fin='+datePipe.transform(new Date(), 'dd-MM-yyyy'))
            .toPromise()
            .then(
            data => {
              this.prov=data;
-              this.proveedores=this.prov.proveedores;
-              this.proveedores2=this.prov.proveedores;
+              this.proveedores=this.prov.presupuesto;
               console.log(this.proveedores);
-              this.productList = this.proveedores;
-              this.filteredItems = this.productList;
-              this.init();
-              this.loading=false;
-            },
-           msg => { 
-             console.log(msg);
-             this.loading=false;
-           });
-
-      this.http.get(this.ruta.get_ruta()+'stock')
-           .toPromise()
-           .then(
-           data => {
-             this.prov=data;
-               this.stock=this.prov.productos;
-              console.log(this.stock);
-              for (var i = 0; i < this.stock.length; i++) {
-                if(this.stock.habilitado=="SI"){
-                  this.stock.habilitado=true;
-                }
-              }
-              this.productList2 = this.stock;
-              this.filteredItems2 = this.productList2;
-              this.init2();
-              this.loading=false;
-            },
-           msg => { 
-             console.log(msg);
-             this.loading=false;
-           });
-  }
-  seleccionar(item){
-    this.proveedor=item;
-    this.itemsPresupuesto=[];
-  }
-  setProveedores(){
-    console.log(this.proveedores2);
-    this.proveedores=this.proveedores2;
-    this.productList = this.proveedores;
-    this.filteredItems = this.productList;
-    this.init();
-  }
-  public itemsPresupuesto:any=[];
-  add(item){
-    if(!this.checkProductos(item)) {
-     item.cantidad=1;
-     this.itemsPresupuesto.push(item);
-    }
-  }
-  set(item){
-    this.http.get(this.ruta.get_ruta()+'productos/'+item.id+'/proveedores')
-           .toPromise()
-           .then(
-           data => {
-              console.log(data);
-              this.prov=data;
-              this.proveedores=this.prov.producto.proveedores;
               for (var i = 0; i < this.proveedores.length; i++) {
-                for (var j = 0; j < this.proveedores2.length; j++) {
-                  if(this.proveedores[i].razon_social==this.proveedores2[j].razon_social) {
-                    this.proveedores[i]=this.proveedores2[j];
-                  }
+                if(this.proveedores[i].estado==0) {
+                  this.proveedores[i].estado2='Enviado';
+                }else if(this.proveedores[i].estado==1) {
+                  this.proveedores[i].estado2='Recibido';
                 }
               }
-              console.log(this.proveedores);
               this.productList = this.proveedores;
               this.filteredItems = this.productList;
               this.init();
@@ -125,89 +79,72 @@ export class presupuestoComponent {
              this.loading=false;
            });
   }
-  checkProductos(item){
-      var band=false;
-      for (var i = 0; i < this.itemsPresupuesto.length; i++) {
-        if(this.itemsPresupuesto[i].id==item.id) {
-          band=true;
-        }
-      }
-      return band;
-    }
-    eliminarProducto(it){
-      for (var i = 0; i < this.itemsPresupuesto.length; i++) {
-        if(this.itemsPresupuesto[i].id==it.id) {
-          this.itemsPresupuesto.splice(i, 1);
-        }
-      }
-    }
-    public observaciones:any;
-    public enviado:any={
-      razon_social:'',
-      nombre_fantasia:'',
-      cuit:'',
-      telefono:'',
-      email:'',
+
+  buscar(){
+    this.loading=true;
+    var datePipe = new DatePipe("en-US");
+    this.http.get(this.ruta.get_ruta()+'presupuesto?inicio='+datePipe.transform(this.inicioD2, 'dd-MM-yyyy')+'&fin='+datePipe.transform(this.finD2, 'dd-MM-yyyy'))
+         .toPromise()
+         .then(
+         data => {
+           this.prov=data;
+            this.proveedores=this.prov.presupuesto;
+            console.log(this.proveedores);
+            this.productList = this.proveedores;
+            this.filteredItems = this.productList;
+            this.init();
+            this.loading=false;
+          },
+         msg => { 
+           console.log(msg);
+           this.loading=false;
+         });
+  }
+  public enviado:any={
+      proveedor:{
+        razon_social:'',
+        nombre_fantasia:'',
+        cuit:'',
+        telefono:'',
+        email:'',
+      },
       pedido_id:0,
       estado:0,
       proveedor_id:0,
       productos:[],
       observaciones:''
     };
-    public aEnviar:any={
-      razon_social:'',
-      nombre_fantasia:'',
-      cuit:'',
-      telefono:'',
-      email:'',
-      pedido_id:21,
+  public verDatos=false;
+  ver(item){
+    this.enviado=item;
+    this.verDatos=true;
+  }
+  volver(){
+    this.enviado={
+      proveedor:{
+        razon_social:'',
+        nombre_fantasia:'',
+        cuit:'',
+        telefono:'',
+        email:'',
+      },
+      pedido_id:0,
       estado:0,
       proveedor_id:0,
       productos:[],
-      observaciones:'',
-      documento:''
+      observaciones:''
     };
-    enviarPresupuesto(){
-      this.loading=true;
-      if(this.itemsPresupuesto.length>0) {
-        this.aEnviar.razon_social=this.proveedor.razon_social,
-        this.aEnviar.nombre_fantasia=this.proveedor.nombre_fantasia,
-        this.aEnviar.cuit=this.proveedor.cuit,
-        this.aEnviar.telefono=this.proveedor.telefono,
-        this.aEnviar.email=this.proveedor.email,
-        this.aEnviar.proveedor_id=this.proveedor.id;
-        this.aEnviar.productos=JSON.stringify(this.itemsPresupuesto);
-        this.aEnviar.observaciones=this.observaciones;
-        console.log(this.aEnviar);
-        this.http.post(this.ruta.get_ruta()+'presupuesto',this.aEnviar)
-           .toPromise()
-           .then(
-           data => {
-             console.log(data);
-             this.enviado=data;
-             this.enviado=this.enviado.Presupuesto;
-             this.enviado.productos=JSON.parse(this.enviado.productos);
-             this.itemsPresupuesto=[];
-             this.loading=false;
-             this.saveFile();
+    this.verDatos=false;
+  }
+  
 
-            },
-           msg => { 
-             console.log(msg);
-             this.loading=false;
-           });
-      }
-      console.log(this.aEnviar);
-    }
-
-  public saveFile(){
-    setTimeout(() => {
+     public saveFile(){
       console.log('exportar');
       let printContents, popupWin;
-      printContents = document.getElementById('exportable').innerHTML;
-      popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
-      popupWin.document.open();
-      popupWin.document.write(`
+    printContents = document.getElementById('exportable').innerHTML;
+    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin.document.open();
+    popupWin.document.write(`
       <html>
         <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -260,10 +197,8 @@ export class presupuestoComponent {
         </head>
       <body onload="window.print();window.close()"> ${printContents} </body>
       </html>`
-      );
-      popupWin.document.close();
-    }, 2000)
-      
+    );
+    popupWin.document.close();
   }
 
 
