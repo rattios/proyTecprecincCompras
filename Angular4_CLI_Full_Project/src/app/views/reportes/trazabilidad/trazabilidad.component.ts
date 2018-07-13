@@ -2,6 +2,7 @@ import { Component, OnInit, Input,Pipe, PipeTransform } from '@angular/core';
 import {CommonModule, NgClass, DatePipe } from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
+import { saveAs } from 'file-saver/FileSaver';
 import { RutaService } from '../../../services/ruta.service';
 import {MatDatepicker} from '@angular/material/datepicker';
 import {DateAdapter} from '@angular/material';
@@ -170,6 +171,15 @@ export class trazabilidadComponent {
     atras(){
       this.verProduc=false;
     }
+
+    public saveFile(){
+      console.log('exportar');
+      var blob = new Blob([document.getElementById('exportable').innerHTML], {
+              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          saveAs(blob, 'trazas.xls');
+           //FileSaver.saveAs(blob, CONFIG.ECOMMERCE_NOMBRE+".xls");
+      }
 
 
     //-------------------------------------------------------------------------------------------------------------------------

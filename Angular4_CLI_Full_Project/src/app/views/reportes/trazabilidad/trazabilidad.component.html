@@ -34,33 +34,39 @@
                 </div>
               </div>
               <br><br><br>
-              <div id="exportable" [hidden]="false">
-                <table class="table table-striped" id="exportable">
-                  <thead>
-                    <th>ID</th>
-                    <th>Cantidad</th>
-                    <th>Nombre</th>
-                    <th>Dto. Emisor</th>
-                    <th>Usuario emisor</th>
-                    <th>Dto. Receptor</th>
-                    <th>Usuario receptor</th>
-                    <th>Tipo</th>
-                    <th>Fecha</th>
-                  </thead>
-                  <tbody>
-                     <tr *ngFor="let item of trazas">
-                        <td>{{item.operacion_id}}</td>
-                        <td>{{item.cantidad}}</td>
-                        <td>{{item.stock.nombre}}</td>
-                        <td>{{item.departamento_emisor.nombre}}</td>
-                        <td>{{item.usuario_emisor.nombre}}</td>
-                        <td>{{item.departamento_receptor.nombre}}</td>
-                        <td>{{item.usuario_receptor.nombre}}</td>
-                        <td>{{item.tipo}}</td>
-                        <th>{{item.created_at  | date:'dd-MM-yyyy HH:MM:ss'}}</th>
-                     </tr>
-                  </tbody>
-                </table>
+              <div [hidden]="false">
+                <div style="text-align: right;">
+                  <button type="button" class="btn btn-primary" (click)=saveFile()>Exportar</button>
+                </div>
+                <div id="exportable">
+                  <table class="table table-striped" >
+                    <thead>
+                      <th>ID</th>
+                      <th>Cantidad</th>
+                      <th>Nombre</th>
+                      <th>Dto. Emisor</th>
+                      <th>Usuario emisor</th>
+                      <th>Dto. Receptor</th>
+                      <th>Usuario receptor</th>
+                      <th>Tipo</th>
+                      <th>Fecha</th>
+                    </thead>
+                    <tbody>
+                       <tr *ngFor="let item of trazas">
+                          <td>{{item.operacion_id}}</td>
+                          <td>{{item.cantidad}}</td>
+                          <td>{{item.stock.nombre}}</td>
+                          <td>{{item.departamento_emisor.nombre}}</td>
+                          <td>{{item.usuario_emisor.nombre}}</td>
+                          <td>{{item.departamento_receptor.nombre}}</td>
+                          <td>{{item.usuario_receptor.nombre}}</td>
+                          <td>{{item.tipo}}</td>
+                          <th>{{item.created_at  | date:'dd-MM-yyyy HH:MM:ss'}}</th>
+                       </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
               </div>
             </tab>
             <tab heading="Stock">

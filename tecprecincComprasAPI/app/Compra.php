@@ -11,7 +11,7 @@ class Compra extends Model
      *
      * @var string
      */
-    protected $table = 'compras';
+    protected $table = 'compra';
 
     //public $timestamps = false;
 
@@ -24,15 +24,22 @@ class Compra extends Model
      *
      * @var array
      */
-    protected $fillable = ['presupuesto_id', 'estado','f_envio',
-    	'confir_ajuste', 'f_respuesta','confir_rec_oc'];
-
+    /*protected $fillable = ['presupuesto_id', 'estado','f_envio',
+    	'confir_ajuste', 'f_respuesta','confir_rec_oc'];*/
+     protected $fillable = ['proveedor_id', 'productos','observaciones',
+        'estado','nota'];
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
     //protected $hidden = [];
+
+    // Relación de presupuesto con proveedor:
+    public function proveedor()
+    {
+        return $this->belongsTo('App\Proveedor', 'proveedor_id');
+    }
 
     // Relación de compra con presupuesto:
 	public function presupuesto()

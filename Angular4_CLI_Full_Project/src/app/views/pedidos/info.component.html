@@ -233,7 +233,7 @@
 					                		
 					                	</div>
 					                	<div *ngIf="!item.pivot.aprobado && !item.pivot.entregado && !item.pivot.cancelado && !item.pivot.devuelto">
-						                	<div *ngIf="(item.stock-item.pivot.cantidad)>0">
+						                	<div *ngIf="(item.stock-item.pivot.cantidad)>0 || (item.stock2-item.pivot.cantidad)>0">
 						                		<button type="button" class="btn btn-outline-success btn-sm" (click)="selectPicking(item);largeModal2.show()">Picking</button>
 							                	<button type="button" class="btn btn-outline-primary btn-sm" >Pedir Presupuesto</button>
 							                	<button type="button" class="btn btn-outline-info btn-sm" (click)=pedirAProveedor(item)>Pedir a proveedor</button>

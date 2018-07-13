@@ -101,6 +101,18 @@
       </li>
 
       <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1]">
+        <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-doc"></i> Compras</a>
+        <ul class="nav-dropdown-items">
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/compras/compra']"><i class="icon-note"></i> Crear una compra</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/compras/compras']"><i class="icon-list"></i> Compras</a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1]">
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="fa fa-database"></i> Inventarios</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item" *ngxPermissionsOnly="[0]">
