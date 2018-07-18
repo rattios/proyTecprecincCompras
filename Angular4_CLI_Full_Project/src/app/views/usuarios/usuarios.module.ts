@@ -7,6 +7,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { UsuariosComponent } from './usuarios.component';
+import { PerfilComponent } from './perfil.component';
 import { UsuariosRoutingModule } from './usuarios-routing.module';
 
 @NgModule({
@@ -20,7 +21,8 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
     ModalModule.forRoot()
   ],
   declarations: [ 
-  	UsuariosComponent
+  	UsuariosComponent,
+    PerfilComponent
     ]
 })
 export class UsuariosModule { }
