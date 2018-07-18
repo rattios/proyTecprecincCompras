@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-07-2018 a las 21:52:39
+-- Tiempo de generación: 18-07-2018 a las 08:16:33
 -- Versión del servidor: 10.1.26-MariaDB
 -- Versión de PHP: 7.1.8
 
@@ -31,16 +31,17 @@ SET time_zone = "+00:00";
 CREATE TABLE `almacenes` (
   `id` int(11) NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
-  `telefono` varchar(255) DEFAULT NULL
+  `telefono` varchar(255) DEFAULT NULL,
+  `direccion` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `almacenes`
 --
 
-INSERT INTO `almacenes` (`id`, `nombre`, `telefono`) VALUES
-(1, 'Secundario', '06000001'),
-(2, 'Secundario', '06000002');
+INSERT INTO `almacenes` (`id`, `nombre`, `telefono`, `direccion`) VALUES
+(1, 'Principal', '06000001', 'Principal'),
+(2, 'Secundario', '06000002', 'Secundario');
 
 -- --------------------------------------------------------
 
@@ -230,6 +231,35 @@ INSERT INTO `centro_costos` (`id`, `codigo`, `descripcion`, `habilitado`, `desde
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `compra`
+--
+
+CREATE TABLE `compra` (
+  `id` int(11) NOT NULL,
+  `proveedor_id` int(11) NOT NULL,
+  `productos` text CHARACTER SET utf8 NOT NULL,
+  `observaciones` text CHARACTER SET utf8,
+  `estado` int(1) DEFAULT NULL,
+  `nota` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `compra`
+--
+
+INSERT INTO `compra` (`id`, `proveedor_id`, `productos`, `observaciones`, `estado`, `nota`, `created_at`, `updated_at`) VALUES
+(1, 1, '[{\"id\":1,\"nombre\":\" Alcohol Iodado\",\"codigo\":\"2951\",\"precio\":\"100\",\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:17\",\"producto_id\":1,\"pivot\":{\"proveedor_id\":1,\"producto_id\":1,\"precio\":null},\"cantidad\":1}]', 'asd', 0, 'sad', '2018-07-13 03:45:00', '2018-07-13 03:00:21'),
+(2, 1, '[{\"id\":1,\"nombre\":\" Alcohol Iodado\",\"codigo\":\"2951\",\"precio\":\"1002\",\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:17\",\"producto_id\":1,\"pivot\":{\"proveedor_id\":1,\"producto_id\":1,\"precio\":null},\"cantidad\":1}]', 'sadasd', 0, 'asdda', '2018-07-13 03:45:05', '2018-07-13 03:01:03'),
+(3, 1237, '[{\"id\":2,\"nombre\":\" Ap?sito (para acolchado de heridas o vendajes compresivos)\",\"codigo\":\"2949\",\"precio\":45,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":2,\"pivot\":{\"proveedor_id\":1237,\"producto_id\":2,\"precio\":null},\"cantidad\":1}]', 'adasd', 0, 'asddasdadas', '2018-07-13 03:45:09', '2018-07-13 03:06:11'),
+(4, 24, '[{\"id\":3,\"nombre\":\" Ficha Macho 2P + T x 16amp (Domiciliaria) .-\",\"codigo\":\"3471\",\"precio\":\"200\",\"categoria_id\":18,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":3,\"pivot\":{\"proveedor_id\":24,\"producto_id\":3,\"precio\":null},\"cantidad\":\"20\"}]', 'aposdjapsdjapsodj', 0, 'casaczc', '2018-07-13 03:45:13', '2018-07-13 03:08:04'),
+(5, 2, '[{\"id\":3489,\"nombre\":\"bien de uso stalin prueba\",\"codigo\":\"7620\",\"precio\":10000,\"categoria_id\":6,\"created_at\":\"2018-07-09 20:35:46\",\"updated_at\":\"2018-07-09 20:35:46\",\"producto_id\":3489,\"pivot\":{\"proveedor_id\":2,\"producto_id\":3489,\"precio\":null},\"cantidad\":\"2\"}]', 'ojaspdjaspdjojapsodj', 0, 'este producto esta cotizado el dia 10', '2018-07-13 03:20:37', '2018-07-13 03:20:37'),
+(6, 2, '[{\"id\":2,\"nombre\":\" Ap?sito (para acolchado de heridas o vendajes compresivos)\",\"codigo\":\"2949\",\"precio\":45,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":2,\"pivot\":{\"proveedor_id\":2,\"producto_id\":2,\"precio\":null},\"cantidad\":1}]', 'qwe', 0, 'poqdjwqpowjd', '2018-07-13 03:21:59', '2018-07-13 03:21:59');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `compras`
 --
 
@@ -393,7 +423,9 @@ INSERT INTO `mensajes` (`id`, `estado`, `tipo`, `asunto`, `msg`, `adjunto`, `dep
 (54, 1, 1, 'Nueva Devolución', 'Tienes una nueva devolución.', NULL, 1, '2018-06-18 22:01:56', '2018-06-18 22:01:56'),
 (55, 1, 1, 'Nueva Devolución', 'Tienes una nueva devolución.', NULL, 1, '2018-06-18 22:02:11', '2018-06-18 22:02:11'),
 (56, 1, 1, 'Nueva Devolución', 'Tienes una nueva devolución.', NULL, 1, '2018-06-18 22:02:34', '2018-06-18 22:02:34'),
-(57, 1, 1, 'Nueva Devolución', 'Tienes una nueva devolución.', NULL, 1, '2018-06-18 23:23:36', '2018-06-18 23:23:36');
+(57, 1, 1, 'Nueva Devolución', 'Tienes una nueva devolución.', NULL, 1, '2018-06-18 23:23:36', '2018-06-18 23:23:36'),
+(58, 1, 1, 'Nueva Devolución', 'Tienes una nueva devolución.', NULL, 1, '2018-07-13 20:44:21', '2018-07-13 20:44:21'),
+(59, 1, 1, 'Nueva Transferencia', 'Tienes una nueva transferencia.', NULL, 1, '2018-07-13 20:45:44', '2018-07-13 20:45:44');
 
 -- --------------------------------------------------------
 
@@ -444,6 +476,7 @@ CREATE TABLE `pedidos` (
   `centro_costos_id` int(11) NOT NULL DEFAULT '43',
   `contrato_id` int(11) NOT NULL DEFAULT '1',
   `aprobar` int(1) NOT NULL DEFAULT '0',
+  `observaciones` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -452,27 +485,27 @@ CREATE TABLE `pedidos` (
 -- Volcado de datos para la tabla `pedidos`
 --
 
-INSERT INTO `pedidos` (`id`, `estado`, `usuario_id`, `centro_costos_id`, `contrato_id`, `aprobar`, `created_at`, `updated_at`) VALUES
-(21, '2', 5, 1, 1, 0, '2018-02-27 00:08:22', '2018-02-27 00:08:59'),
-(22, '2', 5, 2, 1, 0, '2018-02-27 00:09:22', '2018-02-27 00:54:51'),
-(23, '2', 5, 3, 1, 0, '2018-02-27 00:55:48', '2018-05-09 23:45:10'),
-(24, '2', 5, 4, 1, 0, '2018-02-27 03:15:40', '2018-05-09 23:45:45'),
-(25, '2', 5, 5, 1, 0, '2018-02-28 00:02:23', '2018-05-10 00:10:50'),
-(26, '4', 5, 1, 1, 1, '2018-04-25 04:32:25', '2018-05-03 03:59:02'),
-(27, '4', 5, 43, 1, 0, '2018-04-25 04:38:54', '2018-04-26 01:14:48'),
-(28, '2', 5, 43, 2, 0, '2018-04-25 05:12:25', '2018-05-10 00:10:54'),
-(29, '2', 5, 42, 3, 0, '2018-04-25 05:13:06', '2018-05-21 17:31:32'),
-(30, '2', 3, 1, 3, 1, '2018-05-02 21:16:53', '2018-05-21 17:31:36'),
-(31, '1', 5, 1, 2, 1, '2018-05-03 03:40:15', '2018-06-18 19:45:47'),
-(32, '2', 5, 1, 4, 1, '2018-05-04 19:33:59', '2018-05-21 17:31:40'),
-(33, '2', 6, 43, 1, 1, '2018-05-07 02:43:48', '2018-05-07 02:44:47'),
-(34, '0', 3, 43, 1, 0, '2018-05-10 15:34:23', '2018-05-10 15:34:23'),
-(35, '2', 3, 43, 1, 0, '2018-05-10 15:37:14', '2018-05-21 18:54:26'),
-(36, '0', 3, 43, 1, 0, '2018-05-10 15:39:48', '2018-05-10 15:39:48'),
-(37, '1', 3, 43, 1, 1, '2018-05-21 18:26:50', '2018-05-21 18:27:31'),
-(38, '1', 5, 43, 1, 1, '2018-06-14 21:10:57', '2018-06-14 21:13:53'),
-(39, '1', 18, 43, 1, 1, '2018-06-18 20:06:25', '2018-06-18 20:08:58'),
-(40, '1', 18, 43, 1, 1, '2018-06-18 20:10:26', '2018-06-18 20:11:26');
+INSERT INTO `pedidos` (`id`, `estado`, `usuario_id`, `centro_costos_id`, `contrato_id`, `aprobar`, `observaciones`, `created_at`, `updated_at`) VALUES
+(21, '2', 5, 1, 1, 0, NULL, '2018-02-27 00:08:22', '2018-02-27 00:08:59'),
+(22, '2', 5, 2, 1, 0, NULL, '2018-02-27 00:09:22', '2018-02-27 00:54:51'),
+(23, '2', 5, 3, 1, 0, NULL, '2018-02-27 00:55:48', '2018-05-09 23:45:10'),
+(24, '2', 5, 4, 1, 0, NULL, '2018-02-27 03:15:40', '2018-05-09 23:45:45'),
+(25, '2', 5, 5, 1, 0, NULL, '2018-02-28 00:02:23', '2018-05-10 00:10:50'),
+(26, '4', 5, 1, 1, 1, NULL, '2018-04-25 04:32:25', '2018-05-03 03:59:02'),
+(27, '4', 5, 43, 1, 0, NULL, '2018-04-25 04:38:54', '2018-04-26 01:14:48'),
+(28, '2', 5, 43, 2, 0, NULL, '2018-04-25 05:12:25', '2018-05-10 00:10:54'),
+(29, '2', 5, 42, 3, 0, NULL, '2018-04-25 05:13:06', '2018-05-21 17:31:32'),
+(30, '2', 3, 1, 3, 1, NULL, '2018-05-02 21:16:53', '2018-05-21 17:31:36'),
+(31, '1', 5, 1, 2, 1, NULL, '2018-05-03 03:40:15', '2018-06-18 19:45:47'),
+(32, '2', 5, 1, 4, 1, NULL, '2018-05-04 19:33:59', '2018-05-21 17:31:40'),
+(34, '0', 3, 43, 1, 0, NULL, '2018-05-10 15:34:23', '2018-05-10 15:34:23'),
+(35, '2', 3, 43, 1, 0, NULL, '2018-05-10 15:37:14', '2018-05-21 18:54:26'),
+(36, '0', 3, 43, 1, 0, NULL, '2018-05-10 15:39:48', '2018-05-10 15:39:48'),
+(37, '1', 3, 43, 1, 1, NULL, '2018-05-21 18:26:50', '2018-05-21 18:27:31'),
+(38, '1', 5, 43, 1, 1, NULL, '2018-06-14 21:10:57', '2018-06-14 21:13:53'),
+(39, '1', 18, 43, 1, 1, NULL, '2018-06-18 20:06:25', '2018-06-18 20:08:58'),
+(40, '1', 18, 43, 1, 1, NULL, '2018-06-18 20:10:26', '2018-06-18 20:11:26'),
+(41, '2', 3, 43, 1, 1, 'obs1\n\naprobar', '2018-07-17 23:44:09', '2018-07-18 00:15:05');
 
 -- --------------------------------------------------------
 
@@ -518,7 +551,6 @@ INSERT INTO `pedido_stock` (`id`, `pedido_id`, `stock_id`, `cantidad`, `aprobado
 (34, 31, 4, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (35, 32, 1, 5, 0, 0, NULL, NULL, 0, 0, NULL, NULL, 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (36, 32, 3, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(37, 33, 1, 5, 0, 1, NULL, NULL, 0, 0, NULL, NULL, 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (38, 34, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (39, 35, 1, 1, 0, 1, NULL, NULL, 0, 0, NULL, NULL, 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (40, 36, 1, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, 37, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
@@ -532,7 +564,39 @@ INSERT INTO `pedido_stock` (`id`, `pedido_id`, `stock_id`, `cantidad`, `aprobado
 (48, 37, 20, 1, 0, 0, NULL, NULL, 0, 0, NULL, NULL, 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (49, 38, 1, 1, 0, 1, NULL, NULL, 0, 0, NULL, NULL, 37, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (50, 39, 1, 2, 0, 1, NULL, NULL, 0, 0, NULL, NULL, 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(51, 40, 1, 1, 0, 1, NULL, NULL, 0, 0, NULL, NULL, 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(51, 40, 1, 1, 0, 1, NULL, NULL, 0, 0, NULL, NULL, 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(52, 41, 1, 1, 0, 1, NULL, NULL, 0, 0, NULL, NULL, 43, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `presupuesto`
+--
+
+CREATE TABLE `presupuesto` (
+  `id` int(11) NOT NULL,
+  `proveedor_id` int(11) NOT NULL,
+  `productos` text NOT NULL,
+  `observaciones` text,
+  `estado` int(1) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `presupuesto`
+--
+
+INSERT INTO `presupuesto` (`id`, `proveedor_id`, `productos`, `observaciones`, `estado`, `created_at`, `updated_at`) VALUES
+(1, 1, '[{\"id\":1,\"nombre\":\" Alcohol Iodado\",\"codigo\":\"2951\",\"precio\":10,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:17\",\"producto_id\":1,\"pivot\":{\"proveedor_id\":1,\"producto_id\":1,\"precio\":null},\"cantidad\":1},{\"id\":2,\"nombre\":\" Ap?sito (para acolchado de heridas o vendajes compresivos)\",\"codigo\":\"2949\",\"precio\":45,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":2,\"pivot\":{\"proveedor_id\":1,\"producto_id\":2,\"precio\":null},\"cantidad\":1}]', '123', 0, '2018-07-12 02:23:42', '2018-07-12 02:23:42'),
+(2, 2, '[{\"id\":1,\"nombre\":\" Alcohol Iodado\",\"codigo\":\"2951\",\"precio\":10,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:17\",\"producto_id\":1,\"pivot\":{\"proveedor_id\":2,\"producto_id\":1,\"precio\":null},\"cantidad\":1}]', 'wer', 0, '2018-07-12 02:25:03', '2018-07-12 02:25:03'),
+(3, 1, '[{\"id\":1,\"nombre\":\" Alcohol Iodado\",\"codigo\":\"2951\",\"precio\":10,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:17\",\"producto_id\":1,\"pivot\":{\"proveedor_id\":1,\"producto_id\":1,\"precio\":null},\"cantidad\":1},{\"id\":2,\"nombre\":\" Ap?sito (para acolchado de heridas o vendajes compresivos)\",\"codigo\":\"2949\",\"precio\":45,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":2,\"pivot\":{\"proveedor_id\":1,\"producto_id\":2,\"precio\":null},\"cantidad\":1},{\"id\":7,\"nombre\":\" Piso de Goma Moneda Negro x mts (goma por pa?o para piso, mesa d ebanco, etc)\",\"codigo\":\"3235\",\"precio\":0,\"categoria_id\":7,\"created_at\":\"2018-01-26 01:37:33\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":7,\"pivot\":{\"proveedor_id\":1,\"producto_id\":7,\"precio\":null},\"cantidad\":1}]', 'asdasd', 0, '2018-07-12 02:27:10', '2018-07-12 02:27:10'),
+(4, 24, '[{\"id\":1,\"nombre\":\" Alcohol Iodado\",\"codigo\":\"2951\",\"precio\":10,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:17\",\"producto_id\":1,\"pivot\":{\"proveedor_id\":24,\"producto_id\":1,\"precio\":null},\"cantidad\":1},{\"id\":3,\"nombre\":\" Ficha Macho 2P + T x 16amp (Domiciliaria) .-\",\"codigo\":\"3471\",\"precio\":0,\"categoria_id\":18,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":3,\"pivot\":{\"proveedor_id\":24,\"producto_id\":3,\"precio\":null},\"cantidad\":\"4\"},{\"id\":4,\"nombre\":\" Ficha Macho 2P + T x 32amp (Domiciliaria) .-\",\"codigo\":\"2733\",\"precio\":1.08,\"categoria_id\":18,\"created_at\":\"2018-01-26 01:37:33\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":4,\"pivot\":{\"proveedor_id\":24,\"producto_id\":4,\"precio\":null},\"cantidad\":\"10\"}]', 'sadas', 0, '2018-07-12 04:45:07', '2018-07-12 04:45:07'),
+(5, 24, '[{\"id\":4,\"nombre\":\" Ficha Macho 2P + T x 32amp (Domiciliaria) .-\",\"codigo\":\"2733\",\"precio\":1.08,\"categoria_id\":18,\"created_at\":\"2018-01-26 01:37:33\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":4,\"pivot\":{\"proveedor_id\":24,\"producto_id\":4,\"precio\":null},\"cantidad\":\"50\"}]', 'opodsjfpsjdfposdjfpsdojfpsdjfspdjfspdojfspdojfspodjfpsodjfs', 0, '2018-07-12 04:52:55', '2018-07-12 04:52:55'),
+(6, 24, '[{\"id\":3,\"nombre\":\" Ficha Macho 2P + T x 16amp (Domiciliaria) .-\",\"codigo\":\"3471\",\"precio\":0,\"categoria_id\":18,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":3,\"pivot\":{\"proveedor_id\":24,\"producto_id\":3,\"precio\":null},\"cantidad\":1}]', 'ñ', 0, '2018-07-12 04:57:09', '2018-07-12 04:57:09'),
+(7, 1239, '[{\"id\":4,\"nombre\":\" Ficha Macho 2P + T x 32amp (Domiciliaria) .-\",\"codigo\":\"2733\",\"precio\":1.08,\"categoria_id\":18,\"created_at\":\"2018-01-26 01:37:33\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":4,\"pivot\":{\"proveedor_id\":1239,\"producto_id\":4,\"precio\":null},\"cantidad\":1}]', 'hoihgougoubjlnbikhuiyxddgfchgjvbklnijhougiyfutydrfxhcgjvhkblkijopihougiyft gouiyfutyigukojiohuigyufttfuyiguhjpo`kpojpihougyfttfyguhipjoihougyftdyrydtufyiguo\n\nhugyftdrydtufyiguhpjo`k+òjpihugiyf\n\nñjhugkyjfthdrdtfyiguhpjo`pkjopihougyftdrsydtufigohpùpiyougiyfutdufyugihougiyfutdfy', 0, '2018-07-12 05:02:43', '2018-07-12 05:02:43'),
+(8, 1239, '[{\"id\":4,\"nombre\":\" Ficha Macho 2P + T x 32amp (Domiciliaria) .-\",\"codigo\":\"2733\",\"precio\":1.08,\"categoria_id\":18,\"created_at\":\"2018-01-26 01:37:33\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":4,\"pivot\":{\"proveedor_id\":1239,\"producto_id\":4,\"precio\":null},\"cantidad\":1}]', 'jliuyfthdjhijñok´piouytdrdtfyguhiopíoñulykgtdrgsdhtfgkuhiljñok´pkioñjhlukgythdrsgeafsrdtyuiopoupiy8out7iertwafdgsfhdjkliuop978658e4wtsegxfhcgvhkjliup97869758reyrsfxhgcjhvkgjliup970869587eyrshdcgjfkuhyiup970869758r', 0, '2018-07-12 05:07:53', '2018-07-12 05:07:53'),
+(9, 2, '[{\"id\":2,\"nombre\":\" Ap?sito (para acolchado de heridas o vendajes compresivos)\",\"codigo\":\"2949\",\"precio\":45,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":2,\"pivot\":{\"proveedor_id\":2,\"producto_id\":2,\"precio\":null},\"cantidad\":1}]', 'dfsdfeprlgeprlgeplgeprlgeprlgeplgeprlgeplgepgleprlgeplgperlgepgleprlgeplgepglrepglerpgleprlgerpg', 0, '2018-07-12 05:10:35', '2018-07-12 05:10:35');
 
 -- --------------------------------------------------------
 
@@ -545,13 +609,18 @@ CREATE TABLE `presupuestos` (
   `pedido_id` int(10) UNSIGNED NOT NULL,
   `proveedor_id` int(10) UNSIGNED NOT NULL,
   `estado` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `f_envio` date DEFAULT NULL,
-  `f_respuesta` date DEFAULT NULL,
-  `f_entrega` date DEFAULT NULL,
-  `documento` text COLLATE utf8_unicode_ci,
+  `observaciones` text CHARACTER SET utf8,
+  `productos` text CHARACTER SET utf8,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `presupuestos`
+--
+
+INSERT INTO `presupuestos` (`id`, `pedido_id`, `proveedor_id`, `estado`, `observaciones`, `productos`, `created_at`, `updated_at`) VALUES
+(10, 21, 1, '0', 'kok', '', '2018-07-12 02:19:46', '2018-07-12 02:19:46');
 
 -- --------------------------------------------------------
 
@@ -4086,15 +4155,16 @@ CREATE TABLE `proveedores` (
   `fax` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
-  `estado` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `estado` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `calificacion` int(11) DEFAULT NULL,
-  `direccion` text COLLATE utf8_unicode_ci,
+  `direccion` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `calle` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `nro` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ciudad` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `provincia` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `pais` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `forma_pago` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `motivo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -4103,468 +4173,469 @@ CREATE TABLE `proveedores` (
 -- Volcado de datos para la tabla `proveedores`
 --
 
-INSERT INTO `proveedores` (`id`, `razon_social`, `nombre_fantacia`, `cuit`, `telefono`, `fax`, `email`, `habilitado`, `estado`, `calificacion`, `direccion`, `calle`, `nro`, `ciudad`, `provincia`, `pais`, `forma_pago`, `created_at`, `updated_at`) VALUES
-(1, 'Proveedor A', '', '27-28899287-3', '1234567', '', '', 1, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '[]', '2018-01-27 03:43:30', '2018-07-10 18:53:44'),
-(2, 'Proveedor C', '', '20-27108471-5', '12324', '', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '[]', '2018-01-27 03:43:30', '2018-07-09 03:31:35'),
-(5, 'LUCIANO MARTIN MU?IZ', 'ABER-LU', '20-21502797-0', '(02994)4346-25', '(     )    -', '.', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(6, 'DIST. LEO S.R.L.', 'DIST. LEO S.R.L.', '30-69788550-8', '(44364)  63-', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(9, 'DISTRIBUIDORA ACME', 'DISTRIBUIDORA ACME', '20-14065307-2', '(02994)4231-83', '(02991)5580-0924', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(12, 'ADME S.A.', 'ADME S.A.', '33-71025394-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(19, 'AGA S.A.', 'AGA S.A.', '30-50139538-9', '( 0299) 443-3773', '( 0299) 441-3609', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(24, 'ABERTURAS DE ALUMINIO SA', 'ABERTURAS DE ALUMINIO SA', '30-64304557-1', '( 0299) 479-2347', '(  299)4792-347', 'ventas@aberturas.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(31, 'ALMEIDA NEUMATICOS', 'ALMEIDA NEUMATICOS', '20-93747834-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(35, 'Claudio Gast?n Alday', 'Almec Bulonera', '20-31483924-3', '( 0299) 486-1894', '(     )    -', 'ventaseden@argentina.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(51, 'LIBRERIA ANJESVAN', 'LIBRERIA ANJESVAN', '20-11603814-6', '(     )4886-035', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(53, 'SUPERMERCADOS LA ANONIMA', 'SUPERMERCADOS LA ANONIMA', '30-50673003-8', '(     )    -', '(     )    -', 'supermercadolanonima@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(54, 'A.P.A. SRL', 'A.P.A. SRL', '30-70969450-9', '( 0299) 448-1786', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(55, 'ALMACENES PETROLEROS SRL', 'ALMACENES PETROLEROS SRL', '30-53683087-8', '( 0299) 488-6026', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(64, 'ARELLANO JAVIER CRISTIAN', 'ARELLANO JAVIER CRISTIAN', '20-27674729-1', '( 0299) 488-7532', '(  154) 735-860', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(65, 'ARENA E HIJOS de Bravo Alicia Ramona', 'ARENA E HIJOS de Bravo Alicia Ramona', '27-04929812-4', '( 0299) 488-6620', '(  299) 491-1314', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(66, 'ARGINBUREAU SRL', 'ARGINBUREAU SRL', '33-70716958-9', '(  011)4751-6081', '(  011)4751-4128', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(69, 'ARTEGRAF', 'ARTEGRAF', '20-14349898-1', '( 0299) 443-3843', '( 0299) 448-1010', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(71, 'CARLOS A PARADA', 'CARLOS A PARADA', '20-23058608-0', '( 0299) 488-7433', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(73, 'PROST MABEL Y ARENS GUILLERMO S.H.', 'PROST MABEL Y ARENS GUILLERMO S.H.', '30-70708888-1', '(02990) 496-3334', '(     )    -', 'arenservicios@copelnet.com.a', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(79, 'METALURGICA ATK SRL', 'METALURGICA ATK SRL', '33-70953322-9', '(  011)4653-1863', '(     )    -', 'atk@atksrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(91, 'B&M SRL', 'B&M SRL', '30-70757728-9', '( 0299) 443-8363', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(94, 'BALDOR S.R.L.', 'BALDOR S.R.L.', '30-64843454-1', '( 0299) 442-6581', '(     )    -', 'serviciotecnico@baldorsrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(110, 'CONTRERAS PATRICIO FABIAN', 'CONTRERAS PATRICIO FABIAN', '23-21750220-9', '( 0299) 496-4103', '(     )    -', 'bigbangcomputacion@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(115, 'ELDO DARIO BOTTICELLI', 'ELDO DARIO BOTTICELLI', '20-16819804-4', '( 0299) 442-1012', '( 0299) 443-8178', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(126, 'BULONERA NEUQUEN SRL', 'BULONERA NEUQUEN SRL', '30-71073787-4', '( 0299) 443-1807', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(127, 'BULONERA PATAGONICA S.R.L.', 'BULONERA PATAGONICA S.R.L.', '33-57350882-9', '( 0298) 442-5370', '( 0810) 222-5936', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(130, 'ADOLFO CASSARO E HIJOS SRL', 'ADOLFO CASSARO E HIJOS SRL', '30-58124572-2', '( 0351) 423-0050', '( 0351)422--4433', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(132, 'CABARCO MOTORES', 'CABARCO MOTORES', '20-05041803-1', '(02941) 428-018', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(136, 'CALAMARI S.A.', 'CALAMARI S.A.', '30-67164419-7', '(02342) 427-998', '(02342)4279-78', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(137, 'CALCIC', 'CALCIC', '33-69449947-9', '(02326) 492-276', '(02326)  45-1038', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(141, 'CARAN S.A.', 'CARAN S.A.', '30-50435544-2', '(  011)4792-2249', '(  011)4792-6117', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(145, 'CAUTIO S.R.L.', 'CAUTIO S.R.L.', '30-70830075-2', '(  011)4687-1169', '(     )    -', 'dsilva@cautiosrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(157, 'CBS COMPUTACION', 'CBS COMPUTACION', '23-07687566-9', '( 0299) 443-0328', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(159, 'ELBA CRISTINA MARTI - COPEGAN DISTRIBUCIONES', 'COPEGAN DISTRIBUCIONES', '27-06365469-3', '( 0299) 443-9637', '( 0299) 448-1772', 'copegan@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(161, 'CEMAC ELECTROMECANICA', 'CEMAC ELECTROMECANICA', '20-22474925-3', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(164, 'CENTRO AUTOMOTORES S.A.', 'CENTRO AUTOMOTORES S.A.', '30-51976460-8', '( 0299) 442-0921', '( 0299) 442-1090', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(165, 'CEO NATURA SRL', 'CEO NATURA SRL', '30-70962791-7', '( 0299) 442-4412', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(166, 'CEPAUT', 'CEPAUT', '30-67254453-6', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(172, 'CHAPERMAN S.R.L.', 'CHAPERMAN S.R.L.', '30-71032389-1', '( 0299) 443-3801', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(179, 'CHUBB ARG. DE SEGUROS S.A.', 'CHUBB ARG. DE SEGUROS S.A.', '30-68515834-1', '(  011)4510-1500', '(  011)4510-1545', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(186, 'RICARDO GALLEGO', 'RICARDO GALLEGO', '23-04422280-9', '( 0299)4773-844', '( 0299) 477-3934', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(194, 'CARLOS VICTOR PARADA', 'CARLOS VICTOR PARADA', '20-08850035-1', '( 0299) 488-6047', '(     )    -', 'carlosparada@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(199, 'COMERCIAL ARGENTINA SRL', 'COMERCIAL ARGENTINA SRL', '30-70702685-1', '( 0299)4430-6611', '(     )    -', 'ventasexternas@comercialargentina.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(200, 'COMPUCENTRO', 'COMPUCENTRO', '20-20654831-3', '( 0299) 496-9382', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(201, 'COMPUNEUQUEN S.A.', 'COMPUNEUQUEN S.A.', '30-71076243-7', '( 0299) 448-6441', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(215, 'EL CONDOR AUTOMOTORES SA', 'EL CONDOR AUTOMOTORES SA', '30-59122056-6', '(     )    -', '(     )    -', 'elcondor@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(216, 'EL CORRALON S.R.L.', 'EL CORRALON S.R.L.', '30-61106569-4', '( 0299) 496-1086', '( 0299) 496-1338', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(227, 'CRISTAL-CO', 'CRISTAL-CO', '20-18636457-1', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(234, 'CUMEN SRL', 'CUMEN SRL', '30-68443575-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(236, 'CYPSA IMPEX S.R.L.', 'CYPSA IMPEX S.R.L.', '33-66171412-9', '(  011)4712-7219', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(237, 'D?ALLEVA S.R.L', 'D?ALLEVA S.R.L', '33-69785100-9', '(     )    -', '(     )    -', 'repuestos@dalleva.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(239, 'DAM MAYORISTA', 'DAM MAYORISTA', '20-12818091-6', '(     )    -496', '( 1187)    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(240, 'DAMARRA SRL', 'DAMARRA SRL', '30-70733460-2', '( 0299) 496-4485', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(243, 'DANTE  EDUARDO SCANTAMBURLO', 'DANTE  EDUARDO SCANTAMBURLO', '20-12066388-8', '( 0299) 443-1804', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(244, 'DARIO TENAGLIA NEUMATICOS', 'DARIO TENAGLIA NEUMATICOS', '23-14993614-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(246, 'GUSTAVO DANIEL DARONI', 'GUSTAVO DANIEL DARONI', '20-28624389-5', '(01115)4061-1629', '(     )    -', 'gustavo@steuerung.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(253, 'DELL AMERICA LATINA CORP.SUCURSAL ARGENTINA', 'DELL AMERICA LATINA CORP.SUCURSAL ARGENTINA', '30-70719842-3', '( 0800) 444-0730', '(  800) 666-0789', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(256, 'INDUSTRIAS QUIMICAS DEM SA', 'INDUSTRIAS QUIMICAS DEM SA', '30-68365507-0', '(03489)4388-71', '(    1)    -', 'carlosfontela2008@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(259, 'DIENST CONSULTING S.A.', 'DIENST CONSULTING S.A.', '30-70771220-8', '( 0291) 455-0250', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(261, 'DINDON LIBRERIAS Y PAPELERIAS', 'DINDON LIBRERIAS Y PAPELERIAS', '30-68450164-6', '( 0299) 448-7537', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(262, 'DIPET S.R.L.', 'DIPET S.R.L.', '30-65679184-1', '( 0299) 496-4905', '(     )    -', 'dipetcutralco@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(267, 'DISTRIBUIDORA NEUQUEN S.A.', 'DISTRIBUIDORA NEUQUEN S.A.', '30-63975352-9', '( 0299)4424-369', '( 0299)4420-191', 'distrineuquen@hotmail.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(268, 'ESCAPES DILUCENTE', 'ESCAPES DILUCENTE', '20-10942811-7', '(     )    -', '(49617)  22-', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(271, 'DON ALBERTO VIDRIOS', 'DON ALBERTO VIDRIOS', '20-08377106-3', '(02994)9618-13', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(274, 'RIMOLI NATALIA EDITH', 'RIMOLI NATALIA EDITH', '27-23801638-5', '( 0299) 496-3091', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(277, 'LUIS PASQUINELLI E HIJOS SA', 'LUIS PASQUINELLI E HIJOS SA', '30-51748025-4', '(  011)4624-0067', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(278, 'DISTRIBUIDORA SUR SRL', 'DISTRIBUIDORA SUR SRL', '30-63746594-1', '(02994)9675-90', '(     )    -', '', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
-(283, 'ECOSISTEMAS PATAGONICOS SRL', 'ECOSISTEMAS PATAGONICOS SRL', '30-67272510-7', '( 0299) 445-2060', '( 0299) 445-2059', 'info@ecospatagonicos.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(286, 'HUGO WALTER ALDAY', 'INDUSTRIAL EDEN', '20-11806432-2', '( 0299) 496-4869', '(     )    -', 'ventaseden@argentina.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(287, 'EET S.A.', 'EET S.A.', '30-70748830-8', '( 0299) 496-8695', '( 5411)4270-1012', 'EET@YAHOO.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(292, 'ELECTRO CATRIEL', 'ELECTRO CATRIEL', '30-70736931-7', '( 0299)4887-244', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(293, 'ELECTRO PARTES', 'ELECTRO PARTES', '20-07579046-6', '(     )    -', '(     )    -', 'electroparteszurita@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(299, 'JOSE BENJAMIN RUBILAR', 'El Porte?o', '20-11904268-3', '( 0299) 488-6055', '( 0299) 488-6829', 'joserubilar@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(300, 'TALLER DE TONERIA EL ROLO', 'TALLER DE TONERIA EL ROLO', '20-07562188-5', '( 0299) 496-1690', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(304, 'ELECTROMECANICA MORENO', 'ELECTROMECANICA MORENO', '20-07306677-9', '( 0299) 496-1241', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(310, 'HUGO RUBEN GUERRERO', 'EPUHUENEY', '20-10951223-1', '( 0299) 496-3986', '(     )    -', 'ventasepuhueney@gmail.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(311, 'MARTIN ROLANDO ANIBAL', 'MARTIN ROLANDO ANIBAL', '20-04541478-8', '( 0299) 443-2510', '( 0299) 442-2314', 'martinequipamientos@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(314, 'ERXILAPE', 'ERXILAPE', '20-12210318-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(315, 'CARRON OSCAR ROBERTO', 'STOP Materiales El?ctricos', '20-12432727-0', '( 0299) 496-5888', '(     )    -', 'stop@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(317, 'ESLOVENIA S.A.', 'ESLOVENIA S.A.', '30-58262676-2', '( 0299) 444-1122', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(318, 'ESMET S.A.', 'ESMET S.A.', '30-60500898-0', '(44318)  03-', '(     )    -', 'juanpablobono@esmetsa.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(319, 'ESPINOZA ANA MATILDE (ELECTRO CATRIEL)', 'ESPINOZA ANA MATILDE (ELECTRO CATRIEL)', '27-26046232-1', '( 0299) 491-4481', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(329, 'NATALIA S.FALCONE F&F', 'NATALIA S.FALCONE F&F', '27-26157738-6', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(330, 'FAT Gr?as de Jos? Luis Far?as', 'JOSE LUIS FARIAS', '23-08029910-9', '(02991)5418-6298', '(02991)5408-7382', 'fatgruas@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(333, 'FADAT S.A.I.C.', 'FADAT S.A.I.C.', '30-51870717-1', '( 0299) 442-3983', '(     )    -', 'fadat@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(335, 'FAIL AUTOMOTORES S.R.L.', 'FAIL AUTOMOTORES S.R.L.', '30-70243411-0', '(     )4968-777', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(341, 'FERR\' OIL', 'FERR\' OIL', '33-70871543-9', '( 0299) 491-1128', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(342, 'FERRA-GOM SRL', 'FERRA-GOM SRL', '30-61763230-2', '( 0299) 491-1413', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(348, 'SERVICIOS FF S.R.L.', 'SERVICIOS FF S.R.L.', '33-71001225-9', '(  011)4658-1300', '(     )    -', 'andrea@serviciosff.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(350, 'FIBRASINT S.R.L.', 'FIBRASINT S.R.L.', '30-55152848-7', '(01147)5519-63', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(351, 'FIORASI SA', 'FIORASI SA', '30-53563811-6', '(  299) 446-5280', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(354, 'FLAMA SIST.C/INCENDIOS', 'FLAMA SIST.C/INCENDIOS', '20-10701939-2', '(     )4968-932', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(355, 'FLUODINAMICA SA', 'FLUODINAMICA SA', '33-51738154-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(359, 'EL FORTIN CONSTRUCCIONES SRL', 'EL FORTIN CONSTRUCCIONES SRL', '30-70767217-6', '( 0299) 479-1805', '( 0299) 479-1503', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(362, 'CONTRERAS WALTER', 'CONTRERAS WALTER', '20-17782087-4', '( 0299)6309-676', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(370, 'FUTALAUFQUEN S.A. (Gervasini Neumaticos)', 'FUTALAUFQUEN S.A. (Gervasini Neumaticos)', '30-70863909-1', '(  443)7134-', '( 0299) 447-2040', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(372, 'G&G SERVICIOS SRL', 'G&G SERVICIOS SRL', '33-67270682-9', '( 0299) 487-9220', '( 0299) 487-9221', 'administracion@gygservicios.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(389, 'GERVASINI NEUMATICOS - FUTALAUFQUEN S.A.', 'GERVASINI NEUMATICOS - FUTALAUFQUEN S.A.', '30-68904753-6', '( 0299) 447-2040', '( 0299) 443-7134', 'ventas@gervasinineumaticos.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(390, 'GESERFULL S.A.', 'GESERFULL S.A.', '33-69787557-9', '( 0299) 440-0492', '(     )    -', 'ventas@geserfull.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(392, 'G&G MOTOR SPORT SRL', 'G&G MOTOR SPORT SRL', '30-70890567-0', '( 0299) 496-3361', '(     )    -', 'tongaperez1@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(393, 'FERRETERIA GIMLUC', 'FERRETERIA GIMLUC', '27-11082384-9', '( 0299) 496-4044', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(399, 'GOTLIP S.A', 'GOTLIP S.A', '30-61803200-7', '( 0299)4420-042', '( 0299)4420-781', 'ventas@gotlip.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(403, 'GREGORUTTI & ASOCIADOS', 'GREGORUTTI & ASOCIADOS', '33-67705166-9', '(  011)4541-5108', '(  011)4545-0773', 'gisela@gregorutti.com.ar ', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(406, 'G-STORE IMPRESOS PUBLICITARIOS', 'G-STORE IMPRESOS PUBLICITARIOS', '23-24817541-9', '(  155)  88-6497', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(417, 'HIDRINOX S.A.', 'HIDRINOX S.A.', '33-70301753-9', '(  011)4014-7777', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(435, 'INOXIDABLES GARCIA SRL', 'INOXIDABLES GARCIA SRL', '30-71180760-4', '( 0299) 448-4100', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(440, 'IMPRESORA PATAGONICA', 'IMPRESORA PATAGONICA', '30-67262649-4', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(443, 'INBECK SRL', 'INBECK SRL', '30-67261387-2', '( 0299) 496-8682', '(  299) 496-6134', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(444, 'INDUSLAB S.R.L.', 'INDUSLAB S.R.L.', '30-70841419-7', '( 0299) 496-2652', '( 0299) 491-4326', 'indus@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(446, 'INSCANN S.A.', 'INSCANN S.A.', '30-69795330-9', '( 0299) 496-2139', '(     )    -', 'wpereyra@inscann.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(447, 'INSER GROUP SRL', 'INSER GROUP SRL', '30-70901289-0', '( 0299) 443-5585', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(453, 'LUIS GARCIA (INOXIDABLES GARCIA)', 'LUIS GARCIA (INOXIDABLES GARCIA)', '24-93887574-6', '( 0299) 448-0527', '( 0299) 448-4100', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(459, 'CARLOS ISLA Y CIA S.A', 'CARLOS ISLA Y CIA S.A', '30-52904657-6', '(02994)4400-90', '(     )    -', 'neuquen@carlosisla.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(466, 'JP INDUMENTARIA Y SERVICIOS', 'JP INDUMENTARIA Y SERVICIOS', '20-23214514-6', '( 0299) 496-2978', '(     )    -', 'jpindumentaria@yahoo.com.ar.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(471, 'JUAN CARLOS MARTINEZ', 'JUAN CARLOS MARTINEZ', '20-08119402-6', '(02941) 426-109', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(478, 'ALBERTO E. KOMJATI SERVICIOS', 'ALBERTO E. KOMJATI SERVICIOS', '20-07570291-5', '(     )    -', '(     )    -', 'komjati@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(483, 'KUMENIA SA', 'KUMENIA SA', '30-71218887-8', '( 0299) 442-0921', '(     )    -', 'acontegrand@kumenia.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(487, 'DDD SA LATIN CAR', 'DDD SA LATIN CAR', '30-70839781-0', '( 0299) 447-0593', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(490, 'LA CASA DE LAS HERRAMIENTAS SA', 'LA CASA DE LAS HERRAMIENTAS SA', '30-64802051-8', '( 0299) 442-6721', '( 0299) 488-6939', 'ventasrdls@lcdh.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(497, 'LACAR INCENDIO SRL', 'LACAR INCENDIO SRL', '30-70944420-0', '(  011)4755-8300', '(     )    -', 'ventas@lacarincendio.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(500, 'LANDER GUSTAVO MARIO', 'LANDER GUSTAVO MARIO', '20-13047618-0', '( 0299) 442-2111', '( 0299) 448-6771', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(501, 'LAS DOS MM', 'LAS DOS MM', '27-11087910-0', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(502, 'LASARTE HNOS S.R.L.', 'LASARTE HNOS S.R.L.', '30-64693875-5', '(     )    -', '(49411) 510-', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(507, 'PETROLAB S.R.L.', 'PETROLAB S.R.L.', '30-65858022-8', '( 0299) 496-3823', '( 0299) 496-7267', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(514, 'LEIMAT BATERIAS', 'LEIMAT BATERIAS', '23-12629910-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(524, 'OBANDO ELEAZAR (lavadero Limay)', 'OBANDO ELEAZAR (lavadero Limay)', '20-11431062-0', '( 0299)4913-295', '(  154) 157-859', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(530, 'HIERROMET SRL', 'HIERROMET SRL', '33-67256510-9', '( 0299) 488-6587', '( 0299) 488-7613', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(533, 'LOZANO HERRAMIENTAS', 'LOZANO HERRAMIENTAS', '20-17575332-0', '(     )    -', '(     )    -', 'ventas@lozanoherramientas.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(537, 'CASA HUMBERTO LUCAIOLI S.A.', 'CASA HUMBERTO LUCAIOLI S.A.', '30-68808772-0', '(     )    -', '(     )    -', 'info@lucaioli.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(542, 'LUSCHER HNOS.', 'LUSCHER HNOS.', '33-59012119-9', '( 0299) 491-1404', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(544, 'A. MARSHALL MOFFAT S.A.', 'A. MARSHALL MOFFAT S.A.', '30-52826337-9', '(011)4302-9333', '(011)4303-1287', '', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(546, 'CASA A. MAJLUF', 'CASA A. MAJLUF', '33-67263277-9', '(     )4961-103', '(     )4961-716', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(547, 'DISTRIBUIDORA MARTIN E HIJOS', 'DISTRIBUIDORA MARTIN E HIJOS', '30-67169810-6', '( 0299) 491-3243', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(556, 'LEANDRO LONGSTAFF', 'LEANDRO LONGSTAFF', '20-20045348-5', '( 0299)4438-678', '(     )    -', 'info@markas.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(563, 'MANTEROLA MARCELA ROSANA', 'MANTEROLA MARCELA ROSANA', '27-20673284-4', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(566, 'MARIA C. MALABER - SERV INFORM', 'MARIA C. MALABER - SERV INFORM', '27-13754548-4', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(573, 'MAXIGOMA S.R.L.', 'MAXIGOMA S.R.L.', '30-67265426-9', '( 0299) 442-9859', '(     )    -', 'administraci?n@maxigoma.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(576, 'NEUQUEN MADERAS S.R.L.', 'NEUQUEN MADERAS S.R.L.', '30-70770693-3', '( 0299)4425-692', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(579, 'SERVICENTRO MALARGUE S.A.', 'SERVICENTRO MALARGUE S.A.', '30-62936048-0', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(584, 'MELISAM S.A.', 'MELISAM S.A.', '30-60069872-5', '(  011)5648-6996', '(  011)5648-6997', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(586, 'METALTEJ S.R.L.', 'METALTEJ S.R.L.', '30-51789985-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(597, 'MIGUEL ANGEL DEBASA', 'MIGUEL ANGEL DEBASA', '20-10933913-0', '( 0299)4911-152', '(     )    -', 'migueldebasa@catriel.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(599, 'MILLA NEUMATICOS S.R.L.', 'MILLA NEUMATICOS S.R.L.', '33-62532451-9', '(     )4961-680', '(     )    -', 'millacco@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(605, 'GONZALEZ MORETTI SA', 'GONZALEZ MORETTI SA', '30-60285173-3', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(608, 'MONTANI HNOS. S.A.', 'MONTANI HNOS. S.A.', '30-56184600-2', '(     )4424-522', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(612, 'BEJAR SEBASTIAN', 'BEJAR SEBASTIAN', '20-23989453-5', '( 0299) 496-9361', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(620, 'NATIONAL SERVICE ARGENTINA', 'NATIONAL SERVICE ARGENTINA', '30-65201048-9', '( 0299) 447-0551', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(621, 'NATIVA S.A.', 'NATIVA S.A.', '30-67260605-1', '( 0299) 496-6240', '( 0299) 496-6250', 'nativasa@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(625, 'EDGARDO NELSON PE?A (NEMIR)', 'EDGARDO NELSON PE?A (NEMIR)', '20-07572888-4', '(  154) 109-262', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(626, 'MABEL ESTHER LANDA', 'EL NECOCHENSE', '27-11177543-0', '( 0299)4965-243', '(     )    -', 'ELNECOCHENSE@YAHOO.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(627, 'NECAM VIDRIOS', 'NECAM VIDRIOS', '23-07291248-9', '(     )4961-032', '(     )    -', 'necam@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(628, 'NEUMAN Y MONTENEGRO N. S.H.', 'MAX NEUMANN & Cia.', '30-70738061-2', '( 0299) 448-7069', '(     )    -', 'maxneuman@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(629, 'NEUNET S.A.', 'NEUNET S.A.', '30-70819707-2', '( 0299) 489-4000', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(632, 'PINTURERIA LA NEUQUINA SRL', 'PINTURERIA LA NEUQUINA SRL', '33-70743366-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(634, 'NIPPON CAR SRL', 'NIPPON CAR SRL', '30-67277058-7', '(02941)4207-17', '(     )    -', 'nipones@car.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(635, 'TALLERES METALURGICOS', 'TALLERES METALURGICOS', '20-93200928-6', '(     )    -', '(42092) 639-', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(636, 'NATIONAL OILWELL VARCO', 'NATIONAL OILWELL VARCO', '30-71056741-3', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(653, 'DISTRIBUIDORA OLIVOS SRL', 'DISTRIBUIDORA OLIVOS SRL', '30-59483308-9', '( 0299) 448-9988', '( 0299) 443-8216', 'webmaster@distribuidoraolivos.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(656, 'OLMAR SEG. INDUSTRIAL S.R.L.', 'OLMAR SEG. INDUSTRIAL S.R.L.', '30-67271036-3', '( 0299) 488-6251', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(671, 'Diego Parra', 'METALURGICA PARRA', '20-07687786-7', '( 0299) 496-0756', '(     )    -', 'diego@parra.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(673, 'LOS PALAS S.R.L.', 'LOS PALAS S.R.L.', '30-70771414-6', '( 0299) 496-4909', '( 0800) 444-5324', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(674, 'MATERIALES PANOZZO Y CIA. SRL.', 'MATERIALES PANOZZO Y CIA. SRL.', '30-67269114-8', '( 0299) 443-3638', '( 0299) 443-3624', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(677, 'PALEPERA NEUQUEN S.R.L.', 'PALEPERA NEUQUEN S.R.L.', '30-69788376-9', '(02994)4317-73', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(681, 'PARCT SRL', 'PARCT SRL', '30-52300011-6', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(683, 'Espacio para cargar ', '', '20-27797252-3', '( 0299) 496-0756', '(     )    -', 'libre@libre', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(686, 'VIDRIERIA PARADA', 'VIDRIERIA PARADA', '20-13812410-0', '(     )    -', '(     )    -', 'vidrieriaparada@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(694, 'HIERROS A. PESINEY', 'HIERROS A. PESINEY', '20-20249045-0', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(696, 'PEFOW EQUIPAMIENTOS S.A.', 'PEFOW EQUIPAMIENTOS S.A.', '30-66214566-8', '(01142)0778-70', '(01142)0619-40', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(697, 'PEGASO SRL', 'PEGASO SRL', '30-64852384-6', '( 0299) 496-5521', '(     )    -', 'pegaso@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(698, 'PEHUEN REP.DEL AUTOMOTOR', 'PEHUEN REP.DEL AUTOMOTOR', '20-23488768-9', '(     )4886-591', '(  155)8371-71', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(704, 'SERGIO A ZANETTI', 'SERGIO A ZANETTI', '20-14811794-3', '( 0299) 491-4224', '(  156) 324-451', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(710, 'TALLER MECANICO EL PIOJITO', 'TALLER MECANICO EL PIOJITO', '20-04987459-7', '( 0299) 496-3624', '(    1)5635-2572', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(721, 'POLI - PLAZ SRL', 'POLI - PLAZ SRL', '30-63298330-8', '(     )4961-144', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(722, 'POLISERVICE SUMINISTROS', 'POLISERVICE SUMINISTROS', '20-06252458-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(730, 'PALUMBO PASCUAL RUBEN D', 'PALUMBO PASCUAL RUBEN D', '20-11676298-7', '( 0299) 448-0688', '(  156) 357-679', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(731, 'PRENTEX S.A.', 'PRENTEX S.A.', '30-58346413-8', '(  011)4724-7200', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(732, 'PROMO PLUS', 'PROMO PLUS', '20-24392180-6', '(  029)9455-8068', '(   68)    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(733, 'PROSERVICIOS', 'PROSERVICIOS', '20-24123895-5', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(734, 'PROSPITI SILVANA EDITH', 'PROSPITI SILVANA EDITH', '27-29235213-7', '( 0299) 447-4651', '(  154) 066-594', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(747, 'Rafael A. Badilla', 'EL RAFA', '20-92498927-1', '( 0299)1563-0979', '(    5)    -', 'elrafa@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(751, 'RADIADORES NEUQUEN SAIC', 'RADIADORES NEUQUEN SAIC', '30-56322626-5', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(767, 'NELIDA ALVAREZ - REIM\'S', 'NELIDA ALVAREZ - REIM\'S', '27-11128490-9', '(02991)5418-4634', '( 0299) 496-338', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(773, 'REN FOR S.R.L.', 'REN FOR S.R.L.', '30-67259816-4', '(     )4962-509', '(     )4967-269', 'renfor@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(775, 'RESISTENCIAS ELECTRO ARGENTINAS SRL', 'RESISTENCIAS ELECTRO ARGENTINAS SRL', '30-70979703-0', '(  011)4700-0951', '(  011)4700-0941', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(776, 'REVICAN S.R.L.', 'REVICAN S.R.L.', '30-65641835-0', '( 0299) 496-5384', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(784, 'RIMADA DANIEL - RIMADA JORGE SH', 'RIMADA DANIEL - RIMADA JORGE SH', '30-70902827-4', '( 0299) 442-5423', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(787, 'ROKAS PORFIDO SRL', 'ROKAS PORFIDO SRL', '30-70746894-3', '( 0299) 496-6999', '( 0299) 496-2933', 'info@rishco.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(792, 'HECTOR EDUARDO RUEDA', 'HECTOR EDUARDO RUEDA', '20-10701959-7', '( 0299) 488-6545', '(     )    -', 'imprentaroseduma@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(798, 'RODAMIENTOS CUTRAL CO', 'RODAMIENTOS CUTRAL CO', '20-14230449-0', '(     )4964-293', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(800, 'ROGELIO DIEZ Y CIA LONAS NQN', 'ROGELIO DIEZ Y CIA LONAS NQN', '30-51817392-4', '( 0299) 440-0144', '( 0299) 440-0594', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(804, 'AC SAT SRL', 'AC SAT SRL', '30-71096504-4', '( 0299) 477-1986', '(     )    -', 'ADMINISTRACION@RSVONLINE.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(806, 'RUEDA DIEGO OMAR', 'RUEDA DIEGO OMAR', '20-11603814-6', '( 0299)4886-035', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(817, 'GRUAS SAN BLAS S.A.', 'GRUAS SAN BLAS S.A.', '30-66092045-1', '( 0299)4484-101', '(     )    -', 'nnn@nnn.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(821, 'PABLO ANDRES CONTI TAGUALI', 'PABLO ANDRES CONTI TAGUALI', '20-22105321-5', '(     )    -', '(     )    -', 'sanpabloadministracion@gmail.com ', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(825, 'SAHIORA SA', 'SAHIORA SA', '30-69231962-8', '( 0299) 442-0920', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(826, 'SAIGRO S.A.', 'SAIGRO S.A.', '30-59068969-2', '( 0299) 446-6285', '( 0299) 446-2241', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(827, 'SAKURA S.A.', 'SAKURA S.A.', '30-70947725-7', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(831, 'SAMCYD S.R.L.', 'SAMCYD S.R.L.', '33-65724853-9', '(02994)9601-02', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(840, 'SATURNO HOGAR S.A.', 'SATURNO HOGAR S.A.', '30-67267729-3', '( 0299) 496-5722', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(841, 'SB SERVICIOS', 'SB SERVICIOS', '20-24817436-7', '(02994)9647-52', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31');
-INSERT INTO `proveedores` (`id`, `razon_social`, `nombre_fantacia`, `cuit`, `telefono`, `fax`, `email`, `habilitado`, `estado`, `calificacion`, `direccion`, `calle`, `nro`, `ciudad`, `provincia`, `pais`, `forma_pago`, `created_at`, `updated_at`) VALUES
-(842, 'FABIO DARIO  SCHWAB', 'FABIO DARIO  SCHWAB', '20-26320736-0', '( 0299) 496-4801', '(  155) 885-589', 'scheab@7lagos.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(847, 'JUAN CARLOS SCORPANITI', 'JUAN CARLOS SCORPANITI', '20-18169764-5', '( 0299)4430-298', '( 0299) 443-6457', 'info@opticasenso.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(848, 'MB SERVICIOS de mirta Narambue', 'MB SERVICIOS de mirta Narambue', '27-06394748-8', '(02994)7862-17', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(852, 'SECORVEP S.A.', 'SECORVEP S.A.', '30-66204596-5', '( 0299) 443-2149', '( 0299) 448-3830', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(853, 'SEGUCUER SRL', 'SEGUCUER SRL', '30-70724807-2', '(  011)4204-5339', '(  011)4265-0910', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(854, 'ARGENTSEAL S.A.', 'GOMEZ CARLOS BERNARDO', '30-70812483-0', '(  011)4951-2535', '', 'segupres@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(855, 'SELCOM COMUNICACIONES Y TELEFO', 'SELCOM COMUNICACIONES Y TELEFO', '20-21952764-1', '( 0299)4474-111', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(856, 'SEMATRYN S.A.', 'SEMATRYN S.A.', '30-70959917-4', '(  011)4251-2951', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(857, 'SERER ANDRES', 'SERER ANDRES', '20-07301573-2', '( 0299) 496-1417', '(     )    -', 'serer@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(858, 'SERVIAIKE S.R.L.', 'SERVIAIKE S.R.L.', '30-68445533-4', '( 0299) 489-4831', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(859, 'SERVICIO C.O.', 'SERVICIO C.O.', '20-07564409-5', '( 0299)6327-501', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(862, 'SERVICIOS HUINCUL', 'SERVICIOS HUINCUL', '27-18501764-3', '(02994)9661-12', '(     )    -', 'xxxxxxxxQxxxx.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(865, 'SERVICOM S.R.L.', 'SERVICOM S.R.L.', '30-65771002-0', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(866, 'SERVIMAQ REP. HERR. ELECTRICAS', 'SERVIMAQ REP. HERR. ELECTRICAS', '23-25460473-9', '(     )    -', '(02994)4740-20', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(873, 'LEANDRO RAMON PE?ALVER Y JORGE DANIEL SUAREZ S.H.', 'LEANDRO RAMON PE?ALVER Y JORGE DANIEL SUAREZ S.H.', '30-70898108-3', '( 0299)5814-247', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(874, 'S.I.C.I. SRL', 'S.I.C.I. SRL', '33-57819033-9', '(  011)4664-3075', '(     )    -', 'aperello@sici.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(875, 'SEGURIDAD INDUSTRIAL S.R.L.', 'SEGURIDAD INDUSTRIAL S.R.L.', '30-70791898-1', '(     )4967-500', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(879, 'SILIQUINI S.R.L.', 'SILIQUINI S.R.L.', '30-55541125-8', '(     )    -', '(     )    -', 'ventas@siliquini.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(881, 'SL GROUP REPRESENTACIONES T SR', 'SL GROUP REPRESENTACIONES T SR', '30-70886729-9', '( 0299) 496-4485', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(884, 'JORGE ADOLFO SENN', 'JORGE ADOLFO SENN', '20-20963008-8', '( 0299) 446-2183', '( 0299) 445-2279', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(885, 'BURGOS LORENA NOEMI (SOLUCIONES)', 'BURGOS LORENA NOEMI (SOLUCIONES)', '27-26530507-0', '( 0299) 486-0445', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(890, 'PUCHULU MARIA ANA SOLTEC', 'SOLTEC', '23-17166638-4', '(  011)4799-3818', '(     )    -', 'ventas@soltec-cmc.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(892, 'SOL DE ORO S.H.', 'SOL DE ORO S.H.', '30-70986121-9', '( 0299) 496-1197', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(895, 'SOLUCIONES SRL', 'SOLUCIONES SRL', '30-71149872-5', '(     )    -', '(     )    -', 'solucionesco@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(897, 'MARIA CELESTE LUCERO', 'SPEED GRAFIC - IMPRENTA', '27-28394839-6', '( 0299) 486-0338', '(     )    -', 'imprentaspeed@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(898, 'MARIO A. SPATARO', 'MARIO A. SPATARO', '20-04976346-9', '( 0299) 442-3571', '(  154) 762-076', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(901, 'SILVIA PERALTA', 'SILVIA PERALTA', '27-20074507-3', '( 0299) 439-1584', '(  299)4203-410', 'pehuenrabs@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(904, 'MARCOS ROCCA', 'MARCOS ROCCA', '20-31613670-3', '( 0299) 442-1973', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(906, 'STARGRAF IMPRESORES', 'STARGRAF IMPRESORES', '27-11344013-4', '(     )4435-702', '(     )4431-229', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(912, 'SULLAIR ARGENTINA SA', 'SULLAIR ARGENTINA SA', '30-57672171-0', '( 0299) 478-2500', '( 0299) 478-2002', 'rhaltrich@sullair.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(913, 'SUMINISTROS TECNICOS SRL', 'SUMINISTROS TECNICOS SRL', '30-61252927-9', '( 0299) 445-2952', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(916, 'SURSTORE SRL', 'SURSTORE SRL', '30-70885107-4', '(02941)4213-33', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(917, 'SYMA', 'SYMA', '23-26046527-9', '(  011)4115-8060', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(919, 'EDGAR RAFAEL SOLANA', 'Lavadero Solana', '20-20558719-6', '( 0299) 496-3867', '(  154)0872-62', 'edgar.solana@hotmail.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(926, 'SERV. TEC. TECNICA HUINCUL', 'SERV. TEC. TECNICA HUINCUL', '23-12262017-4', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(927, 'TECHNIQUES & SUPPLIES SRL', 'TECHNIQUES & SUPPLIES SRL', '30-64611871-5', '(  011)4723-3358', '(  011)4723-2916', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(930, 'TECNODIESEL S.R.L.', 'TECNODIESEL S.R.L.', '30-59462020-4', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(937, 'TALLERES HUINCUL S.A.', 'TALLERES HUINCUL S.A.', '30-64811813-5', '(  155) 132-883', '(     )    -', 'talleres@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(943, 'DE TODO SANITARIO', 'DE TODO SANITARIO', '20-13180204-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(944, 'FARIAS ELSA', 'TORNERIA Y MONTAJE LOS SAUCES', '23-13508143-4', '( 0299) 488-7040', '(  155) 096-680', 'torner?a@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(947, 'PAOLA GRITTINI', 'PAOLA GRITTINI', '27-24082644-0', '( 0299) 496-8440', '(     )    -', 'contacto@grupotoolbar.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(948, 'SUPERMERCADOS TOPSY', 'SUPERMERCADOS TOPSY', '33-58557688-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(951, 'TORNERIA EL PAMPEANO', 'TORNERIA EL PAMPEANO', '30-67261745-2', '( 0299) 496-1910', '( 0299) 496-3309', 'pampeano@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(955, 'BURGOS CLAUDIO MARCELO', 'BURGOS CLAUDIO MARCELO', '20-16680029-4', '( 0299) 496-7236', '(     )    -', 'claudioburgos@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(961, 'TRAC SUR SRL', 'TRAC SUR SRL', '33-68446239-9', '( 0299) 446-6055', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(981, 'ACCESORIOS LA UNION GARCIA SANTIAGO ANDRES', 'ACCESORIOS LA UNION GARCIA SANTIAGO ANDRES', '20-25624408-0', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(995, 'SILVIO EMILIO VECE', 'SILVIO EMILIO VECE', '23-20211324-9', '( 0299) 496-1185', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(999, 'MARCOS LYARDET Y PABLO LYARDET', 'Visual Grafic', '30-71167418-3', '( 0299)4779-7999', '(     )    -', 'marcos.visual@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1010, 'VULCANO NOTEBOOK OUTLET SRL', 'VULCANO NOTEBOOK OUTLET SRL', '30-70928247-2', '( 5246)6660-6661', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1012, 'WAL MART ARGENTINA S.R.L. ', 'WAL MART', '30-67813830-0', '(     )    -', '(     )    -', 'noreply@wall-mart.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1014, 'WELL DONE SERVICES SRL', 'WELL DONE SERVICES SRL', '30-71046476-2', '(     )    -', '(     )    -', 'servicio.tecnico@welldonesrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1015, 'WELTY S.A.', 'WELTY S.A.', '30-70761834-1', '( 0299)4473-934', '( 0299)4886-830', 'WELTY@CIUDAD.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1019, 'YANINA LAVADERO', 'YANINA LAVADERO', '23-29970641-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1028, 'Aislaciones del Valle S.R.L.', '', '33-68447973-9', '0299 4461277', '', 'aislacionesdelValle@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1029, 'MONTES MAURICIO JOSE', 'TODO DIGITAL', '20-28393816-7', '0299-496-7258', '', 'tododigital@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1030, 'ACYMAT S.A.', 'ACYMAT S.A.', '30-70881617-1', '011-4225-3711/4241-8282', '', 'acymat@ciudad.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1031, 'Herfil - Herramientas Industriales', '', '20-16454246-8', '011 - 4912 3744', '', '', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1032, 'EQUIPEL S.R.L.', '', '30-68447614-5', '(0299) 4473766', '', 'consultas@equipel.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1033, 'LUBE SEG.INDUSTRIAL S.R.L.', 'LUBE', '30-71091160-2', '011-4488-5595', '011-4488-3053', 'info@lubeseguridad.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1034, 'Equipar Services S.R.L.', '', '30-71285380-4', '4462183', '', '', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1035, 'ZOXI', 'ZOXI', '30-69787670-3', '0299 445 7000', '', '', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1036, 'N & G ', 'Tapicer?a N&G de N?stor Valenzuela', '20-08583152-7', '0299 - 4887233', '', 'n&g@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1037, 'SYLVIA CARTELES SRL', 'SYLVIA CARTELES SRL', '30-71168974-1', '011-6091-4721/4582-7531/4433-2517 CEL.1550021189', '', 'ventas@sylviacarteles.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1038, 'IRAM', 'IRAM', '30-52556278-2', '02994474400', '', 'mfarias@iram.org.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1039, 'ZANETTI CRISTIAN JOSE ', 'EL PUPI', '20-31316767-5', '0299-4914224', '0299-4914224', ' cristianzanetti@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1040, 'LTM Suministros Industriales Bahia Blanca SRL en formaci?n de Lloret Rodrigo y Pierobon Rafael', 'LTM Suministros Industriales SRL', '30-70918030-0', '02941-4007787 / 4007788', '', 'ventas@ltmsuministrosindustriales.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1041, 'Hormig?n Huincul de Cimientos Constructora S.A.', 'Hormig?n Huincul', '30-71184231-0', '486 1156', '', '00000@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1042, 'Yayty S.A.', 'Yayty S.A.', '30-57288868-8', '(011) 4652 67554', '', 'yaytysa@ciudad.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1043, 'C.N. ALDAY', 'C.N. ALDAY', '20-35655861-9', '2995530530', '', 'rnicolas.alday@argentina.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1044, 'KSB', 'KSB', '33-50142415-9', '(011) 4766 3021', '', 'ventas@ksb.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1045, 'ENPOL - Envases Pl?sticos Olmos', 'ENPOL - Envases Pl?sticos Olmos', '30-68490427-9', '(0221) 4418-708', '', 'enpol@infovia.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1046, 'La Casa de las Pilas', '', '20-92711775-5', '0299 4960985', '', 'lacasadelaspilas@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1047, 'Cimse Patagonia  s.r.l.', 'Cimse Patagonia s.r.l.', '30-71224403-4', '0299 431 0557', '', 'administracion@cimsesrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1048, 'Pi?ot Alicia Estela', 'Librer?a Din?mica', '27-12510404-0', '4430524', '', 'libreriadinamica@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1049, 'TEX ARGENTINA SRL', '', '30-70872033-6', '(011) 4702-4002/3', '', 'ftenaglia@texasrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1050, 'MAQUINARIAS ZEZIOLA SRL', '', '33-70879920-9', '(54-11) 4842-4477 / 4840-0671', '', 'informes@maquinariaszeziola.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1051, 'CANDAMIO S.A.', 'CANDAMIO S.A.', '30-52045347-0', '01142562666', '', 'candamio@fibertel.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1052, 'Insumos & M?quinas', '', '20-11560636-1', '(0351) 474 2233 - 155 195220', '', 'info@insumosymaquinas.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1053, 'Carlos Luis Bruno', 'SISCOM', '20-14055244-6', '0341-4409517 - Int 150', '', 'carlos.bruno@siscom.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1054, 'DASH SRL', '', '30-70951595-7', '445 1375', '', 'dash@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1055, 'ELECTR?NICA VALENCIA', 'ELECTR?NICA VALENCIA', '20-11742982-3', '02994432542', '', 'gustavo.gutierrez@doschips.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1056, 'Lonera LEO', 'Lonera LEO', '20-23793681-8', '(011) 4666 0823', '', 'info@loneraleo.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1057, 'Transportes Seifert S.R.L.', 'Transportes Seifert S.R.L.', '30-71023138-5', '496 5082', '', 'tseifert@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1058, 'Tecni Total SA', '', '30-69664498-1', '(011) 4139 0695', '', 'tecnitotal@ciudad.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1059, 'Tassi Silvana Lorena', 'Farmacia Vital', '27-25776834-7', '0299 4966625', '', 'farmacia_vital@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1060, 'GEO COMAHUE', 'GEO COMAHUE', '30-70243657-1', '496 6803', '', 'geocom@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1061, 'Sanchez E. Jorge', 'Herrajes Tito', '20-07576089-3', '0299 4961721', '', 'sanchjor46@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1062, 'Almar Martin Miguel', 'Integral Instrument', '20-29846383-1', '011-4218 5675', '', 'integralinstrument@ciudad.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1063, 'AFP Service', 'AFP Service', '20-17238830-3', '(0298) 4430355', '', 'ventas@afpservice.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1064, 'Ceferino Carlos Mart?nez', 'ByteShop Computaci?n', '23-25489875-9', '0299 156348241', '', 'byteshop@coplnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1065, 'INSUAR', 'INSUAR de Alberto R. Arful', '20-17301723-6', '(0341) 426 6546', '', 'horacio@insuar.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1066, 'Meteostar de Cecilia Rosana Di Santto', 'Cecilia Rosana Di Santto', '27-17939857-0', '(02325)-15-435418', '', 'info@meteostar.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1067, 'Daniel Felix Granollers', '', '23-11545278-9', '0299 4886102', '', 'metalurgicarincon@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1068, 'Sidercam S.A.', 'Sidercam S.A.', '30-71030166-9', '447 2540', '', 'cmonachesi@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1069, 'Roberto Tedesco', 'Consultora del Sud -SHIMA&PRO', '20-10949193-5', '0299155477790', '', 'rtedesco@liv.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1071, 'SERVICIOS MARCOS', '', '23-11737705-9', '02994243067', '', 'SERVICIOSMARCOS@TECPRECINCSRL.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1072, 'Grupo PRAM', 'Grupo PRAM', '30-71047926-3', '486 1156', '', 'grupopram@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1073, 'WURTH  ', '', '30-63181058-2', '011 5453 4200 ', '', 'info@wurth.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1074, 'Servicios Industriales y Civiles S.R.L.', 'S.I.C.', '30-71248421-3', '0299 486 2200', '', 'COLLIGO.CLAUDIO@SIC-SRL.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1075, 'Kim? Consturc - Instalaciones el?ctricas', 'Kim? Consturc - Instalaciones el?ctricas', '20-93320591-7', '(0299) 444 1381', '', 'wwww@qqqq.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1076, 'Servicios Topogr?ficos', 'S.T.', '30-65859193-9', '0299 496 0893', '', 'servtop@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1077, 'Silvia Alejandra Araujo', 'Silvia Alejandra Araujo', '27-24866258-7', '496 6666', '', 'saa@www.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1078, 'GSA - Grupo Sur S.A. - Componentes T?rmicos', 'GSA - Grupo Sur S.A. - Componentes T?rmicos', '30-69729328-7', '(011) 4218 2442', '', 'info@gruposurargentina.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1079, 'Seminarios Corporativos SRL', 'FORUM', '30-71420595-8', '(011) 5032-3111', '', 'afratamico@criteriocapacitacion.com  ', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1080, 'ECOM S.A.', 'ECOM S.A.', '30-69142747-8', '(0221) 461 3587', '', 'ecomsa@infovia.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1081, 'Rey del Tanque SRL', 'Rey del Tanque SRL', '30-71333490-8', '(011) 4521 5786', '', 'reydeltanque@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1082, 'Industrial Belgrano S.A.', 'Industrial Belgrano S.A.', '30-58054653-2', '(011) 582 8844', '', 'info@industrialbelgrano.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1083, 'TECIN', 'TECNOLOGIA CONTRA INCENDIOS S.A.', '30-51694830-9', '(011) 4766 4440', '', 'informes@tecin.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1084, 'DER GROUP SRL', 'DER GROUP SRL', '30-70989613-6', '4434944', '', 'enrique@dergroup.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1085, 'Ca?iflex de Tubiflex S.A.', 'Ca?iflex de Tubiflex S.A.', '30-70960350-3', '(03462) 436200', '', 'ventas@caniflex.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1086, 'TUBOSCOPE VECTO DE ARGENTINA S.A.', 'TUBOSCOPE', '33-61600863-9', '0299 4413207', '', 'Victor.Toledo@nov.com ', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1087, 'GEESE QUIMICA SRL', 'GEESE QUIMICA SRL', '30-63751613-9', '(011) 4247 9379', '', 'info@geesequimica.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1088, 'MOTO UNO', 'MOTO UNO', '27-29429901-2', '155 227255', '', 'nnnn@nnn.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1089, 'T.H.C. Servicios (Soldaduras en Gral. P.H.)', '', '20-32020373-3', '0299 155184159', '', 'trabajosenhierroscastillo@hotmsil.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
-(1090, 'Adrian Alejandro Orrego', 'Patagonian Agrifood Advice', '20-22898459-1', '02994964997', '', 'aasanmartin@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1091, 'JAS S.R.L.', 'JAS S.R.L.', '30-70899227-1', '4413926', '', ' jasservicios@jasservicios.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1092, 'PROSEGUR TECNOLOGIA ARGENTINA S.A.', 'PROSEGUR TECNOLOGIA ARGENTINA S.A.', '30-65719840-0', '(11) 4838 2300 ', '', 'diego.gimenez@prosegur.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1093, 'MARTIN RUBEN PEREZ', 'CEMAR ELECTRONICA', '20-30799447-0', '0223156156292', '', 'cemarventas@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1094, 'EQUIPOS DE BOMBEO S.A.', 'T&T', '30-71155070-0', '02614324583', '', 'aletomba@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1095, 'Motores y Materiales Electricos S.A.', 'MYM', '30-55662684-3', '02614380380', '', 'electricidad@mymesa.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1096, 'ELECTRICIDAD MAZA SRL', 'ELECTRICIDAD MAZA SRL', '30-58710878-6', '02614444444', '', 'ELECTRICIDAD@MAZA.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1097, 'POLAR S.R.L.', '', '30-70906138-7', '0299 4430160', '', 'ventas@polarsrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1098, 'Nicolas Morales', 'Gomer?a El Pampeano', '20-08367248-0', '02994886120', '', 'gomer?a@goma.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1099, 'HIERROS MALDONADO S.A.', 'HIERROS MALDONADO S.A.', '30-70892133-1', '(0261) 426 2929', '', 'odragoni@hmaldonado.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1100, 'GEOCONSULT S.R.L.', 'GEOCONSULT S.R.L.', '30-67264713-0', '(0299) 4436886', '', 'geoconsult@geoconsult.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1101, 'LAHUE S.R.L.', 'LAHUE S.R.L.', '30-70811468-1', '(0299) 4964908', '', 'lahue@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1102, 'Transporte PEDUZZI SRL', 'Transporte PEDUZZI SRL', '30-70849238-4', '496 6151', '', 'tpeduzzi@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1103, 'LA CASA DEL INSTALADOR SA', 'LA CASA DEL INSTALADOR SA', '30-58403615-6', '4432630', '', 'lacasadelinstalador@notengocorreo.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1104, 'Luis Alberto Gonz?lez', 'LS-PROTEC', '24-23944369-5', '01152922216', '', 'info@lsprotec.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1105, 'GONZALEZ LILIANA NOEMI', 'PARALIM', '27-10531317-4', '02994861343', '', 'paralimp@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1106, 'Viviana Elizabeth Jaime', 'Lavadero Rincon y Servicios', '27-14175737-2', '0299156316519', '', 'lavaderordls@hotmail.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1107, 'Skywalker Argentina s.r.l.', '', '30-70730595-5', '011-4721-0201', '', 'info@skywalker.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1108, 'Lidia Esther Lopez', 'La Rotonda - Gomeria y Servicios', '27-10042182-3', '02994963699 - 02994964396', '', 'larotonda@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1109, 'Fernando Fernandez', 'Rio Colorado - Servicios Industriales (Lav. Catriel)', '20-13997184-2', '0299 155188053', '', 'serviciosindustrialesriocolorado@cotecal.net.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1110, 'Troncoso Jorge Omar y Jara Ceferino Daniel', 'Remisse Los Amigos', '30-70884206-7', '0299 4965800', '', 'notieneemail@bar.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1111, 'Reactiva S.R.L.', 'Reactiva S.R.L.', '30-65726231-1', '(011) 4568-2227 ', '', 'info@reactiva.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1112, 'High Valley Services S.R.L.', 'Pro Hygiene', '30-71145113-3', '02994470551', '', 'ejecutivo1.neuquen@prohygiene.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1113, 'HILTI ', 'HILTI', '30-65696323-5', '08004444580', '', 'ar-onlinesales@hilti.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1114, 'Verit?cnica', 'Verit?cnica', '30-67264133-7', '0299 4433310', '', 'verit?cnicasrladm@outlook.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1115, 'EL ALEMAN S.R.L.', 'EL ALEMAN S.R.L.', '30-71366500-9', '0299 155967740', '', 'elalemansrlsrl@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1116, 'DURANDO GAS', 'DURANDO GAS', '20-20881689-7', '02994589830', '', 'DURANDOGAS@RINCONDLS.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1117, 'PC DISCOUNT S.A.', 'PC DISCOUNT S.A.', '30-70197343-3', 'TEL 011 4957 1000 INT 29', '', 'garleo@pcdiscount.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1118, 'Julia Roquelina Gil', 'CROCANTES', '23-13880307-4', '02994964997', '', 'crocantes@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1119, 'Fernandez Oscar Alfredo', 'Farmacia Silvia II', '23-26510089-9', '48861802', '', 'farmacia@tecuro.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1120, 'Motos GARDEL', 'Motos GARDEL', '20-20211483-1', '496xxx', '', 'motosgardel@nnnnnn.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1121, 'Norberto Manuel Gaitan y Cia. S.R.L.', 'Norberto Manuel Gaitan y Cia. S.R.L.', '30-70922440-5', '(011) 4647 0986', '', 'js@alvearmedicalcenter.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1122, 'STI - Servicios T?cnicos Integrales', 'STI - Servicios T?cnicos Integrales', '20-14277130-7', '(011) 4200 3188', '', 'stiventas@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1123, 'Labtesa Laboratorios Termoionic s.a.', '', '30-58301360-8', '011 4712 5484', '', 'ventas@labtesa.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1124, 'Rodriguez Emilio Nelson Ariel', 'EMILIO PC Servicios Informaticos', '20-12680317-7', '299154766433', '', 'emiliopc@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1125, 'Abarzua Aedo Daniel Orlando', 'SIICO Servicios', '20-24941251-2', '299156349409', '', 'daniel_abarzua@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1126, 'Biancucci Bassignani', '', '33-62347736-9', '0299 4432535', '', 'biancucci@basignani.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1127, 'Rizza Fabian', 'El Boulevard de la Empanada', '20-20558704-8', '0299 4861641', '', 'rizaa@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1128, 'Claudia Gabriela Huinca', 'Lavadero Huinval', '27-27979737-5', '2995801612', '', 'lavadero_huinval@outlook.es', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1129, 'Leandro Knotek', 'Knotek Textil', '20-24157980-9', '02994202002', '', 'knotektextil@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1130, 'Gamboa Silvia', 'EL GALLEGO', '27-04965943-7', '4886742', '', 'pablo.painevil@tecprecincsrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1131, 'Antonio Pan e Hijos', 'AP & H', '30-69788079-4', '0299 449 6999', '', 'ventas@antoniopan.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1132, 'Gr?as ORBAS SRL', 'Gr?as ORBAS SRL', '30-71204205-9', '2994053658', '', 's.a.b.65@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1133, 'CAMPOS, HECTOR OMAR', 'CAMPOS CONSTRUCCIONES', '20-16980045-7', '02994886120', '', 'PABLO.PAINEVIL@TECPRECINCSRL.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1134, 'MARIO GUSTAVO GUIDON', 'TEXTIL CORDILLERANA', '20-10062843-1', '0229 4961738', '', 'textilcordillerana@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1135, 'LAVEZZI ERNESTO', 'PLANETA NOTEBOOKS', '20-23573978-0', '011-43280740', '', 'info@planetanotebooks.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1136, 'CENCOSUD S.A.', 'EASY NEUQUEN', '30-59036076-3', '08109993279', '', 'EASY@GMAIL.COM', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1137, 'Alborelli Ferreter?a de H?ctor Humberto Alborelli', 'Alborelli Ferreter?a', '20-07746395-0', '400 9489', '', 'cotizaciones@alborelli.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1138, 'Acu?a Noelia Beatriz', 'Emmanuel Servicios', '27-29755283-5', '0299155819146', '', 'PABLO.PAINEVIL@TECPRECINCSRL.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1139, 'Comaseg s.r.l.', 'Comaseg s.r.l.', '30-71405574-3', '0299-5002426', '', 'servicios@comaseg.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1140, 'VALAM S.A.I.C.', '', '33-53988281-9', '(011) 42076616', '', 'ventas@valam.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1141, 'EVERTHRON MARINE SYSTEMS SRL', 'EVERTHRON MARINE SYSTEMS SRL', '30-71065652-1', ' (+5411) 4720-5692', '', 'damian.avanzi@everthron.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1142, 'MG de Mario Gonzalez', 'MG Bulonera', '20-26042883-8', '445 2240', '', 'mgbulonera@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1143, 'NEW TECHNOLOGY', 'NEW TECHNOLOGY', '30-71151814-9', '01152799919', '', 'info@new-technology.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1144, 'Casa Ferracioli S.A.', 'Casa Ferracioli S.A.', '30-56180035-5', '4487918', '', 'camping@ferracioli.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1145, 'DOLZ  Hnos. S.R.L.', 'DOLZ  FABRICA Y CALIBRACIONES', '30-50460344-6', '011 4635 3159', '', 'DOLZHNOS@SPEEDY.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1146, 'Silvia Laura Lizarrondo', 'SYMIL PRINT', '27-14856826-5', '2996322917', '', 'simylprint@hotmail.es', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1147, 'DALBUZ SRL', 'DALBUZ SRL', '30-57102353-5', '02215044962', '', 'federico_daloia@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1148, 'SINERGIA SERVICIOS SRL', 'SINERGIA SERVICIOS SRL', '30-70887459-7', '(0341) 4780700', '', 'mlopez@sinergiaservicios.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1149, 'Arauco s.a.c.i.f.  CONSECIONARIO OFICIAL', 'Arauco s.a.c.i.f.', '30-55423290-2', '0299 4455600', '', ' info@arauco.com.ar ', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1150, 'Alfredo Daniel Romanazzi', 'El Puma Pesca', '20-17021654-8', '0261 425 9110', '', 'ventaselpumapesca@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1151, 'ALBERTO FRECCERO', 'PRECINT  FACTORY', '20-12913180-3', '011 4253 6114', '', 'INFO@PRECINTFACTORY.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1152, 'Gustavo Adolfo Gutierrez', 'F&G Transportes y Servicios', '20-23612549-2', '2994653079', '', 'gustavo.gutierrez@live.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1153, 'NIPRO SRL', 'NIPOR SRL', '30-70798051-2', '02614251583', '', 'compras@tecprecincsrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1154, 'Jorge Daniel Lomo', 'MASTER BLOSTER', '20-14873681-3', '4423157', '', 'lujan@importadoradelvalle.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1155, 'EPIMASTER SRL', 'EPIMASTER SRL', '30-70725010-7', '(011) 1544146102', '(011) 4656 9222', 'infoventas@epitecnica.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1156, 'Mariela Adriana Mansilla', 'LA GRAFICA', '27-25173292-8', '02994969700', '', 'marieal.mansilla@hotmail.comes.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1157, 'Valves Systems  s.r.l.', 'Valves Systems s.r.l.', '33-71071369-9', '011 4722 2733', '', 'info@valvessystems.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1158, 'SERVIN INGENIER?A S.A.', 'SERVIN INGENIERIA', '30-70760271-2', '02994488499', '', 'servinqn@serviningenieria.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1159, 'Sanchez Miguel Angel', 'Sanchez Miguel Angel', '20-12212586-7', '0299-155096680', '', 'MIGUELSANCHEZ@HOTMAIL.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1160, 'Ra?l V. Batall?s S.A.', 'YUKON', '30-50208683-5', '01145555100', '', 'info@yukonargentina.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1161, 'SALDA?A TRUCKS', 'SALDA?A TRUCKS', '20-20606052-3', '02994823429', '0299156324147', 'SALDA?A@HOTMAIL.COM', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1162, 'ML GOMA', 'ML GOMA', '20-22342408-3', '03414653237', '03414612495', 'ml_goma@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1163, 'V.A. Gr?as de V?ctor A. Gutierrez', 'V.A. Gr?as', '20-08215607-1', '2995834253', '', 'victorg2348@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1164, 'Ciudad Muebles', 'Ciudad Muebles', '20-30067213-3', '011 4482 6261', '', 'info@ciudad-muebles.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1165, 'ALFARO DAIANA LORENA', 'FERRETER?A LO DE ALFARO', '27-34220319-7', '02994862620', '', 'lodealfarogas@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1166, 'RICARDO CUNEO', 'SERVICE CUNEO', '20-07578390-7', '02994962128', '', 'cuneo@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1167, 'Nelson Fabian Dolso', 'FARMACIA EL INDIO', '20-22843085-5', '02994968105', '', 'elindio@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1168, 'ELECTROANTU SRL', 'ELECTROANTU SRL', '30-67262755-5', '4964400', '', 'javiertapia182@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1169, 'Neuservice SRL', 'Neuservice SRL', '33-70947729-9', '496 2194', '', 'neuservice@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1170, 'Eliana Gimena Gallo', 'BUNKER OIL', '27-28394864-7', '2994110252', '', 'bunkeroilservicios@yahoo.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1171, 'Servi Centro de Julio Pacheco', 'Servi Centro -', '20-11244739-4', '440 0107', '', 'servicentro@live.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1172, 'Ortiz De Guinea Diego', 'MEXX Computaci?n', '20-22653576-5', '01144333829', '', 'hola@mexx.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1173, 'Cisterna Walter Edgardo', 'S.I.P. - Servicio Instrumental Petrolero', '23-24751489-9', '2995292190', '', 'CISTERNAWALTER@YAHOO.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1174, 'INDUMENTARIA PROTECTIVA RASA S.A.', 'RASA   S.A.', '30-71018043-8', '(02241) 424-374', '', 'rasa@rasaindprot.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1175, 'SEGUSUR S.H. de GOMEZ, GUSTAVO y GARCIA, MARTIN', 'SEGUSUR', '30-71118833-5', '2914162702', '', 'ventas1@segusurweb.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1176, 'PAIMUN INDUSTRIAL SA', 'PAIMUN INDUSTRIAL SA', '30-70877557-2', '+54-011-4297-9112', '', 'ventas@e-paimun.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32');
-INSERT INTO `proveedores` (`id`, `razon_social`, `nombre_fantacia`, `cuit`, `telefono`, `fax`, `email`, `habilitado`, `estado`, `calificacion`, `direccion`, `calle`, `nro`, `ciudad`, `provincia`, `pais`, `forma_pago`, `created_at`, `updated_at`) VALUES
-(1177, 'Raul Enrique Mardones ', 'R.E.M.', '20-20960556-3', '02994965570', '', 'remventas@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1178, 'VIANHE SA', 'VIANHE SA', '33-70801685-9', '011- 4654-8794 ', '', 'info@vianhe.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1180, 'SEGURIDAD Y EMPAQUE SA', 'SEGURIDAD Y EMPAQUE SA', '30-64194798-5', '(11) 4918-5026', '', 'facturaci?n@segempsa.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1181, 'CLARO', 'AMX ARGENTINA SA', '30-66328849-7', '03327413434', '', 'exa73787@claro.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1182, 'GPM ARGENTINA SA', 'GPM ARGENTINA SA', '33-71008269-9', '(011) 4453-1646 / 4454-0032', '', 'dorsi@gpmsa.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1183, 'Metal?rgica JM  s.r.l.', 'Metal?rgica JM  s.r.l.', '30-58960983-9', '011 4612 2715', '', 'info@jmsrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1184, 'ECSE SRL', 'ECSE SRL', '30-70915096-7', '03543 ? 467956', '', 'castorseguridad@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1185, 'El Quijote Librer?a s.r.l.', 'El Quijote Librer?a', '30-71076482-0', '0299 442 9806', '', 'elquijotelibreria@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1186, 'PIMIACI S.A.', '', '30-70713518-9', '(011) 4543 2217', '', 'info@vernassa.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1187, 'Silvia Andrea Peralta ', 'Nueva Tela', '27-20558511-2', '02994964300', '', 'nuevatela@hotmail.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1188, 'RIO LIMAY OIL FIELD SERVICES SA', 'RIO LIMAY OIL FIELD SERVICES SA', '30-70988747-1', ' 449-0155', '', 'flizarrondo@riolimayofs.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1189, 'El Monito - Servicios Generales', '', '20-22538534-4', '2994219449', '', 'elmonito@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1190, 'KINGVOX SRL', 'KINGVOX SRL', '30-50469372-0', '011 4671-5171/4961', '', 'kingvox.oscar@kingvox.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1191, 'Caroli, Fernando Ariel', 'NOTEBOOKS', '20-33033094-6', '0111537346536', '', 'info@fcnotebooks.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1192, 'Envases Pl?sticos Lago S.A.', 'Envases Pl?sticos Lago S.A.', '30-70949938-2', '0114699-7257 ', '', 'ventas@plasticoslago.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1193, 'Servicios Petroleros del Norte SA', 'Servicios Petroleros del Norte SA', '30-70904534-9', '4969790', '', 'sergio_formica@nortpetrol.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1194, 'AUTOMAT MEDICION', 'AUTOMAT MEDICION', '30-59888196-7', '01145550055', '', 'comercial1@automat.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1195, 'AUTO TUNING', 'AUTO TUNING', '20-24583662-8', '(011) 4652 2036', '', 'autotuningcomar@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1196, 'Lihue Regaler?a', 'Lihue Regaler?a', '27-32120297-2', '2994205190', '', 'lihueregalaer?a@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1197, 'ELECTROTECNIA FIORINO SRL', 'ELECTROTECNIA FIORINO SRL', '30-70732689-8', '(+5411) 4581-3700', '', 'info@fiorinoelect.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1198, 'Yaguar ', '', '30-62964267-2', '447-5400', '', '\'truiz@yaguar.com.ar\'', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1199, 'Sinigoj Graciela Cristina', 'Maderara Patagonia', '27-13148043-7', '0299 443 4408', '', 'maderapatagonia@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1200, 'Bonafide Expresso', 'Bonafide Expresso', '27-05469520-4', '0299 4960454', '', 'bonafide@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1201, 'DASTEC SRL', 'DASTEC SRL', '30-64114165-4', '01153522518', '', 'dastecsrl@dastecsrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1202, 'ABS INTERNATIONAL SA', 'ABS INTERNATIONAL SA', '30-68245522-1', '01142544831', '', 'abs@absinternational.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1203, 'FARIAS LUCAS GABRIEL', 'GRUAS FARIAS SERVICIOS', '20-30673950-7', '2994087382', '', 'gruasfarias84@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1204, 'Ing. Roberto F. Corbelle', '', '20-11742640-9', '154 289243', '', 'robertocorbelle@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1205, 'ITECO SRL', '', '30-51722193-3', '(54-11) 4855-7092', '', 'info@iteco.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1206, 'CHASQUI SRL', 'CHASQUI SRL CONTROL DE PLAGAS', '30-64837080-2', '02994433984', '', 'raul@chasquinqn.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1207, 'Matec Medici?n s.r.l.', 'Tu Medici?n', '30-70991633-1', '011 4554 8480', '', 'asistente3@tumedicion.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1208, 'Nancy Beatriz Bianchi', 'Cacho?s Cerrajer?a', '27-21385978-7', '2994912522', '', 'cachitopablo@noteolvideslallave.cat.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1209, 'Importaciones y Exp. Industriales Nozzles Ltda.', '', '00-00000000-0', '+56 2 2247 6401', '', 'info@industrysystem.cl', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1210, 'Proseind s.a.', 'Proseind s.a.', '30-70700989-2', '0299 4420453 - 0351 4552017', '', 'ventas@proseind.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1211, 'Supermercados Mayoristas MAKRO s.a.', 'Makro', '30-58962149-9', '0299 4450207', '', 'macro@macromayorista.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1212, 'SIAFA SRL', 'SIAFA SRL', '30-66319797-1', '011 4684 2232', '', 'higieneocupacional@siafa.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1213, 'ARELLANO CRISTIAN JAVIER', 'ARELLANO CRISTIAN JAVIER', '23-40960202-9', '2994887888', '', 'arellanocristian@rincon.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1214, 'TORNERIA MECINA de Andr?s Mecina', 'TORNERIA MECINA', '20-04622190-8', '49600000000000', '', 'mecina@mecina.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1215, 'Vicentelli Carlos Roberto', 'Mas que Precios', '20-08270257-2', '011 42510290', '', 'masqueprecios@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1216, 'TGB SA', 'TGB SA', '30-50257715-4', ' (011) 4918 - 2828', '', 'tgbsa@tgb.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1217, 'EPITECNICA ', 'SESENTAONCE SRL', '30-71151096-2', '(011) 4656-9700/8989', '', 'infoventas@epitecnica.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1218, 'Farmacia AMUYEN III de Javier Gonzalez', 'AMUYEN III', '20-20832455-2', '2994567519', '', 'farmaciaamuyen3@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1219, 'SAC - Servicios de Asesoramiento y Capacitaci?n SRL', '', '30-70982789-4', '2996288456', '', 'insaurraldecarlos@sacsrl.com.ar  ', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1220, 'Pulidos ZURITA / de Zurita Facundo Germ?n', 'Pulidos ZURITA', '20-32570476-5', '496xxxx', '', 'nnnn@nn.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1221, 'Mauro Muebles de Mario Hugo Rubio', 'Mauro Muebles', '20-14405387-8', '496 6237', '', 'mauro@nnn.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1222, 'SOIPE SRL', '', '30-70764016-9', '4961851', '', 'compras@soipesrl.com.ae', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1223, 'RIVERA JUAN FERNANDO', 'Seguridad en Carteles', '20-13220915-5', '+54 11 4 674 0440 / 0990', '', 'ventas@seguridadencarteles.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1224, 'DIEGO MART?N PEREZ', 'FDS GASES (PRAXAIR)', '27-35178762-2', '2995822062', '', 'fdsgases@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1225, 'Hermosilla Teresa Lidia', 'Bulonera FAMA', '23-14430820-4', '0299 486 2120', '', 'bulonerafama@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1226, 'Remolques ALE de Nu?ez Nolberto Fabi?n', 'Remolques ALE', '23-13574180-9', '2996339352', '', 'remolquesale@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1227, 'ERNESTO Y JORGE FERRARI S.H.', 'FERRARI Hnos.', '30-64287304-7', '446 1564', '', 'ferrarish@ferrarihnos.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1228, 'Mercado LA FLORIDA', 'Mercado LA FLORIDA', '23-92405983-4', '496 3479', '', 'laflorida@nnn.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1230, 'SUPERMERCADO LEON de Qiu Liyin', 'SUPERMERCADO LEON', '27-94055603-7', '4966666666', '', 'supleon@nnn.nn', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
-(1234, 'eimar ', 'eimar ', '123123', '123, 123, 123, 123', NULL, 'e.rangeld@hotmail.com', 0, 'c', NULL, '111', '222', '333', '444', '555', '666', NULL, '2018-05-21 21:35:45', '2018-05-21 21:35:45'),
-(1235, 'eimar2 ', 'eimar 2', '222', '2222', NULL, '222', 0, '', NULL, '222', '222', '22', '2', '', '', NULL, '2018-05-21 21:40:26', '2018-05-21 21:40:26'),
-(1236, 'jose ', 'jose', '333', '333', NULL, 'jose@d.c', 0, 'v', NULL, '11', '22', '', '', '', '', '[{\"nombre\":\"Efectivo\"},{\"nombre\":\"Tarjeta Débito\"}]', '2018-05-21 21:42:47', '2018-05-21 21:42:47'),
-(1237, 'proveedor d', 'fantasia d', '12423993432', '555555555555', NULL, 'proveedord@tecprecinc.com', 0, '', NULL, '123123', '123123', '123', '', '', '', '[{\"nombre\":\"Tarjeta Débito\"}]', '2018-07-10 17:27:01', '2018-07-10 17:27:01'),
-(1238, 'prive f', '213213', '12', '31', NULL, '', 0, '', NULL, '31', '', '', '', '', '', '[]', '2018-07-10 18:41:59', '2018-07-10 18:41:59');
+INSERT INTO `proveedores` (`id`, `razon_social`, `nombre_fantacia`, `cuit`, `telefono`, `fax`, `email`, `habilitado`, `estado`, `calificacion`, `direccion`, `calle`, `nro`, `ciudad`, `provincia`, `pais`, `forma_pago`, `motivo`, `created_at`, `updated_at`) VALUES
+(1, 'Proveedor A', '', '27-28899287-3', '1234567', '', '', 1, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '[]', NULL, '2018-01-27 03:43:30', '2018-07-10 18:53:44'),
+(2, 'Proveedor C', '', '20-27108471-5', '12324', '', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '[]', NULL, '2018-01-27 03:43:30', '2018-07-09 03:31:35'),
+(5, 'LUCIANO MARTIN MU?IZ', 'ABER-LU', '20-21502797-0', '(02994)4346-25', NULL, '.', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '[]', NULL, '2018-01-27 03:43:30', '2018-07-10 21:10:39'),
+(6, 'DIST. LEO S.R.L.', 'DIST. LEO S.R.L.', '30-69788550-8', '(44364)  63-', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(9, 'DISTRIBUIDORA ACME', 'DISTRIBUIDORA ACME', '20-14065307-2', '(02994)4231-83', '(02991)5580-0924', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(12, 'ADME S.A.', 'ADME S.A.', '33-71025394-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(19, 'AGA S.A.', 'AGA S.A.', '30-50139538-9', '( 0299) 443-3773', '( 0299) 441-3609', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(24, 'ABERTURAS DE ALUMINIO SA', 'ABERTURAS DE ALUMINIO SA', '30-64304557-1', '( 0299) 479-2347', NULL, 'ventas@aberturas.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '[]', NULL, '2018-01-27 03:43:30', '2018-07-10 21:10:49'),
+(31, 'ALMEIDA NEUMATICOS', 'ALMEIDA NEUMATICOS', '20-93747834-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(35, 'Claudio Gast?n Alday', 'Almec Bulonera', '20-31483924-3', '( 0299) 486-1894', '(     )    -', 'ventaseden@argentina.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(51, 'LIBRERIA ANJESVAN', 'LIBRERIA ANJESVAN', '20-11603814-6', '(     )4886-035', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(53, 'SUPERMERCADOS LA ANONIMA', 'SUPERMERCADOS LA ANONIMA', '30-50673003-8', '(     )    -', '(     )    -', 'supermercadolanonima@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(54, 'A.P.A. SRL', 'A.P.A. SRL', '30-70969450-9', '( 0299) 448-1786', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(55, 'ALMACENES PETROLEROS SRL', 'ALMACENES PETROLEROS SRL', '30-53683087-8', '( 0299) 488-6026', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(64, 'ARELLANO JAVIER CRISTIAN', 'ARELLANO JAVIER CRISTIAN', '20-27674729-1', '( 0299) 488-7532', '(  154) 735-860', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(65, 'ARENA E HIJOS de Bravo Alicia Ramona', 'ARENA E HIJOS de Bravo Alicia Ramona', '27-04929812-4', '( 0299) 488-6620', '(  299) 491-1314', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(66, 'ARGINBUREAU SRL', 'ARGINBUREAU SRL', '33-70716958-9', '(  011)4751-6081', '(  011)4751-4128', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(69, 'ARTEGRAF', 'ARTEGRAF', '20-14349898-1', '( 0299) 443-3843', '( 0299) 448-1010', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(71, 'CARLOS A PARADA', 'CARLOS A PARADA', '20-23058608-0', '( 0299) 488-7433', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(73, 'PROST MABEL Y ARENS GUILLERMO S.H.', 'PROST MABEL Y ARENS GUILLERMO S.H.', '30-70708888-1', '(02990) 496-3334', '(     )    -', 'arenservicios@copelnet.com.a', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(79, 'METALURGICA ATK SRL', 'METALURGICA ATK SRL', '33-70953322-9', '(  011)4653-1863', '(     )    -', 'atk@atksrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(91, 'B&M SRL', 'B&M SRL', '30-70757728-9', '( 0299) 443-8363', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(94, 'BALDOR S.R.L.', 'BALDOR S.R.L.', '30-64843454-1', '( 0299) 442-6581', '(     )    -', 'serviciotecnico@baldorsrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(110, 'CONTRERAS PATRICIO FABIAN', 'CONTRERAS PATRICIO FABIAN', '23-21750220-9', '( 0299) 496-4103', '(     )    -', 'bigbangcomputacion@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(115, 'ELDO DARIO BOTTICELLI', 'ELDO DARIO BOTTICELLI', '20-16819804-4', '( 0299) 442-1012', '( 0299) 443-8178', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(126, 'BULONERA NEUQUEN SRL', 'BULONERA NEUQUEN SRL', '30-71073787-4', '( 0299) 443-1807', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(127, 'BULONERA PATAGONICA S.R.L.', 'BULONERA PATAGONICA S.R.L.', '33-57350882-9', '( 0298) 442-5370', '( 0810) 222-5936', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(130, 'ADOLFO CASSARO E HIJOS SRL', 'ADOLFO CASSARO E HIJOS SRL', '30-58124572-2', '( 0351) 423-0050', '( 0351)422--4433', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(132, 'CABARCO MOTORES', 'CABARCO MOTORES', '20-05041803-1', '(02941) 428-018', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(136, 'CALAMARI S.A.', 'CALAMARI S.A.', '30-67164419-7', '(02342) 427-998', '(02342)4279-78', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(137, 'CALCIC', 'CALCIC', '33-69449947-9', '(02326) 492-276', '(02326)  45-1038', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(141, 'CARAN S.A.', 'CARAN S.A.', '30-50435544-2', '(  011)4792-2249', '(  011)4792-6117', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(145, 'CAUTIO S.R.L.', 'CAUTIO S.R.L.', '30-70830075-2', '(  011)4687-1169', '(     )    -', 'dsilva@cautiosrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(157, 'CBS COMPUTACION', 'CBS COMPUTACION', '23-07687566-9', '( 0299) 443-0328', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(159, 'ELBA CRISTINA MARTI - COPEGAN DISTRIBUCIONES', 'COPEGAN DISTRIBUCIONES', '27-06365469-3', '( 0299) 443-9637', '( 0299) 448-1772', 'copegan@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(161, 'CEMAC ELECTROMECANICA', 'CEMAC ELECTROMECANICA', '20-22474925-3', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(164, 'CENTRO AUTOMOTORES S.A.', 'CENTRO AUTOMOTORES S.A.', '30-51976460-8', '( 0299) 442-0921', '( 0299) 442-1090', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(165, 'CEO NATURA SRL', 'CEO NATURA SRL', '30-70962791-7', '( 0299) 442-4412', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(166, 'CEPAUT', 'CEPAUT', '30-67254453-6', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(172, 'CHAPERMAN S.R.L.', 'CHAPERMAN S.R.L.', '30-71032389-1', '( 0299) 443-3801', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(179, 'CHUBB ARG. DE SEGUROS S.A.', 'CHUBB ARG. DE SEGUROS S.A.', '30-68515834-1', '(  011)4510-1500', '(  011)4510-1545', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(186, 'RICARDO GALLEGO', 'RICARDO GALLEGO', '23-04422280-9', '( 0299)4773-844', '( 0299) 477-3934', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(194, 'CARLOS VICTOR PARADA', 'CARLOS VICTOR PARADA', '20-08850035-1', '( 0299) 488-6047', '(     )    -', 'carlosparada@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(199, 'COMERCIAL ARGENTINA SRL', 'COMERCIAL ARGENTINA SRL', '30-70702685-1', '( 0299)4430-6611', '(     )    -', 'ventasexternas@comercialargentina.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(200, 'COMPUCENTRO', 'COMPUCENTRO', '20-20654831-3', '( 0299) 496-9382', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(201, 'COMPUNEUQUEN S.A.', 'COMPUNEUQUEN S.A.', '30-71076243-7', '( 0299) 448-6441', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(215, 'EL CONDOR AUTOMOTORES SA', 'EL CONDOR AUTOMOTORES SA', '30-59122056-6', '(     )    -', '(     )    -', 'elcondor@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(216, 'EL CORRALON S.R.L.', 'EL CORRALON S.R.L.', '30-61106569-4', '( 0299) 496-1086', '( 0299) 496-1338', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(227, 'CRISTAL-CO', 'CRISTAL-CO', '20-18636457-1', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(234, 'CUMEN SRL', 'CUMEN SRL', '30-68443575-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(236, 'CYPSA IMPEX S.R.L.', 'CYPSA IMPEX S.R.L.', '33-66171412-9', '(  011)4712-7219', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(237, 'D?ALLEVA S.R.L', 'D?ALLEVA S.R.L', '33-69785100-9', '(     )    -', '(     )    -', 'repuestos@dalleva.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(239, 'DAM MAYORISTA', 'DAM MAYORISTA', '20-12818091-6', '(     )    -496', '( 1187)    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(240, 'DAMARRA SRL', 'DAMARRA SRL', '30-70733460-2', '( 0299) 496-4485', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(243, 'DANTE  EDUARDO SCANTAMBURLO', 'DANTE  EDUARDO SCANTAMBURLO', '20-12066388-8', '( 0299) 443-1804', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(244, 'DARIO TENAGLIA NEUMATICOS', 'DARIO TENAGLIA NEUMATICOS', '23-14993614-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(246, 'GUSTAVO DANIEL DARONI', 'GUSTAVO DANIEL DARONI', '20-28624389-5', '(01115)4061-1629', '(     )    -', 'gustavo@steuerung.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(253, 'DELL AMERICA LATINA CORP.SUCURSAL ARGENTINA', 'DELL AMERICA LATINA CORP.SUCURSAL ARGENTINA', '30-70719842-3', '( 0800) 444-0730', '(  800) 666-0789', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(256, 'INDUSTRIAS QUIMICAS DEM SA', 'INDUSTRIAS QUIMICAS DEM SA', '30-68365507-0', '(03489)4388-71', '(    1)    -', 'carlosfontela2008@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(259, 'DIENST CONSULTING S.A.', 'DIENST CONSULTING S.A.', '30-70771220-8', '( 0291) 455-0250', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(261, 'DINDON LIBRERIAS Y PAPELERIAS', 'DINDON LIBRERIAS Y PAPELERIAS', '30-68450164-6', '( 0299) 448-7537', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(262, 'DIPET S.R.L.', 'DIPET S.R.L.', '30-65679184-1', '( 0299) 496-4905', '(     )    -', 'dipetcutralco@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(267, 'DISTRIBUIDORA NEUQUEN S.A.', 'DISTRIBUIDORA NEUQUEN S.A.', '30-63975352-9', '( 0299)4424-369', '( 0299)4420-191', 'distrineuquen@hotmail.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(268, 'ESCAPES DILUCENTE', 'ESCAPES DILUCENTE', '20-10942811-7', '(     )    -', '(49617)  22-', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(271, 'DON ALBERTO VIDRIOS', 'DON ALBERTO VIDRIOS', '20-08377106-3', '(02994)9618-13', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(274, 'RIMOLI NATALIA EDITH', 'RIMOLI NATALIA EDITH', '27-23801638-5', '( 0299) 496-3091', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(277, 'LUIS PASQUINELLI E HIJOS SA', 'LUIS PASQUINELLI E HIJOS SA', '30-51748025-4', '(  011)4624-0067', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(278, 'DISTRIBUIDORA SUR SRL', 'DISTRIBUIDORA SUR SRL', '30-63746594-1', '(02994)9675-90', '(     )    -', '', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:30', '2018-01-27 03:43:30'),
+(283, 'ECOSISTEMAS PATAGONICOS SRL', 'ECOSISTEMAS PATAGONICOS SRL', '30-67272510-7', '( 0299) 445-2060', '( 0299) 445-2059', 'info@ecospatagonicos.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(286, 'HUGO WALTER ALDAY', 'INDUSTRIAL EDEN', '20-11806432-2', '( 0299) 496-4869', '(     )    -', 'ventaseden@argentina.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(287, 'EET S.A.', 'EET S.A.', '30-70748830-8', '( 0299) 496-8695', '( 5411)4270-1012', 'EET@YAHOO.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(292, 'ELECTRO CATRIEL', 'ELECTRO CATRIEL', '30-70736931-7', '( 0299)4887-244', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(293, 'ELECTRO PARTES', 'ELECTRO PARTES', '20-07579046-6', '(     )    -', '(     )    -', 'electroparteszurita@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(299, 'JOSE BENJAMIN RUBILAR', 'El Porte?o', '20-11904268-3', '( 0299) 488-6055', '( 0299) 488-6829', 'joserubilar@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(300, 'TALLER DE TONERIA EL ROLO', 'TALLER DE TONERIA EL ROLO', '20-07562188-5', '( 0299) 496-1690', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(304, 'ELECTROMECANICA MORENO', 'ELECTROMECANICA MORENO', '20-07306677-9', '( 0299) 496-1241', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(310, 'HUGO RUBEN GUERRERO', 'EPUHUENEY', '20-10951223-1', '( 0299) 496-3986', '(     )    -', 'ventasepuhueney@gmail.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(311, 'MARTIN ROLANDO ANIBAL', 'MARTIN ROLANDO ANIBAL', '20-04541478-8', '( 0299) 443-2510', '( 0299) 442-2314', 'martinequipamientos@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(314, 'ERXILAPE', 'ERXILAPE', '20-12210318-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(315, 'CARRON OSCAR ROBERTO', 'STOP Materiales El?ctricos', '20-12432727-0', '( 0299) 496-5888', '(     )    -', 'stop@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(317, 'ESLOVENIA S.A.', 'ESLOVENIA S.A.', '30-58262676-2', '( 0299) 444-1122', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(318, 'ESMET S.A.', 'ESMET S.A.', '30-60500898-0', '(44318)  03-', '(     )    -', 'juanpablobono@esmetsa.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(319, 'ESPINOZA ANA MATILDE (ELECTRO CATRIEL)', 'ESPINOZA ANA MATILDE (ELECTRO CATRIEL)', '27-26046232-1', '( 0299) 491-4481', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(329, 'NATALIA S.FALCONE F&F', 'NATALIA S.FALCONE F&F', '27-26157738-6', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(330, 'FAT Gr?as de Jos? Luis Far?as', 'JOSE LUIS FARIAS', '23-08029910-9', '(02991)5418-6298', '(02991)5408-7382', 'fatgruas@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(333, 'FADAT S.A.I.C.', 'FADAT S.A.I.C.', '30-51870717-1', '( 0299) 442-3983', '(     )    -', 'fadat@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(335, 'FAIL AUTOMOTORES S.R.L.', 'FAIL AUTOMOTORES S.R.L.', '30-70243411-0', '(     )4968-777', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(341, 'FERR\' OIL', 'FERR\' OIL', '33-70871543-9', '( 0299) 491-1128', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(342, 'FERRA-GOM SRL', 'FERRA-GOM SRL', '30-61763230-2', '( 0299) 491-1413', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(348, 'SERVICIOS FF S.R.L.', 'SERVICIOS FF S.R.L.', '33-71001225-9', '(  011)4658-1300', '(     )    -', 'andrea@serviciosff.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(350, 'FIBRASINT S.R.L.', 'FIBRASINT S.R.L.', '30-55152848-7', '(01147)5519-63', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(351, 'FIORASI SA', 'FIORASI SA', '30-53563811-6', '(  299) 446-5280', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(354, 'FLAMA SIST.C/INCENDIOS', 'FLAMA SIST.C/INCENDIOS', '20-10701939-2', '(     )4968-932', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(355, 'FLUODINAMICA SA', 'FLUODINAMICA SA', '33-51738154-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(359, 'EL FORTIN CONSTRUCCIONES SRL', 'EL FORTIN CONSTRUCCIONES SRL', '30-70767217-6', '( 0299) 479-1805', '( 0299) 479-1503', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(362, 'CONTRERAS WALTER', 'CONTRERAS WALTER', '20-17782087-4', '( 0299)6309-676', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(370, 'FUTALAUFQUEN S.A. (Gervasini Neumaticos)', 'FUTALAUFQUEN S.A. (Gervasini Neumaticos)', '30-70863909-1', '(  443)7134-', '( 0299) 447-2040', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(372, 'G&G SERVICIOS SRL', 'G&G SERVICIOS SRL', '33-67270682-9', '( 0299) 487-9220', '( 0299) 487-9221', 'administracion@gygservicios.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(389, 'GERVASINI NEUMATICOS - FUTALAUFQUEN S.A.', 'GERVASINI NEUMATICOS - FUTALAUFQUEN S.A.', '30-68904753-6', '( 0299) 447-2040', '( 0299) 443-7134', 'ventas@gervasinineumaticos.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(390, 'GESERFULL S.A.', 'GESERFULL S.A.', '33-69787557-9', '( 0299) 440-0492', '(     )    -', 'ventas@geserfull.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(392, 'G&G MOTOR SPORT SRL', 'G&G MOTOR SPORT SRL', '30-70890567-0', '( 0299) 496-3361', '(     )    -', 'tongaperez1@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(393, 'FERRETERIA GIMLUC', 'FERRETERIA GIMLUC', '27-11082384-9', '( 0299) 496-4044', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(399, 'GOTLIP S.A', 'GOTLIP S.A', '30-61803200-7', '( 0299)4420-042', '( 0299)4420-781', 'ventas@gotlip.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(403, 'GREGORUTTI & ASOCIADOS', 'GREGORUTTI & ASOCIADOS', '33-67705166-9', '(  011)4541-5108', '(  011)4545-0773', 'gisela@gregorutti.com.ar ', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(406, 'G-STORE IMPRESOS PUBLICITARIOS', 'G-STORE IMPRESOS PUBLICITARIOS', '23-24817541-9', '(  155)  88-6497', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(417, 'HIDRINOX S.A.', 'HIDRINOX S.A.', '33-70301753-9', '(  011)4014-7777', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(435, 'INOXIDABLES GARCIA SRL', 'INOXIDABLES GARCIA SRL', '30-71180760-4', '( 0299) 448-4100', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(440, 'IMPRESORA PATAGONICA', 'IMPRESORA PATAGONICA', '30-67262649-4', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(443, 'INBECK SRL', 'INBECK SRL', '30-67261387-2', '( 0299) 496-8682', '(  299) 496-6134', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(444, 'INDUSLAB S.R.L.', 'INDUSLAB S.R.L.', '30-70841419-7', '( 0299) 496-2652', '( 0299) 491-4326', 'indus@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(446, 'INSCANN S.A.', 'INSCANN S.A.', '30-69795330-9', '( 0299) 496-2139', '(     )    -', 'wpereyra@inscann.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(447, 'INSER GROUP SRL', 'INSER GROUP SRL', '30-70901289-0', '( 0299) 443-5585', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(453, 'LUIS GARCIA (INOXIDABLES GARCIA)', 'LUIS GARCIA (INOXIDABLES GARCIA)', '24-93887574-6', '( 0299) 448-0527', '( 0299) 448-4100', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(459, 'CARLOS ISLA Y CIA S.A', 'CARLOS ISLA Y CIA S.A', '30-52904657-6', '(02994)4400-90', '(     )    -', 'neuquen@carlosisla.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(466, 'JP INDUMENTARIA Y SERVICIOS', 'JP INDUMENTARIA Y SERVICIOS', '20-23214514-6', '( 0299) 496-2978', '(     )    -', 'jpindumentaria@yahoo.com.ar.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(471, 'JUAN CARLOS MARTINEZ', 'JUAN CARLOS MARTINEZ', '20-08119402-6', '(02941) 426-109', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(478, 'ALBERTO E. KOMJATI SERVICIOS', 'ALBERTO E. KOMJATI SERVICIOS', '20-07570291-5', '(     )    -', '(     )    -', 'komjati@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(483, 'KUMENIA SA', 'KUMENIA SA', '30-71218887-8', '( 0299) 442-0921', '(     )    -', 'acontegrand@kumenia.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(487, 'DDD SA LATIN CAR', 'DDD SA LATIN CAR', '30-70839781-0', '( 0299) 447-0593', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(490, 'LA CASA DE LAS HERRAMIENTAS SA', 'LA CASA DE LAS HERRAMIENTAS SA', '30-64802051-8', '( 0299) 442-6721', '( 0299) 488-6939', 'ventasrdls@lcdh.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(497, 'LACAR INCENDIO SRL', 'LACAR INCENDIO SRL', '30-70944420-0', '(  011)4755-8300', '(     )    -', 'ventas@lacarincendio.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(500, 'LANDER GUSTAVO MARIO', 'LANDER GUSTAVO MARIO', '20-13047618-0', '( 0299) 442-2111', '( 0299) 448-6771', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(501, 'LAS DOS MM', 'LAS DOS MM', '27-11087910-0', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(502, 'LASARTE HNOS S.R.L.', 'LASARTE HNOS S.R.L.', '30-64693875-5', '(     )    -', '(49411) 510-', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(507, 'PETROLAB S.R.L.', 'PETROLAB S.R.L.', '30-65858022-8', '( 0299) 496-3823', '( 0299) 496-7267', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(514, 'LEIMAT BATERIAS', 'LEIMAT BATERIAS', '23-12629910-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(524, 'OBANDO ELEAZAR (lavadero Limay)', 'OBANDO ELEAZAR (lavadero Limay)', '20-11431062-0', '( 0299)4913-295', '(  154) 157-859', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(530, 'HIERROMET SRL', 'HIERROMET SRL', '33-67256510-9', '( 0299) 488-6587', '( 0299) 488-7613', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(533, 'LOZANO HERRAMIENTAS', 'LOZANO HERRAMIENTAS', '20-17575332-0', '(     )    -', '(     )    -', 'ventas@lozanoherramientas.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(537, 'CASA HUMBERTO LUCAIOLI S.A.', 'CASA HUMBERTO LUCAIOLI S.A.', '30-68808772-0', '(     )    -', '(     )    -', 'info@lucaioli.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(542, 'LUSCHER HNOS.', 'LUSCHER HNOS.', '33-59012119-9', '( 0299) 491-1404', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(544, 'A. MARSHALL MOFFAT S.A.', 'A. MARSHALL MOFFAT S.A.', '30-52826337-9', '(011)4302-9333', '(011)4303-1287', '', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(546, 'CASA A. MAJLUF', 'CASA A. MAJLUF', '33-67263277-9', '(     )4961-103', '(     )4961-716', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(547, 'DISTRIBUIDORA MARTIN E HIJOS', 'DISTRIBUIDORA MARTIN E HIJOS', '30-67169810-6', '( 0299) 491-3243', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(556, 'LEANDRO LONGSTAFF', 'LEANDRO LONGSTAFF', '20-20045348-5', '( 0299)4438-678', '(     )    -', 'info@markas.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(563, 'MANTEROLA MARCELA ROSANA', 'MANTEROLA MARCELA ROSANA', '27-20673284-4', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(566, 'MARIA C. MALABER - SERV INFORM', 'MARIA C. MALABER - SERV INFORM', '27-13754548-4', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(573, 'MAXIGOMA S.R.L.', 'MAXIGOMA S.R.L.', '30-67265426-9', '( 0299) 442-9859', '(     )    -', 'administraci?n@maxigoma.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(576, 'NEUQUEN MADERAS S.R.L.', 'NEUQUEN MADERAS S.R.L.', '30-70770693-3', '( 0299)4425-692', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(579, 'SERVICENTRO MALARGUE S.A.', 'SERVICENTRO MALARGUE S.A.', '30-62936048-0', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(584, 'MELISAM S.A.', 'MELISAM S.A.', '30-60069872-5', '(  011)5648-6996', '(  011)5648-6997', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(586, 'METALTEJ S.R.L.', 'METALTEJ S.R.L.', '30-51789985-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(597, 'MIGUEL ANGEL DEBASA', 'MIGUEL ANGEL DEBASA', '20-10933913-0', '( 0299)4911-152', '(     )    -', 'migueldebasa@catriel.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(599, 'MILLA NEUMATICOS S.R.L.', 'MILLA NEUMATICOS S.R.L.', '33-62532451-9', '(     )4961-680', '(     )    -', 'millacco@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(605, 'GONZALEZ MORETTI SA', 'GONZALEZ MORETTI SA', '30-60285173-3', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(608, 'MONTANI HNOS. S.A.', 'MONTANI HNOS. S.A.', '30-56184600-2', '(     )4424-522', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(612, 'BEJAR SEBASTIAN', 'BEJAR SEBASTIAN', '20-23989453-5', '( 0299) 496-9361', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(620, 'NATIONAL SERVICE ARGENTINA', 'NATIONAL SERVICE ARGENTINA', '30-65201048-9', '( 0299) 447-0551', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(621, 'NATIVA S.A.', 'NATIVA S.A.', '30-67260605-1', '( 0299) 496-6240', '( 0299) 496-6250', 'nativasa@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(625, 'EDGARDO NELSON PE?A (NEMIR)', 'EDGARDO NELSON PE?A (NEMIR)', '20-07572888-4', '(  154) 109-262', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(626, 'MABEL ESTHER LANDA', 'EL NECOCHENSE', '27-11177543-0', '( 0299)4965-243', '(     )    -', 'ELNECOCHENSE@YAHOO.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(627, 'NECAM VIDRIOS', 'NECAM VIDRIOS', '23-07291248-9', '(     )4961-032', '(     )    -', 'necam@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(628, 'NEUMAN Y MONTENEGRO N. S.H.', 'MAX NEUMANN & Cia.', '30-70738061-2', '( 0299) 448-7069', '(     )    -', 'maxneuman@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(629, 'NEUNET S.A.', 'NEUNET S.A.', '30-70819707-2', '( 0299) 489-4000', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(632, 'PINTURERIA LA NEUQUINA SRL', 'PINTURERIA LA NEUQUINA SRL', '33-70743366-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(634, 'NIPPON CAR SRL', 'NIPPON CAR SRL', '30-67277058-7', '(02941)4207-17', '(     )    -', 'nipones@car.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(635, 'TALLERES METALURGICOS', 'TALLERES METALURGICOS', '20-93200928-6', '(     )    -', '(42092) 639-', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(636, 'NATIONAL OILWELL VARCO', 'NATIONAL OILWELL VARCO', '30-71056741-3', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(653, 'DISTRIBUIDORA OLIVOS SRL', 'DISTRIBUIDORA OLIVOS SRL', '30-59483308-9', '( 0299) 448-9988', '( 0299) 443-8216', 'webmaster@distribuidoraolivos.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(656, 'OLMAR SEG. INDUSTRIAL S.R.L.', 'OLMAR SEG. INDUSTRIAL S.R.L.', '30-67271036-3', '( 0299) 488-6251', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(671, 'Diego Parra', 'METALURGICA PARRA', '20-07687786-7', '( 0299) 496-0756', '(     )    -', 'diego@parra.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(673, 'LOS PALAS S.R.L.', 'LOS PALAS S.R.L.', '30-70771414-6', '( 0299) 496-4909', '( 0800) 444-5324', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(674, 'MATERIALES PANOZZO Y CIA. SRL.', 'MATERIALES PANOZZO Y CIA. SRL.', '30-67269114-8', '( 0299) 443-3638', '( 0299) 443-3624', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(677, 'PALEPERA NEUQUEN S.R.L.', 'PALEPERA NEUQUEN S.R.L.', '30-69788376-9', '(02994)4317-73', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(681, 'PARCT SRL', 'PARCT SRL', '30-52300011-6', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(683, 'Espacio para cargar ', '', '20-27797252-3', '( 0299) 496-0756', '(     )    -', 'libre@libre', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(686, 'VIDRIERIA PARADA', 'VIDRIERIA PARADA', '20-13812410-0', '(     )    -', '(     )    -', 'vidrieriaparada@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(694, 'HIERROS A. PESINEY', 'HIERROS A. PESINEY', '20-20249045-0', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(696, 'PEFOW EQUIPAMIENTOS S.A.', 'PEFOW EQUIPAMIENTOS S.A.', '30-66214566-8', '(01142)0778-70', '(01142)0619-40', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(697, 'PEGASO SRL', 'PEGASO SRL', '30-64852384-6', '( 0299) 496-5521', '(     )    -', 'pegaso@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(698, 'PEHUEN REP.DEL AUTOMOTOR', 'PEHUEN REP.DEL AUTOMOTOR', '20-23488768-9', '(     )4886-591', '(  155)8371-71', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(704, 'SERGIO A ZANETTI', 'SERGIO A ZANETTI', '20-14811794-3', '( 0299) 491-4224', '(  156) 324-451', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(710, 'TALLER MECANICO EL PIOJITO', 'TALLER MECANICO EL PIOJITO', '20-04987459-7', '( 0299) 496-3624', '(    1)5635-2572', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(721, 'POLI - PLAZ SRL', 'POLI - PLAZ SRL', '30-63298330-8', '(     )4961-144', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(722, 'POLISERVICE SUMINISTROS', 'POLISERVICE SUMINISTROS', '20-06252458-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(730, 'PALUMBO PASCUAL RUBEN D', 'PALUMBO PASCUAL RUBEN D', '20-11676298-7', '( 0299) 448-0688', '(  156) 357-679', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(731, 'PRENTEX S.A.', 'PRENTEX S.A.', '30-58346413-8', '(  011)4724-7200', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(732, 'PROMO PLUS', 'PROMO PLUS', '20-24392180-6', '(  029)9455-8068', '(   68)    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(733, 'PROSERVICIOS', 'PROSERVICIOS', '20-24123895-5', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(734, 'PROSPITI SILVANA EDITH', 'PROSPITI SILVANA EDITH', '27-29235213-7', '( 0299) 447-4651', '(  154) 066-594', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(747, 'Rafael A. Badilla', 'EL RAFA', '20-92498927-1', '( 0299)1563-0979', '(    5)    -', 'elrafa@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(751, 'RADIADORES NEUQUEN SAIC', 'RADIADORES NEUQUEN SAIC', '30-56322626-5', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(767, 'NELIDA ALVAREZ - REIM\'S', 'NELIDA ALVAREZ - REIM\'S', '27-11128490-9', '(02991)5418-4634', '( 0299) 496-338', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(773, 'REN FOR S.R.L.', 'REN FOR S.R.L.', '30-67259816-4', '(     )4962-509', '(     )4967-269', 'renfor@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(775, 'RESISTENCIAS ELECTRO ARGENTINAS SRL', 'RESISTENCIAS ELECTRO ARGENTINAS SRL', '30-70979703-0', '(  011)4700-0951', '(  011)4700-0941', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(776, 'REVICAN S.R.L.', 'REVICAN S.R.L.', '30-65641835-0', '( 0299) 496-5384', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(784, 'RIMADA DANIEL - RIMADA JORGE SH', 'RIMADA DANIEL - RIMADA JORGE SH', '30-70902827-4', '( 0299) 442-5423', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(787, 'ROKAS PORFIDO SRL', 'ROKAS PORFIDO SRL', '30-70746894-3', '( 0299) 496-6999', '( 0299) 496-2933', 'info@rishco.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(792, 'HECTOR EDUARDO RUEDA', 'HECTOR EDUARDO RUEDA', '20-10701959-7', '( 0299) 488-6545', '(     )    -', 'imprentaroseduma@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(798, 'RODAMIENTOS CUTRAL CO', 'RODAMIENTOS CUTRAL CO', '20-14230449-0', '(     )4964-293', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(800, 'ROGELIO DIEZ Y CIA LONAS NQN', 'ROGELIO DIEZ Y CIA LONAS NQN', '30-51817392-4', '( 0299) 440-0144', '( 0299) 440-0594', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(804, 'AC SAT SRL', 'AC SAT SRL', '30-71096504-4', '( 0299) 477-1986', '(     )    -', 'ADMINISTRACION@RSVONLINE.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(806, 'RUEDA DIEGO OMAR', 'RUEDA DIEGO OMAR', '20-11603814-6', '( 0299)4886-035', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(817, 'GRUAS SAN BLAS S.A.', 'GRUAS SAN BLAS S.A.', '30-66092045-1', '( 0299)4484-101', '(     )    -', 'nnn@nnn.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(821, 'PABLO ANDRES CONTI TAGUALI', 'PABLO ANDRES CONTI TAGUALI', '20-22105321-5', '(     )    -', '(     )    -', 'sanpabloadministracion@gmail.com ', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(825, 'SAHIORA SA', 'SAHIORA SA', '30-69231962-8', '( 0299) 442-0920', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31');
+INSERT INTO `proveedores` (`id`, `razon_social`, `nombre_fantacia`, `cuit`, `telefono`, `fax`, `email`, `habilitado`, `estado`, `calificacion`, `direccion`, `calle`, `nro`, `ciudad`, `provincia`, `pais`, `forma_pago`, `motivo`, `created_at`, `updated_at`) VALUES
+(826, 'SAIGRO S.A.', 'SAIGRO S.A.', '30-59068969-2', '( 0299) 446-6285', '( 0299) 446-2241', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(827, 'SAKURA S.A.', 'SAKURA S.A.', '30-70947725-7', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(831, 'SAMCYD S.R.L.', 'SAMCYD S.R.L.', '33-65724853-9', '(02994)9601-02', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(840, 'SATURNO HOGAR S.A.', 'SATURNO HOGAR S.A.', '30-67267729-3', '( 0299) 496-5722', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(841, 'SB SERVICIOS', 'SB SERVICIOS', '20-24817436-7', '(02994)9647-52', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(842, 'FABIO DARIO  SCHWAB', 'FABIO DARIO  SCHWAB', '20-26320736-0', '( 0299) 496-4801', '(  155) 885-589', 'scheab@7lagos.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(847, 'JUAN CARLOS SCORPANITI', 'JUAN CARLOS SCORPANITI', '20-18169764-5', '( 0299)4430-298', '( 0299) 443-6457', 'info@opticasenso.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(848, 'MB SERVICIOS de mirta Narambue', 'MB SERVICIOS de mirta Narambue', '27-06394748-8', '(02994)7862-17', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(852, 'SECORVEP S.A.', 'SECORVEP S.A.', '30-66204596-5', '( 0299) 443-2149', '( 0299) 448-3830', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(853, 'SEGUCUER SRL', 'SEGUCUER SRL', '30-70724807-2', '(  011)4204-5339', '(  011)4265-0910', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(854, 'ARGENTSEAL S.A.', 'GOMEZ CARLOS BERNARDO', '30-70812483-0', '(  011)4951-2535', '', 'segupres@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(855, 'SELCOM COMUNICACIONES Y TELEFO', 'SELCOM COMUNICACIONES Y TELEFO', '20-21952764-1', '( 0299)4474-111', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(856, 'SEMATRYN S.A.', 'SEMATRYN S.A.', '30-70959917-4', '(  011)4251-2951', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(857, 'SERER ANDRES', 'SERER ANDRES', '20-07301573-2', '( 0299) 496-1417', '(     )    -', 'serer@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(858, 'SERVIAIKE S.R.L.', 'SERVIAIKE S.R.L.', '30-68445533-4', '( 0299) 489-4831', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(859, 'SERVICIO C.O.', 'SERVICIO C.O.', '20-07564409-5', '( 0299)6327-501', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(862, 'SERVICIOS HUINCUL', 'SERVICIOS HUINCUL', '27-18501764-3', '(02994)9661-12', '(     )    -', 'xxxxxxxxQxxxx.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(865, 'SERVICOM S.R.L.', 'SERVICOM S.R.L.', '30-65771002-0', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(866, 'SERVIMAQ REP. HERR. ELECTRICAS', 'SERVIMAQ REP. HERR. ELECTRICAS', '23-25460473-9', '(     )    -', '(02994)4740-20', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(873, 'LEANDRO RAMON PE?ALVER Y JORGE DANIEL SUAREZ S.H.', 'LEANDRO RAMON PE?ALVER Y JORGE DANIEL SUAREZ S.H.', '30-70898108-3', '( 0299)5814-247', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(874, 'S.I.C.I. SRL', 'S.I.C.I. SRL', '33-57819033-9', '(  011)4664-3075', '(     )    -', 'aperello@sici.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(875, 'SEGURIDAD INDUSTRIAL S.R.L.', 'SEGURIDAD INDUSTRIAL S.R.L.', '30-70791898-1', '(     )4967-500', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(879, 'SILIQUINI S.R.L.', 'SILIQUINI S.R.L.', '30-55541125-8', '(     )    -', '(     )    -', 'ventas@siliquini.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(881, 'SL GROUP REPRESENTACIONES T SR', 'SL GROUP REPRESENTACIONES T SR', '30-70886729-9', '( 0299) 496-4485', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(884, 'JORGE ADOLFO SENN', 'JORGE ADOLFO SENN', '20-20963008-8', '( 0299) 446-2183', '( 0299) 445-2279', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(885, 'BURGOS LORENA NOEMI (SOLUCIONES)', 'BURGOS LORENA NOEMI (SOLUCIONES)', '27-26530507-0', '( 0299) 486-0445', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(890, 'PUCHULU MARIA ANA SOLTEC', 'SOLTEC', '23-17166638-4', '(  011)4799-3818', '(     )    -', 'ventas@soltec-cmc.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(892, 'SOL DE ORO S.H.', 'SOL DE ORO S.H.', '30-70986121-9', '( 0299) 496-1197', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(895, 'SOLUCIONES SRL', 'SOLUCIONES SRL', '30-71149872-5', '(     )    -', '(     )    -', 'solucionesco@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(897, 'MARIA CELESTE LUCERO', 'SPEED GRAFIC - IMPRENTA', '27-28394839-6', '( 0299) 486-0338', '(     )    -', 'imprentaspeed@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(898, 'MARIO A. SPATARO', 'MARIO A. SPATARO', '20-04976346-9', '( 0299) 442-3571', '(  154) 762-076', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(901, 'SILVIA PERALTA', 'SILVIA PERALTA', '27-20074507-3', '( 0299) 439-1584', '(  299)4203-410', 'pehuenrabs@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(904, 'MARCOS ROCCA', 'MARCOS ROCCA', '20-31613670-3', '( 0299) 442-1973', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(906, 'STARGRAF IMPRESORES', 'STARGRAF IMPRESORES', '27-11344013-4', '(     )4435-702', '(     )4431-229', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(912, 'SULLAIR ARGENTINA SA', 'SULLAIR ARGENTINA SA', '30-57672171-0', '( 0299) 478-2500', '( 0299) 478-2002', 'rhaltrich@sullair.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(913, 'SUMINISTROS TECNICOS SRL', 'SUMINISTROS TECNICOS SRL', '30-61252927-9', '( 0299) 445-2952', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(916, 'SURSTORE SRL', 'SURSTORE SRL', '30-70885107-4', '(02941)4213-33', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(917, 'SYMA', 'SYMA', '23-26046527-9', '(  011)4115-8060', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(919, 'EDGAR RAFAEL SOLANA', 'Lavadero Solana', '20-20558719-6', '( 0299) 496-3867', '(  154)0872-62', 'edgar.solana@hotmail.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(926, 'SERV. TEC. TECNICA HUINCUL', 'SERV. TEC. TECNICA HUINCUL', '23-12262017-4', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(927, 'TECHNIQUES & SUPPLIES SRL', 'TECHNIQUES & SUPPLIES SRL', '30-64611871-5', '(  011)4723-3358', '(  011)4723-2916', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(930, 'TECNODIESEL S.R.L.', 'TECNODIESEL S.R.L.', '30-59462020-4', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(937, 'TALLERES HUINCUL S.A.', 'TALLERES HUINCUL S.A.', '30-64811813-5', '(  155) 132-883', '(     )    -', 'talleres@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(943, 'DE TODO SANITARIO', 'DE TODO SANITARIO', '20-13180204-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(944, 'FARIAS ELSA', 'TORNERIA Y MONTAJE LOS SAUCES', '23-13508143-4', '( 0299) 488-7040', '(  155) 096-680', 'torner?a@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(947, 'PAOLA GRITTINI', 'PAOLA GRITTINI', '27-24082644-0', '( 0299) 496-8440', '(     )    -', 'contacto@grupotoolbar.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(948, 'SUPERMERCADOS TOPSY', 'SUPERMERCADOS TOPSY', '33-58557688-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(951, 'TORNERIA EL PAMPEANO', 'TORNERIA EL PAMPEANO', '30-67261745-2', '( 0299) 496-1910', '( 0299) 496-3309', 'pampeano@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(955, 'BURGOS CLAUDIO MARCELO', 'BURGOS CLAUDIO MARCELO', '20-16680029-4', '( 0299) 496-7236', '(     )    -', 'claudioburgos@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(961, 'TRAC SUR SRL', 'TRAC SUR SRL', '33-68446239-9', '( 0299) 446-6055', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(981, 'ACCESORIOS LA UNION GARCIA SANTIAGO ANDRES', 'ACCESORIOS LA UNION GARCIA SANTIAGO ANDRES', '20-25624408-0', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(995, 'SILVIO EMILIO VECE', 'SILVIO EMILIO VECE', '23-20211324-9', '( 0299) 496-1185', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(999, 'MARCOS LYARDET Y PABLO LYARDET', 'Visual Grafic', '30-71167418-3', '( 0299)4779-7999', '(     )    -', 'marcos.visual@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1010, 'VULCANO NOTEBOOK OUTLET SRL', 'VULCANO NOTEBOOK OUTLET SRL', '30-70928247-2', '( 5246)6660-6661', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1012, 'WAL MART ARGENTINA S.R.L. ', 'WAL MART', '30-67813830-0', '(     )    -', '(     )    -', 'noreply@wall-mart.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1014, 'WELL DONE SERVICES SRL', 'WELL DONE SERVICES SRL', '30-71046476-2', '(     )    -', '(     )    -', 'servicio.tecnico@welldonesrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1015, 'WELTY S.A.', 'WELTY S.A.', '30-70761834-1', '( 0299)4473-934', '( 0299)4886-830', 'WELTY@CIUDAD.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1019, 'YANINA LAVADERO', 'YANINA LAVADERO', '23-29970641-9', '(     )    -', '(     )    -', '', 0, 'Apto para todas las operaciones', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1028, 'Aislaciones del Valle S.R.L.', '', '33-68447973-9', '0299 4461277', '', 'aislacionesdelValle@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1029, 'MONTES MAURICIO JOSE', 'TODO DIGITAL', '20-28393816-7', '0299-496-7258', '', 'tododigital@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1030, 'ACYMAT S.A.', 'ACYMAT S.A.', '30-70881617-1', '011-4225-3711/4241-8282', '', 'acymat@ciudad.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1031, 'Herfil - Herramientas Industriales', '', '20-16454246-8', '011 - 4912 3744', '', '', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1032, 'EQUIPEL S.R.L.', '', '30-68447614-5', '(0299) 4473766', '', 'consultas@equipel.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1033, 'LUBE SEG.INDUSTRIAL S.R.L.', 'LUBE', '30-71091160-2', '011-4488-5595', '011-4488-3053', 'info@lubeseguridad.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1034, 'Equipar Services S.R.L.', '', '30-71285380-4', '4462183', '', '', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1035, 'ZOXI', 'ZOXI', '30-69787670-3', '0299 445 7000', '', '', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1036, 'N & G ', 'Tapicer?a N&G de N?stor Valenzuela', '20-08583152-7', '0299 - 4887233', '', 'n&g@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1037, 'SYLVIA CARTELES SRL', 'SYLVIA CARTELES SRL', '30-71168974-1', '011-6091-4721/4582-7531/4433-2517 CEL.1550021189', '', 'ventas@sylviacarteles.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1038, 'IRAM', 'IRAM', '30-52556278-2', '02994474400', '', 'mfarias@iram.org.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1039, 'ZANETTI CRISTIAN JOSE ', 'EL PUPI', '20-31316767-5', '0299-4914224', '0299-4914224', ' cristianzanetti@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1040, 'LTM Suministros Industriales Bahia Blanca SRL en formaci?n de Lloret Rodrigo y Pierobon Rafael', 'LTM Suministros Industriales SRL', '30-70918030-0', '02941-4007787 / 4007788', '', 'ventas@ltmsuministrosindustriales.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1041, 'Hormig?n Huincul de Cimientos Constructora S.A.', 'Hormig?n Huincul', '30-71184231-0', '486 1156', '', '00000@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1042, 'Yayty S.A.', 'Yayty S.A.', '30-57288868-8', '(011) 4652 67554', '', 'yaytysa@ciudad.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1043, 'C.N. ALDAY', 'C.N. ALDAY', '20-35655861-9', '2995530530', '', 'rnicolas.alday@argentina.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1044, 'KSB', 'KSB', '33-50142415-9', '(011) 4766 3021', '', 'ventas@ksb.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1045, 'ENPOL - Envases Pl?sticos Olmos', 'ENPOL - Envases Pl?sticos Olmos', '30-68490427-9', '(0221) 4418-708', '', 'enpol@infovia.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1046, 'La Casa de las Pilas', '', '20-92711775-5', '0299 4960985', '', 'lacasadelaspilas@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1047, 'Cimse Patagonia  s.r.l.', 'Cimse Patagonia s.r.l.', '30-71224403-4', '0299 431 0557', '', 'administracion@cimsesrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1048, 'Pi?ot Alicia Estela', 'Librer?a Din?mica', '27-12510404-0', '4430524', '', 'libreriadinamica@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1049, 'TEX ARGENTINA SRL', '', '30-70872033-6', '(011) 4702-4002/3', '', 'ftenaglia@texasrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1050, 'MAQUINARIAS ZEZIOLA SRL', '', '33-70879920-9', '(54-11) 4842-4477 / 4840-0671', '', 'informes@maquinariaszeziola.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1051, 'CANDAMIO S.A.', 'CANDAMIO S.A.', '30-52045347-0', '01142562666', '', 'candamio@fibertel.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1052, 'Insumos & M?quinas', '', '20-11560636-1', '(0351) 474 2233 - 155 195220', '', 'info@insumosymaquinas.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1053, 'Carlos Luis Bruno', 'SISCOM', '20-14055244-6', '0341-4409517 - Int 150', '', 'carlos.bruno@siscom.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1054, 'DASH SRL', '', '30-70951595-7', '445 1375', '', 'dash@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1055, 'ELECTR?NICA VALENCIA', 'ELECTR?NICA VALENCIA', '20-11742982-3', '02994432542', '', 'gustavo.gutierrez@doschips.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1056, 'Lonera LEO', 'Lonera LEO', '20-23793681-8', '(011) 4666 0823', '', 'info@loneraleo.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1057, 'Transportes Seifert S.R.L.', 'Transportes Seifert S.R.L.', '30-71023138-5', '496 5082', '', 'tseifert@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1058, 'Tecni Total SA', '', '30-69664498-1', '(011) 4139 0695', '', 'tecnitotal@ciudad.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1059, 'Tassi Silvana Lorena', 'Farmacia Vital', '27-25776834-7', '0299 4966625', '', 'farmacia_vital@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1060, 'GEO COMAHUE', 'GEO COMAHUE', '30-70243657-1', '496 6803', '', 'geocom@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1061, 'Sanchez E. Jorge', 'Herrajes Tito', '20-07576089-3', '0299 4961721', '', 'sanchjor46@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1062, 'Almar Martin Miguel', 'Integral Instrument', '20-29846383-1', '011-4218 5675', '', 'integralinstrument@ciudad.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1063, 'AFP Service', 'AFP Service', '20-17238830-3', '(0298) 4430355', '', 'ventas@afpservice.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1064, 'Ceferino Carlos Mart?nez', 'ByteShop Computaci?n', '23-25489875-9', '0299 156348241', '', 'byteshop@coplnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1065, 'INSUAR', 'INSUAR de Alberto R. Arful', '20-17301723-6', '(0341) 426 6546', '', 'horacio@insuar.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1066, 'Meteostar de Cecilia Rosana Di Santto', 'Cecilia Rosana Di Santto', '27-17939857-0', '(02325)-15-435418', '', 'info@meteostar.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1067, 'Daniel Felix Granollers', '', '23-11545278-9', '0299 4886102', '', 'metalurgicarincon@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1068, 'Sidercam S.A.', 'Sidercam S.A.', '30-71030166-9', '447 2540', '', 'cmonachesi@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1069, 'Roberto Tedesco', 'Consultora del Sud -SHIMA&PRO', '20-10949193-5', '0299155477790', '', 'rtedesco@liv.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1071, 'SERVICIOS MARCOS', '', '23-11737705-9', '02994243067', '', 'SERVICIOSMARCOS@TECPRECINCSRL.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1072, 'Grupo PRAM', 'Grupo PRAM', '30-71047926-3', '486 1156', '', 'grupopram@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1073, 'WURTH  ', '', '30-63181058-2', '011 5453 4200 ', '', 'info@wurth.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1074, 'Servicios Industriales y Civiles S.R.L.', 'S.I.C.', '30-71248421-3', '0299 486 2200', '', 'COLLIGO.CLAUDIO@SIC-SRL.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1075, 'Kim? Consturc - Instalaciones el?ctricas', 'Kim? Consturc - Instalaciones el?ctricas', '20-93320591-7', '(0299) 444 1381', '', 'wwww@qqqq.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1076, 'Servicios Topogr?ficos', 'S.T.', '30-65859193-9', '0299 496 0893', '', 'servtop@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1077, 'Silvia Alejandra Araujo', 'Silvia Alejandra Araujo', '27-24866258-7', '496 6666', '', 'saa@www.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1078, 'GSA - Grupo Sur S.A. - Componentes T?rmicos', 'GSA - Grupo Sur S.A. - Componentes T?rmicos', '30-69729328-7', '(011) 4218 2442', '', 'info@gruposurargentina.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1079, 'Seminarios Corporativos SRL', 'FORUM', '30-71420595-8', '(011) 5032-3111', '', 'afratamico@criteriocapacitacion.com  ', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1080, 'ECOM S.A.', 'ECOM S.A.', '30-69142747-8', '(0221) 461 3587', '', 'ecomsa@infovia.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1081, 'Rey del Tanque SRL', 'Rey del Tanque SRL', '30-71333490-8', '(011) 4521 5786', '', 'reydeltanque@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1082, 'Industrial Belgrano S.A.', 'Industrial Belgrano S.A.', '30-58054653-2', '(011) 582 8844', '', 'info@industrialbelgrano.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1083, 'TECIN', 'TECNOLOGIA CONTRA INCENDIOS S.A.', '30-51694830-9', '(011) 4766 4440', '', 'informes@tecin.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1084, 'DER GROUP SRL', 'DER GROUP SRL', '30-70989613-6', '4434944', '', 'enrique@dergroup.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1085, 'Ca?iflex de Tubiflex S.A.', 'Ca?iflex de Tubiflex S.A.', '30-70960350-3', '(03462) 436200', '', 'ventas@caniflex.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1086, 'TUBOSCOPE VECTO DE ARGENTINA S.A.', 'TUBOSCOPE', '33-61600863-9', '0299 4413207', '', 'Victor.Toledo@nov.com ', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1087, 'GEESE QUIMICA SRL', 'GEESE QUIMICA SRL', '30-63751613-9', '(011) 4247 9379', '', 'info@geesequimica.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1088, 'MOTO UNO', 'MOTO UNO', '27-29429901-2', '155 227255', '', 'nnnn@nnn.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1089, 'T.H.C. Servicios (Soldaduras en Gral. P.H.)', '', '20-32020373-3', '0299 155184159', '', 'trabajosenhierroscastillo@hotmsil.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:31', '2018-01-27 03:43:31'),
+(1090, 'Adrian Alejandro Orrego', 'Patagonian Agrifood Advice', '20-22898459-1', '02994964997', '', 'aasanmartin@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1091, 'JAS S.R.L.', 'JAS S.R.L.', '30-70899227-1', '4413926', '', ' jasservicios@jasservicios.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1092, 'PROSEGUR TECNOLOGIA ARGENTINA S.A.', 'PROSEGUR TECNOLOGIA ARGENTINA S.A.', '30-65719840-0', '(11) 4838 2300 ', '', 'diego.gimenez@prosegur.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1093, 'MARTIN RUBEN PEREZ', 'CEMAR ELECTRONICA', '20-30799447-0', '0223156156292', '', 'cemarventas@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1094, 'EQUIPOS DE BOMBEO S.A.', 'T&T', '30-71155070-0', '02614324583', '', 'aletomba@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1095, 'Motores y Materiales Electricos S.A.', 'MYM', '30-55662684-3', '02614380380', '', 'electricidad@mymesa.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1096, 'ELECTRICIDAD MAZA SRL', 'ELECTRICIDAD MAZA SRL', '30-58710878-6', '02614444444', '', 'ELECTRICIDAD@MAZA.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1097, 'POLAR S.R.L.', '', '30-70906138-7', '0299 4430160', '', 'ventas@polarsrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1098, 'Nicolas Morales', 'Gomer?a El Pampeano', '20-08367248-0', '02994886120', '', 'gomer?a@goma.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1099, 'HIERROS MALDONADO S.A.', 'HIERROS MALDONADO S.A.', '30-70892133-1', '(0261) 426 2929', '', 'odragoni@hmaldonado.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1100, 'GEOCONSULT S.R.L.', 'GEOCONSULT S.R.L.', '30-67264713-0', '(0299) 4436886', '', 'geoconsult@geoconsult.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1101, 'LAHUE S.R.L.', 'LAHUE S.R.L.', '30-70811468-1', '(0299) 4964908', '', 'lahue@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1102, 'Transporte PEDUZZI SRL', 'Transporte PEDUZZI SRL', '30-70849238-4', '496 6151', '', 'tpeduzzi@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1103, 'LA CASA DEL INSTALADOR SA', 'LA CASA DEL INSTALADOR SA', '30-58403615-6', '4432630', '', 'lacasadelinstalador@notengocorreo.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1104, 'Luis Alberto Gonz?lez', 'LS-PROTEC', '24-23944369-5', '01152922216', '', 'info@lsprotec.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1105, 'GONZALEZ LILIANA NOEMI', 'PARALIM', '27-10531317-4', '02994861343', '', 'paralimp@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1106, 'Viviana Elizabeth Jaime', 'Lavadero Rincon y Servicios', '27-14175737-2', '0299156316519', '', 'lavaderordls@hotmail.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1107, 'Skywalker Argentina s.r.l.', '', '30-70730595-5', '011-4721-0201', '', 'info@skywalker.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1108, 'Lidia Esther Lopez', 'La Rotonda - Gomeria y Servicios', '27-10042182-3', '02994963699 - 02994964396', '', 'larotonda@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1109, 'Fernando Fernandez', 'Rio Colorado - Servicios Industriales (Lav. Catriel)', '20-13997184-2', '0299 155188053', '', 'serviciosindustrialesriocolorado@cotecal.net.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1110, 'Troncoso Jorge Omar y Jara Ceferino Daniel', 'Remisse Los Amigos', '30-70884206-7', '0299 4965800', '', 'notieneemail@bar.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1111, 'Reactiva S.R.L.', 'Reactiva S.R.L.', '30-65726231-1', '(011) 4568-2227 ', '', 'info@reactiva.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1112, 'High Valley Services S.R.L.', 'Pro Hygiene', '30-71145113-3', '02994470551', '', 'ejecutivo1.neuquen@prohygiene.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1113, 'HILTI ', 'HILTI', '30-65696323-5', '08004444580', '', 'ar-onlinesales@hilti.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1114, 'Verit?cnica', 'Verit?cnica', '30-67264133-7', '0299 4433310', '', 'verit?cnicasrladm@outlook.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1115, 'EL ALEMAN S.R.L.', 'EL ALEMAN S.R.L.', '30-71366500-9', '0299 155967740', '', 'elalemansrlsrl@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1116, 'DURANDO GAS', 'DURANDO GAS', '20-20881689-7', '02994589830', '', 'DURANDOGAS@RINCONDLS.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1117, 'PC DISCOUNT S.A.', 'PC DISCOUNT S.A.', '30-70197343-3', 'TEL 011 4957 1000 INT 29', '', 'garleo@pcdiscount.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1118, 'Julia Roquelina Gil', 'CROCANTES', '23-13880307-4', '02994964997', '', 'crocantes@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1119, 'Fernandez Oscar Alfredo', 'Farmacia Silvia II', '23-26510089-9', '48861802', '', 'farmacia@tecuro.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1120, 'Motos GARDEL', 'Motos GARDEL', '20-20211483-1', '496xxx', '', 'motosgardel@nnnnnn.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1121, 'Norberto Manuel Gaitan y Cia. S.R.L.', 'Norberto Manuel Gaitan y Cia. S.R.L.', '30-70922440-5', '(011) 4647 0986', '', 'js@alvearmedicalcenter.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1122, 'STI - Servicios T?cnicos Integrales', 'STI - Servicios T?cnicos Integrales', '20-14277130-7', '(011) 4200 3188', '', 'stiventas@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1123, 'Labtesa Laboratorios Termoionic s.a.', '', '30-58301360-8', '011 4712 5484', '', 'ventas@labtesa.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1124, 'Rodriguez Emilio Nelson Ariel', 'EMILIO PC Servicios Informaticos', '20-12680317-7', '299154766433', '', 'emiliopc@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1125, 'Abarzua Aedo Daniel Orlando', 'SIICO Servicios', '20-24941251-2', '299156349409', '', 'daniel_abarzua@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1126, 'Biancucci Bassignani', '', '33-62347736-9', '0299 4432535', '', 'biancucci@basignani.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1127, 'Rizza Fabian', 'El Boulevard de la Empanada', '20-20558704-8', '0299 4861641', '', 'rizaa@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1128, 'Claudia Gabriela Huinca', 'Lavadero Huinval', '27-27979737-5', '2995801612', '', 'lavadero_huinval@outlook.es', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1129, 'Leandro Knotek', 'Knotek Textil', '20-24157980-9', '02994202002', '', 'knotektextil@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1130, 'Gamboa Silvia', 'EL GALLEGO', '27-04965943-7', '4886742', '', 'pablo.painevil@tecprecincsrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1131, 'Antonio Pan e Hijos', 'AP & H', '30-69788079-4', '0299 449 6999', '', 'ventas@antoniopan.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1132, 'Gr?as ORBAS SRL', 'Gr?as ORBAS SRL', '30-71204205-9', '2994053658', '', 's.a.b.65@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1133, 'CAMPOS, HECTOR OMAR', 'CAMPOS CONSTRUCCIONES', '20-16980045-7', '02994886120', '', 'PABLO.PAINEVIL@TECPRECINCSRL.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1134, 'MARIO GUSTAVO GUIDON', 'TEXTIL CORDILLERANA', '20-10062843-1', '0229 4961738', '', 'textilcordillerana@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1135, 'LAVEZZI ERNESTO', 'PLANETA NOTEBOOKS', '20-23573978-0', '011-43280740', '', 'info@planetanotebooks.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1136, 'CENCOSUD S.A.', 'EASY NEUQUEN', '30-59036076-3', '08109993279', '', 'EASY@GMAIL.COM', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1137, 'Alborelli Ferreter?a de H?ctor Humberto Alborelli', 'Alborelli Ferreter?a', '20-07746395-0', '400 9489', '', 'cotizaciones@alborelli.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1138, 'Acu?a Noelia Beatriz', 'Emmanuel Servicios', '27-29755283-5', '0299155819146', '', 'PABLO.PAINEVIL@TECPRECINCSRL.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1139, 'Comaseg s.r.l.', 'Comaseg s.r.l.', '30-71405574-3', '0299-5002426', '', 'servicios@comaseg.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1140, 'VALAM S.A.I.C.', '', '33-53988281-9', '(011) 42076616', '', 'ventas@valam.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1141, 'EVERTHRON MARINE SYSTEMS SRL', 'EVERTHRON MARINE SYSTEMS SRL', '30-71065652-1', ' (+5411) 4720-5692', '', 'damian.avanzi@everthron.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1142, 'MG de Mario Gonzalez', 'MG Bulonera', '20-26042883-8', '445 2240', '', 'mgbulonera@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1143, 'NEW TECHNOLOGY', 'NEW TECHNOLOGY', '30-71151814-9', '01152799919', '', 'info@new-technology.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1144, 'Casa Ferracioli S.A.', 'Casa Ferracioli S.A.', '30-56180035-5', '4487918', '', 'camping@ferracioli.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1145, 'DOLZ  Hnos. S.R.L.', 'DOLZ  FABRICA Y CALIBRACIONES', '30-50460344-6', '011 4635 3159', '', 'DOLZHNOS@SPEEDY.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1146, 'Silvia Laura Lizarrondo', 'SYMIL PRINT', '27-14856826-5', '2996322917', '', 'simylprint@hotmail.es', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1147, 'DALBUZ SRL', 'DALBUZ SRL', '30-57102353-5', '02215044962', '', 'federico_daloia@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1148, 'SINERGIA SERVICIOS SRL', 'SINERGIA SERVICIOS SRL', '30-70887459-7', '(0341) 4780700', '', 'mlopez@sinergiaservicios.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1149, 'Arauco s.a.c.i.f.  CONSECIONARIO OFICIAL', 'Arauco s.a.c.i.f.', '30-55423290-2', '0299 4455600', '', ' info@arauco.com.ar ', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1150, 'Alfredo Daniel Romanazzi', 'El Puma Pesca', '20-17021654-8', '0261 425 9110', '', 'ventaselpumapesca@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1151, 'ALBERTO FRECCERO', 'PRECINT  FACTORY', '20-12913180-3', '011 4253 6114', '', 'INFO@PRECINTFACTORY.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1152, 'Gustavo Adolfo Gutierrez', 'F&G Transportes y Servicios', '20-23612549-2', '2994653079', '', 'gustavo.gutierrez@live.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1153, 'NIPRO SRL', 'NIPOR SRL', '30-70798051-2', '02614251583', '', 'compras@tecprecincsrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1154, 'Jorge Daniel Lomo', 'MASTER BLOSTER', '20-14873681-3', '4423157', '', 'lujan@importadoradelvalle.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1155, 'EPIMASTER SRL', 'EPIMASTER SRL', '30-70725010-7', '(011) 1544146102', '(011) 4656 9222', 'infoventas@epitecnica.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1156, 'Mariela Adriana Mansilla', 'LA GRAFICA', '27-25173292-8', '02994969700', '', 'marieal.mansilla@hotmail.comes.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1157, 'Valves Systems  s.r.l.', 'Valves Systems s.r.l.', '33-71071369-9', '011 4722 2733', '', 'info@valvessystems.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1158, 'SERVIN INGENIER?A S.A.', 'SERVIN INGENIERIA', '30-70760271-2', '02994488499', '', 'servinqn@serviningenieria.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1159, 'Sanchez Miguel Angel', 'Sanchez Miguel Angel', '20-12212586-7', '0299-155096680', '', 'MIGUELSANCHEZ@HOTMAIL.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1160, 'Ra?l V. Batall?s S.A.', 'YUKON', '30-50208683-5', '01145555100', '', 'info@yukonargentina.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1161, 'SALDA?A TRUCKS', 'SALDA?A TRUCKS', '20-20606052-3', '02994823429', '0299156324147', 'SALDA?A@HOTMAIL.COM', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1162, 'ML GOMA', 'ML GOMA', '20-22342408-3', '03414653237', '03414612495', 'ml_goma@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1163, 'V.A. Gr?as de V?ctor A. Gutierrez', 'V.A. Gr?as', '20-08215607-1', '2995834253', '', 'victorg2348@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1164, 'Ciudad Muebles', 'Ciudad Muebles', '20-30067213-3', '011 4482 6261', '', 'info@ciudad-muebles.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1165, 'ALFARO DAIANA LORENA', 'FERRETER?A LO DE ALFARO', '27-34220319-7', '02994862620', '', 'lodealfarogas@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1166, 'RICARDO CUNEO', 'SERVICE CUNEO', '20-07578390-7', '02994962128', '', 'cuneo@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1167, 'Nelson Fabian Dolso', 'FARMACIA EL INDIO', '20-22843085-5', '02994968105', '', 'elindio@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32');
+INSERT INTO `proveedores` (`id`, `razon_social`, `nombre_fantacia`, `cuit`, `telefono`, `fax`, `email`, `habilitado`, `estado`, `calificacion`, `direccion`, `calle`, `nro`, `ciudad`, `provincia`, `pais`, `forma_pago`, `motivo`, `created_at`, `updated_at`) VALUES
+(1168, 'ELECTROANTU SRL', 'ELECTROANTU SRL', '30-67262755-5', '4964400', '', 'javiertapia182@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1169, 'Neuservice SRL', 'Neuservice SRL', '33-70947729-9', '496 2194', '', 'neuservice@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1170, 'Eliana Gimena Gallo', 'BUNKER OIL', '27-28394864-7', '2994110252', '', 'bunkeroilservicios@yahoo.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1171, 'Servi Centro de Julio Pacheco', 'Servi Centro -', '20-11244739-4', '440 0107', '', 'servicentro@live.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1172, 'Ortiz De Guinea Diego', 'MEXX Computaci?n', '20-22653576-5', '01144333829', '', 'hola@mexx.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1173, 'Cisterna Walter Edgardo', 'S.I.P. - Servicio Instrumental Petrolero', '23-24751489-9', '2995292190', '', 'CISTERNAWALTER@YAHOO.COM.AR', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1174, 'INDUMENTARIA PROTECTIVA RASA S.A.', 'RASA   S.A.', '30-71018043-8', '(02241) 424-374', '', 'rasa@rasaindprot.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1175, 'SEGUSUR S.H. de GOMEZ, GUSTAVO y GARCIA, MARTIN', 'SEGUSUR', '30-71118833-5', '2914162702', '', 'ventas1@segusurweb.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1176, 'PAIMUN INDUSTRIAL SA', 'PAIMUN INDUSTRIAL SA', '30-70877557-2', '+54-011-4297-9112', '', 'ventas@e-paimun.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1177, 'Raul Enrique Mardones ', 'R.E.M.', '20-20960556-3', '02994965570', '', 'remventas@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1178, 'VIANHE SA', 'VIANHE SA', '33-70801685-9', '011- 4654-8794 ', '', 'info@vianhe.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1180, 'SEGURIDAD Y EMPAQUE SA', 'SEGURIDAD Y EMPAQUE SA', '30-64194798-5', '(11) 4918-5026', '', 'facturaci?n@segempsa.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1181, 'CLARO', 'AMX ARGENTINA SA', '30-66328849-7', '03327413434', '', 'exa73787@claro.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1182, 'GPM ARGENTINA SA', 'GPM ARGENTINA SA', '33-71008269-9', '(011) 4453-1646 / 4454-0032', '', 'dorsi@gpmsa.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1183, 'Metal?rgica JM  s.r.l.', 'Metal?rgica JM  s.r.l.', '30-58960983-9', '011 4612 2715', '', 'info@jmsrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1184, 'ECSE SRL', 'ECSE SRL', '30-70915096-7', '03543 ? 467956', '', 'castorseguridad@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1185, 'El Quijote Librer?a s.r.l.', 'El Quijote Librer?a', '30-71076482-0', '0299 442 9806', '', 'elquijotelibreria@speedy.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1186, 'PIMIACI S.A.', '', '30-70713518-9', '(011) 4543 2217', '', 'info@vernassa.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1187, 'Silvia Andrea Peralta ', 'Nueva Tela', '27-20558511-2', '02994964300', '', 'nuevatela@hotmail.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1188, 'RIO LIMAY OIL FIELD SERVICES SA', 'RIO LIMAY OIL FIELD SERVICES SA', '30-70988747-1', ' 449-0155', '', 'flizarrondo@riolimayofs.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1189, 'El Monito - Servicios Generales', '', '20-22538534-4', '2994219449', '', 'elmonito@copelnet.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1190, 'KINGVOX SRL', 'KINGVOX SRL', '30-50469372-0', '011 4671-5171/4961', '', 'kingvox.oscar@kingvox.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1191, 'Caroli, Fernando Ariel', 'NOTEBOOKS', '20-33033094-6', '0111537346536', '', 'info@fcnotebooks.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1192, 'Envases Pl?sticos Lago S.A.', 'Envases Pl?sticos Lago S.A.', '30-70949938-2', '0114699-7257 ', '', 'ventas@plasticoslago.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1193, 'Servicios Petroleros del Norte SA', 'Servicios Petroleros del Norte SA', '30-70904534-9', '4969790', '', 'sergio_formica@nortpetrol.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1194, 'AUTOMAT MEDICION', 'AUTOMAT MEDICION', '30-59888196-7', '01145550055', '', 'comercial1@automat.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1195, 'AUTO TUNING', 'AUTO TUNING', '20-24583662-8', '(011) 4652 2036', '', 'autotuningcomar@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1196, 'Lihue Regaler?a', 'Lihue Regaler?a', '27-32120297-2', '2994205190', '', 'lihueregalaer?a@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1197, 'ELECTROTECNIA FIORINO SRL', 'ELECTROTECNIA FIORINO SRL', '30-70732689-8', '(+5411) 4581-3700', '', 'info@fiorinoelect.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1198, 'Yaguar ', '', '30-62964267-2', '447-5400', '', '\'truiz@yaguar.com.ar\'', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1199, 'Sinigoj Graciela Cristina', 'Maderara Patagonia', '27-13148043-7', '0299 443 4408', '', 'maderapatagonia@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1200, 'Bonafide Expresso', 'Bonafide Expresso', '27-05469520-4', '0299 4960454', '', 'bonafide@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1201, 'DASTEC SRL', 'DASTEC SRL', '30-64114165-4', '01153522518', '', 'dastecsrl@dastecsrl.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1202, 'ABS INTERNATIONAL SA', 'ABS INTERNATIONAL SA', '30-68245522-1', '01142544831', '', 'abs@absinternational.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1203, 'FARIAS LUCAS GABRIEL', 'GRUAS FARIAS SERVICIOS', '20-30673950-7', '2994087382', '', 'gruasfarias84@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1204, 'Ing. Roberto F. Corbelle', '', '20-11742640-9', '154 289243', '', 'robertocorbelle@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1205, 'ITECO SRL', '', '30-51722193-3', '(54-11) 4855-7092', '', 'info@iteco.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1206, 'CHASQUI SRL', 'CHASQUI SRL CONTROL DE PLAGAS', '30-64837080-2', '02994433984', '', 'raul@chasquinqn.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1207, 'Matec Medici?n s.r.l.', 'Tu Medici?n', '30-70991633-1', '011 4554 8480', '', 'asistente3@tumedicion.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1208, 'Nancy Beatriz Bianchi', 'Cacho?s Cerrajer?a', '27-21385978-7', '2994912522', '', 'cachitopablo@noteolvideslallave.cat.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1209, 'Importaciones y Exp. Industriales Nozzles Ltda.', '', '00-00000000-0', '+56 2 2247 6401', '', 'info@industrysystem.cl', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1210, 'Proseind s.a.', 'Proseind s.a.', '30-70700989-2', '0299 4420453 - 0351 4552017', '', 'ventas@proseind.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1211, 'Supermercados Mayoristas MAKRO s.a.', 'Makro', '30-58962149-9', '0299 4450207', '', 'macro@macromayorista.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1212, 'SIAFA SRL', 'SIAFA SRL', '30-66319797-1', '011 4684 2232', '', 'higieneocupacional@siafa.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1213, 'ARELLANO CRISTIAN JAVIER', 'ARELLANO CRISTIAN JAVIER', '23-40960202-9', '2994887888', '', 'arellanocristian@rincon.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1214, 'TORNERIA MECINA de Andr?s Mecina', 'TORNERIA MECINA', '20-04622190-8', '49600000000000', '', 'mecina@mecina.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1215, 'Vicentelli Carlos Roberto', 'Mas que Precios', '20-08270257-2', '011 42510290', '', 'masqueprecios@yahoo.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1216, 'TGB SA', 'TGB SA', '30-50257715-4', ' (011) 4918 - 2828', '', 'tgbsa@tgb.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1217, 'EPITECNICA ', 'SESENTAONCE SRL', '30-71151096-2', '(011) 4656-9700/8989', '', 'infoventas@epitecnica.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1218, 'Farmacia AMUYEN III de Javier Gonzalez', 'AMUYEN III', '20-20832455-2', '2994567519', '', 'farmaciaamuyen3@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1219, 'SAC - Servicios de Asesoramiento y Capacitaci?n SRL', '', '30-70982789-4', '2996288456', '', 'insaurraldecarlos@sacsrl.com.ar  ', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1220, 'Pulidos ZURITA / de Zurita Facundo Germ?n', 'Pulidos ZURITA', '20-32570476-5', '496xxxx', '', 'nnnn@nn.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1221, 'Mauro Muebles de Mario Hugo Rubio', 'Mauro Muebles', '20-14405387-8', '496 6237', '', 'mauro@nnn.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1222, 'SOIPE SRL', '', '30-70764016-9', '4961851', '', 'compras@soipesrl.com.ae', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1223, 'RIVERA JUAN FERNANDO', 'Seguridad en Carteles', '20-13220915-5', '+54 11 4 674 0440 / 0990', '', 'ventas@seguridadencarteles.com.ar', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1224, 'DIEGO MART?N PEREZ', 'FDS GASES (PRAXAIR)', '27-35178762-2', '2995822062', '', 'fdsgases@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1225, 'Hermosilla Teresa Lidia', 'Bulonera FAMA', '23-14430820-4', '0299 486 2120', '', 'bulonerafama@hotmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1226, 'Remolques ALE de Nu?ez Nolberto Fabi?n', 'Remolques ALE', '23-13574180-9', '2996339352', '', 'remolquesale@gmail.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1227, 'ERNESTO Y JORGE FERRARI S.H.', 'FERRARI Hnos.', '30-64287304-7', '446 1564', '', 'ferrarish@ferrarihnos.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1228, 'Mercado LA FLORIDA', 'Mercado LA FLORIDA', '23-92405983-4', '496 3479', '', 'laflorida@nnn.com', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1230, 'SUPERMERCADO LEON de Qiu Liyin', 'SUPERMERCADO LEON', '27-94055603-7', '4966666666', '', 'supleon@nnn.nn', 0, 'Apto para operaciones menores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-27 03:43:32', '2018-01-27 03:43:32'),
+(1234, 'eimar ', 'eimar ', '123123', '123, 123, 123, 123', NULL, 'e.rangeld@hotmail.com', 0, 'c', NULL, '111', '222', '333', '444', '555', '666', NULL, NULL, '2018-05-21 21:35:45', '2018-05-21 21:35:45'),
+(1235, 'eimar2 ', 'eimar 2', '222', '2222', NULL, '222', 0, '', NULL, '222', '222', '22', '2', '', '', NULL, NULL, '2018-05-21 21:40:26', '2018-05-21 21:40:26'),
+(1236, 'jose ', 'jose', '333', '333', NULL, 'jose@d.c', 0, 'v', NULL, '11', '22', '', '', '', '', '[{\"nombre\":\"Efectivo\"},{\"nombre\":\"Tarjeta Débito\"}]', NULL, '2018-05-21 21:42:47', '2018-05-21 21:42:47'),
+(1237, 'proveedor d', 'fantasia d', '12423993432', '555555555555', NULL, 'proveedord@tecprecinc.com', 0, '', NULL, '123123', '123123', '123', '', '', '', '[{\"nombre\":\"Tarjeta Débito\"}]', NULL, '2018-07-10 17:27:01', '2018-07-10 17:27:01'),
+(1238, 'proveedor f', '213213', '12', '31', NULL, '', 0, '', NULL, '31', '', '', '', '', '', '[]', NULL, '2018-07-10 18:41:59', '2018-07-10 21:11:15'),
+(1239, 'assdoj', 'aosdj', 'oads', '213', NULL, 'asdasdasd', 0, '', NULL, '', '', '', '', '', '', '[]', NULL, '2018-07-10 20:08:21', '2018-07-10 20:08:21');
 
 -- --------------------------------------------------------
 
@@ -4607,14 +4678,19 @@ INSERT INTO `proveedores_productos` (`id`, `precio`, `proveedor_id`, `producto_i
 (70, NULL, 1237, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (71, NULL, 1237, 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (72, NULL, 1237, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(81, NULL, 1238, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(82, NULL, 1238, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(88, NULL, 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(89, NULL, 1, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(90, NULL, 1, 3489, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(91, NULL, 1, 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(92, NULL, 1, 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(100, NULL, 35, 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(100, NULL, 35, 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(104, NULL, 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(105, NULL, 1, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(106, NULL, 1, 3489, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(107, NULL, 1, 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(108, NULL, 1, 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(111, NULL, 1239, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(112, NULL, 1239, 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(114, NULL, 24, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(115, NULL, 24, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(116, NULL, 24, 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(117, NULL, 1238, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(118, NULL, 1238, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -4680,10 +4756,10 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`id`, `nombre`, `codigo`, `precio`, `stock`, `stock2`, `peps`, `valor_reposicion`, `stock_min`, `stock2_min`, `partida_parcial`, `categoria_id`, `rubro_id`, `tipo_id`, `proveedor_id`, `producto_id`, `created_at`, `updated_at`) VALUES
-(1, ' Alcohol Iodado', '2951', 10.00, 8, 4, 0.00, 0.00, 5, 0, NULL, 88, 1, 2, NULL, 1, '2018-01-26 06:02:30', '2018-07-05 01:51:45'),
-(2, ' Apósito (para acolchado de heridas o vendajes compresivos)', '2949', 45.00, 2, 1, 0.00, 0.00, 0, 0, NULL, 84, 6, 2, NULL, 2, '2018-01-26 06:02:30', '2018-05-23 02:54:56'),
+(1, ' Alcohol Iodado', '2951', 10.00, 7, 3, 0.00, 0.00, 5, 0, NULL, 88, 1, 2, NULL, 1, '2018-01-26 06:02:30', '2018-07-13 20:45:44'),
+(2, ' Apósito (para acolchado de heridas o vendajes compresivos)', '2949', 45.00, 1, 2, 0.00, 0.00, 0, 0, NULL, 84, 6, 2, NULL, 2, '2018-01-26 06:02:30', '2018-07-13 20:43:35'),
 (3, ' Ficha Macho 2P + T x 16amp (Domiciliaria) .-', '3471', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 18, 10, 2, NULL, 3, '2018-01-26 06:02:30', '2018-05-08 23:24:20'),
-(4, ' Ficha Macho 2P + T x 32amp (Domiciliaria) .-', '2733', 1.08, 3, 3, 0.00, 0.00, 0, 0, NULL, 18, 9, 2, NULL, 4, '2018-01-26 06:02:30', '2018-05-24 00:54:49'),
+(4, ' Ficha Macho 2P + T x 32amp (Domiciliaria) .-', '2733', 1.08, 3, 4, 0.00, 0.00, 0, 0, NULL, 18, 9, 2, NULL, 4, '2018-01-26 06:02:30', '2018-07-13 20:44:21'),
 (5, ' Gabinete p/ mang y elem seg. BWG-16, puerta ciega y cerr. aldaba. 170x100x22 cm. Div. int. 60cm sup y 114 cm entre 2 est. div. vertical 49 cm. Gancho', '3021', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 46, 0, 0, NULL, 5, '2018-01-26 06:02:30', '2018-05-08 23:24:20'),
 (6, ' Otosporin L Gotas (analg?sico para o?dos)', '2955', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 88, 0, 0, NULL, 6, '2018-01-26 06:02:30', '2018-05-08 23:24:20'),
 (7, ' Piso de Goma Moneda Negro x mts (goma por pa?o para piso, mesa d ebanco, etc)', '3235', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 7, 0, 0, NULL, 7, '2018-01-26 06:02:30', '2018-05-08 23:24:20'),
@@ -8212,10 +8288,12 @@ INSERT INTO `stockdepartamentos` (`id`, `stock_id`, `stock`, `stock_min`, `depar
 (7, 1, 3, 0, 1, 1, '2018-05-21 18:32:06', '2018-05-21 19:01:32'),
 (8, 4, 1, 0, 1, 1, '2018-05-21 19:07:04', '2018-05-21 19:07:04'),
 (9, 4, 1, 0, 4, 1, '2018-05-24 00:49:57', '2018-05-24 00:49:57'),
-(10, 4, 1, 0, 6, 1, '2018-05-24 00:54:49', '2018-05-24 00:54:49'),
+(10, 4, 0, 0, 6, 1, '2018-05-24 00:54:49', '2018-05-24 00:54:49'),
 (11, 1, 2, 0, 3, 18, '2018-06-18 20:09:35', '2018-06-18 20:11:53'),
 (12, 1, 3, 0, 4, 12, '2018-06-18 20:57:12', '2018-06-18 20:57:12'),
-(13, 1, 1, 0, 9, 13, '2018-06-18 21:01:05', '2018-06-18 21:01:05');
+(13, 1, 1, 0, 9, 13, '2018-06-18 21:01:05', '2018-06-18 21:01:05'),
+(14, 1, 1, 0, 7, 11, '2018-07-13 20:45:44', '2018-07-13 20:45:44'),
+(15, 1, 1, 0, 1, 3, '2018-07-18 00:14:53', '2018-07-18 00:14:53');
 
 -- --------------------------------------------------------
 
@@ -8347,7 +8425,10 @@ INSERT INTO `transferencias` (`id`, `estado`, `cantidad_transf`, `stock_id`, `de
 (61, 2, 1, 1, 3, 2, 2, NULL, NULL, '2018-06-18 22:02:11', '2018-06-18 22:02:11'),
 (62, 2, 1, 1, 3, 2, 2, NULL, NULL, '2018-06-18 22:02:34', '2018-06-18 22:02:34'),
 (63, 2, 1, 1, 3, 2, 1, NULL, 18, '2018-06-18 23:23:36', '2018-06-18 23:23:36'),
-(64, 2, 1, 1, 1, 1, 1, NULL, NULL, '2018-07-05 01:51:45', '2018-07-05 01:51:45');
+(64, 2, 1, 1, 1, 1, 1, NULL, NULL, '2018-07-05 01:51:45', '2018-07-05 01:51:45'),
+(65, 2, 1, 2, 1, 1, 2, NULL, NULL, '2018-07-13 20:43:35', '2018-07-13 20:43:35'),
+(66, 2, 1, 4, 6, 2, 2, NULL, 1, '2018-07-13 20:44:21', '2018-07-13 20:44:21'),
+(67, 2, 1, 1, 1, 3, 2, 7, 11, '2018-07-13 20:45:44', '2018-07-13 20:45:44');
 
 -- --------------------------------------------------------
 
@@ -8401,7 +8482,11 @@ INSERT INTO `trazas` (`id`, `stock_id`, `cantidad`, `d_emisor_id`, `d_receptor_i
 (25, 1, 1, 3, 101, 0, 3, 61, 'Devolución', '2018-06-18 22:02:11', '2018-06-18 22:02:11'),
 (26, 1, 1, 3, 101, 0, 3, 62, 'Devolución', '2018-06-18 22:02:34', '2018-06-18 22:02:34'),
 (27, 1, 1, 3, 100, 0, 3, 63, 'Devolución', '2018-06-18 23:23:37', '2018-06-18 23:23:37'),
-(28, 1, 1, 101, 100, 3, 3, 0, 'Transferencia entre almacenes', '2018-07-05 01:51:46', '2018-07-05 01:51:46');
+(28, 1, 1, 101, 100, 3, 3, 0, 'Transferencia entre almacenes', '2018-07-05 01:51:46', '2018-07-05 01:51:46'),
+(29, 2, 1, 100, 101, 3, 3, 0, 'Transferencia entre almacenes', '2018-07-13 20:43:36', '2018-07-13 20:43:36'),
+(30, 4, 1, 6, 101, 0, 3, 66, 'Devolución', '2018-07-13 20:44:22', '2018-07-13 20:44:22'),
+(31, 1, 1, 101, 7, 3, 11, 67, 'Transferencia patrimonial', '2018-07-13 20:45:44', '2018-07-13 20:45:44'),
+(32, 1, 1, 100, 1, 3, 3, 41, 'Picking', '2018-07-18 00:14:55', '2018-07-18 00:14:55');
 
 -- --------------------------------------------------------
 
@@ -8418,6 +8503,7 @@ CREATE TABLE `usuarios` (
   `apellido` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `telefono` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `rol` int(11) NOT NULL,
+  `legajo` int(11) DEFAULT NULL,
   `codigo_verificacion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `departamento_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -8428,22 +8514,22 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `user`, `password`, `email`, `nombre`, `apellido`, `telefono`, `rol`, `codigo_verificacion`, `departamento_id`, `created_at`, `updated_at`) VALUES
-(1, 'Rafael', '$2y$10$ewNAU/1tzVzD6uWgXbAPTegezFGyPQmNDxghLiskGCy0//wRlsChu', 'petitrafi@gmail.com', 'Rafael', 'Sanchez', '555555', 0, NULL, 1, '2018-02-05 15:06:19', '2018-02-05 15:06:19'),
-(2, 'stalin', '$2y$10$il.tPETfkTpX5Ydn9iJCQurG7vM7TYvJ4ydBokpWv7sUQIArwCWXC', 'e.rangeld@hotmail.com', 'eimar', 'rangel', '04147428420', 0, NULL, 1, '2018-02-05 15:02:31', '2018-02-05 15:02:31'),
-(3, 'compras', '$2y$10$WNNdSNQUPPOLZOZGTeCjfei2rSAEahexx.0rM.JK3.1DQLVcaxmmS', 'compras@tecprecinc.com', 'Usuario de Compras', 'Tecprecinc', '555-555-555', 0, NULL, 1, '2018-02-25 19:59:32', '2018-02-25 19:59:32'),
-(4, 'ventas', '$2y$10$kMV3fS6bIx0Zp8HFts//5uTTyjSH32D7iAgluG6Ioazz/wCae/xZy', 'ventas@tecprecinc.com', 'Ventas', 'Tecprecinc', '555-555-555', 1, NULL, 2, '2018-02-25 20:00:25', '2018-02-25 20:00:25'),
-(5, 'rrhh', '$2y$10$GKw6GF/pHkbMCoYQTnEQV.NHgykAeoVJQbP/J5mKzZltdnXb3Ta4C', 'rrhh@tecprecinc.com', 'RRHH', 'Tecprecinc', '555-555-555', 1, NULL, 3, '2018-02-25 20:01:09', '2018-02-25 20:01:09'),
-(7, 'calidad', '$2y$10$/8LXWHPD861qm8SqZnACo.4.hvAHPrarxvHkofMc1vN7sJbMQ716m', 'calidad@tecprecinc.com', 'Calidad', 'Tecprecinc', '555-555-555', 1, NULL, 5, '2018-02-25 20:02:28', '2018-02-25 20:02:28'),
-(8, 'obras', '$2y$10$NuddD28remI3f..uAr8IDOqn/jgd3LDlQQr98ipZlhf3bYWn/YIgC', 'obras@tecprecinc.com', 'Obras', 'Tecprecinc', '555-555-555', 1, NULL, 6, '2018-02-25 20:02:57', '2018-02-25 20:02:57'),
-(9, 'usuariocompras', '$2y$10$WNNdSNQUPPOLZOZGTeCjfei2rSAEahexx.0rM.JK3.1DQLVcaxmmS', 'usuariocompras@tecprecinc.com', 'usuario compras', 'Tecprecinc', '555-555-555', 2, NULL, 1, '2018-05-01 04:30:00', '2018-05-01 04:30:00'),
-(10, 'joseperez', '$2y$10$YNvs0Cjti56MwBtLi3wgk.Tjd51zBkrDccIkrILKUyS/4g4LQfgI2', 'joseperez@tecprecinc.com', 'jose', 'perez', '55-55-555', 2, NULL, 5, '2018-05-02 16:53:33', '2018-05-02 19:42:11'),
-(11, 'administracion', '$2y$10$FWoeruyRgs20vGGDKFxoQe8l1rhEGMAr1bUbe.dOOk0H5JF6XCAOq', 'administracion@tecprecinc.com', 'Supervisor', 'Administración', '000555', 1, NULL, 7, '2018-06-01 19:19:17', '2018-06-01 19:21:17'),
-(12, 'catriel', '$2y$10$qxxDfvdwrjMe8S9ndo592.MQWeHYUjKxHptiyaapfDb.6GwfZvsmS', '', 'Catriel', '', '', 0, NULL, 4, '2018-06-17 00:45:02', '2018-06-17 00:45:02'),
-(13, 'ph', '$2y$10$mVkkWQg/L9lNg9x7gj6JHe6OnBcHH5bkd5e3w.a/mehAdnSqwPn2W', 'ph@tecprecinc.com', 'PH', '', '', 0, NULL, 9, '2018-06-17 01:00:09', '2018-06-17 01:00:09'),
-(16, 'rdls', '$2y$10$Dr9/Re7Zs/bxoJT6hMGAcuVBzPF2l6.CHH3CEiLQNMLcB/dfL3BLS', 'rdls@tecprecinc.com', 'rdls', '', '', 0, NULL, 8, '2018-06-17 01:16:53', '2018-06-17 01:16:53'),
-(17, 'empleado_rdls', '$2y$10$6bap3H9PPA/.ep1/ZDAmXersc./uMSu7ruyAsks5WMlAHYUREp5ZK', 'empleado_rdls@gmail.com', 'rlds', 'empleado', '', 2, NULL, 8, '2018-06-17 01:18:53', '2018-06-17 01:18:53'),
-(18, 'stalin1', '$2y$10$vnUfhm6ecPOIVGLNPrC1lua6WPHz4JLqr8zZ5xLZ6tyR.CLNnbVGa', 'stalin1@tecprecinc.com', 'Stalin', 'Rangel', '555555555', 2, NULL, 3, '2018-06-18 20:04:22', '2018-06-18 20:04:22');
+INSERT INTO `usuarios` (`id`, `user`, `password`, `email`, `nombre`, `apellido`, `telefono`, `rol`, `legajo`, `codigo_verificacion`, `departamento_id`, `created_at`, `updated_at`) VALUES
+(1, 'Rafael', '$2y$10$ewNAU/1tzVzD6uWgXbAPTegezFGyPQmNDxghLiskGCy0//wRlsChu', 'petitrafi@gmail.com', 'Rafael', 'Sanchez', '5555555', 0, 12, NULL, 1, '2018-02-05 15:06:19', '2018-07-18 02:08:50'),
+(2, 'stalin', '$2y$10$il.tPETfkTpX5Ydn9iJCQurG7vM7TYvJ4ydBokpWv7sUQIArwCWXC', 'e.rangeld@hotmail.com', 'eimar', 'rangel', '04147428420', 0, NULL, NULL, 1, '2018-02-05 15:02:31', '2018-02-05 15:02:31'),
+(3, 'compras', '$2y$10$KOvX3pZhhdnTZRvfUrX68eNIY4VbRE4Y7VsRzXTl5i7wK7TC16RM.', 'compras@tecprecinc.com', 'Usuario de Compras', 'Tecprecinc', '555-555-555', 0, 1, NULL, 1, '2018-02-25 19:59:32', '2018-07-18 04:02:13'),
+(4, 'ventas', '$2y$10$kMV3fS6bIx0Zp8HFts//5uTTyjSH32D7iAgluG6Ioazz/wCae/xZy', 'ventas@tecprecinc.com', 'Ventas', 'Tecprecinc', '555-555-555', 1, NULL, NULL, 2, '2018-02-25 20:00:25', '2018-02-25 20:00:25'),
+(5, 'rrhh', '$2y$10$GKw6GF/pHkbMCoYQTnEQV.NHgykAeoVJQbP/J5mKzZltdnXb3Ta4C', 'rrhh@tecprecinc.com', 'RRHH', 'Tecprecinc', '555-555-555', 1, NULL, NULL, 3, '2018-02-25 20:01:09', '2018-02-25 20:01:09'),
+(7, 'calidad', '$2y$10$/8LXWHPD861qm8SqZnACo.4.hvAHPrarxvHkofMc1vN7sJbMQ716m', 'calidad@tecprecinc.com', 'Calidad', 'Tecprecinc', '555-555-555', 1, NULL, NULL, 5, '2018-02-25 20:02:28', '2018-02-25 20:02:28'),
+(8, 'obras', '$2y$10$NuddD28remI3f..uAr8IDOqn/jgd3LDlQQr98ipZlhf3bYWn/YIgC', 'obras@tecprecinc.com', 'Obras', 'Tecprecinc', '555-555-555', 1, NULL, NULL, 6, '2018-02-25 20:02:57', '2018-02-25 20:02:57'),
+(9, 'usuariocompras', '$2y$10$WNNdSNQUPPOLZOZGTeCjfei2rSAEahexx.0rM.JK3.1DQLVcaxmmS', 'usuariocompras@tecprecinc.com', 'usuario compras', 'Tecprecinc', '555-555-555', 2, NULL, NULL, 1, '2018-05-01 04:30:00', '2018-05-01 04:30:00'),
+(10, 'joseperez', '$2y$10$YNvs0Cjti56MwBtLi3wgk.Tjd51zBkrDccIkrILKUyS/4g4LQfgI2', 'joseperez@tecprecinc.com', 'jose', 'perez', '55-55-555', 2, NULL, NULL, 5, '2018-05-02 16:53:33', '2018-05-02 19:42:11'),
+(11, 'administracion', '$2y$10$FWoeruyRgs20vGGDKFxoQe8l1rhEGMAr1bUbe.dOOk0H5JF6XCAOq', 'administracion@tecprecinc.com', 'Supervisor', 'Administración', '000555', 1, NULL, NULL, 7, '2018-06-01 19:19:17', '2018-06-01 19:21:17'),
+(12, 'catriel', '$2y$10$qxxDfvdwrjMe8S9ndo592.MQWeHYUjKxHptiyaapfDb.6GwfZvsmS', '', 'Catriel', '', '', 0, NULL, NULL, 4, '2018-06-17 00:45:02', '2018-06-17 00:45:02'),
+(13, 'ph', '$2y$10$mVkkWQg/L9lNg9x7gj6JHe6OnBcHH5bkd5e3w.a/mehAdnSqwPn2W', 'ph@tecprecinc.com', 'PH', '', '', 0, NULL, NULL, 9, '2018-06-17 01:00:09', '2018-06-17 01:00:09'),
+(16, 'rdls', '$2y$10$Dr9/Re7Zs/bxoJT6hMGAcuVBzPF2l6.CHH3CEiLQNMLcB/dfL3BLS', 'rdls@tecprecinc.com', 'rdls', '', '', 0, NULL, NULL, 8, '2018-06-17 01:16:53', '2018-06-17 01:16:53'),
+(17, 'empleado_rdls', '$2y$10$6bap3H9PPA/.ep1/ZDAmXersc./uMSu7ruyAsks5WMlAHYUREp5ZK', 'empleado_rdls@gmail.com', 'rlds', 'empleado', '', 2, NULL, NULL, 8, '2018-06-17 01:18:53', '2018-06-17 01:18:53'),
+(18, 'stalin1', '$2y$10$vnUfhm6ecPOIVGLNPrC1lua6WPHz4JLqr8zZ5xLZ6tyR.CLNnbVGa', 'stalin1@tecprecinc.com', 'Stalin', 'Rangel', '555555555', 2, NULL, NULL, 3, '2018-06-18 20:04:22', '2018-06-18 20:04:22');
 
 --
 -- Índices para tablas volcadas
@@ -8469,6 +8555,12 @@ ALTER TABLE `categorias`
 -- Indices de la tabla `centro_costos`
 --
 ALTER TABLE `centro_costos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `compra`
+--
+ALTER TABLE `compra`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -8522,6 +8614,12 @@ ALTER TABLE `pedido_stock`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pedido_stock_pedido_id_foreign` (`pedido_id`),
   ADD KEY `pedido_stock_stock_id_foreign` (`stock_id`);
+
+--
+-- Indices de la tabla `presupuesto`
+--
+ALTER TABLE `presupuesto`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `presupuestos`
@@ -8645,6 +8743,11 @@ ALTER TABLE `categorias`
 ALTER TABLE `centro_costos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
+-- AUTO_INCREMENT de la tabla `compra`
+--
+ALTER TABLE `compra`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
@@ -8668,22 +8771,27 @@ ALTER TABLE `departamentos`
 -- AUTO_INCREMENT de la tabla `mensajes`
 --
 ALTER TABLE `mensajes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT de la tabla `pedido_stock`
 --
 ALTER TABLE `pedido_stock`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+--
+-- AUTO_INCREMENT de la tabla `presupuesto`
+--
+ALTER TABLE `presupuesto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `presupuestos`
 --
 ALTER TABLE `presupuestos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
@@ -8693,7 +8801,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1239;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1240;
 --
 -- AUTO_INCREMENT de la tabla `proveedores_categorias`
 --
@@ -8703,7 +8811,7 @@ ALTER TABLE `proveedores_categorias`
 -- AUTO_INCREMENT de la tabla `proveedores_productos`
 --
 ALTER TABLE `proveedores_productos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 --
 -- AUTO_INCREMENT de la tabla `rubros`
 --
@@ -8718,7 +8826,7 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT de la tabla `stockdepartamentos`
 --
 ALTER TABLE `stockdepartamentos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT de la tabla `stock_permisos_departs`
 --
@@ -8733,12 +8841,12 @@ ALTER TABLE `tipos`
 -- AUTO_INCREMENT de la tabla `transferencias`
 --
 ALTER TABLE `transferencias`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 --
 -- AUTO_INCREMENT de la tabla `trazas`
 --
 ALTER TABLE `trazas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
