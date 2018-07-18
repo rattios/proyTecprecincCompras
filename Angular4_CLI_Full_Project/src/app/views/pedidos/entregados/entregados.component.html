@@ -9,6 +9,24 @@
         <div class="card-body" *ngIf="!loading">
           <tabset>
             <tab heading="Entregadas">
+              <br>
+              <div class="row">
+                <div class="col-sm-5" style="text-align: center">
+                  <label class="labels" style="font-size: 18px; font-weight: bold">Inicio: </label>
+                  <input matInput [matDatepicker]="inicio2" placeholder="Choose a date" [(ngModel)]="inicioD2">
+                  <mat-datepicker-toggle matSuffix [for]="inicio2"></mat-datepicker-toggle>
+                  <mat-datepicker #inicio2></mat-datepicker>
+                </div>
+                <div class="col-sm-5" style="text-align: center">
+                  <label class="labels" style="font-size: 18px; font-weight: bold">Fin: </label>
+                  <input matInput [matDatepicker]="fin2" placeholder="Choose a date" [(ngModel)]="finD2">
+                  <mat-datepicker-toggle matSuffix [for]="fin2"></mat-datepicker-toggle>
+                  <mat-datepicker #fin2></mat-datepicker>
+                </div>
+                <div class="col-sm-1" style="text-align: center"> 
+                  <button type="button" class="btn btn-primary" (click)=buscar()>Buscar</button>
+                </div>
+              </div><br><br>
               <app-tabla-info-entregados [informacion]="pedidos2"></app-tabla-info-entregados>
             </tab>
           </tabset>

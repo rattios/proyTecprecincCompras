@@ -245,6 +245,7 @@ class UsuarioController extends Controller
 
         // Listado de campos recibidos teóricamente.
         $user=$request->input('user'); 
+        $legajo=$request->input('legajo'); 
         $password=$request->input('password'); 
         $email=$request->input('email'); 
         $nombre=$request->input('nombre');
@@ -311,6 +312,12 @@ class UsuarioController extends Controller
         if ($rol != null && $rol!='')
         {
             $usuario->rol = $rol;
+            $bandera=true;
+        }
+
+        if ($legajo != null && $legajo!='')
+        {
+            $usuario->legajo = $legajo;
             $bandera=true;
         }
 

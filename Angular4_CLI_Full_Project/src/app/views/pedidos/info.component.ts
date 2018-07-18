@@ -82,6 +82,34 @@ export class infoComponent {
       console.log(this.largeModal2);
     }
 
+    editar_observacion(id){
+      console.log(id);
+      console.log(this.informacion.observaciones);
+      var enviar={
+        observaciones:this.informacion.observaciones
+      }
+      this.http.put(this.ruta.get_ruta()+'editar_observacion/'+id,enviar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+
+              /*this.success=true;
+              setTimeout(() => {  
+                this.success=false;
+              }, 4000);*/
+
+            },
+           msg => { 
+             console.log(msg);
+             /*this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);*/
+             
+           });
+    }
+
     print(){
     let printContents, popupWin;
     printContents = document.getElementById('prin').innerHTML;

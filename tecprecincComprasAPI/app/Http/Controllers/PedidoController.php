@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
+use DateTime;
 
 class PedidoController extends Controller
 {
@@ -159,10 +160,12 @@ class PedidoController extends Controller
             return response()->json(['status'=>'ok', 'pedidos'=>$pedidos, 'centrocostos'=>$centrocostos], 200);
         } 
     }
-    public function index2()
+    public function index2(Request $request)
     {
+        $from=new DateTime($request->input('inicio'));
+        $to=new DateTime($request->input('fin'));
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::where('estado', 2)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
+        $pedidos = \App\Pedido::where('estado', 2)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->whereRaw("created_at >= ? AND created_at <= ?", array($from->format('Y-m-d') ." 00:00:00", $to->format('Y-m-d')." 23:59:59"))->orderBy('id', 'DESC')->get();
 
 
         if(count($pedidos) == 0){
@@ -345,6 +348,7 @@ class PedidoController extends Controller
             'centro_costos_id'=>$request->input('centro_costos_id'),
             'contrato_id'=>$request->input('contrato_id'),
             'aprobar'=>$request->input('aprobar'),
+            'observaciones'=>$request->input('observaciones'),
             ]))
         {
 
@@ -414,6 +418,18 @@ class PedidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+     public function editar_observacion(Request $request, $id)
+    {
+        // Comprobamos si el pedido que nos están pasando existe o no.
+        $pedido=\App\Pedido::find($id);
+        $pedido->observaciones = $request->input('observaciones');
+
+        if ($pedido->save()) {
+            return response()->json(['status'=>'ok','pedido'=>$pedido], 200);
+        }else{
+            return response()->json(['error'=>'Error al actualizar el pedido.'], 500);
+        }
+    }
     public function update(Request $request, $id)
     {
         // Comprobamos si el pedido que nos están pasando existe o no.
@@ -429,6 +445,7 @@ class PedidoController extends Controller
         $estado=$request->input('estado');
         $solicitud=$request->input('solicitud');
         $aprobar=$request->input('aprobar');
+        $observaciones=$request->input('observaciones');
         // Creamos una bandera para controlar si se ha modificado algún dato.
         $bandera = false;
 
@@ -442,6 +459,11 @@ class PedidoController extends Controller
         if ($aprobar != null && $aprobar!='')
         {
             $pedido->aprobar = $aprobar;
+            $bandera=true;
+        }
+        if ($observaciones != null && $observaciones!='')
+        {
+            $pedido->observaciones = $observaciones;
             $bandera=true;
         }
 

@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { MatDatepickerModule, MatNativeDateModule, DateAdapter } from '@angular/material';
+import { DateFormat } from './date-format';
 
 import { transferenciasComponent } from './transferencias.component';
 import { transferenciasRoutingModule } from './transferencias-routing.module';
@@ -27,6 +29,8 @@ import { transferenciasInfoComponent } from './transferencias/transferenciasInfo
     TabsModule,
     AlertModule.forRoot(),
     ModalModule.forRoot(),
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   declarations: [ 
   	transferenciasComponent,
@@ -37,4 +41,8 @@ import { transferenciasInfoComponent } from './transferencias/transferenciasInfo
     transferenciasInfoComponent
 	]
 })
-export class transferenciasModule { }
+export class transferenciasModule {
+  constructor(private dateAdapter:DateAdapter<Date>) {
+    dateAdapter.setLocale('en-in'); // DD/MM/YYYY
+  }
+ }

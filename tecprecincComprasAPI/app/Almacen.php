@@ -24,7 +24,7 @@ class Almacen extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre', 'telefono'];
+    protected $fillable = ['nombre', 'telefono','direccion'];
 
     /**
      * The attributes excluded from the model's JSON form.

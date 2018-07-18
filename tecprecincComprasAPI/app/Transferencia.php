@@ -40,6 +40,21 @@ class Transferencia extends Model
         // 1 transferencia pertenece a un departamento
         return $this->belongsTo('App\Departamento', 'departamento_id');
     }
+    public function departamento_en_patrimonial()
+    {
+        // 1 transferencia pertenece a un departamento
+        return $this->belongsTo('App\Departamento', 'receptor_id');
+    }
+    public function usuario_receptor_en_patrimonial()
+    {
+        // 1 transferencia pertenece a un departamento
+        return $this->belongsTo('App\User', 'usuario_id');
+    }
+    public function almacen()
+    {
+        // 1 transferencia pertenece a un departamento
+        return $this->belongsTo('App\Almacen', 'almacen');
+    }
 
     /*// Relación de transferencia con stockDepartamento:
     public function stockDep()

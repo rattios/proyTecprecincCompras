@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DateTime;
 use DB;
 
 class TransferenciaController extends Controller
@@ -787,48 +788,85 @@ class TransferenciaController extends Controller
      
     }
 
-    public function indexTranfPuras()
+    public function indexTranfPuras(Request $request)
     {
-        
+        $from=new DateTime($request->input('inicio'));
+        $to=new DateTime($request->input('fin'));
         //cargar todas las transferencias puras
-        $transferencias = \App\Transferencia::where('tipo', 1)->with('stockCentral')->orderBy('id', 'desc')->get();
+        $transferencias = \App\Transferencia::where('tipo', 1)->with('stockCentral')->orderBy('id', 'desc')->whereRaw("created_at >= ? AND created_at <= ?", array($from->format('Y-m-d') ." 00:00:00", $to->format('Y-m-d')." 23:59:59"))->orderBy('id', 'DESC')->get();
 
-        if(count($transferencias) == 0){
-            return response()->json(['error'=>'No existen transferencias puras.'], 404);          
+        $Almacen=\App\Almacen::all();
+
+        for ($i=0; $i < count($transferencias); $i++) { 
+            if ($transferencias[$i]->almacen==1) {
+                $transferencias[$i]->almacen_origen=$Almacen[1];
+                $transferencias[$i]->almacen_destino=$Almacen[0];
+            }else if ($transferencias[$i]->almacen==2) {
+                $transferencias[$i]->almacen_origen=$Almacen[0];
+                $transferencias[$i]->almacen_destino=$Almacen[1];
+            }
+        }
+
+        if(!$transferencias){
+            return response()->json(['error'=>'Error'], 404);          
         }else{
-
             return response()->json(['transferencias'=>$transferencias], 200);
         }    
     }
 
-    public function indexDevoluciones()
+    public function indexDevoluciones(Request $request)
     {
-        
+        $from=new DateTime($request->input('inicio'));
+        $to=new DateTime($request->input('fin'));
         //cargar todas las devoluciones 
         $devoluciones = \App\Transferencia::with('departamento')
             ->with('usuario')
-            ->where('tipo', 2)->with('stockCentral')->orderBy('id', 'desc')->get();
+            ->where('tipo', 2)->with('stockCentral')->orderBy('id', 'desc')->whereRaw("created_at >= ? AND created_at <= ?", array($from->format('Y-m-d') ." 00:00:00", $to->format('Y-m-d')." 23:59:59"))->orderBy('id', 'DESC')->get();
 
-        if(count($devoluciones) == 0){
-            return response()->json(['error'=>'No existen devoluciones.'], 404);          
+        $Almacen=\App\Almacen::all();
+
+        for ($i=0; $i < count($devoluciones); $i++) { 
+            if ($devoluciones[$i]->almacen==1) {
+                $devoluciones[$i]->almacen_origen=$Almacen[1];
+                $devoluciones[$i]->almacen_destino=$Almacen[0];
+            }else if ($devoluciones[$i]->almacen==2) {
+                $devoluciones[$i]->almacen_origen=$Almacen[0];
+                $devoluciones[$i]->almacen_destino=$Almacen[1];
+            }
+        }
+        //return $devoluciones;
+        if(!$devoluciones){
+            return response()->json(['error'=>'Ha ocurrido un error.'], 404);          
         }else{
-
             return response()->json(['devoluciones'=>$devoluciones], 200);
         }    
     }
 
-    public function indexTranfPatri()
+    public function indexTranfPatri(Request $request)
     {
-        
+        $from=new DateTime($request->input('inicio'));
+        $to=new DateTime($request->input('fin'));
         //cargar todas las transferencias patrimoniales
         $transferencias = \App\Transferencia::with('receptor')
             ->with('usuario')
-            ->where('tipo', 3)->with('stockCentral')->orderBy('id', 'desc')->get();
+            ->where('tipo', 3)->with('stockCentral')->with('departamento_en_patrimonial')->with('usuario_receptor_en_patrimonial')->orderBy('id', 'desc')->whereRaw("created_at >= ? AND created_at <= ?", array($from->format('Y-m-d') ." 00:00:00", $to->format('Y-m-d')." 23:59:59"))->orderBy('id', 'DESC')->get();
 
-        if(count($transferencias) == 0){
+        $Almacen=\App\Almacen::all();
+
+        for ($i=0; $i < count($transferencias); $i++) { 
+            
+            if ($transferencias[$i]->almacen==1) {
+                $transferencias[$i]->almacen_origen=$Almacen[0];
+                $transferencias[$i]->almacen_destino=$transferencias[$i]->departamento_en_patrimonial;
+            }else if ($transferencias[$i]->almacen==2) {
+                $transferencias[$i]->almacen_origen=$Almacen[0];
+                $transferencias[$i]->almacen_destino=$transferencias[$i]->departamento_en_patrimonial;
+            }
+        }
+
+        if(!$transferencias){
             return response()->json(['error'=>'No existen transferencias patrimoniales.'], 404);          
         }else{
-
             return response()->json(['transferencias'=>$transferencias], 200);
         }    
     }

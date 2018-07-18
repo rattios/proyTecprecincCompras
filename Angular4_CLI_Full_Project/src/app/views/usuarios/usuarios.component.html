@@ -87,16 +87,22 @@
                 </div>
               </div><!--/.row-->
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                   <div class="form-group">
                     <label for="name">Usuario</label>
                     <input type="text" class="form-control" id="Usuario" placeholder="" [(ngModel)]="proveedor.user">
                   </div>
                 </div>
-                <div class="col-sm-6" *ngIf="proveedor.id==0">
+                <div class="col-sm-4" *ngIf="proveedor.id==0">
                   <div class="form-group">
                     <label for="ccnumber">Contraseña</label>
                     <input type="text" class="form-control" id="password" placeholder="" [(ngModel)]="proveedor.password">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="name">Legajo</label>
+                    <input type="number" class="form-control" id="Usuario" placeholder="" [(ngModel)]="proveedor.legajo">
                   </div>
                 </div>
               </div>

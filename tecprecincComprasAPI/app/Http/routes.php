@@ -96,6 +96,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/pedidos/departamento/{id}','PedidoController@index_departamentos');
         Route::post('/pedidos','PedidoController@store');
         Route::put('/pedidos/{id}','PedidoController@update');
+        Route::put('/editar_observacion/{id}','PedidoController@editar_observacion');
         Route::delete('/pedidos/{id}','PedidoController@destroy');
         Route::get('/pedidos/{id}','PedidoController@show');
         Route::post('/pedidos/picking','PedidoController@picking');

@@ -134,7 +134,7 @@ class UsuariosController extends Controller
     public function update(Request $request, $id)
     {
         //cargar un proveedor
-        $cc=\App\CentroCostos::where('id',$id)->first();;
+        $cc=\App\User::where('id',$id)->first();;
         $cc->fill($request->all());
 
         if($cc->save())

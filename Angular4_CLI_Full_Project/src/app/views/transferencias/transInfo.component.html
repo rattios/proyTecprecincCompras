@@ -24,8 +24,8 @@
 				              	<td></td>
 				                <td>{{item.cantidad_transf}}</td>
 				                <td>{{item.stock_central.nombre}}</td>
-				                <td>{{item.nombreAlmacen}}</td>
-				                <td>{{item.nombreAlmacenDestino}}</td>
+				                <td>{{item.almacen_origen.nombre}}</td>
+				                <td>{{item.almacen_destino.nombre}}</td>
 				                <td>{{item.nombreTipo}}</td>
 				                <td>{{item.nombreEstado}}</td>
 				                <td>{{item.created_at | date : "d/MM/yyyy"}}</td>
@@ -160,17 +160,17 @@
 	      	<br><br>
 	      	<div class="row" >
 	      		<div class="col-lg-12">
-	      			Déposito de origen: {{transf.nombreAlmacen}}<br>
-	      			Dirección: <br>
-	      			Teléfono: <br>
+	      			Déposito de origen: {{transf.almacen_origen.nombre}}<br>
+	      			Dirección: {{transf.almacen_origen.direccion}}<br>
+	      			Teléfono: {{transf.almacen_origen.telefono}}<br>
 	      		</div>	
 	      	</div>
 	      	<br><br>
 	      	<div class="row" >
 	      		<div class="col-lg-12">
-	      			Déposito de destino: {{transf.nombreAlmacenDestino}}<br>
-	      			Dirección: <br>
-	      			Teléfono: <br>
+	      			Déposito de destino: {{transf.almacen_destino.nombre}}<br>
+	      			Dirección: {{transf.almacen_destino.direccion}}<br>
+	      			Teléfono: {{transf.almacen_destino.telefono}}<br>
 	      		</div>	
 	      	</div>
 	      	<br><br>
@@ -260,7 +260,7 @@
 	      			Fecha: {{transf.created_at}}<br>
 	      			ACTA Nro: {{transf.id}}<br>
 	      			Unidad: {{transf.receptor.nombre}}<br>
-	      			Responsable: {{transf.receptor.nombre}}<br>
+	      			Responsable: {{transf.usuario_receptor_en_patrimonial.nombre}} {{transf.usuario_receptor_en_patrimonial.apellido}}<br>
 	      		</div>	
 	      	</div>
 	      	<br>

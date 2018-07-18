@@ -66,29 +66,64 @@
       				</div>
       				<br><br><br>
       				<div class="row" style="border:2px solid;">
-      					<div class="row col-lg-12">
-      						<div class="col-sm-4">
-      							<strong >Solicitud: </strong>{{informacion.id}}
-      						</div>
-      						<div class="col-sm-4">
-      							
-      						</div>
-      						<div class="col-sm-4">
-      							<strong>Fecha de alta: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
-      						</div>	
-      					</div>
-      					<br><br>
-      					<div class="row col-lg-12">
-	      					<div class="col-sm-4">
-	      						<strong>Solicitante: </strong>{{informacion.usuario.nombre}}
+      					<div class="col-lg-8">
+      						<div class="row">
+	      						<div class="col-sm-4">
+	      							<strong >Solicitud: </strong>{{informacion.id}}
+	      						</div>
+	      						<div class="col-sm-4">
+	      							
+	      						</div>
+	      						<div class="col-sm-4">
+	      							<strong>Fecha de alta: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
+	      						</div>	
+	      					</div>
+	      					<div class="row">
+		      					<div class="col-sm-4">
+		      						<strong>Solicitante: </strong>{{informacion.centro_costos.descripcion}}
+			      				</div>
+			      				<div class="col-sm-4">
+			      					<strong>Departamento: </strong>{{informacion.usuario.departamento.nombre}}
+			      				</div>
+			      				<div class="col-sm-4">
+			      					
+			      				</div>
 		      				</div>
-		      				<div class="col-sm-4">
-		      					<strong>Departamento: </strong>{{informacion.usuario.departamento.nombre}}
+		      				<div class="row">
+		      					<div class="col-sm-4">
+		      						<strong>Fecha de entrega posible: </strong>
+			      				</div>
+			      				<div class="col-sm-4">
+			      					
+			      				</div>
+			      				<div class="col-sm-4">
+			      					
+			      				</div>
 		      				</div>
-		      				<div class="col-sm-4">
-		      					
+		      				<div class="row">
+		      					<div class="col-sm-4">
+		      						<strong>Area/Proceso: </strong>
+			      				</div>
+			      				<div class="col-sm-4">
+			      					
+			      				</div>
+			      				<div class="col-sm-4">
+			      					
+			      				</div>
 		      				</div>
-	      				</div>
+		      			</div>
+		      			<div class="col-lg-4" style="border-left: 2px #000000">
+		      				<div class="row">
+		      					<div class="col-sm-12">
+		      						<strong>Firma del solicitante: </strong>
+			      				</div>
+		      				</div>
+		      				<div class="row">
+		      					<div class="col-sm-12">
+		      						<strong>Aclaración y firma del autorizante: </strong>
+			      				</div>
+		      				</div>
+		      			</div>
       				</div>
       			</div>
       		</div>	
@@ -125,12 +160,9 @@
       		<div class="col-lg-12">
       			<div class="row" style="border:2px solid;">
   					<div class="row col-lg-12">
-  						<div class="col-sm-4">
+  						<div class="col-sm-8">
   							<strong >OBSERVACIONES: </strong>
-  							<br><br><br><br>
-  						</div>
-  						<div class="col-sm-4">
-  							
+  							<br>{{informacion.observaciones}}<br><br><br>
   						</div>
   						<div class="col-sm-4">
   							<strong>Fecha de alta: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
@@ -175,13 +207,16 @@
       				</div>
       				<br>
       				<div class="row">
-      					<div class="col-lg-4">
+      					<div class="col-lg-3">
+	      					<strong>Solicitante: </strong>{{informacion.centro_costos.descripcion}}
+	      				</div>
+      					<div class="col-lg-3">
 	      					<strong>Departamento: </strong>{{informacion.usuario.departamento.nombre}}
 	      				</div>
-	      				<div class="col-lg-4">
+	      				<div class="col-lg-3">
 	      					<strong>Usuario: </strong>{{informacion.usuario.nombre}}
 	      				</div>
-	      				<div class="col-lg-4">
+	      				<div class="col-lg-3">
 	      					<strong>Fecha de alta: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
 	      				</div>
       				</div>
@@ -253,9 +288,10 @@
 				          </table>
 				          <div class="row">
 				          	<div class="col-lg-12">
-				          		<div class="form-group">
-								  <label for="comment">Observaciones:</label>
-								  <textarea class="form-control" rows="5" cols="150"></textarea>
+				          		<label for="comment">Observaciones:</label>
+				          		<div class="form-group" style="text-align: center">
+								  <textarea class="form-control" rows="5" cols="190" [(ngModel)]="informacion.observaciones"></textarea><br>
+								  <button type="button" class="btn btn-primary" [hidden]="informacion.estado==2" (click)=editar_observacion(informacion.id)>Editar Observacion</button>
 								</div>
 					        </div>
 				          </div>
@@ -323,7 +359,7 @@
 	      				<div class="row"  style="border:2px solid;">
 	      					<div class="row col-lg-12" >
 		      					<div class="col-sm-7">
-		      						<strong>Solicitante: </strong>{{informacion.usuario.nombre}}
+		      						<strong>Solicitante: </strong>{{informacion.centro_costos.descripcion}}
 			      				</div>
 			      				<div class="col-sm-3">
 			      					

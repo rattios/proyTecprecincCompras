@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { MatDatepickerModule, MatNativeDateModule, DateAdapter } from '@angular/material';
+import { DateFormat } from './date-format';
 
 import { pedidosComponent } from './pedidos.component';
 import { misPedidosComponent } from './mis-pedidos.component';
@@ -51,6 +53,8 @@ import { presupuestosComponent } from './presupuesto.component';
     TabsModule,
     AlertModule.forRoot(),
     ModalModule.forRoot(),
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   declarations: [ 
       pedidosComponent,
@@ -78,4 +82,8 @@ import { presupuestosComponent } from './presupuesto.component';
     pickingComponent
     ]
 })
-export class pedidosModule { }
+export class pedidosModule {
+  constructor(private dateAdapter:DateAdapter<Date>) {
+    dateAdapter.setLocale('en-in'); // DD/MM/YYYY
+  }
+}

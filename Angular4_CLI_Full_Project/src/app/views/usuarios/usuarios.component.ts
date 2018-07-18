@@ -80,6 +80,7 @@ export class UsuariosComponent {
           departamento_id:"",
           rol: 2,
           user:"",
+          legajo:"",
           password:"",
           id:0
         };
@@ -107,6 +108,7 @@ export class UsuariosComponent {
         departamento_id: this.proveedor.departamento_id,
         rol: this.proveedor.rol,
         user: this.proveedor.user,
+        legajo: this.proveedor.legajo,
         password:this.proveedor.password
       }
 
@@ -172,7 +174,8 @@ export class UsuariosComponent {
         email: this.proveedor.email,
         departamento_id: this.proveedor.departamento_id,
         rol: this.proveedor.rol,
-        user: this.proveedor.user
+        user: this.proveedor.user,
+        legajo: this.proveedor.legajo
         //password:this.proveedor.password
       }
       console.log(send);

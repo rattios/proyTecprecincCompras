@@ -30,8 +30,18 @@ export class transInfoComponent {
     },
     receptor:{
       nombre:''
-    }
-  };
+    },
+    almacen_origen:{
+      nombre:'',
+      direccion:'',
+      telefono:''
+    },
+    almacen_destino:{
+      nombre:'',
+      direccion:'',
+      telefono:''
+    }  
+    };
   @Input() informacion:any;
 
   constructor(private http: HttpClient, private ruta: RutaService) {

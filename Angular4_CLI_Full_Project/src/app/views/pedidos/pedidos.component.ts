@@ -22,6 +22,7 @@ export class pedidosComponent {
   public loading=true;
   public success=false;
   public fail=false;
+  public observaciones='';
   constructor(private http: HttpClient, private ruta: RutaService) {
 
   }
@@ -91,7 +92,8 @@ export class pedidosComponent {
           centro_costos_id:this.idCentroCostos,
           contrato_id:this.idContrato,
           estado: 0,
-          aprobar:0
+          aprobar:0,
+          observaciones:this.observaciones
         }
         console.log(enviar);
 
@@ -122,6 +124,7 @@ export class pedidosComponent {
     }
     vaciar(){
       this.productosSeleccionados=[];
+      this.observaciones='';
     }
     
     cc(centro_costo_id) {
