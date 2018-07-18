@@ -97,6 +97,43 @@ export class UsuariosComponent {
     volver(){
       this.verDatos=false;
     }
+
+    user(){
+      this.loading=true;
+      this.http.get(this.ruta.get_ruta()+'user/'+this.proveedor.user)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.loading=false;
+             if(data==1) {
+               alert('Ya hay existe un usuario con este user');
+             }
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+
+           });
+    }
+    email(){
+      this.loading=true;
+      this.http.get(this.ruta.get_ruta()+'email/'+this.proveedor.email)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.loading=false;
+             if(data==1) {
+               alert('Ya hay existe un usuario con este user');
+             }
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+
+           });
+    }
     
     crearProveedor(){
       

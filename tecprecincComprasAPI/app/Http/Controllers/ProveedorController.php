@@ -43,6 +43,17 @@ class ProveedorController extends Controller
         //
     }
 
+    public function razon_social($id)
+    {
+        $usuario=\App\Proveedor::where('razon_social',$id)->first();
+
+        if ($usuario) {
+            return 1;
+        }else{
+            return 0; 
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -68,7 +79,7 @@ class ProveedorController extends Controller
             return response()->json(['error'=>'Ya existe otro proveedor con el nombre(razón social) '.$request->input('razon_social')], 409);
         } 
 
-        if ($request->input('nombre_fantacia')) {
+        /*if ($request->input('nombre_fantacia')) {
             $aux2 = \App\Proveedor::where('nombre_fantacia', $request->input('nombre_fantacia'))->get();
             if(count($aux2) != 0){
                // Devolvemos un código 409 Conflict. 
@@ -88,7 +99,7 @@ class ProveedorController extends Controller
                // Devolvemos un código 409 Conflict. 
                 return response()->json(['error'=>'Ya existe otro proveedor con el email '.$request->input('email')], 409);
             } 
-        }
+        }*/
 
         if ($request->input('productos')) {
             //Verificar que todos los productos del pedido existen

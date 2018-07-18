@@ -79,7 +79,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="name">Razón Social</label>
-                    <input type="text" class="form-control" id="razon_social" placeholder="" [(ngModel)]="proveedor.razon_social">
+                    <input type="text" class="form-control" id="razon_social" placeholder="" [(ngModel)]="proveedor.razon_social" (blur)="razon_social()">
                   </div>
                 </div>
                 <div class="col-sm-4">
@@ -220,8 +220,11 @@
             </div>
           </div>
           <div style="text-align: center">
-            <button type="button" class="btn btn-success" (click)=editar() *ngIf="!crear">Editar productos del proveedor</button> 
-            <button type="button" class="btn btn-success" (click)=crearProveedor() *ngIf="crear">Crear proveedor</button> 
+            <div *ngIf="proveedor.razon_social!=''">
+              <button type="button" class="btn btn-success" (click)=editar() *ngIf="!crear">Editar productos del proveedor</button> 
+              <button type="button" class="btn btn-success" (click)=crearProveedor() *ngIf="crear">Crear proveedor</button> 
+            </div>
+            
           </div>
         </div>
     </div>

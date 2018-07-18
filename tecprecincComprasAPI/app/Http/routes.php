@@ -44,6 +44,8 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/usuarios/pedidos','UsuarioController@usuariosPedidos');
         Route::post('/usuarios','UsuarioController@store');
         Route::put('/usuarios/{id}','UsuarioController@update');
+        Route::get('/user/{id}','UsuarioController@user');
+        Route::get('/email/{id}','UsuarioController@email');
         Route::delete('/usuarios/{id}','UsuarioController@destroy');
         Route::get('/usuarios/{id}','UsuarioController@show');
         Route::get('/usuarios/{id}/pedidos','UsuarioController@usuarioPedidos');
@@ -106,6 +108,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/proveedores','ProveedorController@index');
         Route::post('/proveedores','ProveedorController@store');
         Route::put('/proveedores/{id}','ProveedorController@update');
+        Route::get('/razon_social/{id}','ProveedorController@razon_social');
         Route::delete('/proveedores/{id}','ProveedorController@destroy');
         Route::get('/proveedores/{id}','ProveedorController@show');
         Route::get('/proveedores/{id}/categorias','ProveedorController@proveedorCats');

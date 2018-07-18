@@ -113,6 +113,25 @@ export class ProveedoresComponent {
       this.proveedor.forma_pago=JSON.stringify(this.proveedor.forma_pago);
     }
 
+    razon_social(){
+      this.loading=true;
+      this.http.get(this.ruta.get_ruta()+'razon_social/'+this.proveedor.razon_social)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             this.loading=false;
+             if(data==1) {
+               alert('Ya hay existe un usuario con este user');
+             }
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+
+           });
+    }
+
     addFp(){
       console.log(this.formaPago);
       if(!this.checkFp(this.formaPago)) {

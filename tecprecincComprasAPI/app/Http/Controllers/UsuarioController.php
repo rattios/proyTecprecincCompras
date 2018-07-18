@@ -225,6 +225,29 @@ class UsuarioController extends Controller
         //
     }
 
+    public function user($id)
+    {
+        $usuario=\App\User::where('user',$id)->first();
+        //return json_encode($usuario);
+        if ($usuario) {
+            return 1;
+        }else{
+            return 0; 
+        }
+        
+    }
+
+    public function email($id)
+    {
+        $usuario=\App\User::where('email',$id)->first();
+
+        if ($usuario) {
+            return 1;
+        }else{
+            return 0; 
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      *

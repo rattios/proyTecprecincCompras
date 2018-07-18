@@ -93,11 +93,11 @@
       	<br><br><br><strong>Lo pueden ver los departamentos de:</strong><br><br>
       	<div class="row" style="text-align:center">
       		<div *ngFor="let depart of departamentos" >
-	      		<div class="col-lg-3">
+	      		<div class="col-lg-3" *ngIf="depart.id!=100 && depart.id!=101">
 	      			<label>{{depart.nombre}}:</label>
 		      			
 	      		</div>
-	      		<div class="col-lg-3">
+	      		<div class="col-lg-3" *ngIf="depart.id!=100 && depart.id!=101">
 	      			<label class="switch switch-3d switch-secondary">
 			            <input type="checkbox" class="switch-input" [(ngModel)]="depart.bandera" (change)="checkAdd(depart.id)">
 			            <span class="switch-label"></span>

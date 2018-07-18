@@ -90,7 +90,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="name">Usuario</label>
-                    <input type="text" class="form-control" id="Usuario" placeholder="" [(ngModel)]="proveedor.user">
+                    <input type="text" class="form-control" id="Usuario" placeholder="" [(ngModel)]="proveedor.user" (blur)="user()">
                   </div>
                 </div>
                 <div class="col-sm-4" *ngIf="proveedor.id==0">
@@ -107,19 +107,19 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="ccnumber">Email</label>
+                    <input type="text" class="form-control" id="email" placeholder="" [(ngModel)]="proveedor.email" (blur)="email()">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-sm-12">
                   <div class="form-group">
                     <label for="ccnumber">Teléfonos</label>
                     <input type="text" class="form-control" id="telefono" placeholder="" [(ngModel)]="proveedor.telefono">
                    <!--  <button style="text-align:right" type="button" class="btn btn-outline-success">+</button> -->
-                  </div>
-                </div>
-              </div> 
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="ccnumber">Email</label>
-                    <input type="text" class="form-control" id="email" placeholder="" [(ngModel)]="proveedor.email">
                   </div>
                 </div>
               </div>
@@ -143,8 +143,11 @@
             </div>
           </div>
           <div style="text-align: center">
-            <button type="button" class="btn btn-success" (click)=editar() *ngIf="!crear">Editar </button> 
-            <button type="button" class="btn btn-success" (click)=crearProveedor() *ngIf="crear">Crear Usuario</button> 
+            <div *ngIf="proveedor.user!='' && proveedor.email!='' && proveedor.departamento_id!=''">
+              <button type="button" class="btn btn-success" (click)=editar() *ngIf="!crear">Editar </button> 
+              <button type="button" class="btn btn-success" (click)=crearProveedor() *ngIf="crear">Crear Usuario</button>
+            </div>
+             
           </div>
         </div>
     </div>
