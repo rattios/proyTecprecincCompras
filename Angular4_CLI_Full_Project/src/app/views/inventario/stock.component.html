@@ -32,10 +32,50 @@
                    <tr *ngFor="let item of items">
                       
                       <td>{{item.nombre}}</td>
-                      <td>{{item.stock}}</td>
+                      <td><p [ngStyle]="{ 'background-color': 'red'}" *ngIf="item.stock<=item.stock_min">{{item.stock}}</p><p *ngIf="item.stock>item.stock_min">{{item.stock}}</p></td>
                       <td>{{item.precio}}</td>
                       <td>{{item.codigo}}</td>
                       <td><button type="button" class="btn btn-success" (click)=ver(item)>Ir</button></td>
+                   </tr>
+                </tbody>
+              </table>
+                <div class="btn-toolbar" role="toolbar" style="margin: 0;">
+                  <div class="btn-group">
+                     <label style="margin-top:10px">Página {{currentIndex}}/{{pageNumber}} </label>
+                  </div>
+                  <div class="btn-group pull-right">
+                     <ul class="pagination" >
+                        <li [ngClass]="{'disabled': (currentIndex == 1 || pageNumber == 0)}" ><a  (click)="prevPage()">Atrás</a></li>
+                           <li *ngFor="let page of pagesIndex"  [ngClass]="{'active': (currentIndex == page)}">
+                              <a (click)="setPage(page)" >{{page}} </a>
+                           </li>
+                        <li [ngClass]="{'disabled': (currentIndex == pageNumber || pageNumber == 0)}" ><a   (click)="nextPage()">Siguiente</a></li>
+                     </ul>
+                  </div>
+                </div>
+            </tab>
+            <tab heading="Bajo inventario">
+              <div class="form-group form-black label-floating is-empty">
+                 <label class="labels" style="font-size: 18px; font-weight: bold">Buscar: </label>
+                <input  class="form-control" type="text"  id="inputName" [(ngModel)]="inputName" (ngModelChange)="FilterByName()"/>
+                 <br>
+              </div>
+              <table class="table">
+                <thead>
+                  <th>Nombre</th>
+                  <th>Stock principal</th>
+                  <th>Precio</th>
+                  <th>Código</th>
+                  <th></th>
+                </thead>
+                <tbody>
+                   <tr *ngFor="let item of items">
+                      
+                      <td *ngIf="item.stock<=item.stock_min">{{item.nombre}}</td>
+                      <td *ngIf="item.stock<=item.stock_min">{{item.stock}}</td>
+                      <td *ngIf="item.stock<=item.stock_min">{{item.precio}}</td>
+                      <td *ngIf="item.stock<=item.stock_min">{{item.codigo}}</td>
+                      <td *ngIf="item.stock<=item.stock_min"><button type="button" class="btn btn-success" (click)=ver(item)>Ir</button></td>
                    </tr>
                 </tbody>
               </table>

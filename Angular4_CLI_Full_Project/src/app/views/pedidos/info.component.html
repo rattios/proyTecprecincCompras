@@ -256,10 +256,10 @@
 				                	
 				                	<div *ngIf="informacion.estado==1">
 					                	<div *ngIf="item.pivot.aprobado">
-					                		<button type="button" class="btn btn-outline-secondary btn-sm" (click)=devolver(item)>Devolver</button>
+					                		<!--button type="button" class="btn btn-outline-secondary btn-sm" (click)=devolver(item)>Devolver</button-->
 					                	</div>
 					                	<div *ngIf="item.pivot.entregado">
-					                		<button type="button" class="btn btn-outline-secondary btn-sm" (click)=devolver(item)>Devolver</button>
+					                		<!--button type="button" class="btn btn-outline-secondary btn-sm" (click)=devolver(item)>Devolver</button-->
 					                	</div>
 					                	<div *ngIf="item.pivot.cancelado">
 					                		
@@ -270,14 +270,14 @@
 					                	<div *ngIf="!item.pivot.aprobado && !item.pivot.entregado && !item.pivot.cancelado && !item.pivot.devuelto">
 						                	<div *ngIf="(item.stock-item.pivot.cantidad)>0 || (item.stock2-item.pivot.cantidad)>0">
 						                		<button type="button" class="btn btn-outline-success btn-sm" (click)="selectPicking(item);largeModal2.show()">Picking</button>
-							                	<button type="button" class="btn btn-outline-primary btn-sm" >Pedir Presupuesto</button>
-							                	<button type="button" class="btn btn-outline-info btn-sm" (click)=pedirAProveedor(item)>Pedir a proveedor</button>
-							                	<button type="button" class="btn btn-outline-danger btn-sm" (click)=cancelar(item)>Cancelar</button>
+							                	<button type="button" class="btn btn-outline-primary btn-sm"  [routerLink]="['/presupuestos/presupuesto']">Pedir Presupuesto</button>
+							                	<button type="button" class="btn btn-outline-info btn-sm"  [routerLink]="['/compras/compra']">Pedir a proveedor</button>
+							                	<!--button type="button" class="btn btn-outline-danger btn-sm" (click)=cancelar(item)>Cancelar</button-->
 						                	</div>
-						                	<div *ngIf="(item.stock-item.pivot.cantidad)<0">
-							                	<button type="button" class="btn btn-outline-primary btn-sm" >Pedir Presupuesto</button>
-							                	<button type="button" class="btn btn-outline-info btn-sm" (click)=pedirAProveedor(item)>Pedir a proveedor</button>
-							                	<button type="button" class="btn btn-outline-danger btn-sm" (click)=cancelar(item)>Cancelar</button>
+						                	<div *ngIf="(item.stock-item.pivot.cantidad)<0 || (item.stock2-item.pivot.cantidad)<0">
+							                	<button type="button" class="btn btn-outline-primary btn-sm"  [routerLink]="['/presupuestos/presupuesto']">Pedir Presupuesto</button>
+							                	<button type="button" class="btn btn-outline-info btn-sm" (click)=pedirAProveedor(item) [routerLink]="['/compras/compra']">Pedir a proveedor</button>
+							                	<!--button type="button" class="btn btn-outline-danger btn-sm" (click)=cancelar(item)>Cancelar</button-->
 						                	</div>
 					                	</div>
 					                	

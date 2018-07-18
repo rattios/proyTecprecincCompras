@@ -30,7 +30,7 @@ export class AppHeader {
     parentElement.removeChild(nativeElement);
     this.nombre= localStorage.getItem('tecprecinc_nombre');
 
-    this.http.get(this.ruta.get_ruta()+'mensajes/departamento/'+localStorage.getItem('tecprecinc_departamento_id'))
+    /*this.http.get(this.ruta.get_ruta()+'mensajes/departamento/'+localStorage.getItem('tecprecinc_departamento_id'))
          .toPromise()
          .then(
          data => {
@@ -53,7 +53,7 @@ export class AppHeader {
          msg => { 
            console.log(msg);
            //alert(msg.error);
-         });
+         });*/
 
   }
 
