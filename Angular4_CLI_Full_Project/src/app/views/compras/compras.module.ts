@@ -14,6 +14,9 @@ import { comprasRoutingModule } from './compras-routing.module';
 
 import { compraComponent } from './compra/compra.component';
 import { comprasComponent } from './compras/compras.component';
+import { compras_recepcionComponent } from './compras_recepcion/compras_recepcion.component';
+import { pickingComponent } from './picking.component';
+
 
 @NgModule({
   imports: [
@@ -31,7 +34,9 @@ import { comprasComponent } from './compras/compras.component';
   declarations: [ 
 
     compraComponent,
-    comprasComponent
+    comprasComponent,
+    compras_recepcionComponent,
+    pickingComponent
 
     ],
     providers: [

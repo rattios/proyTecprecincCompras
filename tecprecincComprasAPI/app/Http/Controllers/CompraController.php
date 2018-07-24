@@ -43,6 +43,19 @@ class compraController extends Controller
         //
     }
 
+
+    public function add(Request $request, $id)
+    {
+        $agregar = \App\Stock::where('id',$id)->first();
+        $agregar->stock= $agregar->stock+ $request->cantidad;
+
+        if($agregar->save())
+            return response()->json(['status'=>'ok', 'producto'=>$agregar], 200);
+        else
+            return response()->json(['error'=>'No se pudo agregar'], 404); 
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -102,8 +115,10 @@ class compraController extends Controller
     public function update(Request $request, $id)
     {
         //cargar un proveedor
-        $cc=\App\Compra::where('id',$id)->first();;
-        $cc->fill($request->all());
+        $cc=\App\Compra::where('id',$id)->first();
+        //return $cc;
+        $cc->productos=json_encode($request->productos);
+        //$cc->fill($request->all());
 
         if($cc->save())
             return response()->json(['status'=>'ok', 'compra'=>$cc], 200);

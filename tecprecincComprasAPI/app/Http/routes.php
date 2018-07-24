@@ -195,6 +195,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::delete('/compra/{id}','CompraController@destroy');
         Route::get('/compra/{id}','CompraController@show');
 
+        Route::post('/add_inventario/{id}','CompraController@add'); 
     Route::group(['middleware' => 'jwt-auth'], function(){
 
 
