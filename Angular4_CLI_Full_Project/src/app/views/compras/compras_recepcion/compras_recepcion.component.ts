@@ -163,6 +163,7 @@ export class compras_recepcionComponent {
      .then(
      data => {
         var send2={
+          estado:1,
           productos:pedido.productos
         }
         console.log(send2);
@@ -186,8 +187,23 @@ export class compras_recepcionComponent {
      });
   }
 
-  finalizar(id){
-    console.log(id); 
+  finalizar(enviado){
+    var send={
+      estado:1,
+      productos:enviado.productos
+    }
+    this.http.put(this.ruta.get_ruta()+'compra/'+enviado.id,send)
+         .toPromise()
+         .then(
+         data => {
+            
+            console.log(data);
+            
+          },
+         msg => { 
+           console.log(msg);
+           this.loading=false;
+         }); 
   }
 
 

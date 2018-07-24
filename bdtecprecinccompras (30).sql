@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-07-2018 a las 08:16:33
+-- Tiempo de generación: 24-07-2018 a las 06:56:26
 -- Versión del servidor: 10.1.26-MariaDB
 -- Versión de PHP: 7.1.8
 
@@ -254,8 +254,11 @@ INSERT INTO `compra` (`id`, `proveedor_id`, `productos`, `observaciones`, `estad
 (2, 1, '[{\"id\":1,\"nombre\":\" Alcohol Iodado\",\"codigo\":\"2951\",\"precio\":\"1002\",\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:17\",\"producto_id\":1,\"pivot\":{\"proveedor_id\":1,\"producto_id\":1,\"precio\":null},\"cantidad\":1}]', 'sadasd', 0, 'asdda', '2018-07-13 03:45:05', '2018-07-13 03:01:03'),
 (3, 1237, '[{\"id\":2,\"nombre\":\" Ap?sito (para acolchado de heridas o vendajes compresivos)\",\"codigo\":\"2949\",\"precio\":45,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":2,\"pivot\":{\"proveedor_id\":1237,\"producto_id\":2,\"precio\":null},\"cantidad\":1}]', 'adasd', 0, 'asddasdadas', '2018-07-13 03:45:09', '2018-07-13 03:06:11'),
 (4, 24, '[{\"id\":3,\"nombre\":\" Ficha Macho 2P + T x 16amp (Domiciliaria) .-\",\"codigo\":\"3471\",\"precio\":\"200\",\"categoria_id\":18,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":3,\"pivot\":{\"proveedor_id\":24,\"producto_id\":3,\"precio\":null},\"cantidad\":\"20\"}]', 'aposdjapsdjapsodj', 0, 'casaczc', '2018-07-13 03:45:13', '2018-07-13 03:08:04'),
-(5, 2, '[{\"id\":3489,\"nombre\":\"bien de uso stalin prueba\",\"codigo\":\"7620\",\"precio\":10000,\"categoria_id\":6,\"created_at\":\"2018-07-09 20:35:46\",\"updated_at\":\"2018-07-09 20:35:46\",\"producto_id\":3489,\"pivot\":{\"proveedor_id\":2,\"producto_id\":3489,\"precio\":null},\"cantidad\":\"2\"}]', 'ojaspdjaspdjojapsodj', 0, 'este producto esta cotizado el dia 10', '2018-07-13 03:20:37', '2018-07-13 03:20:37'),
-(6, 2, '[{\"id\":2,\"nombre\":\" Ap?sito (para acolchado de heridas o vendajes compresivos)\",\"codigo\":\"2949\",\"precio\":45,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":2,\"pivot\":{\"proveedor_id\":2,\"producto_id\":2,\"precio\":null},\"cantidad\":1}]', 'qwe', 0, 'poqdjwqpowjd', '2018-07-13 03:21:59', '2018-07-13 03:21:59');
+(5, 2, '[{\"id\":3489,\"nombre\":\"bien de uso stalin prueba\",\"codigo\":\"7620\",\"precio\":10000,\"categoria_id\":6,\"created_at\":\"2018-07-09 20:35:46\",\"updated_at\":\"2018-07-09 20:35:46\",\"producto_id\":3489,\"pivot\":{\"proveedor_id\":2,\"producto_id\":3489,\"precio\":null},\"cantidad\":\"2\"}]', 'ojaspdjaspdjojapsodj', 1, 'este producto esta cotizado el dia 10', '2018-07-24 00:46:13', '2018-07-24 00:16:13'),
+(6, 2, '[{\"id\":2,\"nombre\":\" Ap?sito (para acolchado de heridas o vendajes compresivos)\",\"codigo\":\"2949\",\"precio\":45,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":2,\"pivot\":{\"proveedor_id\":2,\"producto_id\":2,\"precio\":null},\"cantidad\":1}]', 'qwe', 0, 'poqdjwqpowjd', '2018-07-13 03:21:59', '2018-07-13 03:21:59'),
+(13, 2, '[{\"id\":1,\"nombre\":\" Alcohol Iodado\",\"codigo\":\"2951\",\"precio\":10,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:17\",\"producto_id\":1,\"pivot\":{\"proveedor_id\":2,\"producto_id\":1,\"precio\":null},\"cantidad\":1,\"factura\":\"123\",\"entregado\":1},{\"id\":2,\"nombre\":\" Ap?sito (para acolchado de heridas o vendajes compresivos)\",\"codigo\":\"2949\",\"precio\":45,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":2,\"pivot\":{\"proveedor_id\":2,\"producto_id\":2,\"precio\":null},\"cantidad\":1,\"factura\":\"123\",\"entregado\":1}]', NULL, 0, '', '2018-07-24 01:06:57', '2018-07-24 00:36:57'),
+(14, 1, 'null', 'sd', 0, 'sda', '2018-07-24 01:19:37', '2018-07-24 00:49:37'),
+(15, 1, '[{\"id\":1,\"nombre\":\" Alcohol Iodado\",\"codigo\":\"2951\",\"precio\":10,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:17\",\"producto_id\":1,\"pivot\":{\"proveedor_id\":1,\"producto_id\":1,\"precio\":null},\"cantidad\":1,\"factura\":\"313\",\"entregado\":1},{\"id\":2,\"nombre\":\" Ap?sito (para acolchado de heridas o vendajes compresivos)\",\"codigo\":\"2949\",\"precio\":45,\"categoria_id\":88,\"created_at\":\"2018-01-26 01:37:32\",\"updated_at\":\"2018-05-08 18:54:20\",\"producto_id\":2,\"pivot\":{\"proveedor_id\":1,\"producto_id\":2,\"precio\":null},\"cantidad\":1,\"factura\":\"131\",\"entregado\":1}]', 'asd', 1, 'asd', '2018-07-24 01:22:41', '2018-07-24 00:52:41');
 
 -- --------------------------------------------------------
 
@@ -4756,9 +4759,9 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`id`, `nombre`, `codigo`, `precio`, `stock`, `stock2`, `peps`, `valor_reposicion`, `stock_min`, `stock2_min`, `partida_parcial`, `categoria_id`, `rubro_id`, `tipo_id`, `proveedor_id`, `producto_id`, `created_at`, `updated_at`) VALUES
-(1, ' Alcohol Iodado', '2951', 10.00, 7, 3, 0.00, 0.00, 5, 0, NULL, 88, 1, 2, NULL, 1, '2018-01-26 06:02:30', '2018-07-13 20:45:44'),
-(2, ' Apósito (para acolchado de heridas o vendajes compresivos)', '2949', 45.00, 1, 2, 0.00, 0.00, 0, 0, NULL, 84, 6, 2, NULL, 2, '2018-01-26 06:02:30', '2018-07-13 20:43:35'),
-(3, ' Ficha Macho 2P + T x 16amp (Domiciliaria) .-', '3471', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 18, 10, 2, NULL, 3, '2018-01-26 06:02:30', '2018-05-08 23:24:20'),
+(1, ' Alcohol Iodado', '2951', 10.00, 17, 3, 0.00, 0.00, 5, 0, NULL, 88, 1, 2, NULL, 1, '2018-01-26 06:02:30', '2018-07-24 00:52:38'),
+(2, ' Apósito (para acolchado de heridas o vendajes compresivos)', '2949', 45.00, 6, 2, 0.00, 0.00, 0, 0, NULL, 84, 6, 2, NULL, 2, '2018-01-26 06:02:30', '2018-07-24 00:52:39'),
+(3, ' Ficha Macho 2P + T x 16amp (Domiciliaria) .-', '3471', 0.00, 6, 0, 0.00, 0.00, 0, 0, NULL, 18, 10, 2, NULL, 3, '2018-01-26 06:02:30', '2018-07-24 00:15:21'),
 (4, ' Ficha Macho 2P + T x 32amp (Domiciliaria) .-', '2733', 1.08, 3, 4, 0.00, 0.00, 0, 0, NULL, 18, 9, 2, NULL, 4, '2018-01-26 06:02:30', '2018-07-13 20:44:21'),
 (5, ' Gabinete p/ mang y elem seg. BWG-16, puerta ciega y cerr. aldaba. 170x100x22 cm. Div. int. 60cm sup y 114 cm entre 2 est. div. vertical 49 cm. Gancho', '3021', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 46, 0, 0, NULL, 5, '2018-01-26 06:02:30', '2018-05-08 23:24:20'),
 (6, ' Otosporin L Gotas (analg?sico para o?dos)', '2955', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 88, 0, 0, NULL, 6, '2018-01-26 06:02:30', '2018-05-08 23:24:20'),
@@ -8255,7 +8258,7 @@ INSERT INTO `stock` (`id`, `nombre`, `codigo`, `precio`, `stock`, `stock2`, `pep
 (3486, 'Z?calo Bajo-Puerta', '13485', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 1, 0, 0, NULL, 3486, '2018-01-26 06:02:35', '2018-05-08 23:26:17'),
 (3487, 'Z?calo de relle ejecuci?n de 2/2 pisos por tornillo PR1-BSC2/2X21 PHOENIX', '13486', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 18, 0, 0, NULL, 3487, '2018-01-26 06:02:35', '2018-05-08 23:26:17'),
 (3488, 'VALVULA DE FONDO DRAGO', '13487', 0.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 22, 0, 0, NULL, 3488, '2018-01-26 06:02:35', '2018-05-08 23:26:17'),
-(3489, 'bien de uso de stalin', '57541', 1.00, 0, 0, 0.00, 0.00, 1, 1, NULL, 1, 1, 2, NULL, NULL, '2018-05-25 21:11:46', '2018-05-25 21:11:46'),
+(3489, 'bien de uso de stalin', '57541', 1.00, 1, 0, 0.00, 0.00, 1, 1, NULL, 1, 1, 2, NULL, NULL, '2018-05-25 21:11:46', '2018-07-24 00:40:11'),
 (3490, 'comsumo stalin prueba', '78750', 1.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 1, 2, 1, NULL, NULL, '2018-05-25 21:50:42', '2018-05-25 21:50:42'),
 (3491, 'servicios stalin', '87232', 1.00, 0, 0, 0.00, 0.00, 0, 0, NULL, 1, 1, 4, NULL, NULL, '2018-05-25 22:01:37', '2018-05-25 22:01:37'),
 (3492, 'bien de uso stalin prueba', '7620', 10000.00, 0, 0, 0.00, 0.00, 5, 5, NULL, 6, 1, 2, NULL, 3489, '2018-07-10 01:05:46', '2018-07-10 01:05:46');
@@ -8746,7 +8749,7 @@ ALTER TABLE `centro_costos`
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT de la tabla `compras`
 --

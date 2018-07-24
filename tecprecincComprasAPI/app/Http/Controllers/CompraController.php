@@ -118,6 +118,7 @@ class compraController extends Controller
         $cc=\App\Compra::where('id',$id)->first();
         //return $cc;
         $cc->productos=json_encode($request->productos);
+        $cc->estado=$request->estado;
         //$cc->fill($request->all());
 
         if($cc->save())
