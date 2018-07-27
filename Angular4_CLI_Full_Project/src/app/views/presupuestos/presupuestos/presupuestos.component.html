@@ -75,14 +75,17 @@
                 
               </div>
               <div id="exportable" class="col-lg-10">
+
                 <div class="row">
                   <div class="col-sm-3">
                     <img src="http://www.tecprecincsrl.com.ar/e/wp-content/uploads/2018/02/logo.png" style="width: 210px;">
                   </div>
                   <div class="col-sm-7" style="text-align: right;">
-                    Presupuesto: Nº {{enviado.id}}
+                    Presupuesto: Nº <strong>{{enviado.id}}</strong><br>
+                    Fecha: <strong>{{enviado.created_at | date:'dd-MM-yyyy'}}</strong>
                   </div>
                 </div>
+                
                 <div class="row">
                   <div class="col-lg-12" style="text-align: center">
                     <h4>SOLICITUD DE PRESUPUESTO</h4>

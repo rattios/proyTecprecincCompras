@@ -103,6 +103,7 @@ class ContratosController extends Controller
             return response()->json(['error'=>'No se pudo crear cc'], 404); 
     }
 
+
     /**
      * Remove the specified resource from storage.
      *

@@ -49,10 +49,23 @@ class compraController extends Controller
         $agregar = \App\Stock::where('id',$id)->first();
         $agregar->stock= $agregar->stock+ $request->cantidad;
 
-        if($agregar->save())
+        if($agregar->save()){
+            $cc=new \App\Trazas;
+            $cc->cantidad=$request->cantidad;
+            $cc->stock_id=$id;
+            $cc->d_receptor_id=100;
+            $cc->d_emisor_id=100;
+            $cc->operacion_id=$agregar->id;
+            $cc->factura=$request->factura;
+            $cc->tipo='Ingreso al inventario por factura';
+            $cc->u_emisor_id=$request->usuario;
+            $cc->u_receptor_id=$request->usuario;
+            $cc->save();
             return response()->json(['status'=>'ok', 'producto'=>$agregar], 200);
-        else
+        }
+        else{
             return response()->json(['error'=>'No se pudo agregar'], 404); 
+        }
 
     }
 

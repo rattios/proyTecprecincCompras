@@ -83,7 +83,6 @@ export class presupuestoComponent {
   }
   seleccionar(item){
     this.proveedor=item;
-    this.itemsPresupuesto=[];
   }
   setProveedores(){
     console.log(this.proveedores2);
@@ -98,6 +97,27 @@ export class presupuestoComponent {
      item.cantidad=1;
      this.itemsPresupuesto.push(item);
     }
+  }
+  del(){
+    this.proveedor={
+          calificacion:null,
+          cuit:"",
+          email:"",
+          estado:"",
+          fax:"",
+          habilitado:"NO",
+          habilitado2: false,
+          motivo:"",
+          id:0,
+          nombre_fantacia:"",
+          productos:[],
+          razon_social:"",
+          telefono:"",
+          direccion: "",
+          formaPago: "",
+          telefonos: []
+        };
+    this.itemsPresupuesto=[];
   }
   set(item){
     this.http.get(this.ruta.get_ruta()+'productos/'+item.id+'/proveedores')
@@ -119,6 +139,15 @@ export class presupuestoComponent {
               this.filteredItems = this.productList;
               this.init();
               this.loading=false;
+              if(!this.checkProductos(item)) {
+               item.cantidad=1;
+               item.factura='';
+               item.entregado=0;
+               this.itemsPresupuesto.push(item);
+              }
+              if(this.proveedores.length==0) {
+                this.del();
+              }
             },
            msg => { 
              console.log(msg);

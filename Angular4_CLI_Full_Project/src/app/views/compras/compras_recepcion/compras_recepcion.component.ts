@@ -149,14 +149,18 @@ export class compras_recepcionComponent {
 
   addInventario(id,cantidad,pedido_id,pedido){
     console.log(pedido);
+    var fac='';
     for (var i = 0; i < pedido.productos.length; i++) {
       if(pedido.productos[i].id==id) {
         pedido.productos[i].entregado=1;
+        fac=pedido.productos[i].factura;
       }
     }
     console.log(id+'-'+cantidad+'-'+pedido_id); 
     var send={
-      cantidad:cantidad
+      cantidad:cantidad,
+      factura:fac,
+      usuario:localStorage.getItem('tecprecinc_usuario_id')
     }
     this.http.post(this.ruta.get_ruta()+'add_inventario/'+id,send)
      .toPromise()

@@ -95,6 +95,20 @@ export class DashboardComponent implements OnInit {
             console.log(this.datos);
            //this.departamentos=this.datos.departamentos;
            this.ultimosPedidos=this.datos.ultimosPedidos;
+           for (var i = 0; i < this.ultimosPedidos.length; i++) {
+             if(this.ultimosPedidos[i].estado=='0' && this.ultimosPedidos[i].aprobar==0) {
+               this.ultimosPedidos[i].estado2='Por aprobar';
+             }else if(this.ultimosPedidos[i].estado=='0' && this.ultimosPedidos[i].aprobar==1) {
+               this.ultimosPedidos[i].estado2='Entrante';
+             }else if(this.ultimosPedidos[i].estado=='1') {
+               this.ultimosPedidos[i].estado2='En curso';
+             }else if(this.ultimosPedidos[i].estado=='2') {
+               this.ultimosPedidos[i].estado2='Entregado';
+             }else if(this.ultimosPedidos[i].estado=='2') {
+               this.ultimosPedidos[i].estado2='Cancelado';
+             }
+             
+           }
            for (var i = 0; i < this.datos.departamentos.length; i++) {
              if(/*this.datos.departamentos[i].nombre!='Compras' &&*/ this.datos.departamentos[i].nombre!='Almacen Principal' && this.datos.departamentos[i].nombre!='Almacen Secundario') {
                this.departamentos.push(this.datos.departamentos[i]);

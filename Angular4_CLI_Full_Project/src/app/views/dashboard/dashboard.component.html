@@ -196,7 +196,7 @@
             
             
             <br>
-            <div class="table-responsive"></div>
+            <h4>Últimas 15 solicitudes</h4>
             <table class="table table-responsive table-hover table-outline mb-0">
               <thead class="thead-default">
                 <tr>
@@ -204,6 +204,7 @@
                   <th>USUARIO</th>
                   <th>DEPARTAMENTO</th>
                   <th class="text-center">CANTIDAD</th>
+                  <th class="text-center">ESTADO</th>
                   <th>CENTRO DE COSTO</th>
                 </tr>
               </thead>
@@ -220,6 +221,9 @@
                   </td>
                   <td class="text-center">
                     {{u.cantidad}}
+                  </td>
+                  <td class="text-center">
+                    {{u.estado2}}
                   </td>
                   <td>
                     {{u.centro_costos.descripcion}}
