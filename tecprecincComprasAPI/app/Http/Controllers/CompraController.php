@@ -132,6 +132,7 @@ class compraController extends Controller
         //return $cc;
         $cc->productos=json_encode($request->productos);
         $cc->estado=$request->estado;
+        $cc->obs_recepcion=$request->obs_recepcion;
         //$cc->fill($request->all());
 
         if($cc->save())

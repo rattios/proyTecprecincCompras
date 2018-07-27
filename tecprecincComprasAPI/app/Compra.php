@@ -26,7 +26,7 @@ class Compra extends Model
      */
     /*protected $fillable = ['presupuesto_id', 'estado','f_envio',
     	'confir_ajuste', 'f_respuesta','confir_rec_oc'];*/
-     protected $fillable = ['proveedor_id', 'productos','observaciones',
+     protected $fillable = ['proveedor_id', 'productos','observaciones','obs_recepcion',
         'estado','nota'];
     /**
      * The attributes excluded from the model's JSON form.

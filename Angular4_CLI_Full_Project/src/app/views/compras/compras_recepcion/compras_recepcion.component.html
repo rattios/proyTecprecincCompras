@@ -126,8 +126,8 @@
                             <td>{{it.cantidad}}</td>
                             <td>{{it.nombre}}</td>
                             <td>{{it.precio}}</td>
-                            <td><input type="" name="" *ngIf="it.entregado==0" [(ngModel)]="it.factura"><p *ngIf="it.entregado!=0">{{it.factura}}</p></td>
-                            <td><button type="button" class="btn btn-success" *ngIf="it.entregado==0" (click)="addInventario(it.id,it.cantidad,enviado.id,enviado)">Cargar al inventario</button></td>
+                            <td><div *ngIf="enviado.estado!=2"><input type="" name="" *ngIf="it.entregado==0" [(ngModel)]="it.factura"></div><p *ngIf="it.entregado!=0">{{it.factura}}</p></td>
+                            <td><div *ngIf="enviado.estado!=2"> <button type="button" class="btn btn-success" *ngIf="it.entregado==0" (click)="addInventario(it.id,it.cantidad,enviado.id,enviado)">Cargar al inventario</button></div></td>
                           </tr>
                       </tbody>
                     </table>
@@ -142,9 +142,17 @@
                     </div>
                   </div>
                 </div> 
+                <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <strong>Observaciones de recepción:</strong>
+                    <textarea class="form-control" rows="5" cols="150" [(ngModel)]="obs_recepcion"></textarea>
+                  </div>
+                </div>
+              </div>
                 <br>
                 <div class="row">
-                  <div class="col-lg-12" style="text-align:center">
+                  <div class="col-lg-12" style="text-align:center" *ngIf="enviado.estado!=2">
                     <button type="button" class="btn btn-primary" (click)="finalizar(enviado)">Finalizar orden de compra</button>
                   </div>
                 </div>

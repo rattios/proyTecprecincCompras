@@ -274,11 +274,11 @@
 							                	<button type="button" class="btn btn-outline-info btn-sm"  [routerLink]="['/compras/compra']">Pedir a proveedor</button>
 							                	<!--button type="button" class="btn btn-outline-danger btn-sm" (click)=cancelar(item)>Cancelar</button-->
 						                	</div>
-						                	<div *ngIf="(item.stock-item.pivot.cantidad)<0 || (item.stock2-item.pivot.cantidad)<0">
+						                	<!--div *ngIf="(item.stock-item.pivot.cantidad)<0 || (item.stock2-item.pivot.cantidad)<0">
 							                	<button type="button" class="btn btn-outline-primary btn-sm"  [routerLink]="['/presupuestos/presupuesto']">Pedir Presupuesto</button>
 							                	<button type="button" class="btn btn-outline-info btn-sm" (click)=pedirAProveedor(item) [routerLink]="['/compras/compra']">Pedir a proveedor</button>
-							                	<!--button type="button" class="btn btn-outline-danger btn-sm" (click)=cancelar(item)>Cancelar</button-->
-						                	</div>
+							                	<button type="button" class="btn btn-outline-danger btn-sm" (click)=cancelar(item)>Cancelar</button>
+						                	</div-->
 					                	</div>
 					                	
 					               	</div>

@@ -176,6 +176,7 @@ export class compraComponent {
       }
     }
     public observaciones:any;
+    public obs_recepcion:any;
     public enviado:any={
       razon_social:'',
       nombre_fantasia:'',
@@ -213,6 +214,7 @@ export class compraComponent {
         this.aEnviar.nota=this.nota;
         this.aEnviar.productos=JSON.stringify(this.itemsPresupuesto);
         this.aEnviar.observaciones=this.observaciones;
+        this.obs_recepcion='';
         console.log(this.aEnviar);
         this.http.post(this.ruta.get_ruta()+'compra',this.aEnviar)
            .toPromise()

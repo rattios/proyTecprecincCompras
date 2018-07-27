@@ -66,6 +66,8 @@ export class comprasComponent {
                 if(this.proveedores[i].estado==0) {
                   this.proveedores[i].estado2='Enviado';
                 }else if(this.proveedores[i].estado==1) {
+                  this.proveedores[i].estado2='En proceso';
+                }else if(this.proveedores[i].estado==2) {
                   this.proveedores[i].estado2='Recibido';
                 }
               }

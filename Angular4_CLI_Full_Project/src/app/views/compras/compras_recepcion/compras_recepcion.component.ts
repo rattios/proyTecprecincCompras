@@ -20,6 +20,7 @@ export class compras_recepcionComponent {
   public productos: any;
   public loading=true;
   public loading2=true;
+  public obs_recepcion: any;
   public proveedor: any={
           calificacion:null,
           cuit:"",
@@ -67,6 +68,8 @@ export class compras_recepcionComponent {
                 if(this.proveedores[i].estado==0) {
                   this.proveedores[i].estado2='Enviado';
                 }else if(this.proveedores[i].estado==1) {
+                  this.proveedores[i].estado2='En proceso';
+                }else if(this.proveedores[i].estado==2) {
                   this.proveedores[i].estado2='Recibido';
                 }
               }
@@ -118,6 +121,7 @@ export class compras_recepcionComponent {
   public verDatos=false;
   ver(item){
     this.enviado=item;
+    this.obs_recepcion=this.enviado.obs_recepcion;
     this.verDatos=true;
   }
   volver(){
@@ -168,7 +172,8 @@ export class compras_recepcionComponent {
      data => {
         var send2={
           estado:1,
-          productos:pedido.productos
+          productos:pedido.productos,
+          obs_recepcion:this.obs_recepcion
         }
         console.log(send2);
         this.http.put(this.ruta.get_ruta()+'compra/'+pedido_id,pedido)
@@ -177,7 +182,9 @@ export class compras_recepcionComponent {
          data => {
             
             console.log(data);
-            
+
+            alert('Éxito!');
+
           },
          msg => { 
            console.log(msg);
@@ -193,8 +200,9 @@ export class compras_recepcionComponent {
 
   finalizar(enviado){
     var send={
-      estado:1,
-      productos:enviado.productos
+      estado:2,
+      productos:enviado.productos,
+      obs_recepcion:this.obs_recepcion
     }
     this.http.put(this.ruta.get_ruta()+'compra/'+enviado.id,send)
          .toPromise()
@@ -202,7 +210,9 @@ export class compras_recepcionComponent {
          data => {
             
             console.log(data);
-            
+            this.ngOnInit();
+            this.verDatos=false;
+            alert('Éxito!');
           },
          msg => { 
            console.log(msg);
