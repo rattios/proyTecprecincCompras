@@ -3,6 +3,7 @@ import {CommonModule, NgClass} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../services/ruta.service';
+import { SharedService } from './shared.service';
 
 @Component({
   selector: 'app-picking',
@@ -15,15 +16,26 @@ export class pickingComponent {
   public proveedor: any='';
   public showP1=true;
   public showP2=true;
+  public showP11=true;
+  public showP22=true;
   public loading=true;
   public departamentos:any;
   public empleados:any;
   public empleado_id:any;
+  private _name: any;
+
+
   @Input() producto:any;
   @Input() informacion:any;
 
-  constructor(private http: HttpClient, private ruta: RutaService) {
-
+  constructor(private http: HttpClient, private ruta: RutaService,private sharedService: SharedService) {
+    this.sharedService.cartData.subscribe(
+          (data: any) => {
+            console.log(data);
+            this.showP1=true;
+            this.showP2=true;
+            alert('chato');
+          });
   }
 
    ngOnInit(): void {
@@ -31,6 +43,8 @@ export class pickingComponent {
       console.log(this.producto);
       this.producto.bstock=true;
       this.producto.bstock2=true;
+      this.producto.observacion='';
+      
       this.http.get(this.ruta.get_ruta()+'usuarios?rol='+10+"&departamento_id="+this.producto.departamento.id)
            .toPromise()
            .then(
@@ -82,6 +96,77 @@ export class pickingComponent {
     }
 
     picking(item,tipo){
+      console.log(item);
+      if(tipo==1) {
+        item.almacen='principal';
+        var send = {
+          picking: JSON.stringify(item)
+        }
+        
+        this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
+             .toPromise()
+             .then(
+             data => {
+               console.log(data);
+               var rec:any;
+               rec=data;
+               console.log(this.producto);
+               console.log(rec);
+               console.log(rec.picking);
+               for (var i = 0; i < this.informacion.solicitud.length; i++) {
+                 if(this.informacion.solicitud[i].id==rec.picking.id) {
+                   this.informacion.solicitud[i]=rec.picking;
+                 }
+               }
+               this.producto.stock=this.producto.stock-item.pivot.cantidad;
+               this.showP1=false;
+               this.showP2=false;
+               alert('éxito');
+               this.traxas(item.pivot.stock_id,item.pivot.cantidad,100,item.departamento.id,localStorage.getItem('tecprecinc_usuario_id'),this.empleado_id,item.pivot.pedido_id,'Picking');
+              },msg => { 
+               console.log(msg);
+               alert('Error: '+JSON.stringify(msg));
+             });
+      }else if(tipo==2){
+        item.almacen='secundario';
+        console.log(item);
+        var send = {
+          picking: JSON.stringify(item)
+        }
+
+        this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
+             .toPromise()
+             .then(
+             data => {
+               console.log(data);
+               var rec:any;
+               rec=data;
+               console.log(this.producto);
+               console.log(rec);
+               console.log(rec.picking);
+               for (var i = 0; i < this.informacion.solicitud.length; i++) {
+                 if(this.informacion.solicitud[i].id==rec.picking.id) {
+                   this.informacion.solicitud[i]=rec.picking;
+                 }
+               }
+               this.producto.stock2=this.producto.stock-item.pivot.cantidad;
+               this.showP1=false;
+               this.showP2=false;
+               alert('éxito');
+               this.traxas(item.pivot.stock_id,item.pivot.cantidad,101,item.departamento.id,localStorage.getItem('tecprecinc_usuario_id'),this.empleado_id,item.pivot.pedido_id,'Picking');
+              },
+             msg => { 
+               console.log(msg);
+               alert('Error: '+JSON.stringify(msg));
+             });
+      }
+    }  
+
+    picking2(item,tipo,stock){
+      item.pivot.cantidad=stock;
+      if(item.observacion=='') {
+        item.observacion='Se entro solo '+ stock +' unidades que habia en stock';
+      }
       console.log(item);
       if(tipo==1) {
         item.almacen='principal';

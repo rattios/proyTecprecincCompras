@@ -54,7 +54,7 @@ class Stock extends Model
     public function solicitud(){
         // 1 producto del stock puede estar solicitado en varios pedidos
         return $this->belongsToMany('\App\Pedido','pedido_stock','stock_id','pedido_id')
-            ->withPivot('cantidad','aprobado','entregado',
+            ->withPivot('cantidad','aprobado','entregado','cantidad_entregada', 'observacion',
                 'f_entrega','tipo_entrega','devuelto',
                 'cancelado','pendiente','observaciones')/*->withTimestamps()*/; 
     }

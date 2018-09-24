@@ -573,7 +573,7 @@ class PedidoController extends Controller
             DB::table('pedido_stock')
                 ->where('pedido_id', $picking->pivot->pedido_id)
                 ->where('stock_id', $picking->pivot->stock_id)
-                ->update(['entregado' => 1]);
+                ->update(['entregado' => 1,'cantidad_entregada' => $picking->pivot->cantidad, 'observacion' =>$picking->observacion]);
             
             $picking->pivot->entregado = 1;
 

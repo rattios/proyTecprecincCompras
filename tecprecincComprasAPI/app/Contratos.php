@@ -33,4 +33,16 @@ class Contratos extends Model
      */
     protected $hidden = ['updated_at'];
 
+    //contrato_departamento_centrocosto contrato_id departamento_id controcosto_id
+
+    public function departamentos(){
+        return $this->belongsToMany('\App\Departamento','contrato_departamento_centrocosto')
+            ->withPivot('contro_costos_id');
+    }
+
+    public function centrocostos(){
+        return $this->belongsToMany('\App\CentroCostos','contrato_departamento_centrocosto')
+            ->withPivot('departamento_id');
+    }
+
 }

@@ -168,7 +168,9 @@ Route::group(  ['middleware' =>'cors'], function(){
         
         Route::get('/contratos','ContratosController@index');
         Route::post('/contratos','ContratosController@store');
+        Route::post('/relaciones','ContratosController@relaciones');
         Route::put('/contratos/{id}','ContratosController@update');
+        Route::put('/relaciones/{id}','ContratosController@relaciones_actualizar');
         Route::delete('/contratos/{id}','ContratosController@destroy');
 
         Route::get('/almacen','AlmacenController@index');

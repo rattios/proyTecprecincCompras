@@ -55,7 +55,7 @@ class compraController extends Controller
             $cc->stock_id=$id;
             $cc->d_receptor_id=100;
             $cc->d_emisor_id=100;
-            $cc->operacion_id=$agregar->id;
+            $cc->operacion_id=$request->pedido_id;
             $cc->factura=$request->factura;
             $cc->tipo='Ingreso al inventario por factura';
             $cc->u_emisor_id=$request->usuario;

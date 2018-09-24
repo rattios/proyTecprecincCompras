@@ -9,6 +9,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { MatDatepickerModule, MatNativeDateModule, DateAdapter } from '@angular/material';
 import { DateFormat } from './date-format';
 
+import { SharedService } from './shared.service';
+
 import { pedidosComponent } from './pedidos.component';
 import { misPedidosComponent } from './mis-pedidos.component';
 import { todosPedidosComponent } from './todos-pedidos.component';
@@ -80,7 +82,8 @@ import { presupuestosComponent } from './presupuesto.component';
     transferenciasPuraComponent,
     transferenciasInfoComponent,
     pickingComponent
-    ]
+    ],
+  providers: [ SharedService ],
 })
 export class pedidosModule {
   constructor(private dateAdapter:DateAdapter<Date>) {

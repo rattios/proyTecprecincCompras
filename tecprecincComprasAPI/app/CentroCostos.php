@@ -33,6 +33,20 @@ class CentroCostos extends Model
      */
     protected $hidden = ['created_at', 'updated_at'];
 
+
+    //contrato_departamento_centrocosto contrato_id departamento_id controcosto_id
+
+    public function contratos2(){
+        return $this->belongsToMany('\App\Contratos','contrato_departamento_centrocosto')
+            ->withPivot('departamento_id');
+    }
+
+    public function departamentos(){
+        return $this->belongsToMany('\App\Departamento','contrato_departamento_centrocosto')
+            ->withPivot('contratos_id');
+    }
+
+
     public function contratos()
     {
         // 1 categoria puede tener varios productos

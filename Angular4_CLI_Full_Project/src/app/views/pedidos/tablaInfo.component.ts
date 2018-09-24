@@ -4,6 +4,7 @@ import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../services/ruta.service';
 import { todosPedidosComponent } from './todos-pedidos.component';
+import { SharedService } from './shared.service';
 
 @Component({
   selector: 'app-tabla-info',
@@ -16,7 +17,7 @@ export class tablaInfoComponent {
   
   @Input() informacion:any;
 
-  constructor(private http: HttpClient, private ruta: RutaService, private parent: todosPedidosComponent) {
+  constructor(private http: HttpClient, private ruta: RutaService, private parent: todosPedidosComponent,private sharedService: SharedService) {
 
   }
 

@@ -161,10 +161,13 @@ export class compras_recepcionComponent {
       }
     }
     console.log(id+'-'+cantidad+'-'+pedido_id); 
+    console.log('usuario id: '+localStorage.getItem('tecprecinc_usuario_id'));
+    console.log(localStorage.getItem('tecprecinc_usuario_id'));
     var send={
       cantidad:cantidad,
       factura:fac,
-      usuario:localStorage.getItem('tecprecinc_usuario_id')
+      usuario:localStorage.getItem('tecprecinc_usuario_id'),
+      pedido_id:pedido_id
     }
     this.http.post(this.ruta.get_ruta()+'add_inventario/'+id,send)
      .toPromise()

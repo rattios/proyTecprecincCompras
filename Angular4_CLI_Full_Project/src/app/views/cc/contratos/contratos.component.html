@@ -95,18 +95,26 @@
               </div>
               <div class="row">
                   <div class="col-md-12">
+                    <label class="label" for="select">Departamentos</label>
+                    <select id="departamentos" name="departamentos" class="form-control" [(ngModel)]="centroCosto.departamento_id">
+                      <option *ngFor="let d of depart" [value]="cc.id">{{d.nombre}}</option>
+                    </select>
+                  </div>
+              </div><br>
+              <div class="row">
+                  <div class="col-md-12">
                     <label class="label" for="select">Centro de costos</label>
                     <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="centroCosto.centro_costos_id">
                       <option *ngFor="let cc of cc" [value]="cc.id">{{cc.descripcion}}</option>
                     </select>
                   </div>
-                </div>
+              </div>
             </div>
           </div>  
           
           <div style="text-align: center">
-            <button type="button" class="btn btn-success" (click)=editar() *ngIf="!crear">Editar productos del centro costo</button> 
-            <button type="button" class="btn btn-success" (click)=crearcentroCosto() *ngIf="crear">Crear centroCosto</button> 
+            <button type="button" class="btn btn-success" (click)=editar() *ngIf="!crear">Editar Contrato</button> 
+            <button type="button" class="btn btn-success" (click)=crearcentroCosto() *ngIf="crear">Crear Contrato</button> 
           </div>
         </div>
     </div>

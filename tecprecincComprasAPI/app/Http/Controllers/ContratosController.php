@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 
 class ContratosController extends Controller
 {
@@ -51,6 +52,28 @@ class ContratosController extends Controller
             return response()->json(['status'=>'ok', 'contratos'=>$cc], 200);
         else
             return response()->json(['error'=>'No se pudo crear cc'], 404); 
+    }
+
+
+    public function relaciones(Request $request)
+    {
+
+        $contrato=new \App\contratos;
+
+        $contrato->departamentos()->attach($request->departamentos_id,['contro_costos_id'=>$request->contro_costos_id,'contratos_id'=>$request->contratos_id]);
+        return response()->json(['status'=>'ok', 'contratos'=>$contrato], 200);
+ 
+    }
+
+    public function relaciones_actualizar(Request $request,$id)
+    {
+
+       DB::table('contrato_departamento_centrocosto')
+                ->where('id', $id)
+                ->update(['contratos_id' => $request->contratos_id,'departamento_id' => $request->departamento_id, 'contro_costos_id' =>$request->contro_costos_id]);
+
+        return response()->json(['status'=>'ok'], 200);
+ 
     }
 
     /**

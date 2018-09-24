@@ -4,6 +4,7 @@ import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
 import { RutaService } from '../../services/ruta.service';
+import { SharedService } from './shared.service';
 
 @Component({
   selector: 'app-info',
@@ -19,7 +20,7 @@ export class infoComponent {
 
   @Input() informacion:any;
 
-  constructor(private http: HttpClient, private ruta: RutaService) {
+  constructor(private http: HttpClient, private ruta: RutaService,private sharedService: SharedService) {
 
   }
 
@@ -39,6 +40,7 @@ export class infoComponent {
       item.departamento=this.informacion.usuario.departamento;
       //item.informacion=this.informacion;
       console.log(item);
+      this.sharedService.cartData.emit("onEvent: chato");
       this.aPicking=item;
       this.showPicking=true;
     }

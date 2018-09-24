@@ -33,6 +33,18 @@ class Departamento extends Model
      */
     protected $hidden = ['created_at','updated_at'];
 
+    //contrato_departamento_centrocosto contrato_id departamento_id controcosto_id
+
+    public function contratos2(){
+        return $this->belongsToMany('\App\Contratos','contrato_departamento_centrocosto')
+            ->withPivot('contro_costos_id');
+    }
+
+    public function centrocostos(){
+        return $this->belongsToMany('\App\CentroCostos','contrato_departamento_centrocosto')
+            ->withPivot('contratos_id');
+    }
+
     // Relación de departamento con usuarios:
     public function usuarios()
     {

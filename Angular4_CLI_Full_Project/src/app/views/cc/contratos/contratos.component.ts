@@ -16,6 +16,7 @@ export class contratosComponent {
 
   public prov: any;
   public cc: any;
+  public depart: any;
   public stock: any;
   public contratos: any;
   public productos: any;
@@ -25,6 +26,7 @@ export class contratosComponent {
   public sucontratosess=false;
   public fail=false;
   public crear=false;
+  public relaciones=[];
 
   public options: DatepickerOptions = {
     displayFormat: 'DD/MM/YYYY',
@@ -61,6 +63,17 @@ export class contratosComponent {
            data => {
              this.prov=data;
              this.cc=this.prov.CentroCostos;
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+           });
+      this.http.get(this.ruta.get_ruta()+'departamentos')
+           .toPromise()
+           .then(
+           data => {
+             this.depart=data;
+             this.depart=this.depart.departamentos;
             },
            msg => { 
              console.log(msg);
