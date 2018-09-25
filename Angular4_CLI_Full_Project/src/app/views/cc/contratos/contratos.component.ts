@@ -26,7 +26,9 @@ export class contratosComponent {
   public sucontratosess=false;
   public fail=false;
   public crear=false;
-  public relaciones=[];
+  public relaciones:any =[];
+  public departamento_id:any =1;
+  public centroCostos_id:any =1;
 
   public options: DatepickerOptions = {
     displayFormat: 'DD/MM/YYYY',
@@ -131,6 +133,60 @@ export class contratosComponent {
           this.centroCosto.productos.splice(i, 1);
         }
       }
+    }
+
+    agregarDepartamento(departamento_id){
+      console.log(departamento_id);
+      for (var i = 0; i < this.depart.length; i++) {
+        if(departamento_id==this.depart[i].id) {
+          if(!this.checkDepartamento(this.depart[i].id)) {
+            this.depart[i].cc=[];
+            this.relaciones.push(this.depart[i]);
+            console.log(this.relaciones);
+          }
+        }
+      }
+    }
+
+    checkDepartamento(id){
+      var band=false;
+      for (var i = 0; i < this.relaciones.length; i++) {
+        if(this.relaciones[i].id==id) {
+          band=true;
+        }
+      }
+      return band;
+    }
+
+    agregarCentroCostos(id,centroCostos_id){
+      console.log(id+' '+centroCostos_id);
+      for (var i = 0; i < this.relaciones.length; i++) {
+        if(id==this.relaciones[i].id) {
+          for (var j = 0; j < this.cc.length; j++) {
+            if(centroCostos_id==this.cc[j].id) {
+              if(!this.checkCentroCostos(id,centroCostos_id)) {
+                this.relaciones[i].cc.push(this.cc[j]);
+                console.log(this.relaciones);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    checkCentroCostos(id,centroCostos_id){
+      console.log(centroCostos_id);
+      var band=false;
+      for (var i = 0; i < this.relaciones.length; i++) {
+        if(id==this.relaciones[i].id) {
+          for (var j = 0; j < this.relaciones[i].cc.length; j++) {
+            if(this.relaciones[i].cc[j].id==centroCostos_id) {
+              band=true;
+            }
+          }
+        }
+      }
+      return band;
     }
 
     crearcentroCosto(){

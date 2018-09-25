@@ -96,21 +96,87 @@
               <div class="row">
                   <div class="col-md-12">
                     <label class="label" for="select">Departamentos</label>
-                    <select id="departamentos" name="departamentos" class="form-control" [(ngModel)]="centroCosto.departamento_id">
-                      <option *ngFor="let d of depart" [value]="cc.id">{{d.nombre}}</option>
+                    <select id="departamentos" name="departamentos" class="form-control" [(ngModel)]="departamento_id">
+                      <option *ngFor="let d of depart" [value]="d.id">{{d.nombre}}</option>
                     </select>
                   </div>
               </div><br>
+
               <div class="row">
+                <div class="col-md-12">
+                  <div style="text-align: right;">
+                    <button type="button" class="btn btn-success" (click)=agregarDepartamento(departamento_id)>Agregar departamento</button> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div>
+                    <div class="card-body">
+                      
+              
+                      <h4>Relaciones</h4>
+                      <table class="table table-responsive table-hover table-outline mb-0">
+                        <thead class="thead-default">
+                          <tr>
+                            <th class="">Departamento-Centro de Costos</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let u of relaciones">
+                            <td class="">
+                              <strong>{{u.nombre}}</strong><br>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label class="label" for="select">Centro de costos</label>
+                                  <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="centroCostos_id">
+                                    <option *ngFor="let cc of cc" [value]="cc.id">{{cc.descripcion}}</option>
+                                  </select>
+                                </div>
+                              </div><br><br>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <div style="text-align: right;">
+                                    <button type="button" class="btn btn-success" (click)=agregarCentroCostos(u.id,centroCostos_id)>Agregar centro de costos</button> 
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  Centros de costos:
+                                  <div *ngFor="let cc of u.cc">
+                                    -{{cc.descripcion}}
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div><!--/.col-->
+              </div><!--/.row-->
+
+              <!--div class="row">
                   <div class="col-md-12">
                     <label class="label" for="select">Centro de costos</label>
                     <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="centroCosto.centro_costos_id">
                       <option *ngFor="let cc of cc" [value]="cc.id">{{cc.descripcion}}</option>
                     </select>
                   </div>
-              </div>
+              </div><br><br>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div style="text-align: right;">
+                    <button type="button" class="btn btn-success" (click)=agregarCentroCostos()>Agregar centro de costos</button> 
+                  </div>
+                </div>
+              </div><br><br>
             </div>
-          </div>  
+          </div-->  
           
           <div style="text-align: center">
             <button type="button" class="btn btn-success" (click)=editar() *ngIf="!crear">Editar Contrato</button> 
