@@ -36,12 +36,12 @@ class Contratos extends Model
     //contrato_departamento_centrocosto contrato_id departamento_id controcosto_id
 
     public function departamentos(){
-        return $this->belongsToMany('\App\Departamento','contrato_departamento_centrocosto')
+        return $this->belongsToMany('\App\Departamento','contrato_departamento_centrocosto','contratos_id','departamento_id')
             ->withPivot('contro_costos_id');
     }
 
     public function centrocostos(){
-        return $this->belongsToMany('\App\CentroCostos','contrato_departamento_centrocosto')
+        return $this->belongsToMany('\App\CentroCostos','contrato_departamento_centrocosto','contratos_id','contro_costos_id')
             ->withPivot('departamento_id');
     }
 

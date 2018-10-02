@@ -40,8 +40,12 @@ class Departamento extends Model
             ->withPivot('contro_costos_id');
     }
 
-    public function centrocostos(){
+    /*public function centrocostos(){
         return $this->belongsToMany('\App\CentroCostos','contrato_departamento_centrocosto')
+            ->withPivot('contratos_id');
+    }*/
+    public function centrocostos(){
+        return $this->belongsToMany('\App\CentroCostos','contrato_departamento_centrocosto','departamento_id','contro_costos_id')
             ->withPivot('contratos_id');
     }
 

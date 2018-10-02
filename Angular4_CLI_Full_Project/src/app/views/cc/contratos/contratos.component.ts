@@ -148,6 +148,15 @@ export class contratosComponent {
       }
     }
 
+    eliminarDepartamento(it){
+      console.log(it);
+      for (var i = 0; i < this.relaciones.length; i++) {
+        if(this.relaciones[i].id==it.id) {
+          this.relaciones.splice(i, 1);
+        }
+      }
+    }
+
     checkDepartamento(id){
       var band=false;
       for (var i = 0; i < this.relaciones.length; i++) {
@@ -188,6 +197,99 @@ export class contratosComponent {
       }
       return band;
     }
+
+    crearContrato(){
+      var vecRelaciones=[];
+
+      console.log(this.relaciones);
+      for (var i = 0; i < this.relaciones.length; i++) {
+        for (var j = 0; j < this.relaciones[i].cc.length; j++) {
+          vecRelaciones.push({
+            contratos_id:0,
+            departamento_id:this.relaciones[i].id,
+            contro_costos_id:this.relaciones[i].cc[j].id
+          });
+        }
+      }
+      console.log(vecRelaciones);
+      var send={
+          nombre:this.centroCosto.nombre,
+          cliente:this.centroCosto.cliente,
+          vigencia:this.centroCosto.vigencia,
+          centro_costos:JSON.stringify(vecRelaciones)
+        };
+      console.log(send);
+
+      this.http.post(this.ruta.get_ruta()+'relaciones',send)
+           .toPromise()
+           .then(
+           data => {
+            
+              console.log(data);
+              this.crear=false;
+              this.sucontratosess=true;
+              setTimeout(() => {  
+                this.sucontratosess=false;
+              }, 4000);
+
+            },
+           msg => { 
+             console.log(msg);
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
+
+           });
+
+    }
+
+    editarContrato(){
+      var vecRelaciones=[];
+
+      console.log(this.relaciones);
+      for (var i = 0; i < this.relaciones.length; i++) {
+        for (var j = 0; j < this.relaciones[i].cc.length; j++) {
+          vecRelaciones.push({
+            contratos_id:0,
+            departamento_id:this.relaciones[i].id,
+            contro_costos_id:this.relaciones[i].cc[j].id
+          });
+        }
+      }
+      console.log(vecRelaciones);
+      var send={
+          nombre:this.centroCosto.nombre,
+          cliente:this.centroCosto.cliente,
+          vigencia:this.centroCosto.vigencia,
+          centro_costos:JSON.stringify(vecRelaciones)
+        };
+      console.log(send);
+
+      this.http.put(this.ruta.get_ruta()+'relaciones/',send)
+           .toPromise()
+           .then(
+           data => {
+            
+              console.log(data);
+              this.crear=false;
+              this.sucontratosess=true;
+              setTimeout(() => {  
+                this.sucontratosess=false;
+              }, 4000);
+
+            },
+           msg => { 
+             console.log(msg);
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
+
+           });
+
+    }
+
 
     crearcentroCosto(){
       

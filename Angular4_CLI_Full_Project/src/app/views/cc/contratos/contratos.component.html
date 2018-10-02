@@ -127,6 +127,10 @@
                           <tr *ngFor="let u of relaciones">
                             <td class="">
                               <strong>{{u.nombre}}</strong><br>
+                              <div style="text-align: right;">
+                                <button type="button" class="btn btn-danger" (click)=eliminarDepartamento(u) >Eliminar</button> 
+                              </div>
+                              
                               <div class="row">
                                 <div class="col-md-12">
                                   <label class="label" for="select">Centro de costos</label>
@@ -179,8 +183,9 @@
           </div-->  
           
           <div style="text-align: center">
-            <button type="button" class="btn btn-success" (click)=editar() *ngIf="!crear">Editar Contrato</button> 
-            <button type="button" class="btn btn-success" (click)=crearcentroCosto() *ngIf="crear">Crear Contrato</button> 
+            <button type="button" class="btn btn-success" (click)=editarContrato() *ngIf="!crear">Editar Contrato</button> 
+            <!--button type="button" class="btn btn-success" (click)=crearcentroCosto() *ngIf="crear">Crear Contrato</button--> 
+            <button type="button" class="btn btn-success" (click)=crearContrato() *ngIf="crear">Crear Contrato</button> 
           </div>
         </div>
     </div>

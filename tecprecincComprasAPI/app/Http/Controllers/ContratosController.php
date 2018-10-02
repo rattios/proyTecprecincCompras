@@ -58,21 +58,37 @@ class ContratosController extends Controller
     public function relaciones(Request $request)
     {
 
-        $contrato=new \App\contratos;
+        $contrato=new \App\Contratos;
+        $contrato->fill($request->all());
+        $contrato->save();
 
-        $contrato->departamentos()->attach($request->departamentos_id,['contro_costos_id'=>$request->contro_costos_id,'contratos_id'=>$request->contratos_id]);
+        $centro_costos=json_decode($request->centro_costos);
+        //return $centro_costos;
+        for ($i=0; $i < count($centro_costos); $i++) { 
+            $contrato->departamentos()->attach($centro_costos[$i]->departamento_id,['contro_costos_id'=>$centro_costos[$i]->contro_costos_id]);
+        }
+        
         return response()->json(['status'=>'ok', 'contratos'=>$contrato], 200);
  
     }
 
     public function relaciones_actualizar(Request $request,$id)
     {
+        $contrato=\App\Contratos::find($id);
+        
+        $contrato->departamentos()->detach();
 
-       DB::table('contrato_departamento_centrocosto')
+        for ($i=0; $i < 4; $i++) { 
+            $contrato->departamentos()->attach($request->departamento_id,['contro_costos_id'=>$request->contro_costos_id]);
+        }
+        
+        return response()->json(['status'=>'ok', 'contratos'=>$contrato], 200);
+
+       /*DB::table('contrato_departamento_centrocosto')
                 ->where('id', $id)
                 ->update(['contratos_id' => $request->contratos_id,'departamento_id' => $request->departamento_id, 'contro_costos_id' =>$request->contro_costos_id]);
 
-        return response()->json(['status'=>'ok'], 200);
+        return response()->json(['status'=>'ok'], 200);*/
  
     }
 
@@ -85,15 +101,90 @@ class ContratosController extends Controller
     public function show($id)
     {
         //cargar un proveedor
-        $proveedor = \App\Proveedor::find($id);
+        $Contratos = \App\Contratos::where('id',$id)->with('departamentos')->with('centrocostos')->get();
+        
+        if(count($Contratos)==0){
+            
 
-        if(count($proveedor)==0){
-            return response()->json(['error'=>'No existe el proveedor con id '.$id], 404);          
+        
+            return response()->json(['error'=>'No existe el Contratos con id '.$id], 404);          
         }else{
+            for ($i=0; $i < count($Contratos); $i++) { 
+                for ($j=0; $j < count($Contratos[$i]->departamentos); $j++) {
+                $Contratos[$i]->departamentos[$j]->cc=[];
+                $cc=[];
+                    for ($k=0; $k < count($Contratos[$i]->centrocostos); $k++) { 
+                        if ($Contratos[$i]->id == $Contratos[$i]->centrocostos[$k]->pivot->contratos_id && $Contratos[$i]->departamentos[$j]->id == $Contratos[$i]->centrocostos[$k]->pivot->departamento_id && $Contratos[$i]->departamentos[$j]->pivot->contro_costos_id == $Contratos[$i]->centrocostos[$k]->pivot->contro_costos_id) {
+                            array_push($cc,$Contratos[$i]->centrocostos[$k]);
+                            //return $Contratos[$i]->centrocostos[$k];
+                        }
+                    }
+                    $Contratos[$i]->departamentos[$j]->cc=$cc;
+                    $cc=[];
+                }
+            }
 
+            $con= new \App\Contratos;
+            $con->id= $Contratos[0]->id;
+            $con->nombre= $Contratos[0]->nombre;
+            $con->cliente= $Contratos[0]->cliente;
+            $con->vigencia= $Contratos[0]->vigencia;
+            $con->centro_costos_id= $Contratos[0]->centro_costos_id;
+            $con->created_at= $Contratos[0]->created_at;
+            $con->departamentos= [];
+
+
+            $d=[];
+           
+            $departamento=new \App\Departamento;
+            $departamento->id=$Contratos[0]->departamentos[0]->id;
+            $departamento->nombre=$Contratos[0]->departamentos[0]->nombre;
+            $departamento->codigo=$Contratos[0]->departamentos[0]->codigo;
+            $departamento->telefono=$Contratos[0]->departamentos[0]->telefono;
+            $departamento->cc=[];
+            array_push($d, $departamento);
+            for ($i=0; $i < count($Contratos); $i++) { 
+                for ($j=0; $j < count($Contratos[$i]->departamentos); $j++) {
+                    //return $this->repetidos($Contratos[$i]->departamentos[$j]->id,$d);
+                    if ($this->repetidos($Contratos[$i]->departamentos[$j]->id,$d)) {
+                        $departamento=new \App\Departamento;
+                        $departamento->id=$Contratos[$i]->departamentos[$j]->id;
+                        $departamento->nombre=$Contratos[$i]->departamentos[$j]->nombre;
+                        $departamento->codigo=$Contratos[$i]->departamentos[$j]->codigo;
+                        $departamento->telefono=$Contratos[$i]->departamentos[$j]->telefono;
+                        $departamento->cc=[];
+                        array_push($d, $departamento);
+                    }
+                }
+            }
+            $cc=[];
+            for ($k=0; $k < count($d); $k++) { 
+                for ($i=0; $i < count($Contratos); $i++) { 
+                    for ($j=0; $j < count($Contratos[$i]->departamentos); $j++) {
+                        if ($Contratos[$i]->departamentos[$j]->id == $d[$k]->id) {
+                                array_push($cc,$Contratos[$i]->departamentos[$j]->cc);
+                                //return $Contratos[$i]->centrocostos[$k];
+                        }
+                    }
+                }
+                $d[$k]->cc=$cc;
+                $cc=[];
+            }
+
+
+            $con->departamentos= $d;
             //$proveedor->productos = $proveedor->productos;
-            return response()->json(['status'=>'ok', 'proveedor'=>$proveedor], 200);
+            return response()->json(['status'=>'ok', 'Contratos'=>$con], 200);
         }
+    }
+    function repetidos($id,$array){
+       // return $array[0]->id;
+        for ($i=0; $i < count($array); $i++) { 
+            if ($array[$i]->id==$id) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
