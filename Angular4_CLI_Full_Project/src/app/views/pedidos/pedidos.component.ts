@@ -89,6 +89,7 @@ export class pedidosComponent {
         var enviar = {
           usuario_id: localStorage.getItem('tecprecinc_usuario_id'),
           solicitud: JSON.stringify(this.productosSeleccionados),
+          solicitud2: this.productosSeleccionados,
           centro_costos_id:this.idCentroCostos,
           contrato_id:this.idContrato,
           estado: 0,

@@ -207,16 +207,14 @@
       				</div>
       				<br>
       				<div class="row">
-      					<div class="col-lg-3">
-	      					<strong>Solicitante: </strong>{{informacion.centro_costos.descripcion}}
-	      				</div>
-      					<div class="col-lg-3">
+      					
+      					<div class="col-lg-4">
 	      					<strong>Departamento: </strong>{{informacion.usuario.departamento.nombre}}
 	      				</div>
-	      				<div class="col-lg-3">
+	      				<div class="col-lg-4">
 	      					<strong>Usuario: </strong>{{informacion.usuario.nombre}}
 	      				</div>
-	      				<div class="col-lg-3">
+	      				<div class="col-lg-4">
 	      					<strong>Fecha de alta: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
 	      				</div>
       				</div>
@@ -291,7 +289,7 @@
 				          		<label for="comment">Observaciones:</label>
 				          		<div class="form-group" style="text-align: center">
 								  <textarea class="form-control" rows="5" cols="190" [(ngModel)]="informacion.observaciones"></textarea><br>
-								  <button type="button" class="btn btn-primary" [hidden]="informacion.estado==2" (click)=editar_observacion(informacion.id)>Editar Observacion</button>
+								  <button type="button" class="btn btn-primary" [hidden]="informacion.estado==2" (click)=editar_observacion(informacion.id)>Guardar Observacion</button>
 								</div>
 					        </div>
 				          </div>
@@ -359,7 +357,7 @@
 	      				<div class="row"  style="border:2px solid;">
 	      					<div class="row col-lg-12" >
 		      					<div class="col-sm-7">
-		      						<strong>Solicitante: </strong>{{informacion.centro_costos.descripcion}}
+		      						<strong>Solicitante: </strong>{{informacion.usuario.nombre}}
 			      				</div>
 			      				<div class="col-sm-3">
 			      					

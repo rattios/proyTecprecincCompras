@@ -14,22 +14,22 @@
           </div>
           <table class="table table-striped">
             <thead>
+              <th>Código</th>
               <th>Nombre</th>
               <th>Principal</th>
               <th>Secundario</th>
               <th>Precio</th>
-              <th>Código</th>
               <!--<th>Categoria</th>
                <th></th> -->
             </thead>
             <tbody>
                <tr *ngFor="let item of items">
-                  
+                  <td>{{item.codigo}}</td>
                   <td>{{item.nombre}}</td>
                   <td>{{item.stock}}</td>
                   <td>{{item.stock2}}</td>
                   <td>{{item.precio}}</td>
-                  <td>{{item.codigo}}</td>
+                  
                   <!--<td>{{item.categoria}}</td>
                    <td><button type="button" class="btn btn-success" (click)=ver(item)>Ir</button></td> -->
                </tr>

@@ -86,9 +86,9 @@ export class servicioComponent {
 
               if (this.productList[i].stock==this.inputName) {
                  this.filteredItems.push(this.productList[i]);
-              }else if (this.productList[i].nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
+              }else if (this.productList[i].stock==this.inputName) {
                  this.filteredItems.push(this.productList[i]);
-              }else if (this.productList[i].categoria.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
+              }else if (this.productList[i].nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
               }else if (this.productList[i].precio==this.inputName) {
                  this.filteredItems.push(this.productList[i]);

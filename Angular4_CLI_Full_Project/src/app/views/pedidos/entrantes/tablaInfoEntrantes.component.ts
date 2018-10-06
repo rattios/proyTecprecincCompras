@@ -124,14 +124,18 @@ export class tablaInfoEntrantesComponent {
       if(this.inputName != ""){
             for (var i = 0; i < this.productList.length; ++i) {
 
-              if (this.productList[i].stock==this.inputName) {
+              if (this.productList[i].id==this.inputName) {
                  this.filteredItems.push(this.productList[i]);
-              }else if (this.productList[i].nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
+              }else if (this.productList[i].usuario.nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
-              }else if (this.productList[i].precio==this.inputName) {
+              }else if (this.productList[i].usuario.departamento.nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
-              }else if (this.productList[i].codigo==this.inputName) {
+              }else if (this.productList[i].created_at.indexOf(this.inputName)>=0) {
                  this.filteredItems.push(this.productList[i]);
+              }else if(this.productList[i].observaciones!='' && this.productList[i].observaciones!=null) {
+                if (this.productList[i].observaciones.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
+                 this.filteredItems.push(this.productList[i]);
+                }
               }
             }
       }else{

@@ -34,7 +34,7 @@ export class pickingComponent {
             console.log(data);
             this.showP1=true;
             this.showP2=true;
-            alert('chato');
+            //alert('chato');
           });
   }
 
@@ -163,11 +163,40 @@ export class pickingComponent {
     }  
 
     picking2(item,tipo,stock){
+      var diferencia= item.pivot.cantidad-stock;
+      console.log(diferencia);
       item.pivot.cantidad=stock;
       if(item.observacion=='') {
-        item.observacion='Se entro solo '+ stock +' unidades que habia en stock';
+        item.observacion='Se entregó solo '+ stock +' unidades que habia en stock';
       }
       console.log(item);
+      var solicitud = [{
+        cantidad:diferencia,
+        categoria_id:item.categoria_id,
+        centro_costos_id:item.centro_costos.id,
+        codigo:item.codigo,
+        id:item.id,
+        nombre:item.nombre,
+        //precio:item.,
+        producto_id:item.producto_id,
+        rubro_id:item.rubro_id,
+        stock:item.stock,
+        stock2:item.stock2,
+        stock2_min:item.stock2_min,
+        stock_min:item.stock_min,
+        tipo_id:item.tipo_id
+      }];
+      var enviar = {
+        usuario_id: localStorage.getItem('tecprecinc_usuario_id'),
+        solicitud: JSON.stringify(solicitud),
+        solicitud2: solicitud,
+        centro_costos_id:43,
+        contrato_id:1,
+        estado: 1,
+        aprobar:1,
+        observaciones:this.producto.observacion+' de la solicitud Nº'+item.pivot.pedido_id
+      }
+      console.log(enviar);
       if(tipo==1) {
         item.almacen='principal';
         var send = {
@@ -192,9 +221,26 @@ export class pickingComponent {
                this.producto.stock=this.producto.stock-item.pivot.cantidad;
                this.showP1=false;
                this.showP2=false;
-               alert('éxito');
+               alert('éxito al realizar el picking');
                this.traxas(item.pivot.stock_id,item.pivot.cantidad,100,item.departamento.id,localStorage.getItem('tecprecinc_usuario_id'),this.empleado_id,item.pivot.pedido_id,'Picking');
-              },msg => { 
+             
+               //genero un pedido por el faltante
+              
+                setTimeout(() => {
+                  this.http.post(this.ruta.get_ruta()+'pedidos',enviar)
+                   .toPromise()
+                   .then(
+                   data => {
+                     console.log(data);
+                      
+                     alert('Se ha generado una nueva solicitud por la cantidad del producto que no se entregó.');
+                    },
+                   msg => { 
+                     console.log(msg);
+                     alert('Error! No se ha generado una nueva solicitud por la cantidad del producto que no se entregó.');
+                   });
+                }, 1000);
+             },msg => { 
                console.log(msg);
                alert('Error: '+JSON.stringify(msg));
              });
@@ -225,6 +271,23 @@ export class pickingComponent {
                this.showP2=false;
                alert('éxito');
                this.traxas(item.pivot.stock_id,item.pivot.cantidad,101,item.departamento.id,localStorage.getItem('tecprecinc_usuario_id'),this.empleado_id,item.pivot.pedido_id,'Picking');
+               //genero un pedido por el faltante
+              
+                setTimeout(() => {
+                  this.http.post(this.ruta.get_ruta()+'pedidos',enviar)
+                   .toPromise()
+                   .then(
+                   data => {
+                     console.log(data);
+                      
+                     alert('Se ha generado una nueva solicitud por la cantidad del producto que no se entregó.');
+                    },
+                   msg => { 
+                     console.log(msg);
+                     alert('Error! No se ha generado una nueva solicitud por la cantidad del producto que no se entregó.');
+                   });
+                }, 1000);
+
               },
              msg => { 
                console.log(msg);
