@@ -24,7 +24,7 @@ class Presupuesto extends Model
      *
      * @var array
      */
-    protected $fillable = [/*'pedido_id',*/'proveedor_id', 'productos','observaciones','estado'/*,
+    protected $fillable = [/*'pedido_id',*/'proveedor_id', 'productos','observaciones','estado','vigencia'/*,
     	'f_envio', 'f_respuesta','f_entrega', 'documento','observaciones','productos'*/];
 
     /**

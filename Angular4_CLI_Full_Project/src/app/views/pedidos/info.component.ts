@@ -74,7 +74,10 @@ export class infoComponent {
              
            });
     }*/
-
+    apresupuesto(item){
+      console.log(item);
+      localStorage.setItem("apresupuesto", JSON.stringify(item) );
+    }
     transferencia(item){
       this.aTransferir=item;
       this.showTransferencia=true;

@@ -6,6 +6,7 @@ import { saveAs } from 'file-saver/FileSaver';
 import { RutaService } from '../../../services/ruta.service';
 import {MatDatepicker} from '@angular/material/datepicker';
 import {DateAdapter} from '@angular/material';
+import { DatepickerOptions } from 'ng2-datepicker';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class presupuestosComponent {
   public productos: any;
   public loading=true;
   public loading2=true;
+  public vigencia:any=new Date();
   public proveedor: any={
           calificacion:null,
           cuit:"",
@@ -64,9 +66,11 @@ export class presupuestosComponent {
               console.log(this.proveedores);
               for (var i = 0; i < this.proveedores.length; i++) {
                 if(this.proveedores[i].estado==0) {
-                  this.proveedores[i].estado2='Enviado';
+                  this.proveedores[i].estado2='Entregado';
                 }else if(this.proveedores[i].estado==1) {
                   this.proveedores[i].estado2='Recibido';
+                }else if(this.proveedores[i].estado==2) {
+                  this.proveedores[i].estado2='Cancelado';
                 }
               }
               this.productList = this.proveedores;
@@ -136,7 +140,101 @@ export class presupuestosComponent {
     };
     this.verDatos=false;
   }
+  public aEnviar:any={
+      razon_social:'',
+      nombre_fantasia:'',
+      cuit:'',
+      telefono:'',
+      email:'',
+      pedido_id:21,
+      proveedor_id:0,
+      productos:[],
+      observaciones:'',
+      documento:''
+    };
+
+  guardarCambios(){
+    this.loading=true;
+      if(this.enviado.productos.length>0) {
+        this.aEnviar.razon_social=this.enviado.proveedor.razon_social,
+        this.aEnviar.nombre_fantasia=this.enviado.proveedor.nombre_fantasia,
+        this.aEnviar.cuit=this.enviado.proveedor.cuit,
+        this.aEnviar.telefono=this.enviado.proveedor.telefono,
+        this.aEnviar.email=this.enviado.proveedor.email,
+        this.aEnviar.proveedor_id=this.enviado.proveedor.id;
+        this.aEnviar.productos=JSON.stringify(this.enviado.productos);
+        this.aEnviar.observaciones=this.enviado.observaciones;
+        this.aEnviar.vigencia=this.enviado.vigencia;
+        console.log(this.enviado.id);
+        this.http.put(this.ruta.get_ruta()+'presupuesto/'+this.enviado.id,this.aEnviar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+              this.loading=false;
+              alert('Exito!');
+
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+           });
+      }
+      console.log(this.aEnviar);
+  }
+  recibido(){
+    this.loading=true;
+      if(this.enviado.productos.length>0) {
+        var send={
+          estado:1
+          }        
+        console.log(this.enviado.id);
+        this.http.put(this.ruta.get_ruta()+'presupuesto/'+this.enviado.id,send)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+              this.loading=false;
+              this.ngOnInit();
+              this.volver();
+              alert('Exito!');
+
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+           });
+      }
+  }
+  cancelar(){
+    this.loading=true;
+      if(this.enviado.productos.length>0) {
+        var send={
+          estado:2
+          }        
+        console.log(this.enviado.id);
+        this.http.put(this.ruta.get_ruta()+'presupuesto/'+this.enviado.id,send)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+              this.loading=false;
+              this.ngOnInit();
+              this.volver();
+              alert('Exito!');
+
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+           });
+      }
+  }
   
+  mover(){
+    console.log('asd');
+    this.volver();
+  }
 
      public saveFile(){
       console.log('exportar');

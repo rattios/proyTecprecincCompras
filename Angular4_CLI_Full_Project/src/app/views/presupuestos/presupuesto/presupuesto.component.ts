@@ -4,6 +4,7 @@ import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { saveAs } from 'file-saver/FileSaver';
 import { RutaService } from '../../../services/ruta.service';
+import { DatepickerOptions } from 'ng2-datepicker';
 
 @Component({
   templateUrl: 'presupuesto.component.html'
@@ -16,6 +17,8 @@ export class presupuestoComponent {
   public productos: any;
   public loading=true;
   public loading2=true;
+  public vigencia:any=new Date();
+  public apresupuesto: any=[];
   public proveedor: any={
           calificacion:null,
           cuit:"",
@@ -41,6 +44,8 @@ export class presupuestoComponent {
 
   ngOnInit(): void {
     this.loading=true;
+    this.apresupuesto.push(JSON.parse(localStorage.getItem("apresupuesto")));
+    console.log(this.apresupuesto);
       this.http.get(this.ruta.get_ruta()+'proveedores')
            .toPromise()
            .then(
@@ -207,6 +212,7 @@ export class presupuestoComponent {
         this.aEnviar.proveedor_id=this.proveedor.id;
         this.aEnviar.productos=JSON.stringify(this.itemsPresupuesto);
         this.aEnviar.observaciones=this.observaciones;
+        this.aEnviar.vigencia=this.vigencia;
         console.log(this.aEnviar);
         this.http.post(this.ruta.get_ruta()+'presupuesto',this.aEnviar)
            .toPromise()
