@@ -118,7 +118,7 @@
                         <th>Cantidad</th>
                         <th>Nombre</th>
                         <th>Precio</th>
-                        <th>Factura</th>
+                        <!--th>Factura</th-->
                         <th>Agregar</th>
                       </thead>
                       <tbody>
@@ -126,8 +126,11 @@
                             <td>{{it.cantidad}}</td>
                             <td>{{it.nombre}}</td>
                             <td>{{it.precio}}</td>
-                            <td><div *ngIf="enviado.estado!=2"><input type="" name="" *ngIf="it.entregado==0" [(ngModel)]="it.factura"></div><p *ngIf="it.entregado!=0">{{it.factura}}</p></td>
-                            <td><div *ngIf="enviado.estado!=2"> <button type="button" class="btn btn-success" *ngIf="it.entregado==0" (click)="addInventario(it.id,it.cantidad,enviado.id,enviado)">Cargar al inventario</button></div></td>
+                            <!--td><div *ngIf="enviado.estado!=2"><input type="" name="" *ngIf="it.entregado==0" [(ngModel)]="it.factura"></div><p *ngIf="it.entregado!=0">{{it.factura}}</p></td>
+                            <td><div *ngIf="enviado.estado!=2"--> <!--button type="button" class="btn btn-success" *ngIf="it.entregado==0" (click)="addInventario(it.id,it.cantidad,enviado.id,enviado)">Cargar al inventario</button-->
+                            <td>
+                              <button type="button" class="btn btn-success" (click)="largeModal1.show();cargar(it,it.id,it.cantidad,enviado.id,enviado)">Cargar al inventario</button>
+                            </td>
                           </tr>
                       </tbody>
                     </table>
@@ -164,19 +167,72 @@
           </tab>
         </tabset>
 
-        <div bsModal #largeModal2="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
+        <div bsModal #largeModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <h4 class="modal-title">Cargar producto</h4>
-                <button type="button" class="close" (click)="largeModal2.hide()" aria-label="Close">
+                <button type="button" class="close" (click)="largeModal1.hide();ocultar()" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <app-picking [producto]="aPicking" [informacion]="informacion" *ngIf="showPicking"></app-picking>
+                
+                <div class="row">
+                  <div class="col-lg-12">
+                   <br>
+                    <table class="table table-bordered">
+                      <thead>
+                        <th>Cantidad solicitada</th>
+                        <th>Cantidad a ingresar</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Remito</th>
+                        <th>Factura</th>
+                        <th>Agregar</th>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let it of aCargar">
+                            <td style="width: 35px;">{{it.cantidad}}</td>
+                            <td><input style="width: 35px;" type="" name=""  [(ngModel)]="it.cantidadAgregar"></td>
+                            <td>{{it.nombre}}</td>
+                            <td><input style="width: 55px;" type="" name=""  [(ngModel)]="it.precio"></td>
+                            <td><input style="width: 55px;" type="" name=""  [(ngModel)]="it.remito"></td>
+                            <td><input style="width: 55px;" type="" name=""  [(ngModel)]="it.factura"></td>
+                            <td><div> 
+                              <button  type="button" class="btn btn-success" (click)="cargarIngreso(it,it.id,it.cantidad,enviado.id,enviado)">Ingresar al inventario</button>
+                            </div></td>
+                          </tr>
+                      </tbody>
+                    </table>
+                    <br><hr><br>
+                    <strong>Ingresos</strong>
+                    <table class="table table-bordered">
+                      <thead>
+                        <th>Cantidad solicitada</th>
+                        <th>Cantidad ingresó</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Remito</th>
+                        <th>Factura</th>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let it of ingresos">
+                            <td style="width: 35px;">{{it.cantidad}}</td>
+                            <td>{{it.cantidadAgregar}}</td>
+                            <td>{{it.nombre}}</td>
+                            <td>{{it.precio}}</td>
+                            <td>{{it.remito}}</td>
+                            <td>{{it.factura}}</td>
+                            
+                          </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
                 <div style="text-align:right">
-                  <button type="button" class="btn btn-secondary" (click)="largeModal2.hide()">Cerrar</button>
+                  <button type="button" class="btn btn-secondary" (click)="largeModal1.hide();ocultar()">Cerrar</button>
                 </div>
               </div>
             </div>

@@ -150,14 +150,59 @@ export class compras_recepcionComponent {
     this.aPicking=item;
     this.showPicking=true;
   }
+  public aCargar:any=[];
+  public ingresos:any=[];
+  cargar(producto,id,cantidad,pedido_id,pedido){
+    console.log(producto);
+    if(producto.ingresos) {
+      if(producto.ingresos.length==0) {
+        producto.ingresos=[];
+        console.log('entro en ingresos vacios');
+      }
+    }else{
+      producto.ingresos=[];
+    }
+    
+    this.aCargar.push(producto);
+    this.ingresos= this.aCargar[0].ingresos;
+    console.log(producto);
+    console.log(this.aCargar);
+  }
+  cargarIngreso(item,id,cantidad,pedido_id,pedido){
+    console.log(item);
+    console.log(pedido);
+    for (var i = 0; i < this.aCargar.length; i++) {
+      if(this.aCargar[i].id==id) {
+        this.aCargar[i].ingresos.push({
+          cantidad:item.cantidad,
+          cantidadAgregar:item.cantidadAgregar,
+          nombre:item.nombre,
+          precio:item.precio,
+          remito:item.remito,
+          factura:item.factura,
+        });
+        console.log(parseInt(item.cantidadAgregar));
+        this.addInventario(id,parseInt(item.cantidadAgregar),pedido_id,pedido);
+      }
+    }
+    console.log(this.aCargar);
+  }
+
+  ocultar(){
+    this.aCargar=[];
+    this.ingresos=[];
+  }
 
   addInventario(id,cantidad,pedido_id,pedido){
+    console.log(cantidad);
     console.log(pedido);
     var fac='';
+    var prec=0;
     for (var i = 0; i < pedido.productos.length; i++) {
       if(pedido.productos[i].id==id) {
         pedido.productos[i].entregado=1;
         fac=pedido.productos[i].factura;
+        prec=pedido.productos[i].precio;
       }
     }
     console.log(id+'-'+cantidad+'-'+pedido_id); 
@@ -167,7 +212,8 @@ export class compras_recepcionComponent {
       cantidad:cantidad,
       factura:fac,
       usuario:localStorage.getItem('tecprecinc_usuario_id'),
-      pedido_id:pedido_id
+      pedido_id:pedido_id,
+      precio:prec
     }
     this.http.post(this.ruta.get_ruta()+'add_inventario/'+id,send)
      .toPromise()

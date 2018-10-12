@@ -48,7 +48,7 @@ class compraController extends Controller
     {
         $agregar = \App\Stock::where('id',$id)->first();
         $agregar->stock= $agregar->stock+ $request->cantidad;
-
+        $agregar->precio= $request->precio;
         if($agregar->save()){
             $cc=new \App\Trazas;
             $cc->cantidad=$request->cantidad;
@@ -61,6 +61,8 @@ class compraController extends Controller
             $cc->u_emisor_id=$request->usuario;
             $cc->u_receptor_id=$request->usuario;
             $cc->save();
+
+
             return response()->json(['status'=>'ok', 'producto'=>$agregar], 200);
         }
         else{
