@@ -80,7 +80,7 @@
 	      					</div>
 	      					<div class="row">
 		      					<div class="col-sm-4">
-		      						<strong>Solicitante: </strong>{{informacion.centro_costos.descripcion}}
+		      						<strong>Solicitante: </strong>{{informacion.usuario.nombre}}
 			      				</div>
 			      				<div class="col-sm-4">
 			      					<strong>Departamento: </strong>{{informacion.usuario.departamento.nombre}}
@@ -89,7 +89,7 @@
 			      					
 			      				</div>
 		      				</div>
-		      				<div class="row">
+		      				<!--div class="row">
 		      					<div class="col-sm-4">
 		      						<strong>Fecha de entrega posible: </strong>
 			      				</div>
@@ -110,9 +110,9 @@
 			      				<div class="col-sm-4">
 			      					
 			      				</div>
-		      				</div>
+		      				</div-->
 		      			</div>
-		      			<div class="col-lg-4" style="border-left: 2px #000000">
+		      			<!--div class="col-lg-4" style="border-left: 2px #000000">
 		      				<div class="row">
 		      					<div class="col-sm-12">
 		      						<strong>Firma del solicitante: </strong>
@@ -123,7 +123,7 @@
 		      						<strong>Aclaración y firma del autorizante: </strong>
 			      				</div>
 		      				</div>
-		      			</div>
+		      			</div-->
       				</div>
       			</div>
       		</div>	
@@ -139,7 +139,8 @@
 				              	<th>Código</th>
 				                <th>Cantidad</th>
 				                <th>Nombre</th>
-				                <th>Centro de costos</th>
+				                <th>Precio UNT</th>
+				                <th>Total</th>
 				              </tr>
 				            </thead>
 				            <tbody>
@@ -147,7 +148,8 @@
 				              	<td>{{item.codigo}}</td>
 				                <td>{{item.pivot.cantidad}}</td>
 				                <td>{{item.nombre}}</td>
-				                <td>{{item.pivot.nombre_centro_costo}}</td>
+				                <td>{{item.precio}}</td>
+				                <td>{{item.pivot.cantidad}}*{{item.precio}}</td>
 				              </tr>
 				            </tbody>
 				          </table>
@@ -159,7 +161,7 @@
       	<div class="row" >
       		<div class="col-lg-12">
       			<div class="row" style="border:2px solid;">
-  					<div class="row col-lg-12">
+  					<!--div class="row col-lg-12">
   						<div class="col-sm-8">
   							<strong >OBSERVACIONES: </strong>
   							<br>{{informacion.observaciones}}<br><br><br>
@@ -178,11 +180,12 @@
 	      				<div class="col-sm-3">
 	      					<p style="font-weight: bold; font-size: smaller; margin: 5px;">Firma:</p>
 	      				</div>
-      				</div>
+      				</div-->
       				<div class="row col-lg-12">
       					<div class="col-sm-6">
       						<strong>OBSERVACIÓN DE LA RECEPCIÓN: </strong>
-      						<br><br><br><br><br>
+      						<p>{{informacion.observaciones}}</p>
+      						<br><br><br>
 	      				</div>
 	      				<div class="col-sm-2">
 	      				</div>
@@ -266,7 +269,7 @@
 					                		
 					                	</div>
 					                	<div *ngIf="!item.pivot.aprobado && !item.pivot.entregado && !item.pivot.cancelado && !item.pivot.devuelto">
-						                	<div *ngIf="(item.stock-item.pivot.cantidad)>0 || (item.stock2-item.pivot.cantidad)>0">
+						                	<div >
 						                		<button type="button" class="btn btn-outline-success btn-sm" (click)="selectPicking(item);largeModal2.show()">Picking</button>
 							                	<button type="button" class="btn btn-outline-primary btn-sm" (click)="apresupuesto(item)" [routerLink]="['/presupuestos/presupuesto']">Pedir Presupuesto</button>
 							                	<button type="button" class="btn btn-outline-info btn-sm"  [routerLink]="['/compras/compra']">Pedir a proveedor</button>
@@ -343,13 +346,13 @@
 	      				<br><br>
 	      				<div class="row" >
 	      					<div class="row col-lg-12" style="font-size: 12px">
-	      						<div class="col-sm-4" style="border:2px solid;">
+	      						<div class="col-sm-5" style="border:2px solid;">
 	      							Numero de requirmiento: {{informacion.id}}
 	      						</div>
-	      						<div class="col-sm-2" style="border:2px solid;">
+	      						<!--div class="col-sm-2" style="border:2px solid;">
 	      							5555
-	      						</div>
-	      						<div class="col-sm-4" style="border:2px solid;">
+	      						</div-->
+	      						<div class="col-sm-5" style="border:2px solid;">
 	      							<strong>Fecha de alta: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
 	      						</div>	
 	      					</div>
@@ -368,7 +371,7 @@
 		      				</div>
 	      				</div>
 	      				<div class="row"  style="border:2px solid;">
-	      					<div class="row col-lg-12" >
+	      					<!--div class="row col-lg-12" >
 		      					<div class="col-sm-7">
 		      						Domicilio: 
 			      				</div>
@@ -378,17 +381,17 @@
 			      				<div class="col-sm-2">
 			      					
 			      				</div>
-		      				</div>
+		      				</div-->
 		      				<div class="row col-lg-12" >
 		      					<div class="col-sm-7">
 		      						Zona: 
 			      				</div>
-			      				<div class="col-sm-3">
-			      					Centro:
+			      				<div class="col-sm-5">
+			      					Autorizante:
 			      				</div>
-			      				<div class="col-sm-2">
+			      				<!--div class="col-sm-2">
 			      					Teléfono:
-			      				</div>
+			      				</div-->
 		      				</div>
 	      				</div>
 	      			</div>
@@ -449,8 +452,7 @@
   						</p>
   						<p style="font-weight: bold; margin: 5px; text-align: left; margin-bottom: 25px;font-size: 12px;">Aclaración:
   						</p>
-  						<p style="font-weight: bold; margin: 5px; text-align: left; margin-bottom: 25px;font-size: 12px;">Sello de la dependencia:
-  						</p>
+  						<br>
   						<br><br><br> 
   					</div>
   					

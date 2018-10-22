@@ -14,6 +14,7 @@ export class tablaInfoComponent {
 
   public verInfo=false;
   public loading=false;
+  public cancelar=true;
   
   @Input() informacion:any;
 
@@ -27,6 +28,15 @@ export class tablaInfoComponent {
        this.productList = this.informacion;
        this.filteredItems = this.productList;
        this.init();
+       console.log(this.informacion.solicitud[0]);
+       console.log(this.informacion.solicitud[0].pivot);
+       console.log(this.informacion.solicitud[0].pivot.entregado);
+       for (var i = 0; i < this.informacion.solicitud.length; i++) {
+         console.log(this.informacion.solicitud[i].pivot.entregado);
+         if(this.informacion.solicitud[i].pivot.entregado==1) {
+           this.cancelar=false;
+         }
+       }
       }
     }
     aceptarSolicitud(id){

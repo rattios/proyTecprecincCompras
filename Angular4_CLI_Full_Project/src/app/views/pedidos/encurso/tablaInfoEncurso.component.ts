@@ -13,7 +13,7 @@ export class tablaInfoEncursoComponent {
 
   public verInfo=false;
   public loading=false;
-  
+  public cancelar=true;
   @Input() informacion:any;
 
   constructor(private http: HttpClient, private ruta: RutaService, private parent: encursoComponent) {
@@ -21,7 +21,16 @@ export class tablaInfoEncursoComponent {
   }
 
    ngOnInit(): void {
-      console.log(this.informacion);
+      /*console.log(this.informacion);
+      console.log(this.informacion.solicitud[0]);
+       console.log(this.informacion.solicitud[0].pivot);
+       console.log(this.informacion.solicitud[0].pivot.entregado);
+       for (var i = 0; i < this.informacion.solicitud.length; i++) {
+         console.log(this.informacion.solicitud[i].pivot.entregado);
+         if(this.informacion.solicitud[i].pivot.entregado==1) {
+           this.cancelar=false;
+         }
+       }*/
       if(this.informacion!=undefined) {
        this.productList = this.informacion;
        this.filteredItems = this.productList;

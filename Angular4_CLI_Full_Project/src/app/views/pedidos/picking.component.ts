@@ -124,8 +124,8 @@ export class pickingComponent {
                alert('éxito');
                this.traxas(item.pivot.stock_id,item.pivot.cantidad,100,item.departamento.id,localStorage.getItem('tecprecinc_usuario_id'),this.empleado_id,item.pivot.pedido_id,'Picking');
               },msg => { 
-               console.log(msg);
-               alert('Error: '+JSON.stringify(msg));
+               console.log(console.log(msg.error));
+               alert(msg.error);
              });
       }else if(tipo==2){
         item.almacen='secundario';
@@ -156,7 +156,7 @@ export class pickingComponent {
                this.traxas(item.pivot.stock_id,item.pivot.cantidad,101,item.departamento.id,localStorage.getItem('tecprecinc_usuario_id'),this.empleado_id,item.pivot.pedido_id,'Picking');
               },
              msg => { 
-               console.log(msg);
+               console.log(msg.error);
                alert('Error: '+JSON.stringify(msg));
              });
       }
@@ -187,7 +187,7 @@ export class pickingComponent {
         tipo_id:item.tipo_id
       }];
       var enviar = {
-        usuario_id: localStorage.getItem('tecprecinc_usuario_id'),
+        usuario_id: item.usuario_id,
         solicitud: JSON.stringify(solicitud),
         solicitud2: solicitud,
         centro_costos_id:43,

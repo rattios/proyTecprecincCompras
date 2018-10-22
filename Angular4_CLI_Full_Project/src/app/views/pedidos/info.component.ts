@@ -39,6 +39,7 @@ export class infoComponent {
     selectPicking(item){
       item.departamento=this.informacion.usuario.departamento;
       //item.informacion=this.informacion;
+      item.usuario_id=this.informacion.usuario.id;
       console.log(item);
       this.sharedService.cartData.emit("onEvent: chato");
       this.aPicking=item;
