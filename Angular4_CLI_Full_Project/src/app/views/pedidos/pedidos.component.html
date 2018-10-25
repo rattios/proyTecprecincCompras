@@ -77,7 +77,7 @@
                     <th>Cantidad</th>
                     <th>Nombre</th>
                     <th>Código</th>
-                    <th>Centro de costos</th>
+                    <!--th>Centro de costos</th-->
                     <th></th>
                   </tr>
                 </thead>
@@ -86,12 +86,12 @@
                       <td><input type="number" min="1" class="form-control" id="cantidad" [(ngModel)]="item.cantidad"></td>
                       <td>{{item.nombre}}</td>
                       <td>{{item.codigo}}</td>
-                      <td>
+                      <!--td>
                         <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="item.centro_costos_id" (change)="cc($event)">
                           <option *ngFor="let cc of centroCostos" [value]="cc.id">{{cc.descripcion}}</option>
                         </select>
                       </td>
-                      <td><button type="button" class="btn btn-danger" (click)=delProductos(item)>X</button></td>
+                      <td><button type="button" class="btn btn-danger" (click)=delProductos(item)>X</button></td-->
                    </tr>
                 </tbody>
               </table> 

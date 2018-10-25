@@ -21,16 +21,19 @@ export class tablaInfoEncursoComponent {
   }
 
    ngOnInit(): void {
-      /*console.log(this.informacion);
-      console.log(this.informacion.solicitud[0]);
+      console.log(this.informacion);
+      /*console.log(this.informacion.solicitud[0]);
        console.log(this.informacion.solicitud[0].pivot);
-       console.log(this.informacion.solicitud[0].pivot.entregado);
-       for (var i = 0; i < this.informacion.solicitud.length; i++) {
-         console.log(this.informacion.solicitud[i].pivot.entregado);
-         if(this.informacion.solicitud[i].pivot.entregado==1) {
-           this.cancelar=false;
+       console.log(this.informacion.solicitud[0].pivot.entregado);*/
+       for (var i = 0; i < this.informacion.length; i++) {
+         this.informacion[i].cancelar=true;
+         for (var j = 0; j < this.informacion[i].solicitud.length; j++) {
+           console.log(this.informacion[i].solicitud[j].pivot.entregado);
+           if(this.informacion[i].solicitud[j].pivot.entregado==1) {
+             this.informacion[i].cancelar=false;
+           }
          }
-       }*/
+       }
       if(this.informacion!=undefined) {
        this.productList = this.informacion;
        this.filteredItems = this.productList;
