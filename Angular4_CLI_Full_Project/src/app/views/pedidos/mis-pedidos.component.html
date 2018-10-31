@@ -8,6 +8,9 @@
         </div>
         <div class="card-body" *ngIf="!loading">
           <tabset>
+            <tab heading="Entrante">
+              <app-mis-tabla-info [informacion]="pedidos0"></app-mis-tabla-info>
+            </tab>
             <tab heading="En curso">
               <app-mis-tabla-info [informacion]="pedidos1"></app-mis-tabla-info>
             </tab>

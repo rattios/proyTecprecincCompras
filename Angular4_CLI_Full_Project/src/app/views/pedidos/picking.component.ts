@@ -14,6 +14,9 @@ export class pickingComponent {
   public pedidos: any;
   public productos: any;
   public proveedor: any='';
+  public cantEntregar1=0;
+  public cantEntregar2=0;
+  public cantidadSolicitada=0;
   public showP1=true;
   public showP2=true;
   public showP11=true;
@@ -23,6 +26,7 @@ export class pickingComponent {
   public empleados:any;
   public empleado_id:any;
   private _name: any;
+  public aEntregar:any;
 
 
   @Input() producto:any;
@@ -34,13 +38,22 @@ export class pickingComponent {
             console.log(data);
             this.showP1=true;
             this.showP2=true;
+            setTimeout(()=>{
+              this.cantidadSolicitada=this.producto.pivot.cantidad;
+              this.cantEntregar1=this.producto.pivot.cantidad;
+              console.log(data);
+            },1000);
+            
             //alert('chato');
           });
   }
 
+
    ngOnInit(): void {
        this.loading=false;
       console.log(this.producto);
+      this.cantidadSolicitada=this.producto.pivot.cantidad;
+      this.cantEntregar1=this.producto.pivot.cantidad;
       this.producto.bstock=true;
       this.producto.bstock2=true;
       this.producto.observacion='';
@@ -95,15 +108,30 @@ export class pickingComponent {
       });
     }
 
+    pickingEntrega(item,cantidad){
+      console.log(item);
+      if(item.stock>cantidad && this.cantidadSolicitada>cantidad) {
+        alert('entrego completo o parcial');
+      }
+      if(item.stock<cantidad) {
+        alert('entrega parcial y genero una nueva solicitud');
+      }
+      if(item.stock==cantidad && this.cantidadSolicitada==cantidad) {
+        alert('entrega completa');
+      }
+      this.cantidadSolicitada=this.cantidadSolicitada-cantidad;
+    }
+
     picking(item,tipo){
       console.log(item);
+      this.producto.observacion="se entrego completo desde el almacen 1";
       if(tipo==1) {
         item.almacen='principal';
         var send = {
           picking: JSON.stringify(item)
         }
         
-        this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
+        /*this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
              .toPromise()
              .then(
              data => {
@@ -126,15 +154,16 @@ export class pickingComponent {
               },msg => { 
                console.log(console.log(msg.error));
                alert(msg.error);
-             });
+             });*/
       }else if(tipo==2){
+        this.producto.observacion="se entrego completo desde el almacen 2";
         item.almacen='secundario';
         console.log(item);
         var send = {
           picking: JSON.stringify(item)
         }
 
-        this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
+        /*this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
              .toPromise()
              .then(
              data => {
@@ -159,10 +188,12 @@ export class pickingComponent {
                console.log(msg.error);
                alert('Error: '+JSON.stringify(msg));
              });
+          */
       }
     }  
 
     picking2(item,tipo,stock){
+      this.producto.observacion="se entrego desde el almacen 1 y se genero una nuevla solicitud ";
       var diferencia= item.pivot.cantidad-stock;
       console.log(diferencia);
       item.pivot.cantidad=stock;
@@ -203,7 +234,7 @@ export class pickingComponent {
           picking: JSON.stringify(item)
         }
         
-        this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
+        /*this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
              .toPromise()
              .then(
              data => {
@@ -243,15 +274,16 @@ export class pickingComponent {
              },msg => { 
                console.log(msg);
                alert('Error: '+JSON.stringify(msg));
-             });
+             });*/
       }else if(tipo==2){
+        this.producto.observacion="se entrego desde el almacen 2 y se genero una nuevla solicitud ";
         item.almacen='secundario';
         console.log(item);
         var send = {
           picking: JSON.stringify(item)
         }
 
-        this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
+        /*this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
              .toPromise()
              .then(
              data => {
@@ -292,7 +324,76 @@ export class pickingComponent {
              msg => { 
                console.log(msg);
                alert('Error: '+JSON.stringify(msg));
-             });
+             });*/
       }
-    }  
+    } 
+
+    picking3(item,tipo){
+      this.producto.observacion="se entrego parcialmente";
+      console.log(item);
+      if(tipo==1) {
+        item.almacen='principal';
+        var send = {
+          picking: JSON.stringify(item)
+        }
+        
+        /*this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
+             .toPromise()
+             .then(
+             data => {
+               console.log(data);
+               var rec:any;
+               rec=data;
+               console.log(this.producto);
+               console.log(rec);
+               console.log(rec.picking);
+               for (var i = 0; i < this.informacion.solicitud.length; i++) {
+                 if(this.informacion.solicitud[i].id==rec.picking.id) {
+                   this.informacion.solicitud[i]=rec.picking;
+                 }
+               }
+               this.producto.stock=this.producto.stock-item.pivot.cantidad;
+               this.showP1=false;
+               this.showP2=false;
+               alert('éxito');
+               this.traxas(item.pivot.stock_id,item.pivot.cantidad,100,item.departamento.id,localStorage.getItem('tecprecinc_usuario_id'),this.empleado_id,item.pivot.pedido_id,'Picking');
+              },msg => { 
+               console.log(console.log(msg.error));
+               alert(msg.error);
+             });*/
+      }else if(tipo==2){
+        item.almacen='secundario';
+        console.log(item);
+        var send = {
+          picking: JSON.stringify(item)
+        }
+
+        /*this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
+             .toPromise()
+             .then(
+             data => {
+               console.log(data);
+               var rec:any;
+               rec=data;
+               console.log(this.producto);
+               console.log(rec);
+               console.log(rec.picking);
+               for (var i = 0; i < this.informacion.solicitud.length; i++) {
+                 if(this.informacion.solicitud[i].id==rec.picking.id) {
+                   this.informacion.solicitud[i]=rec.picking;
+                 }
+               }
+               this.producto.stock2=this.producto.stock-item.pivot.cantidad;
+               this.showP1=false;
+               this.showP2=false;
+               alert('éxito');
+               this.traxas(item.pivot.stock_id,item.pivot.cantidad,101,item.departamento.id,localStorage.getItem('tecprecinc_usuario_id'),this.empleado_id,item.pivot.pedido_id,'Picking');
+              },
+             msg => { 
+               console.log(msg.error);
+               alert('Error: '+JSON.stringify(msg));
+             });
+          */
+      }
+    }   
 }

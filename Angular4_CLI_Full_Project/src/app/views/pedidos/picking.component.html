@@ -2,18 +2,20 @@
 	<div class="col-lg-12">
 		<br>
       	<strong>Producto:</strong> {{producto.nombre}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!--input type="" name="" (ngModelChange)="doSomething($event)" [ngModel]="producto.nombre"-->
       	<br><br>
         <strong>Empleado a entregar:</strong>
         <select id="empleados" name="empleados" class="form-control" [(ngModel)]="empleado_id">
           <option *ngFor="let cc of empleados" [value]="cc.id">{{cc.nombre}} {{cc.apellido}} - {{cc.nombreRol}}</option>
         </select>
         <br>
-        <strong>Cantidad solicitada:</strong> <a style="font-weight: bold; font-size: 18px">{{producto.pivot.cantidad}}</a>
+        <strong>Cantidad solicitada:</strong>{{cantidadSolicitada}} <a style="font-weight: bold; font-size: 18px"></a><!--br><strong>Cantidad a entregar:</strong></a-->
         <br>
       	<table class="table table-striped">
         	<thead>
         		<th>Almacén</th>
         		<th>En stock</th>
+            <th>A entregar</th>
             <th></th>
         	</thead>
         	<tbody>
@@ -22,32 +24,40 @@
                 <td [ngStyle]="{'background-color':producto.stock > producto.pivot.cantidad ? '#4dbd74' : '#f44336' }">
                   <a style="font-weight: bold;" *ngIf="showP1">{{producto.stock}}</a>
                 </td>
+                <td><input [(ngModel)]="cantEntregar1"></td>
               	<td style="text-align:right">
-                  <div *ngIf="producto.stock >= producto.pivot.cantidad">
+                  <!--div *ngIf="producto.stock >= producto.pivot.cantidad">
                     <button type="button" class="btn btn-success" (click)=picking(producto,1) *ngIf="showP1">Entregar
                     </button>
                   </div>
                   <div *ngIf="producto.stock < producto.pivot.cantidad">
-                    <button type="button" class="btn btn-success" (click)=picking2(producto,1,producto.stock) *ngIf="showP1">Entregar {{producto.stock}} unidades de {{producto.pivot.cantidad}} solicitadas
+                    <button type="button" class="btn btn-success" (click)=picking3(producto,2) *ngIf="showP1">Entrega {{producto.stock}} desde el almacen principal
+                    </button><br>
+                    <button type="button" class="btn btn-success" (click)=picking2(producto,1,producto.stock) *ngIf="showP1">Entregar {{producto.stock}} unidades de {{producto.pivot.cantidad}} solicitadas y generar una nueva solicitud.
                     </button>
-                  </div>
-                  
+
+                  </div-->
+                  <button type="button" class="btn btn-success" (click)=pickingEntrega(producto,1)>Entregar</button>
                 </td>
 
            		</tr> 
               <tr>
                 <td>Secundario</td>
                 <td [ngStyle]="{'background-color':producto.stock2 > producto.pivot.cantidad ? '#4dbd74' : '#f44336' }" *ngIf="showP2">{{producto.stock2}}</td>
+                <td><input [(ngModel)]="cantEntregar2"></td>
                 <td style="text-align:right">
-                  <div *ngIf="producto.stock2 >= producto.pivot.cantidad">
+                  <!--div *ngIf="producto.stock2 >= producto.pivot.cantidad">
                     <button type="button" class="btn btn-success" (click)=picking(producto,2) *ngIf="showP2">Entregar
                     </button>
                   </div>
                   <div *ngIf="producto.stock2 < producto.pivot.cantidad">
-                    <button type="button" class="btn btn-success" (click)=picking2(producto,2,producto.stock2) *ngIf="showP2">Entregar {{producto.stock2}} unidades de {{producto.pivot.cantidad}} solicitadas
+                    <button type="button" class="btn btn-success" (click)=picking3(producto,2) *ngIf="showP2">Entrega {{producto.stock2}} desde el almacen secundario
+                    </button><br>
+                    <button type="button" class="btn btn-success" (click)=picking2(producto,2,producto.stock2) *ngIf="showP2">Entregar {{producto.stock2}} unidades de {{producto.pivot.cantidad}} solicitadas y generar una nueva solicitud.
                     </button>
-                  </div>
-                  
+                    
+                  </div-->
+                  <button type="button" class="btn btn-success" (click)=pickingEntrega(producto,1)>Entregar</button>
                 </td>
               </tr>
         	</tbody>

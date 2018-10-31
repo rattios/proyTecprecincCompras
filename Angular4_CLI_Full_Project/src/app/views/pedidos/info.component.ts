@@ -18,10 +18,16 @@ export class infoComponent {
   public showTransferencia=false;
   public aTransferir:any;
 
+  public largeModal2:any;
+
   @Input() informacion:any;
 
   constructor(private http: HttpClient, private ruta: RutaService,private sharedService: SharedService) {
 
+  }
+  ngOnDestroy() {
+    alert('destruido');
+    console.log(this.largeModal2);
   }
 
    ngOnInit(): void {
@@ -83,7 +89,7 @@ export class infoComponent {
       this.aTransferir=item;
       this.showTransferencia=true;
     }
-    public largeModal2;
+
     cerrar2(){
       console.log(this.largeModal2);
     }

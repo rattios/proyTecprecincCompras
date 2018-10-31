@@ -33,6 +33,6 @@ class Usuarios extends Model
      *
      * @var array
      */
-    protected $hidden = ['updated_at'];
+    protected $hidden = ['password', 'created_at', 'updated_at'];
 
 }

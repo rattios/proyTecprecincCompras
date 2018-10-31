@@ -31,6 +31,7 @@ class UsuariosController extends Controller
     	if ($rol==0 && $departamento_id==1) {
     		$usuarios = DB::select("SELECT * FROM  `usuarios` WHERE 1");
     		for ($i=0; $i < count($usuarios); $i++) { 
+                $usuarios[$i]->password="";
     			$usuarios[$i]->departamentos=[];
     			$d=DB::select("SELECT * FROM `departamentos` WHERE `id`=".$usuarios[$i]->departamento_id);
     			for ($j=0; $j < count($d); $j++) { 
