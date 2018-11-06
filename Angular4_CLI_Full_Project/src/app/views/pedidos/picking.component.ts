@@ -16,7 +16,8 @@ export class pickingComponent {
   public proveedor: any='';
   public cantEntregar1=0;
   public cantEntregar2=0;
-  public cantidadSolicitada=0;
+  public cantidadSolicitada:any=0;
+  public cantidadSolicitada2:any=0;
   public showP1=true;
   public showP2=true;
   public showP11=true;
@@ -39,8 +40,10 @@ export class pickingComponent {
             this.showP1=true;
             this.showP2=true;
             setTimeout(()=>{
-              this.cantidadSolicitada=this.producto.pivot.cantidad;
-              this.cantEntregar1=this.producto.pivot.cantidad;
+              this.cantidadSolicitada=parseInt(this.producto.pivot.cantidad);
+              this.cantidadSolicitada2=parseInt(this.producto.pivot.cantidad);
+              this.cantEntregar1=parseInt(this.producto.pivot.cantidad);
+              this.itemEntregar=[];
               console.log(data);
             },1000);
             
@@ -52,8 +55,9 @@ export class pickingComponent {
    ngOnInit(): void {
        this.loading=false;
       console.log(this.producto);
-      this.cantidadSolicitada=this.producto.pivot.cantidad;
-      this.cantEntregar1=this.producto.pivot.cantidad;
+      this.cantidadSolicitada=parseInt(this.producto.pivot.cantidad);
+      this.cantidadSolicitada2=parseInt(this.producto.pivot.cantidad);
+      this.cantEntregar1=parseInt(this.producto.pivot.cantidad);
       this.producto.bstock=true;
       this.producto.bstock2=true;
       this.producto.observacion='';
@@ -108,19 +112,244 @@ export class pickingComponent {
       });
     }
 
-    pickingEntrega(item,cantidad){
-      console.log(item);
-      if(item.stock>cantidad && this.cantidadSolicitada>cantidad) {
-        alert('entrego completo o parcial');
+
+    public itemEntregar:any=[];
+    public numEntregar=0;
+
+    //if stock!=0
+     // if cantidad!=0
+      
+       // 1 caso: Stock>cantidad normal
+         // pero: modifico cantidad original pasa a ser parcial
+       // 2 caso: Stock<cantidad genero una nueva
+         // pero: modifico cantidad original pasa a ser parcial
+    checkCantidadPicking1(item,cantidad){
+      console.log(item.stock+' '+this.cantEntregar1);
+
+      if(item.stock<this.cantEntregar1 && this.cantEntregar1!=this.cantidadSolicitada2) {
+        this.cantEntregar1=0;
       }
-      if(item.stock<cantidad) {
-        alert('entrega parcial y genero una nueva solicitud');
-      }
-      if(item.stock==cantidad && this.cantidadSolicitada==cantidad) {
-        alert('entrega completa');
-      }
-      this.cantidadSolicitada=this.cantidadSolicitada-cantidad;
     }
+    checkCantidadPicking2(item,cantidad){
+      console.log(item.stock+' '+this.cantEntregar2);
+      if(item.stock2<this.cantEntregar2  && this.cantEntregar2!=this.cantidadSolicitada2) {
+        this.cantEntregar2=0;
+      }
+    }
+    pickingEntrega(item,cantidad,almacen){
+      if(almacen==1) {
+        item.almacen='principal';
+        if(item.stock!=0) {
+          if(cantidad!=0) {
+            if(item.stock>=cantidad){
+              if(this.cantidadSolicitada-cantidad>=0) {
+                this.producto.observacion+= ' Entrega '+cantidad+' desde almacen 1.';
+                this.cantidadSolicitada=this.cantidadSolicitada-cantidad;
+                this.numEntregar+=parseInt(cantidad);
+                let estoyEntregando={
+                  cantidad:cantidad,
+                  item:item,
+                  almacen:almacen
+                }
+                this.itemEntregar.push(estoyEntregando);
+                this.showP1=false;
+              }     
+              
+            }
+            else if(item.stock<cantidad) {
+              if(this.cantidadSolicitada-cantidad>=0) {
+                this.producto.observacion+= ' Entrego '+item.stock+' desde almacen 1 y genero una nueva solicitud a '+item.pivot.pedido_id+'.';
+                this.cantidadSolicitada=this.cantidadSolicitada-item.stock;
+                this.numEntregar+=parseInt(item.stock);
+                let estoyEntregando={
+                  cantidad:item.stock,
+                  item:item,
+                  almacen:almacen
+                }
+                this.itemEntregar.push(estoyEntregando);
+                this.showP1=false;
+              }
+              
+            }
+          }
+        }
+      }else if(almacen==2) {
+        item.almacen='secundario';
+        if(item.stock2!=0) {
+          if(cantidad!=0) {
+            if(item.stock2>=cantidad){
+              if(this.cantidadSolicitada-cantidad>=0) {
+                this.producto.observacion+= ' Entrega '+cantidad+' desde almacen 2.';
+                this.cantidadSolicitada=this.cantidadSolicitada-cantidad;
+                this.numEntregar+=parseInt(cantidad);
+                let estoyEntregando={
+                  cantidad:cantidad,
+                  item:item,
+                  almacen:almacen
+                }
+                this.itemEntregar.push(estoyEntregando);
+                this.showP2=false;
+              }
+              
+            }else if(item.stock2<cantidad) {
+              if(this.cantidadSolicitada-cantidad>=0) {
+                this.producto.observacion+= ' Entrego '+item.stock2+' desde almacen 2 y genero una nueva solicitud a '+item.pivot.pedido_id+'.';
+                this.cantidadSolicitada=this.cantidadSolicitada-item.stock2;
+                this.numEntregar+=parseInt(item.stock2);
+                let estoyEntregando={
+                  cantidad:item.stock2,
+                  item:item,
+                  almacen:almacen
+                }
+                this.itemEntregar.push(estoyEntregando);
+                this.showP2=false;
+              }
+              
+            }
+          }
+        }
+      }
+    }
+    
+    public almacenE:any=0;
+    public entregado=true;
+    entrega(){
+      for (var i = 0; i < this.itemEntregar.length; i++) {
+        console.log(this.itemEntregar[i]);
+        this.almacenE=this.itemEntregar[i].almacen;
+        this.itemEntregar[i].item.pivot.cantidad=this.itemEntregar[i].cantidad;
+        this.itemEntregar[i].item.observacion=this.producto.observacion;
+        //this.picking(this.itemEntregar[i].item,this.itemEntregar[i].almacen);
+        var item:any = this.itemEntregar[i].item;
+        var send = {
+            picking: JSON.stringify(item)
+          }
+
+        this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
+             .toPromise()
+             .then(
+             data => {
+               console.log(data);
+               var rec:any;
+               rec=data;
+               console.log(this.producto);
+               console.log(rec);
+               console.log(rec.picking);
+               for (var j = 0; j < this.informacion.solicitud.length; j++) {
+                 if(this.informacion.solicitud[j].id==rec.picking.id) {
+                   this.informacion.solicitud[j]=rec.picking;
+                 }
+               }
+
+               alert('éxito');
+               console.log(this.almacenE);
+               if(this.almacenE==1) {
+                 this.traxas(item.pivot.stock_id,item.pivot.cantidad,100,item.departamento.id,localStorage.getItem('tecprecinc_usuario_id'),this.empleado_id,item.pivot.pedido_id,'Picking');
+               }
+               if(this.almacenE==2) {
+                 this.traxas(item.pivot.stock_id,item.pivot.cantidad,101,item.departamento.id,localStorage.getItem('tecprecinc_usuario_id'),this.empleado_id,item.pivot.pedido_id,'Picking');
+               }
+               this.entregado=false;
+              },msg => { 
+               console.log(console.log(msg.error));
+               alert(msg.error);
+              });
+      }
+    }
+
+    public diferencia=0;
+    entregaygenera(){
+      this.diferencia=this.cantidadSolicitada2-this.numEntregar;
+      if(this.itemEntregar.length==1) {
+        this.almacenE=this.itemEntregar[0].almacen;
+        this.itemEntregar[0].item.pivot.cantidad=this.itemEntregar[0].cantidad;
+        this.itemEntregar[0].item.observacion=this.producto.observacion;
+        //this.picking2(this.itemEntregar[0].item,this.itemEntregar[0].almacen,this.itemEntregar[0].stock);
+        var item:any = this.itemEntregar[0].item;
+        console.log(item);
+        var solicitud = [{
+        cantidad:this.diferencia,
+        categoria_id:item.categoria_id,
+        centro_costos_id:item.centro_costos.id,
+        codigo:item.codigo,
+        id:item.id,
+        nombre:item.nombre,
+        //precio:item.,
+        producto_id:item.producto_id,
+        rubro_id:item.rubro_id,
+        stock:item.stock,
+        stock2:item.stock2,
+        stock2_min:item.stock2_min,
+        stock_min:item.stock_min,
+        tipo_id:item.tipo_id
+      }];
+      var enviar = {
+        usuario_id: item.usuario_id,
+        solicitud: JSON.stringify(solicitud),
+        solicitud2: solicitud,
+        centro_costos_id:43,
+        contrato_id:1,
+        estado: 1,
+        aprobar:1,
+        observaciones:this.producto.observacion
+      }
+      console.log(enviar);
+      var send = {
+          picking: JSON.stringify(item)
+        }
+        
+      this.http.post(this.ruta.get_ruta()+'pedidos/picking',send)
+             .toPromise()
+             .then(
+             data => {
+               console.log(data);
+               var rec:any;
+               rec=data;
+               console.log(this.producto);
+               console.log(rec);
+               console.log(rec.picking);
+               for (var j = 0; j < this.informacion.solicitud.length; j++) {
+                 if(this.informacion.solicitud[j].id==rec.picking.id) {
+                   this.informacion.solicitud[j]=rec.picking;
+                 }
+               }
+              
+               alert('éxito');
+               if(this.almacenE==1) {
+                 this.traxas(item.pivot.stock_id,item.pivot.cantidad,100,item.departamento.id,localStorage.getItem('tecprecinc_usuario_id'),this.empleado_id,item.pivot.pedido_id,'Picking');
+               }
+               if(this.almacenE==2) {
+                 this.traxas(item.pivot.stock_id,item.pivot.cantidad,101,item.departamento.id,localStorage.getItem('tecprecinc_usuario_id'),this.empleado_id,item.pivot.pedido_id,'Picking');
+               }
+               this.entregado=false;
+               
+               //genero un pedido por el faltante
+              
+                setTimeout(() => {
+                  this.http.post(this.ruta.get_ruta()+'pedidos',enviar)
+                   .toPromise()
+                   .then(
+                   data => {
+                     console.log(data);
+                      
+                     alert('Se ha generado una nueva solicitud por la cantidad del producto que no se entregó.');
+                    },
+                   msg => { 
+                     console.log(msg);
+                     alert('Error! No se ha generado una nueva solicitud por la cantidad del producto que no se entregó.');
+                   });
+                }, 1000);
+
+              },
+             msg => { 
+               console.log(msg);
+               alert('Error: '+JSON.stringify(msg));
+             });
+      }else{
+        alert('Tiene que seleccionar desde un solo almacen.');
+      }
+    }
+
 
     picking(item,tipo){
       console.log(item);

@@ -25,10 +25,7 @@ export class infoComponent {
   constructor(private http: HttpClient, private ruta: RutaService,private sharedService: SharedService) {
 
   }
-  ngOnDestroy() {
-    alert('destruido');
-    console.log(this.largeModal2);
-  }
+  
 
    ngOnInit(): void {
       console.log(this.informacion);

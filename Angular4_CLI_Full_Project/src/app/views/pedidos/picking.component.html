@@ -20,12 +20,12 @@
         	</thead>
         	<tbody>
            		<tr>
-           			<td>Principal</td>
-                <td [ngStyle]="{'background-color':producto.stock > producto.pivot.cantidad ? '#4dbd74' : '#f44336' }">
+           			<td *ngIf="showP1">Principal</td>
+                <td [ngStyle]="{'background-color':producto.stock > producto.pivot.cantidad ? '#4dbd74' : '#f44336' }" *ngIf="showP1">
                   <a style="font-weight: bold;" *ngIf="showP1">{{producto.stock}}</a>
                 </td>
-                <td><input [(ngModel)]="cantEntregar1"></td>
-              	<td style="text-align:right">
+                <td *ngIf="showP1"><input [(ngModel)]="cantEntregar1" (blur)=checkCantidadPicking1(producto,cantEntregar1)></td>
+              	<td style="text-align:right" *ngIf="showP1">
                   <!--div *ngIf="producto.stock >= producto.pivot.cantidad">
                     <button type="button" class="btn btn-success" (click)=picking(producto,1) *ngIf="showP1">Entregar
                     </button>
@@ -37,15 +37,15 @@
                     </button>
 
                   </div-->
-                  <button type="button" class="btn btn-success" (click)=pickingEntrega(producto,1)>Entregar</button>
+                  <button type="button" class="btn btn-success" (click)=pickingEntrega(producto,cantEntregar1,1) *ngIf="showP1">Entregar</button>
                 </td>
 
            		</tr> 
               <tr>
-                <td>Secundario</td>
+                <td *ngIf="showP2">Secundario</td>
                 <td [ngStyle]="{'background-color':producto.stock2 > producto.pivot.cantidad ? '#4dbd74' : '#f44336' }" *ngIf="showP2">{{producto.stock2}}</td>
-                <td><input [(ngModel)]="cantEntregar2"></td>
-                <td style="text-align:right">
+                <td *ngIf="showP2"><input [(ngModel)]="cantEntregar2" (blur)=checkCantidadPicking2(producto,cantEntregar2) *ngIf="showP2"></td>
+                <td style="text-align:right" *ngIf="showP2">
                   <!--div *ngIf="producto.stock2 >= producto.pivot.cantidad">
                     <button type="button" class="btn btn-success" (click)=picking(producto,2) *ngIf="showP2">Entregar
                     </button>
@@ -57,14 +57,46 @@
                     </button>
                     
                   </div-->
-                  <button type="button" class="btn btn-success" (click)=pickingEntrega(producto,1)>Entregar</button>
+                  <button type="button" class="btn btn-success" (click)=pickingEntrega(producto,cantEntregar2,2) *ngIf="showP2">Entregar</button>
                 </td>
               </tr>
         	</tbody>
       	</table>
 
+        <br>
+        <strong>Lo que se va a entregar: {{numEntregar}} productos</strong>
+        <br>
+
+        <table class="table table-striped">
+          <thead>
+            <th>Cantidad</th>
+            <th>Producto</th>
+            <th>Almacén</th>
+          </thead>
+          <tbody>
+              <tr *ngFor="let item of itemEntregar">
+                <td>{{item.cantidad}}</td>
+                <td>{{item.item.nombre}}</td>
+                <td>{{item.almacen}}</td>
+              </tr>
+          </tbody>
+        </table>
         <div>
           <strong>Observación:</strong> <input type="text" style="width: 100%" [(ngModel)]="producto.observacion">
         </div><br>
+        <h4>Se entregará: {{numEntregar}} de {{cantidadSolicitada2}} productos</h4>
+        <br>
+        
+        <div class="row" *ngIf="numEntregar!=0">
+          <div style="text-align: center" class="col-sm-12" *ngIf="entregado">
+            <div>
+              <button type="button" class="btn btn-success" (click)=entrega()>Entregar</button>
+            </div><br>
+            <div style="text-align: center" *ngIf="numEntregar<cantidadSolicitada2">
+                <button type="button" class="btn btn-success" (click)=entregaygenera()>Entregar y generar nueva solicitud</button>
+            </div>
+          </div>
+        </div>
+        
     </div>	
 </div>
