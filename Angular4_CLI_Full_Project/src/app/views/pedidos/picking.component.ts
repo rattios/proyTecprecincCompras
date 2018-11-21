@@ -39,11 +39,13 @@ export class pickingComponent {
             console.log(data);
             this.showP1=true;
             this.showP2=true;
+            this.checkCant=true;
             setTimeout(()=>{
               this.cantidadSolicitada=parseInt(this.producto.pivot.cantidad);
               this.cantidadSolicitada2=parseInt(this.producto.pivot.cantidad);
               this.cantEntregar1=parseInt(this.producto.pivot.cantidad);
               this.itemEntregar=[];
+              this.numEntregar=0;
               console.log(data);
             },1000);
             
@@ -209,8 +211,15 @@ export class pickingComponent {
           }
         }
       }
+      this.checkCantidad();
     }
-    
+    public checkCant=true;
+    checkCantidad(){
+      if(this.numEntregar>=this.cantidadSolicitada2){
+        //alert('ya');
+        this.checkCant=false;
+      }
+    }
     public almacenE:any=0;
     public entregado=true;
     entrega(){

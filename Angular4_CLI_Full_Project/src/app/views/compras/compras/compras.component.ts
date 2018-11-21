@@ -62,16 +62,23 @@ export class comprasComponent {
              this.prov=data;
               this.proveedores=this.prov.compra;
               console.log(this.proveedores);
+              var preprov:any=[];
               for (var i = 0; i < this.proveedores.length; i++) {
                 if(this.proveedores[i].estado==0) {
                   this.proveedores[i].estado2='Enviado';
+                  this.items3.push(this.proveedores[i]);
                 }else if(this.proveedores[i].estado==1) {
                   this.proveedores[i].estado2='En proceso';
                 }else if(this.proveedores[i].estado==2) {
                   this.proveedores[i].estado2='Recibido';
+                  preprov.push(this.proveedores[i]);
+                }
+                for (var j = 0; j < this.proveedores[i].productos.length; ++j) {
+                  this.proveedores[i].productos[j].totales=parseInt(this.proveedores[i].productos[j].cantidad)*this.proveedores[i].productos[j].precio;
                 }
               }
-              this.productList = this.proveedores;
+              //this.productList = this.proveedores;
+              this.productList = preprov;
               this.filteredItems = this.productList;
               this.init();
               this.loading=false;
@@ -92,7 +99,22 @@ export class comprasComponent {
            this.prov=data;
             this.proveedores=this.prov.compra;
             console.log(this.proveedores);
-            this.productList = this.proveedores;
+             var preprov:any=[];
+             this.items3=[];
+              for (var i = 0; i < this.proveedores.length; i++) {
+                if(this.proveedores[i].estado==0) {
+                  this.proveedores[i].estado2='Enviado';
+                  this.items3.push(this.proveedores[i]);
+                }else if(this.proveedores[i].estado==1) {
+                  this.proveedores[i].estado2='En proceso';
+                }else if(this.proveedores[i].estado==2) {
+                  this.proveedores[i].estado2='Recibido';
+                  preprov.push(this.proveedores[i]);
+                }
+              }
+              //this.productList = this.proveedores;
+              this.productList = preprov;
+            //this.productList = this.proveedores;
             this.filteredItems = this.productList;
             this.init();
             this.loading=false;
@@ -200,6 +222,7 @@ export class comprasComponent {
       <body onload="window.print();window.close()"> ${printContents} </body>
       </html>`
     );
+    popupWin.document.title = 'compra '+ this.enviado.id;
     popupWin.document.close();
   }
 
@@ -215,6 +238,7 @@ export class comprasComponent {
    pageNumber : number = 6;
    currentIndex : number = 1;
    items: any;
+   items3: any=[];
    pagesIndex : Array<number>;
    pageStart : number = 1;
    inputName : string = '';

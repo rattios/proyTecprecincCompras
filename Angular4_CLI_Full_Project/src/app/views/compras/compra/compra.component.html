@@ -61,7 +61,7 @@
                   <label>Proveedor:</label><strong> {{proveedor.razon_social}}</strong>
                 </div>
                 <div class="col-lg-4">
-                  <label>Nombre fantacia:</label><strong> {{proveedor.nombre_fantacia}}</strong>
+                  <label>Nombre fantasía:</label><strong> {{proveedor.nombre_fantacia}}</strong>
                 </div>
                 <div class="col-lg-4">
                   <label>Cuit:</label><strong> {{proveedor.cuit}}</strong>
@@ -73,6 +73,9 @@
                 </div>
                 <div class="col-lg-4">
                   <label>Email:</label><strong> {{proveedor.email}}</strong>
+                </div>
+                <div class="col-lg-4">
+                  <label>Fecha:</label><strong> {{fecha | date:'dd-MM-yyyy'}}</strong>
                 </div>
               </div>
 
@@ -86,14 +89,16 @@
                     <thead>
                       <th>Cantidad</th>
                       <th>Nombre</th>
-                      <th>Precio</th>
+                      <th>Precio Unit.</th>
+                      <th>Total</th>
                       <th>Eliminar</th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let it of itemsPresupuesto">
-                          <td><input type="text" class="form-control" id="nombre" placeholder="" [(ngModel)]="it.cantidad"></td>
+                          <td><input type="text" class="form-control" id="nombre" placeholder="" [(ngModel)]="it.cantidad" (blur)="calTotales()"></td>
                           <td>{{it.nombre}}</td>
                           <td><input type="text" class="form-control" id="precio" placeholder="" [(ngModel)]="it.precio"></td>
+                          <td><input type="text" class="form-control" id="precio" placeholder="" [(ngModel)]="it.totales"></td>
                           <td><button type="button" class="btn btn-danger" (click)=eliminarProducto(it)>X</button></td>
                         </tr>
                     </tbody>
@@ -150,7 +155,7 @@
                   <label>Proveedor:</label><strong> {{proveedor.razon_social}}</strong>
                 </div>
                 <div class="col-lg-4">
-                  <label>Nombre fantacia:</label><strong> {{proveedor.nombre_fantacia}}</strong>
+                  <label>Nombre fantasía:</label><strong> {{proveedor.nombre_fantacia}}</strong>
                 </div>
                 <div class="col-lg-4">
                   <label>Cuit:</label><strong> {{proveedor.cuit}}</strong>
@@ -174,13 +179,15 @@
                     <thead>
                       <th>Cantidad</th>
                       <th>Nombre</th>
-                      <th>Precio</th>
+                      <th>Precio Unit.</th>
+                      <th>Total</th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let it of enviado.productos">
                           <td>{{it.cantidad}}</td>
                           <td>{{it.nombre}}</td>
                           <td>{{it.precio}}</td>
+                          <td>{{it.totales}}</td>
                         </tr>
                     </tbody>
                   </table>

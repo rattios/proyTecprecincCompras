@@ -17,6 +17,7 @@ export class compraComponent {
   public loading=true;
   public loading2=true;
   public nota:any='';
+  public fecha:any=new Date();
   public proveedor: any={
           calificacion:null,
           cuit:"",
@@ -120,7 +121,13 @@ export class compraComponent {
      item.cantidad=1;
      item.factura='';
      item.entregado=0;
+     item.totales=parseInt(item.cantidad)*item.precio;
      this.itemsPresupuesto.push(item);
+    }
+  }
+  calTotales(){
+    for (var i = 0; i < this.itemsPresupuesto.length; ++i) {
+      this.itemsPresupuesto[i].totales=parseInt(this.itemsPresupuesto[i].cantidad)*this.itemsPresupuesto[i].precio;
     }
   }
   set(item){
@@ -300,6 +307,7 @@ export class compraComponent {
       <body onload="window.print();window.close()"> ${printContents} </body>
       </html>`
       );
+      popupWin.document.title = 'compra '+ this.enviado.id;
       popupWin.document.close();
     }, 2000)
       

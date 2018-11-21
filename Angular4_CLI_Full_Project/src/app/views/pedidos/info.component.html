@@ -235,7 +235,7 @@
 				              	<th>Código</th>
 				                <th>Cantidad</th>
 				                <th>Nombre</th>
-				                <th>Centro de costos</th>
+				                <!--th>Centro de costos</th-->
 				                <th *ngIf="informacion.estado!=0">Estatus</th>
 				                <th *ngIf="informacion.estado==1">Acción</th>
 				              </tr>
@@ -245,7 +245,7 @@
 				              	<td>{{item.codigo}}</td>
 				                <td>{{item.pivot.cantidad}}</td>
 				                <td>{{item.nombre}}</td>
-				                <td>{{item.pivot.nombre_centro_costo}}</td>
+				                <!--td>{{item.pivot.nombre_centro_costo}}</td-->
 				                <td *ngIf="informacion.estado!=0">
 				                  <span [ngClass]="['badge', 'badge-success']" *ngIf="item.pivot.aprobado">Aprobado</span>
 				                  <span [ngClass]="['badge', 'badge-success']" *ngIf="item.pivot.entregado">Entregado</span>
@@ -407,7 +407,7 @@
 					              	<th>Código</th>
 					                <th>Cantidad</th>
 					                <th>Nombre</th>
-					                <th>Centro de costos</th>
+					                <!--th>Centro de costos</th-->
 					              </tr>
 					            </thead>
 					            <tbody>
@@ -415,7 +415,7 @@
 					              	<td>{{item.codigo}}</td>
 					                <td>{{item.pivot.cantidad}}</td>
 					                <td>{{item.nombre}}</td>
-					                <td>{{item.pivot.nombre_centro_costo}}</td>
+					                <!--td>{{item.pivot.nombre_centro_costo}}</td-->
 					              </tr>
 					            </tbody>
 					          </table>

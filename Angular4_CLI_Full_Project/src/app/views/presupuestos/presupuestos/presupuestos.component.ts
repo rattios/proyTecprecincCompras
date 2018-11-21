@@ -66,11 +66,15 @@ export class presupuestosComponent {
               console.log(this.proveedores);
               for (var i = 0; i < this.proveedores.length; i++) {
                 if(this.proveedores[i].estado==0) {
-                  this.proveedores[i].estado2='Entregado';
+                  this.proveedores[i].estado2='Generado';
                 }else if(this.proveedores[i].estado==1) {
                   this.proveedores[i].estado2='Recibido';
                 }else if(this.proveedores[i].estado==2) {
                   this.proveedores[i].estado2='Cancelado';
+                }
+
+                for (var j = 0; j < this.proveedores[i].productos.length; ++j) {
+                  this.proveedores[i].productos[j].totales=parseInt(this.proveedores[i].productos[j].cantidad)*this.proveedores[i].productos[j].precio;
                 }
               }
               this.productList = this.proveedores;
@@ -237,11 +241,12 @@ export class presupuestosComponent {
   }
 
      public saveFile(){
-      console.log('exportar');
+      console.log('exportar pre');
       let printContents, popupWin;
     printContents = document.getElementById('exportable').innerHTML;
-    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
-    popupWin.document.open();
+    popupWin = window.open('presupuesto '+ this.enviado.id, '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin.document.open('presupuesto '+ this.enviado.id);
+
     popupWin.document.write(`
       <html>
         <head>
@@ -296,6 +301,7 @@ export class presupuestosComponent {
       <body onload="window.print();window.close()"> ${printContents} </body>
       </html>`
     );
+    popupWin.document.title = 'presupuesto '+ this.enviado.id;
     popupWin.document.close();
   }
 
