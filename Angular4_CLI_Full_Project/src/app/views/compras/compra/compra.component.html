@@ -26,11 +26,13 @@
                   
                   <table class="table table-bordered">
                     <thead>
+                      <th>Código</th>
                       <th>Nombre</th>
                       <th></th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let it of proveedor.productos">
+                          <td>{{it.codigo}}</td>
                           <td>{{it.nombre}}</td>
                           <td><button type="button" class="btn btn-success" (click)=add(it)>Agregar</button></td>
                         </tr>

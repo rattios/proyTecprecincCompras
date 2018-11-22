@@ -7,7 +7,7 @@ import { RutaService } from '../../../services/ruta.service';
 import {MatDatepicker} from '@angular/material/datepicker';
 import {DateAdapter} from '@angular/material';
 import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
-
+import { SharedService } from './shared.service';
 
 @Component({
   templateUrl: 'compras_recepcion.component.html'
@@ -42,8 +42,12 @@ export class compras_recepcionComponent {
   public inicioD2:any=new Date();
   public finD2:any=new Date();
 
-  constructor(private http: HttpClient, private ruta: RutaService) {
-
+  constructor(private http: HttpClient, private ruta: RutaService,private sharedService: SharedService) {
+    this.sharedService.cartData.subscribe(
+          (data: any) => {
+            this.showPicking=true;
+            console.log('volvio a entrar entro');
+          });
   }
 
   ngOnInit(): void {
@@ -152,6 +156,8 @@ export class compras_recepcionComponent {
   }
   public aCargar:any=[];
   public ingresos:any=[];
+  public showCargar=true;
+  public cantidadEntregada=0;
   cargar(producto,id,cantidad,pedido_id,pedido){
     console.log(producto);
     if(producto.ingresos) {
@@ -159,12 +165,26 @@ export class compras_recepcionComponent {
         producto.ingresos=[];
         console.log('entro en ingresos vacios');
       }
+      for (var i = 0; i < producto.ingresos.length; ++i) {
+        
+      }
     }else{
       producto.ingresos=[];
     }
     
     this.aCargar.push(producto);
     this.ingresos= this.aCargar[0].ingresos;
+    this.cantidadEntregada=0;
+    for (var i = 0; i < this.ingresos.length; i++) {
+      this.cantidadEntregada+=parseInt(this.ingresos[i].cantidadAgregar);
+    }
+    console.log(this.cantidadEntregada);
+    if(this.cantidadEntregada>=this.aCargar[0].cantidad){
+      this.showCargar=false;
+    }else{
+      this.showCargar=true;
+    }
+
     console.log(producto);
     console.log(this.aCargar);
   }
@@ -233,6 +253,16 @@ export class compras_recepcionComponent {
             console.log(data);
 
             alert('Éxito!');
+            this.cantidadEntregada=0;
+            for (var i = 0; i < this.ingresos.length; i++) {
+              this.cantidadEntregada+=parseInt(this.ingresos[i].cantidadAgregar);
+            }
+            console.log(this.cantidadEntregada);
+            if(this.cantidadEntregada>=this.aCargar[0].cantidad){
+              this.showCargar=false;
+            }else{
+              this.showCargar=true;
+            }
 
           },
          msg => { 

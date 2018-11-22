@@ -200,7 +200,7 @@
                             <td><input style="width: 55px;" type="" name=""  [(ngModel)]="it.remito"></td>
                             <td><input style="width: 55px;" type="" name=""  [(ngModel)]="it.factura"></td>
                             <td><div> 
-                              <button  type="button" class="btn btn-success" (click)="cargarIngreso(it,it.id,it.cantidad,enviado.id,enviado)">Ingresar al inventario</button>
+                              <button  type="button" class="btn btn-success" (click)="cargarIngreso(it,it.id,it.cantidad,enviado.id,enviado)" *ngIf="showCargar">Ingresar al inventario</button>
                             </div></td>
                           </tr>
                       </tbody>

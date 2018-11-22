@@ -31,6 +31,8 @@ export class infoComponent {
       console.log(this.informacion);
       for (var i = 0; i < this.informacion.solicitud.length; i++) {
         this.informacion.solicitud[i].usuario=this.informacion.usuario;
+        this.informacion.solicitud[i].totales=this.informacion.solicitud[i].pivot.cantidad*this.informacion.solicitud[i].precio;
+        
       }
       if(this.informacion!=undefined) {
        

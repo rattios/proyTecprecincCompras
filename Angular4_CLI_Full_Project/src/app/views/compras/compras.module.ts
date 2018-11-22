@@ -9,6 +9,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { MatDatepickerModule, MatNativeDateModule, DateAdapter } from '@angular/material';
 import { DateFormat } from './date-format';
 
+import { SharedService } from './compras_recepcion/shared.service';
 
 import { comprasRoutingModule } from './compras-routing.module';
 
@@ -42,6 +43,7 @@ import { pickingComponent } from './picking.component';
     providers: [
      { provide: DateAdapter, useClass: DateFormat },
      MatNativeDateModule,
+     SharedService
    ],
 })
 export class comprasModule { 
