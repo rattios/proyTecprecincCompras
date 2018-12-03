@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { RutaService } from '../../services/ruta.service';
 
 @Component({
@@ -23,8 +24,9 @@ export class pedidosComponent {
   public success=false;
   public fail=false;
   public observaciones='';
-  constructor(private http: HttpClient, private ruta: RutaService) {
-
+  public rolActual:any=2;
+  constructor(private permissionsService: NgxPermissionsService, private http: HttpClient, private ruta: RutaService) {
+    this.rolActual=localStorage.getItem('tecprecinc_rol');
   }
 
    ngOnInit(): void {

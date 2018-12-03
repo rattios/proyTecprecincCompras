@@ -45,6 +45,8 @@ import { pickingComponent } from './picking.component';
 
 import { presupuestosComponent } from './presupuesto.component';
 
+import { NgxPermissionsModule } from 'ngx-permissions';
+
 @NgModule({
   imports: [
     pedidosRoutingModule,
@@ -56,7 +58,8 @@ import { presupuestosComponent } from './presupuesto.component';
     AlertModule.forRoot(),
     ModalModule.forRoot(),
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NgxPermissionsModule.forRoot(),
   ],
   declarations: [ 
       pedidosComponent,

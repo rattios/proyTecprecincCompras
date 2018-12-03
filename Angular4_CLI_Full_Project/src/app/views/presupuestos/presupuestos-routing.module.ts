@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { presupuestoComponent } from './presupuesto/presupuesto.component';
 import { presupuestosComponent } from './presupuestos/presupuestos.component';
+import { comparar_presupuestosComponent } from './comparar_presupuestos/comparar_presupuestos.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,13 @@ const routes: Routes = [
         component: presupuestosComponent,
         data: {
           title: 'Presupuesto'
+        }
+      },
+      {
+        path: 'comparar_presupuestos',
+        component: comparar_presupuestosComponent,
+        data: {
+          title: 'Comparar presupuestos'
         }
       }
     ]

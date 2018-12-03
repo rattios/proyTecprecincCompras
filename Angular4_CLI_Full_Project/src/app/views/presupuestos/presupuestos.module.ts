@@ -15,6 +15,8 @@ import { presupuestosRoutingModule } from './presupuestos-routing.module';
 
 import { presupuestoComponent } from './presupuesto/presupuesto.component';
 import { presupuestosComponent } from './presupuestos/presupuestos.component';
+import { comparar_presupuestosComponent } from './comparar_presupuestos/comparar_presupuestos.component';
+
 
 @NgModule({
   imports: [
@@ -33,7 +35,8 @@ import { presupuestosComponent } from './presupuestos/presupuestos.component';
   declarations: [ 
 
     presupuestoComponent,
-    presupuestosComponent
+    presupuestosComponent,
+    comparar_presupuestosComponent
 
     ],
     providers: [

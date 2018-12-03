@@ -70,46 +70,49 @@
           </li>
         </ul>
       </li>
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1]">
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0]">
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-shuffle"></i> Transferencias</a>
         <ul class="nav-dropdown-items">
-          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/transferencias/transferencia']"><i class="icon-note"></i> Realizar Transferencia</a>
           </li>
-          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/transferencias/transferenciaspura']"><i class=" icon-action-redo"></i> Transferencias</a>
           </li>
-          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/transferencias/devoluciones']"><i class="icon-action-undo"></i> Devoluciones</a>
           </li>
-          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/transferencias/transferenciaspatrimonial']"><i class="icon-action-redo"></i> Transferir Bienes Patrimoniales</a>
           </li>
           
         </ul>
       </li>
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1]">
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0]">
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-doc"></i> Presupuestos</a>
         <ul class="nav-dropdown-items">
-          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/presupuestos/presupuesto']"><i class="icon-note"></i> Crear un presupuesto</a>
           </li>
-          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/presupuestos/presupuestos']"><i class="icon-list"></i> Presupuestos</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/presupuestos/comparar_presupuestos']"><i class="icon-list"></i> Comparar presupuestos</a>
           </li>
         </ul>
       </li>
 
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1]">
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0]">
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-doc"></i> Compras</a>
         <ul class="nav-dropdown-items">
-          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/compras/compra']"><i class="icon-note"></i> Crear una compra</a>
           </li>
-          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/compras/compras']"><i class="icon-list"></i> Compras</a>
           </li>
-          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/compras/compras_recepcion']"><i class="icon-list"></i> Recepción de una compra</a>
           </li>
         </ul>
@@ -130,7 +133,7 @@
         </ul>
       </li>
 
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1]">
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0]">
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="fa fa-building-o"></i> Departamentos</a>
         <ul class="nav-dropdown-items">
           <!-- <li class="nav-item" *ngxPermissionsOnly="[0]">
@@ -219,7 +222,7 @@
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/categorias']"><i class="icon-calculator"></i> Categorias</a>
       </li> -->
       
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1]">
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0]">
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="fa fa-file-excel-o"></i> Reportes</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item" *ngxPermissionsOnly="[0]">
