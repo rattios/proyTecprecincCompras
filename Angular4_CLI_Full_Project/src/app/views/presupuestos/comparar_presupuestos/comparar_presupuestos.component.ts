@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit, Input,Pipe, PipeTransform, NgZone  } from '@angular/core';
 import {CommonModule, NgClass, DatePipe } from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
@@ -20,6 +20,7 @@ export class comparar_presupuestosComponent {
   public productos: any;
   public loading=true;
   public loading2=true;
+  public observaciones:any='';
   public vigencia:any=new Date();
   public fechaMinuta:any=new Date();
   public proveedor: any={
@@ -46,7 +47,7 @@ export class comparar_presupuestosComponent {
   public presupuestosCompara:any=[];
   public productoCompara:any=[];
 
-  constructor(private http: HttpClient, private ruta: RutaService) {
+  constructor(private http: HttpClient, private ruta: RutaService, public zone: NgZone) {
 
   }
 
@@ -150,8 +151,78 @@ export class comparar_presupuestosComponent {
   }
 
   generar(){
+
+    this.zone.run(()=>{});
     console.log(this.presupuestosCompara);
     console.log(this.productoCompara);
+    console.log(this.observaciones);
+    console.log('exportar pre');
+
+    let printContents, popupWin;
+    printContents = document.getElementById('exportable').innerHTML;
+    popupWin = window.open('Minuta ', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin.document.open('Minuta ');
+
+    popupWin.document.write(`
+      <html>
+        <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+          
+          <style>
+            @media print {
+              @page { margin: 0; }
+              body { margin: 1.6cm; }
+              .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+                    float: left;
+               }
+               .col-sm-12 {
+                    width: 100%;
+               }
+               .col-sm-11 {
+                    width: 91.66666667%;
+               }
+               .col-sm-10 {
+                    width: 83.33333333%;
+               }
+               .col-sm-9 {
+                    width: 75%;
+               }
+               .col-sm-8 {
+                    width: 66.66666667%;
+               }
+               .col-sm-7 {
+                    width: 58.33333333%;
+               }
+               .col-sm-6 {
+                    width: 50%;
+               }
+               .col-sm-5 {
+                    width: 41.66666667%;
+               }
+               .col-sm-4 {
+                    width: 33.33333333%;
+               }
+               .col-sm-3 {
+                    width: 25%;
+               }
+               .col-sm-2 {
+                    width: 16.66666667%;
+               }
+               .col-sm-1 {
+                    width: 8.33333333%;
+               }
+            }
+          </style>
+        </head>
+      <body onload="window.print();window.close()"> ${printContents} </body>
+      </html>`
+    );
+    var nombre_proveedores= '';
+    for (var i = 0; i < this.presupuestosCompara.length; i++) {
+      nombre_proveedores+=','+this.presupuestosCompara[i].nombre+' ';
+    }
+    popupWin.document.title = 'Minuta: '+ nombre_proveedores;
+    popupWin.document.close();
   }
 
   cancelar2(){
@@ -342,72 +413,6 @@ export class comparar_presupuestosComponent {
     console.log('asd');
     this.volver();
   }
-
-     public saveFile(){
-      console.log('exportar pre');
-      let printContents, popupWin;
-    printContents = document.getElementById('exportable').innerHTML;
-    popupWin = window.open('presupuesto '+ this.enviado.id, '_blank', 'top=0,left=0,height=100%,width=auto');
-    popupWin.document.open('presupuesto '+ this.enviado.id);
-
-    popupWin.document.write(`
-      <html>
-        <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-          
-          <style>
-            @media print {
-              @page { margin: 0; }
-              body { margin: 1.6cm; }
-              .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
-                    float: left;
-               }
-               .col-sm-12 {
-                    width: 100%;
-               }
-               .col-sm-11 {
-                    width: 91.66666667%;
-               }
-               .col-sm-10 {
-                    width: 83.33333333%;
-               }
-               .col-sm-9 {
-                    width: 75%;
-               }
-               .col-sm-8 {
-                    width: 66.66666667%;
-               }
-               .col-sm-7 {
-                    width: 58.33333333%;
-               }
-               .col-sm-6 {
-                    width: 50%;
-               }
-               .col-sm-5 {
-                    width: 41.66666667%;
-               }
-               .col-sm-4 {
-                    width: 33.33333333%;
-               }
-               .col-sm-3 {
-                    width: 25%;
-               }
-               .col-sm-2 {
-                    width: 16.66666667%;
-               }
-               .col-sm-1 {
-                    width: 8.33333333%;
-               }
-            }
-          </style>
-        </head>
-      <body onload="window.print();window.close()"> ${printContents} </body>
-      </html>`
-    );
-    popupWin.document.title = 'presupuesto '+ this.enviado.id;
-    popupWin.document.close();
-  }
-
 
 
 

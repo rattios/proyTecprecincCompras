@@ -39,6 +39,7 @@ export class comprasComponent {
         };
   public inicioD2:any=new Date();
   public finD2:any=new Date();
+  public canceladas:any=[];
 
   constructor(private http: HttpClient, private ruta: RutaService) {
 
@@ -72,6 +73,12 @@ export class comprasComponent {
                 }else if(this.proveedores[i].estado==2) {
                   this.proveedores[i].estado2='Recibido';
                   preprov.push(this.proveedores[i]);
+                }else if(this.proveedores[i].estado==3) {
+                  this.proveedores[i].estado2='Finalizada';
+                  preprov.push(this.proveedores[i]);
+                }else if(this.proveedores[i].estado==4) {
+                  this.proveedores[i].estado2='Cancelada';
+                  this.canceladas.push(this.proveedores[i]);
                 }
                 for (var j = 0; j < this.proveedores[i].productos.length; ++j) {
                   this.proveedores[i].productos[j].totales=parseInt(this.proveedores[i].productos[j].cantidad)*this.proveedores[i].productos[j].precio;
@@ -110,6 +117,12 @@ export class comprasComponent {
                 }else if(this.proveedores[i].estado==2) {
                   this.proveedores[i].estado2='Recibido';
                   preprov.push(this.proveedores[i]);
+                }else if(this.proveedores[i].estado==3) {
+                  this.proveedores[i].estado2='Finalizada';
+                  preprov.push(this.proveedores[i]);
+                }else if(this.proveedores[i].estado==4) {
+                  this.proveedores[i].estado2='Cancelada';
+                  this.canceladas.push(this.proveedores[i]);
                 }
               }
               //this.productList = this.proveedores;

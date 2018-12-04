@@ -76,13 +76,13 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="name">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="" [(ngModel)]="proveedor.nombre">
+                    <input type="text" class="form-control" id="nombre" placeholder="" [(ngModel)]="proveedor.nombre" [disabled]="true">
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="ccnumber">Apellido</label>
-                    <input type="text" class="form-control" id="apellido" placeholder="" [(ngModel)]="proveedor.apellido">
+                    <input type="text" class="form-control" id="apellido" placeholder="" [(ngModel)]="proveedor.apellido" [disabled]="true">
                   </div>
                 </div>
               </div><!--/.row-->
@@ -90,13 +90,13 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="name">Usuario</label>
-                    <input type="text" class="form-control" id="Usuario" placeholder="" [(ngModel)]="proveedor.user" (blur)="user()">
+                    <input type="text" class="form-control" id="Usuario" placeholder="" [(ngModel)]="proveedor.user" (blur)="user()" [disabled]="true">
                   </div>
                 </div>
                 <div class="col-sm-4" >
                   <div class="form-group">
                     <label for="ccnumber">Contraseña</label>
-                    <input type="text" class="form-control" id="password" placeholder="" [(ngModel)]="proveedor.password">
+                    <input type="password" class="form-control" id="password" placeholder="" [(ngModel)]="proveedor.password">
                   </div>
                 </div>
                 <div class="col-sm-4">

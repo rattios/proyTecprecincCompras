@@ -156,7 +156,10 @@
                 <br>
                 <div class="row">
                   <div class="col-lg-12" style="text-align:center" *ngIf="enviado.estado!=2">
-                    <button type="button" class="btn btn-primary" (click)="finalizar(enviado)">Finalizar orden de compra</button>
+                    <button type="button" class="btn btn-primary" [hidden]="enviado.estado==4" (click)="finalizar(enviado)">Finalizar orden de compra</button>
+                  </div><br><br>
+                  <div class="col-lg-12" style="text-align:center" *ngIf="enviado.estado==0">
+                    <button type="button" class="btn btn-danger"  (click)="cancelar(enviado)">Cancelar</button>
                   </div>
                 </div>
               </div>
@@ -192,9 +195,9 @@
                         <th>Agregar</th>
                       </thead>
                       <tbody>
-                          <tr *ngFor="let it of aCargar">
+                          <tr *ngFor="let it of aCargar; index as i">
                             <td style="width: 35px;">{{it.cantidad}}</td>
-                            <td><input style="width: 35px;" type="" name=""  [(ngModel)]="it.cantidadAgregar" (blur)="dispara(it.cantidad,it.cantidadAgregar)"></td>
+                            <td><input style="width: 35px;" type="" name=""  [(ngModel)]="it.cantidadAgregar" (blur)="dispara(it.cantidad,it.cantidadAgregar,i)"></td>
                             <td>{{it.nombre}}</td>
                             <td><input style="width: 55px;" type="" name=""  [(ngModel)]="it.precio"></td>
                             <td><input style="width: 55px;" type="" name=""  [(ngModel)]="it.remito"></td>

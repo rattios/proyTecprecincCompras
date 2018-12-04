@@ -75,6 +75,10 @@ export class compras_recepcionComponent {
                   this.proveedores[i].estado2='En proceso';
                 }else if(this.proveedores[i].estado==2) {
                   this.proveedores[i].estado2='Recibido';
+                }else if(this.proveedores[i].estado==3) {
+                  this.proveedores[i].estado2='Finalizada';
+                }else if(this.proveedores[i].estado==4) {
+                  this.proveedores[i].estado2='Cancelada';
                 }
               }
               this.productList = this.proveedores;
@@ -86,6 +90,25 @@ export class compras_recepcionComponent {
              console.log(msg);
              this.loading=false;
            });
+  }
+
+  dispara(cantidad,cantidadAgregar,index){
+    console.log(cantidad);
+    console.log(cantidadAgregar);
+    console.log(index);
+    if(parseInt(cantidad)<parseInt(cantidadAgregar)||parseInt(cantidadAgregar)<=0) {
+      alert('La cantidad que agregas no puede ser menor que cero ni mayor a la cantidad solicitada');
+      this.aCargar[index].cantidadAgregar=1;
+    }
+    var ingresados:any=0;
+    for (var i = 0; i < this.ingresos.length; i++) {
+      ingresados+=parseInt(this.ingresos[i].cantidadAgregar);
+    }
+    console.log('ingresados: '+ingresados);
+    if((parseInt(ingresados)+parseInt(cantidadAgregar))>parseInt(cantidad)) {
+      alert('No puedes ingresar más productos que la cantidad solicitada');
+      this.aCargar[index].cantidadAgregar=1;
+    }
   }
 
   buscar(){
@@ -280,6 +303,27 @@ export class compras_recepcionComponent {
   finalizar(enviado){
     var send={
       estado:2,
+      productos:enviado.productos,
+      obs_recepcion:this.obs_recepcion
+    }
+    this.http.put(this.ruta.get_ruta()+'compra/'+enviado.id,send)
+         .toPromise()
+         .then(
+         data => {
+            
+            console.log(data);
+            this.ngOnInit();
+            this.verDatos=false;
+            alert('Éxito!');
+          },
+         msg => { 
+           console.log(msg);
+           this.loading=false;
+         }); 
+  }
+  cancelar(enviado){
+    var send={
+      estado:4,
       productos:enviado.productos,
       obs_recepcion:this.obs_recepcion
     }
