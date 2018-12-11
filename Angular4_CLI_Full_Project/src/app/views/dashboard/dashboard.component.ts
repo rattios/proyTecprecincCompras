@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
   public lineChartType = 'line';
 
 
-  constructor(private http: HttpClient, private ruta: RutaService) { }
+  constructor(private http: HttpClient, private ruta: RutaService, private router: Router) { }
 
 
   ngOnInit(): void {
@@ -86,6 +86,26 @@ export class DashboardComponent implements OnInit {
       this.mainChartData2.push(this.random(80, 100));
       this.mainChartData3.push(65);
     }
+
+    this.http.get(this.ruta.get_ruta()+'login/check?token='+localStorage.getItem('tecprecinc_token'))
+         .toPromise()
+         .then(
+         data => {
+           
+           console.log(data);
+           var usr:any='';
+           usr=data;
+           if(usr.rol!=0) {
+             this.router.navigate(['pages/login'], {});
+             alert('Usuario no autorizado.');
+           }
+          },
+         msg => { 
+           console.log(msg);
+           this.router.navigate(['pages/login'], {});
+           //this.loading=false;
+           alert('Usuario no autorizado.');
+         });
 
     this.http.get(this.ruta.get_ruta()+'dashboard')
          .toPromise()

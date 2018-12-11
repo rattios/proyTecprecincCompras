@@ -34,7 +34,12 @@ class LoginController extends Controller
 
         return 1;
     }
-    
+
+    public function check(Request $request)
+    {
+        $currentUser = JWTAuth::parseToken()->authenticate(); 
+        return $currentUser; 
+    }
 
     public function loginWeb(Request $request)
     {

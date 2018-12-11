@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
@@ -19,8 +20,26 @@ export class canceladosComponent {
   public proveedor: any='';
   public loading=true;
   public verInfo=false;
-  constructor(private http: HttpClient, private ruta: RutaService) {
-
+  constructor(private http: HttpClient, private ruta: RutaService, private router: Router) {
+    this.http.get(this.ruta.get_ruta()+'login/check?token='+localStorage.getItem('tecprecinc_token'))
+         .toPromise()
+         .then(
+         data => {
+           
+           console.log(data);
+           var usr:any='';
+           usr=data;
+           if(usr.rol!=0) {
+             this.router.navigate(['pages/login'], {});
+             alert('Usuario no autorizado.');
+           }
+          },
+         msg => { 
+           console.log(msg);
+           this.router.navigate(['pages/login'], {});
+           //this.loading=false;
+           alert('Usuario no autorizado.');
+         });
   }
 
    ngOnInit(): void {

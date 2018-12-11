@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
+import { Router } from '@angular/router';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../../services/ruta.service';
@@ -15,8 +16,18 @@ export class transferenciasPuraComponent {
   public proveedor: any='';
   public loading=true;
   public verInfo=false;
-  constructor(private http: HttpClient, private ruta: RutaService) {
-
+  constructor(private http: HttpClient, private ruta: RutaService, private router: Router) {
+    this.http.get(this.ruta.get_ruta()+'login/check?token='+localStorage.getItem('tecprecinc_token'))
+         .toPromise()
+         .then(
+         data => {
+           console.log(data);
+          },
+         msg => { 
+           console.log(msg);
+           this.router.navigate(['pages/login'], {});
+           //this.loading=false;
+         });
   }
 
    ngOnInit(): void {

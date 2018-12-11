@@ -1,4 +1,5 @@
 import { Component, OnInit, Input,Pipe, PipeTransform } from '@angular/core';
+import { Router } from '@angular/router';
 import {CommonModule, NgClass, DatePipe } from '@angular/common';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
@@ -8,6 +9,9 @@ import {MatDatepicker} from '@angular/material/datepicker';
 import {DateAdapter} from '@angular/material';
 import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
 import { SharedService } from './shared.service';
+
+import * as moment from 'moment';
+
 
 @Component({
   templateUrl: 'compras_recepcion.component.html'
@@ -42,26 +46,47 @@ export class compras_recepcionComponent {
   public inicioD2:any=new Date();
   public finD2:any=new Date();
 
-  constructor(private http: HttpClient, private ruta: RutaService,private sharedService: SharedService) {
+  constructor(private http: HttpClient, private ruta: RutaService,private sharedService: SharedService, private router: Router) {
     this.sharedService.cartData.subscribe(
           (data: any) => {
             this.showPicking=true;
             console.log('volvio a entrar entro');
           });
+
+
+    this.http.get(this.ruta.get_ruta()+'login/check?token='+localStorage.getItem('tecprecinc_token'))
+         .toPromise()
+         .then(
+         data => {
+           
+           console.log(data);
+           var usr:any='';
+           usr=data;
+           if(usr.rol!=0) {
+             this.router.navigate(['pages/login'], {});
+             alert('Usuario no autorizado.');
+           }
+          },
+         msg => { 
+           console.log(msg);
+           this.router.navigate(['pages/login'], {});
+           //this.loading=false;
+           alert('Usuario no autorizado.');
+         });
   }
 
   ngOnInit(): void {
-    var principio:any= new Date();
-    var mes:any=principio.getMonth()+1; 
-    var anio:any=principio.getYear()+1900;
-    principio=mes+"-01-"+anio;
-    principio=new Date(principio);
-    this.inicioD2=principio;
-    console.log(principio);
-    var datePipe = new DatePipe("en-US");
-    console.log(datePipe.transform(new Date(), 'dd-MM-yyyy'));
+    //var principio:any= new Date();
+    //var mes:any=principio.getMonth()+1; 
+    //var anio:any=principio.getYear()+1900;
+    //principio=mes+"-01-"+anio;
+    //principio=new Date(principio);
+    //this.inicioD2=principio;
+    //console.log(principio);
+    //var datePipe = new DatePipe("en-US");
+    //console.log(datePipe.transform(new Date(), 'dd-MM-yyyy'));
     this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'compra?inicio='+datePipe.transform(principio, 'dd-MM-yyyy')+'&fin='+datePipe.transform(new Date(), 'dd-MM-yyyy'))
+      this.http.get(this.ruta.get_ruta()+'compra?inicio='+moment().format("DD-MM-YYYY")+'&fin='+moment().format("DD-MM-YYYY"))
            .toPromise()
            .then(
            data => {
@@ -121,6 +146,19 @@ export class compras_recepcionComponent {
            this.prov=data;
             this.proveedores=this.prov.compra;
             console.log(this.proveedores);
+            for (var i = 0; i < this.proveedores.length; i++) {
+                if(this.proveedores[i].estado==0) {
+                  this.proveedores[i].estado2='Enviado';
+                }else if(this.proveedores[i].estado==1) {
+                  this.proveedores[i].estado2='En proceso';
+                }else if(this.proveedores[i].estado==2) {
+                  this.proveedores[i].estado2='Recibido';
+                }else if(this.proveedores[i].estado==3) {
+                  this.proveedores[i].estado2='Finalizada';
+                }else if(this.proveedores[i].estado==4) {
+                  this.proveedores[i].estado2='Cancelada';
+                }
+              }
             this.productList = this.proveedores;
             this.filteredItems = this.productList;
             this.init();

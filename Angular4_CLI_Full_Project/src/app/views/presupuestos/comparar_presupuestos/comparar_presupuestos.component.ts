@@ -7,6 +7,7 @@ import { RutaService } from '../../../services/ruta.service';
 import {MatDatepicker} from '@angular/material/datepicker';
 import {DateAdapter} from '@angular/material';
 import { DatepickerOptions } from 'ng2-datepicker';
+import * as moment from 'moment';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class comparar_presupuestosComponent {
   public loading2=true;
   public observaciones:any='';
   public vigencia:any=new Date();
-  public fechaMinuta:any=new Date();
+  public fechaMinuta:any=moment().format("DD-MM-YYYY");
   public proveedor: any={
           calificacion:null,
           cuit:"",
@@ -48,21 +49,27 @@ export class comparar_presupuestosComponent {
   public productoCompara:any=[];
 
   constructor(private http: HttpClient, private ruta: RutaService, public zone: NgZone) {
-
+    console.log(moment().format("DD-MM-YYYY"));
+    console.log(moment().format('MM'));
+    console.log(moment().format('YYYY'));
   }
 
   ngOnInit(): void {
-    var principio:any= new Date();
-    var mes:any=principio.getMonth()+1; 
-    var anio:any=principio.getYear()+1900;
-    principio=mes+"-01-"+anio;
-    principio=new Date(principio);
-    this.inicioD2=principio;
+    var principio:any= moment().format("DD-MM-YYYY");
+    var mes:any=moment().format('MM'); 
+    var anio:any=moment().format('YYYY');
+    principio="01-"+moment().format('MM')+"-"+moment().format('YYYY');
     console.log(principio);
-    var datePipe = new DatePipe("en-US");
-    console.log(datePipe.transform(new Date(), 'dd-MM-yyyy'));
+    //var principio2=principio;
+    //principio=moment(principio).toDate();
+
+    this.inicioD2=moment().format("DD-MM-YYYY");
+   // console.log(moment(principio2).format("DD-MM-YYYY"));
+    //var datePipe = new DatePipe("en-US");
+    //console.log(datePipe.transform(moment().format("DD-MM-YYYY"), 'dd-MM-yyyy'));
     this.loading=true;
-      this.http.get(this.ruta.get_ruta()+'presupuesto?inicio='+datePipe.transform(principio, 'dd-MM-yyyy')+'&fin='+datePipe.transform(new Date(), 'dd-MM-yyyy'))
+      //this.http.get(this.ruta.get_ruta()+'presupuesto?inicio='+datePipe.transform(principio, 'dd-MM-yyyy')+'&fin='+datePipe.transform(moment().format("DD-MM-YYYY"), 'dd-MM-yyyy'))
+        this.http.get(this.ruta.get_ruta()+'presupuesto?inicio='+moment().format("DD-MM-YYYY")+'&fin='+moment().format("DD-MM-YYYY"))
            .toPromise()
            .then(
            data => {
@@ -221,7 +228,7 @@ export class comparar_presupuestosComponent {
     for (var i = 0; i < this.presupuestosCompara.length; i++) {
       nombre_proveedores+=','+this.presupuestosCompara[i].nombre+' ';
     }
-    popupWin.document.title = 'Minuta: '+ nombre_proveedores;
+    popupWin.document.title = 'Minuta: '+ nombre_proveedores+' del '+ this.fechaMinuta;
     popupWin.document.close();
   }
 

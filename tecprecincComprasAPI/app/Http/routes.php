@@ -20,6 +20,7 @@ Route::group(  ['middleware' =>'cors'], function(){
 
     //----Pruebas LoginController
     Route::post('/login/web','LoginController@loginWeb');
+    Route::get('/login/check','LoginController@check');
     //Route::post('/login/app','LoginController@loginApp');
     //Route::post('/validar/token','LoginController@validarToken'); 
 

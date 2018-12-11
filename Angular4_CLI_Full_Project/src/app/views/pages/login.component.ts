@@ -50,7 +50,7 @@ export class LoginComponent {
           msg => { // Error
           	console.log(msg);
             this.loading=false;
-          	//alert(JSON.stringify(msg));
+          	alert('Error al iniciar sesión');
           }
         );
 		//

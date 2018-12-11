@@ -23,7 +23,7 @@ export class infoComponent {
   public permisos_departs:any=[];
   public isCrear=false;
   constructor(private http: HttpClient, private ruta: RutaService, private parent: stockComponent) {
-
+    
   }
 
    ngOnInit(): void {
