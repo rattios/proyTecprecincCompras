@@ -19,7 +19,7 @@ class PedidoController extends Controller
     public function index()
     {
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::with('solicitud')->with('centro_costos')->with('contratos')->with('usuario.departamento')->get();
+        $pedidos = \App\Pedido::with('solicitud')->with('centro_costos')->with('contratos')->with('usuario.departamento')->orderBy('id', 'desc')->get();
 
 
         if(count($pedidos) == 0){
@@ -56,7 +56,7 @@ class PedidoController extends Controller
         //cargar todos los pedidos
         if ($usuario->rol==1 || $usuario->rol==0) {
             $departamento=$usuario->departamento_id;
-            $pedidos = \App\Pedido::where('estado', 0)->where('aprobar', 0)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
+            $pedidos = \App\Pedido::where('estado', 0)->where('aprobar', 0)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->orderBy('id', 'desc')->get();
             $auxPedidos=[];
             for ($i=0; $i < count($pedidos); $i++) { 
                 if ($pedidos[$i]->usuario->departamento->id==$departamento) {
@@ -97,7 +97,7 @@ class PedidoController extends Controller
     public function index0()
     {
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::where('estado', 0)->where('aprobar', 1)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
+        $pedidos = \App\Pedido::where('estado', 0)->where('aprobar', 1)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->orderBy('id', 'desc')->get();
 
 
         if(count($pedidos) == 0){
@@ -129,7 +129,7 @@ class PedidoController extends Controller
     public function index1()
     {
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::where('estado', 1)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
+        $pedidos = \App\Pedido::where('estado', 1)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->orderBy('id', 'desc')->get();
 
 
         if(count($pedidos) == 0){
@@ -200,7 +200,7 @@ class PedidoController extends Controller
     public function index4()
     {
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::where('estado', 4)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
+        $pedidos = \App\Pedido::where('estado', 4)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->orderBy('id', 'desc')->get();
 
 
         if(count($pedidos) == 0){
@@ -238,7 +238,7 @@ class PedidoController extends Controller
     {
 
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::where('usuario_id',$id)->with('solicitud')->with('usuario.departamento')->get();
+        $pedidos = \App\Pedido::where('usuario_id',$id)->with('solicitud')->with('usuario.departamento')->orderBy('id', 'desc')->get();
         $usuario = \App\User::where('id',$id)->with('departamento')->get();
         
         $transferencias = \App\Transferencia::where('departamento_id',$usuario[0]->departamento->id)->with('departamento')/*->with('stockDep')*/->with('stockCentral')->get();

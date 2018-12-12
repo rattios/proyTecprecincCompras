@@ -25,19 +25,20 @@
               </div>
               <table class="table table-striped">
                 <thead>
+                  <th>Código</th>
                   <th [hidden]="rolActual!=0">stock</th>
                   <th>nombre</th>
                   
-                  <th>Código</th>
+                  
                   <th></th>
                 </thead>
                 <tbody>
                    <tr *ngFor="let item of items">
-                      
+                      <td>{{item.codigo}}</td>
                       <td [hidden]="rolActual!=0">{{item.stock}}</td>
+
                       <td>{{item.nombre}}</td>
                       
-                      <td>{{item.codigo}}</td>
                       <td><button type="button" class="btn btn-success" (click)=setProductos(item)>Agregar</button></td>
                    </tr>
                 </tbody>
@@ -74,7 +75,7 @@
               <table class="table table-sm">
                 <thead>
                   <tr>
-                    <th>Cantidad</th>
+                    <th style="width: 90px">Cantidad</th>
                     <th>Nombre</th>
                     <th>Código</th>
                     <!--th>Centro de costos</th-->
@@ -83,7 +84,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of productosSeleccionados"> 
-                      <td><input type="number" min="1" class="form-control" id="cantidad" [(ngModel)]="item.cantidad"></td>
+                      <td style="width: 90px"><input type="number" min="1" class="form-control" id="cantidad" [(ngModel)]="item.cantidad"></td>
                       <td>{{item.nombre}}</td>
                       <td>{{item.codigo}}</td>
                       <!--td>

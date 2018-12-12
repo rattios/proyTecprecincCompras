@@ -125,7 +125,7 @@
                           <tr *ngFor="let it of enviado.productos">
                             <td>{{it.cantidad}}</td>
                             <td>{{it.nombre}}</td>
-                            <td>{{it.precio}}</td>
+                            <td>{{it.precio | number : '1.2-2'}}</td>
                             <!--td><div *ngIf="enviado.estado!=2"><input type="" name="" *ngIf="it.entregado==0" [(ngModel)]="it.factura"></div><p *ngIf="it.entregado!=0">{{it.factura}}</p></td>
                             <td><div *ngIf="enviado.estado!=2"--> <!--button type="button" class="btn btn-success" *ngIf="it.entregado==0" (click)="addInventario(it.id,it.cantidad,enviado.id,enviado)">Cargar al inventario</button-->
                             <td>
@@ -224,7 +224,7 @@
                             <td style="width: 35px;">{{it.cantidad}}</td>
                             <td>{{it.cantidadAgregar}}</td>
                             <td>{{it.nombre}}</td>
-                            <td>{{it.precio}}</td>
+                            <td>{{it.precio | number : '1.2-2'}}</td>
                             <td>{{it.remito}}</td>
                             <td>{{it.factura}}</td>
                             

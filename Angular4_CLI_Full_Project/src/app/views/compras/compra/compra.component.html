@@ -188,8 +188,8 @@
                         <tr *ngFor="let it of enviado.productos">
                           <td>{{it.cantidad}}</td>
                           <td>{{it.nombre}}</td>
-                          <td>{{it.precio}}</td>
-                          <td>{{it.totales}}</td>
+                          <td>{{it.precio | number : '1.2-2'}}</td>
+                          <td>{{it.totales | number : '1.2-2'}}</td>
                         </tr>
                     </tbody>
                   </table>
