@@ -29,7 +29,7 @@ export class aprobarComponent {
            console.log(data);
            var usr:any='';
            usr=data;
-           if(usr.rol!=0) {
+           if(usr.rol!=0 && usr.rol!=1) {
              this.router.navigate(['pages/login'], {});
              alert('Usuario no autorizado.');
            }

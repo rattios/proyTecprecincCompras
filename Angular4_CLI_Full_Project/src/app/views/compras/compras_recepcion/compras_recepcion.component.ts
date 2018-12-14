@@ -252,21 +252,26 @@ export class compras_recepcionComponent {
   cargarIngreso(item,id,cantidad,pedido_id,pedido){
     console.log(item);
     console.log(pedido);
-    for (var i = 0; i < this.aCargar.length; i++) {
-      if(this.aCargar[i].id==id) {
-        this.aCargar[i].ingresos.push({
-          cantidad:item.cantidad,
-          cantidadAgregar:item.cantidadAgregar,
-          nombre:item.nombre,
-          precio:item.precio,
-          remito:item.remito,
-          factura:item.factura,
-        });
-        console.log(parseInt(item.cantidadAgregar));
-        this.addInventario(id,parseInt(item.cantidadAgregar),pedido_id,pedido);
+    if(item.remito!='' || item.factura!=''){
+        for (var i = 0; i < this.aCargar.length; i++) {
+          if(this.aCargar[i].id==id) {
+            this.aCargar[i].ingresos.push({
+              cantidad:item.cantidad,
+              cantidadAgregar:item.cantidadAgregar,
+              nombre:item.nombre,
+              precio:item.precio,
+              remito:item.remito,
+              factura:item.factura,
+            });
+            console.log(parseInt(item.cantidadAgregar));
+            this.addInventario(id,parseInt(item.cantidadAgregar),pedido_id,pedido);
+          }
+        }
+        console.log(this.aCargar);
+    } else{
+        alert('El remito o factura no puedo ser vacio');
       }
-    }
-    console.log(this.aCargar);
+    
   }
 
   ocultar(){

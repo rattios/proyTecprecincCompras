@@ -17,7 +17,7 @@
               <div class="row">
 
                 <div class="col-sm-5" style="text-align: center">
-                  <label class="labels" style="font-size: 18px; font-weight: bold">Inicio: </label>
+                  <label class="labels" style="font-size: 18px; font-weight: bold">s: </label>
                   <input matInput [matDatepicker]="inicio2" placeholder="Choose a date" [(ngModel)]="inicioD2">
                   <mat-datepicker-toggle matSuffix [for]="inicio2"></mat-datepicker-toggle>
                   <mat-datepicker #inicio2></mat-datepicker>
@@ -238,7 +238,8 @@
                   <div class="col-lg-4">
                     <div class="form-group" style="">
                       <label>Vigencia</label>
-                      <ng-datepicker [(ngModel)]="enviado.vigencia" [position]="'top-left'" [options]="options" style="z-index: 999;width: 100%;"> </ng-datepicker>
+                      <!--ng-datepicker [(ngModel)]="enviado.vigencia" [position]="'top-left'" [options]="options" style="z-index: 999;width: 100%;"> </ng-datepicker-->
+                      {{enviado.vigencia | date:'dd-MM-yyyy'}}
                     </div>
                   </div>
                 </div>
@@ -257,11 +258,11 @@
                       </thead>
                       <tbody>
                           <tr *ngFor="let it of enviado.productos">
-                            <td><input type="text" class="form-control" id="precio" placeholder="" [(ngModel)]="it.cantidad"></td>
+                            <td><input type="text" class="form-control" id="cantidad" placeholder="" [(ngModel)]="it.cantidad" (blur)="recalculo()"></td>
                             <td>{{it.codigo}}</td>
                             <td>{{it.nombre}}</td>
-                            <td><input type="text" class="form-control" id="precio" placeholder="" [(ngModel)]="it.precio"></td>
-                            <td><input type="text" class="form-control" id="precio" placeholder="" [(ngModel)]="it.totales"></td>
+                            <td><input type="text" class="form-control" id="precio" placeholder="" [(ngModel)]="it.precio" (blur)="recalculo()"></td>
+                            <td><!--input type="text" class="form-control" id="precio" placeholder="" [(ngModel)]="it.totales" -->{{it.totales}}</td>
                           </tr>
                       </tbody>
                     </table>

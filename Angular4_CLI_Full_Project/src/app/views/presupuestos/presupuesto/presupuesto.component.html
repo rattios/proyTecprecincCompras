@@ -79,7 +79,12 @@
                 <div class="col-lg-4">
                   <div class="form-group" style="">
                     <label>Vigencia</label>
-                    <ng-datepicker [(ngModel)]="vigencia" [position]="'top-left'" [options]="options" style="z-index: 999;width: 100%;"> </ng-datepicker>
+                    <!--ng-datepicker [(ngModel)]="vigencia" [position]="'top-left'" [options]="options" style="z-index: 999;width: 100%;"> </ng-datepicker-->
+                    <div class="col-sm-5" style="text-align: center">
+                      <input matInput [matDatepicker]="inicio2" placeholder="Choose a date" [(ngModel)]="vigencia">
+                      <mat-datepicker-toggle matSuffix [for]="inicio2"></mat-datepicker-toggle>
+                      <mat-datepicker #inicio2></mat-datepicker>
+                    </div>
                   </div>
                 </div>
               </div>

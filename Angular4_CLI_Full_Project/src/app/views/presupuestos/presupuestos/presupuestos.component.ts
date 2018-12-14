@@ -127,6 +127,21 @@ export class presupuestosComponent {
     this.enviado=item;
     this.verDatos=true;
   }
+  recalculo(){
+    for (var i = 0; i < this.proveedores.length; i++) {
+      if(this.proveedores[i].estado==0) {
+        this.proveedores[i].estado2='Generado';
+      }else if(this.proveedores[i].estado==1) {
+        this.proveedores[i].estado2='Recibido';
+      }else if(this.proveedores[i].estado==2) {
+        this.proveedores[i].estado2='Cancelado';
+      }
+
+      for (var j = 0; j < this.proveedores[i].productos.length; ++j) {
+        this.proveedores[i].productos[j].totales=parseInt(this.proveedores[i].productos[j].cantidad)*this.proveedores[i].productos[j].precio;
+      }
+    }
+  }
   volver(){
     this.enviado={
       proveedor:{
