@@ -16,6 +16,7 @@ import { presupuestosRoutingModule } from './presupuestos-routing.module';
 import { presupuestoComponent } from './presupuesto/presupuesto.component';
 import { presupuestosComponent } from './presupuestos/presupuestos.component';
 import { comparar_presupuestosComponent } from './comparar_presupuestos/comparar_presupuestos.component';
+import { minutasComponent } from './minutas/minutas.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { comparar_presupuestosComponent } from './comparar_presupuestos/comparar
 
     presupuestoComponent,
     presupuestosComponent,
-    comparar_presupuestosComponent
+    comparar_presupuestosComponent,
+    minutasComponent
 
     ],
     providers: [

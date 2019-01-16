@@ -24,6 +24,7 @@
                 <thead>
                   <th>Nombre</th>
                   <th>Stock principal</th>
+                  <th>Stock mínimo</th>
                   <th>Precio</th>
                   <th>Código</th>
                   <th></th>
@@ -33,6 +34,7 @@
                       
                         <td>{{item.nombre}}</td>
                         <td><p [ngStyle]="{ 'background-color': 'red'}" *ngIf="item.stock2<=item.stock2_min">{{item.stock2}}</p><p *ngIf="item.stock2>item.stock2_min">{{item.stock2}}</p></td>
+                        <td>{{item.stock_min}}</td>
                         <td>{{item.codigo}}</td>
                         <td>{{item.precio}}</td>
                         <td>{{item.codigo}}</td>

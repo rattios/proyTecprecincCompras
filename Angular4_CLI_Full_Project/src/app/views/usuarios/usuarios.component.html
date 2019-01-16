@@ -76,13 +76,13 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="name">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="" [(ngModel)]="proveedor.nombre" [disabled]="true">
+                    <input type="text" class="form-control" id="nombre" placeholder="" [(ngModel)]="proveedor.nombre" [disabled]="!crear">
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="ccnumber">Apellido</label>
-                    <input type="text" class="form-control" id="apellido" placeholder="" [(ngModel)]="proveedor.apellido" [disabled]="true">
+                    <input type="text" class="form-control" id="apellido" placeholder="" [(ngModel)]="proveedor.apellido" [disabled]="!crear">
                   </div>
                 </div>
               </div><!--/.row-->
@@ -90,7 +90,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="name">Usuario</label>
-                    <input type="text" class="form-control" id="Usuario" placeholder="" [(ngModel)]="proveedor.user" (blur)="user()" [disabled]="true">
+                    <input type="text" class="form-control" id="Usuario" placeholder="" [(ngModel)]="proveedor.user" (blur)="user()" [disabled]="!crear">
                   </div>
                 </div>
                 <div class="col-sm-4" >

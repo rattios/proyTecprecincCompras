@@ -11,9 +11,9 @@ import * as moment from 'moment';
 
 
 @Component({
-  templateUrl: 'comparar_presupuestos.component.html'
+  templateUrl: 'minutas.component.html'
 })
-export class comparar_presupuestosComponent {
+export class minutasComponent {
   public prov: any;
   public stock: any;
   public proveedores: any;
@@ -55,6 +55,7 @@ export class comparar_presupuestosComponent {
   }
 
   ngOnInit(): void {
+    this.loading=false;
     var principio:any= moment().format("DD-MM-YYYY");
     var mes:any=moment().format('MM'); 
     var anio:any=moment().format('YYYY');
@@ -64,42 +65,7 @@ export class comparar_presupuestosComponent {
     //principio=moment(principio).toDate();
 
     this.inicioD2=moment().format("DD-MM-YYYY");
-   // console.log(moment(principio2).format("DD-MM-YYYY"));
-    //var datePipe = new DatePipe("en-US");
-    //console.log(datePipe.transform(moment().format("DD-MM-YYYY"), 'dd-MM-yyyy'));
-    this.loading=true;
-      //this.http.get(this.ruta.get_ruta()+'presupuesto?inicio='+datePipe.transform(principio, 'dd-MM-yyyy')+'&fin='+datePipe.transform(moment().format("DD-MM-YYYY"), 'dd-MM-yyyy'))
-        this.http.get(this.ruta.get_ruta()+'presupuesto?inicio='+moment().format("DD-MM-YYYY")+'&fin='+moment().format("DD-MM-YYYY"))
-           .toPromise()
-           .then(
-           data => {
-             this.prov=data;
-              this.proveedores=this.prov.presupuesto;
-              var preprov:any=[];
-              console.log(this.proveedores);
-              for (var i = 0; i < this.proveedores.length; i++) {
-                if(this.proveedores[i].estado==0) {
-                  this.proveedores[i].estado2='Generado';
-                }else if(this.proveedores[i].estado==1) {
-                  this.proveedores[i].estado2='Recibido';
-                  preprov.push(this.proveedores[i]);
-                }else if(this.proveedores[i].estado==2) {
-                  this.proveedores[i].estado2='Cancelado';
-                }
-
-                for (var j = 0; j < this.proveedores[i].productos.length; ++j) {
-                  this.proveedores[i].productos[j].totales=parseInt(this.proveedores[i].productos[j].cantidad)*this.proveedores[i].productos[j].precio;
-                }
-              }
-              this.productList = preprov;
-              this.filteredItems = this.productList;
-              this.init();
-              this.loading=false;
-            },
-           msg => { 
-             console.log(msg);
-             this.loading=false;
-           });
+   
   }
 
   comparar(item){
@@ -263,6 +229,7 @@ export class comparar_presupuestosComponent {
       this.presupuestosCompara=[];
       this.productoCompara=[];
       this.observaciones='';
+      this.minutaID='';
      }, 3000);
     
   }
@@ -307,13 +274,24 @@ export class comparar_presupuestosComponent {
   buscar(){
     //this.loading=true;
     var datePipe = new DatePipe("en-US");
-    this.http.get(this.ruta.get_ruta()+'presupuesto?inicio='+datePipe.transform(this.inicioD2, 'dd-MM-yyyy')+'&fin='+datePipe.transform(this.finD2, 'dd-MM-yyyy'))
+    this.http.get(this.ruta.get_ruta()+'minutas?inicio='+datePipe.transform(this.inicioD2, 'dd-MM-yyyy')+'&fin='+datePipe.transform(this.finD2, 'dd-MM-yyyy'))
          .toPromise()
          .then(
          data => {
            this.prov=data;
             this.proveedores=this.prov.presupuesto;
             console.log(this.proveedores);
+            for(var i = 0; i < this.proveedores.length; i++) {
+                this.proveedores[i].proveedores=JSON.parse(this.proveedores[i].proveedores);
+                //this.proveedores[i].productos=JSON.parse(this.proveedores[i].productos);
+              }
+            for(var i = 0; i < this.proveedores.length; i++) {
+              this.proveedores[i].nombres='';
+              for(var j = 0; j < this.proveedores[i].proveedores.length; j++){
+                this.proveedores[i].nombres+=this.proveedores[i].proveedores[j].nombre+', ';
+              }
+            }
+
             this.productList = this.proveedores;
             this.filteredItems = this.productList;
             this.init();
@@ -339,9 +317,13 @@ export class comparar_presupuestosComponent {
       observaciones:''
     };
   public verDatos=false;
+  public minutaID:any;
   ver(item){
-    this.enviado=item;
-    this.verDatos=true;
+    this.minutaID=item.id;
+    this.presupuestosCompara=item.proveedores;
+    this.productoCompara=item.productos;
+    this.observaciones=item.observaciones;
+    //this.verDatos=true;
   }
   volver(){
     this.enviado={
@@ -472,6 +454,7 @@ export class comparar_presupuestosComponent {
    inputName : string = '';
 
    init(){
+     console.log(this.productList);
          this.currentIndex = 1;
          this.pageStart = 1;
          this.pages = 4;
@@ -491,6 +474,7 @@ export class comparar_presupuestosComponent {
    FilterByName(){
       this.filteredItems = [];
       if(this.inputName != ""){
+
             for (var i = 0; i < this.productList.length; ++i) {
 
               if (this.productList[i].razon_social.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
@@ -503,12 +487,6 @@ export class comparar_presupuestosComponent {
                  this.filteredItems.push(this.productList[i]);
               }
             }
-
-            // this.productList.forEach(element => {
-            //     if(element.nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0){
-            //       this.filteredItems.push(element);
-            //    }
-            // });
       }else{
          this.filteredItems = this.productList;
       }
@@ -525,6 +503,7 @@ export class comparar_presupuestosComponent {
  refreshItems(){
                this.items = this.filteredItems.slice((this.currentIndex - 1)*this.pageSize, (this.currentIndex) * this.pageSize);
                this.pagesIndex =  this.fillArray();
+               console.log(this.items);
    }
    prevPage(){
       if(this.currentIndex>1){

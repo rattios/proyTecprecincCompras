@@ -24,6 +24,7 @@
                 <thead>
                   <th>Nombre</th>
                   <th>Stock principal</th>
+                  <th>Stock mínimo</th>
                   <th>Precio</th>
                   <th>Código</th>
                   <th></th>
@@ -33,6 +34,7 @@
                       
                       <td>{{item.nombre}}</td>
                       <td><p [ngStyle]="{ 'background-color': 'red'}" *ngIf="item.stock<=item.stock_min">{{item.stock}}</p><p *ngIf="item.stock>item.stock_min">{{item.stock}}</p></td>
+                      <td>{{item.stock_min}}</td>
                       <td>{{item.precio}}</td>
                       <td>{{item.codigo}}</td>
                       <td><button type="button" class="btn btn-success" (click)=ver(item)>Ir</button></td>

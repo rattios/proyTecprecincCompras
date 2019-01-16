@@ -199,6 +199,12 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::delete('/compra/{id}','CompraController@destroy');
         Route::get('/compra/{id}','CompraController@show');
 
+        Route::get('/minutas','MinutasController@index');
+        Route::post('/minutas','MinutasController@store'); 
+        Route::put('/minutas/{id}','MinutasController@update');
+        Route::delete('/minutas/{id}','MinutasController@destroy');
+        Route::get('/minutas/{id}','MinutasController@show');
+
         Route::post('/add_inventario/{id}','CompraController@add'); 
     Route::group(['middleware' => 'jwt-auth'], function(){
 
