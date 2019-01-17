@@ -200,9 +200,9 @@
                             <td><input style="width: 35px;" type="" name=""  [(ngModel)]="it.cantidadAgregar" (blur)="dispara(it.cantidad,it.cantidadAgregar,i)"></td>
                             <td>{{it.nombre}}</td>
                             <td><input style="width: 55px;" type="" name=""  [(ngModel)]="it.precio"></td>
-                            <td><input style="width: 55px;" type="" name=""  [(ngModel)]="it.remito"></td>
-                            <td><input style="width: 55px;" type="" name=""  [(ngModel)]="it.factura"></td>
-                            <td><div> 
+                            <td><input style="width: 55px;" type="" name=""  [(ngModel)]="it.remito" (blur)="deted(it.remito,it.factura)"></td>
+                            <td><input style="width: 55px;" type="" name=""  [(ngModel)]="it.factura" (blur)="deted(it.remito,it.factura)"></td>
+                            <td><div *ngIf="boton"> 
                               <button  type="button" class="btn btn-success" (click)="cargarIngreso(it,it.id,it.cantidad,enviado.id,enviado)" *ngIf="showCargar">Ingresar al inventario</button>
                             </div></td>
                           </tr>

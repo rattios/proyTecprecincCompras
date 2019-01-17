@@ -24,6 +24,7 @@ export class compras_recepcionComponent {
   public productos: any;
   public loading=true;
   public loading2=true;
+  public boton=false;
   public obs_recepcion: any;
   public proveedor: any={
           calificacion:null,
@@ -115,6 +116,16 @@ export class compras_recepcionComponent {
              console.log(msg);
              this.loading=false;
            });
+  }
+
+  deted(remito,factura){
+    console.log(remito);
+    console.log(factura);
+    if(remito!='' || factura!='') {
+      this.boton=true;
+    }else if(remito=='' && factura==''){
+      this.boton=false;
+    }
   }
 
   dispara(cantidad,cantidadAgregar,index){
