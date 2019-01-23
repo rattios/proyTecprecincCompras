@@ -27,6 +27,8 @@ export class infoComponent {
   }
   
 
+   public cc:any;
+
    ngOnInit(): void {
       console.log(this.informacion);
       for (var i = 0; i < this.informacion.solicitud.length; i++) {
@@ -37,6 +39,33 @@ export class infoComponent {
       if(this.informacion!=undefined) {
        
       }
+      this.http.get(this.ruta.get_ruta()+'centro_costos')
+           .toPromise()
+           .then(
+           data => {
+             this.cc=data;
+               this.cc=this.cc.CentroCostos;
+              console.log(this.cc);
+            },
+           msg => { 
+             console.log(msg);
+             this.http.get(this.ruta.get_ruta()+'centro_costos')
+               .toPromise()
+               .then(
+               data => {
+                 this.cc=data;
+                   this.cc=this.cc.CentroCostos;
+                  console.log(this.cc);
+                },
+               msg => { 
+                 console.log(msg);
+               });
+           });
+    }
+
+    ccc(centro_costo_id) {
+      console.log(centro_costo_id.target.value);
+      console.log(this.informacion);
     }
 
     public aPicking:any;
@@ -92,31 +121,63 @@ export class infoComponent {
     cerrar2(){
       console.log(this.largeModal2);
     }
-
+    public success=false;
+    public fail=false;
     editar_observacion(id){
       console.log(id);
       console.log(this.informacion.observaciones);
       var enviar={
-        observaciones:this.informacion.observaciones
+        observaciones:this.informacion.observaciones,
+        centro_costos_id:this.informacion.centro_costos_id
       }
       this.http.put(this.ruta.get_ruta()+'editar_observacion/'+id,enviar)
            .toPromise()
            .then(
            data => {
              console.log(data);
-
-              /*this.success=true;
+             alert('¡Se guardaron los cambios con éxito!');
+              this.success=true;
               setTimeout(() => {  
                 this.success=false;
-              }, 4000);*/
+              }, 4000);
 
             },
            msg => { 
              console.log(msg);
-             /*this.fail=true;
+             alert('¡Falló al guardar los cambios!');
+             this.fail=true;
               setTimeout(() => {  
                 this.fail=false;
-              }, 4000);*/
+              }, 4000);
+             
+           });
+    }
+
+    editar_cc(id){
+      console.log(id);
+      console.log(this.informacion.solicitud);
+      var enviar={
+        solicitud:JSON.stringify(this.informacion.solicitud)
+      }
+      this.http.put(this.ruta.get_ruta()+'editar_cc/'+id,enviar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+             alert('¡Se guardaron los cambios con éxito!');
+              this.success=true;
+              setTimeout(() => {  
+                this.success=false;
+              }, 4000);
+
+            },
+           msg => { 
+             console.log(msg);
+             alert('¡Falló al guardar los cambios!');
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
              
            });
     }

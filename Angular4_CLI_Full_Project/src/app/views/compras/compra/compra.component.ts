@@ -59,9 +59,10 @@ export class compraComponent {
            alert('Usuario no autorizado.');
          });
   }
-
+  public apresupuesto: any=[];
   ngOnInit(): void {
     this.loading=true;
+    this.apresupuesto.push(JSON.parse(localStorage.getItem("apresupuesto")));
       this.http.get(this.ruta.get_ruta()+'proveedores')
            .toPromise()
            .then(

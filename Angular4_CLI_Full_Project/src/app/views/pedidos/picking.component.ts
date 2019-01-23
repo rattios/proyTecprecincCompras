@@ -28,7 +28,7 @@ export class pickingComponent {
   public empleado_id:any;
   private _name: any;
   public aEntregar:any;
-
+  public obs='';
 
   @Input() producto:any;
   @Input() informacion:any;
@@ -40,12 +40,16 @@ export class pickingComponent {
             this.showP1=true;
             this.showP2=true;
             this.checkCant=true;
+            this.numEntregar=0;
             setTimeout(()=>{
               this.cantidadSolicitada=parseInt(this.producto.pivot.cantidad);
               this.cantidadSolicitada2=parseInt(this.producto.pivot.cantidad);
               this.cantEntregar1=parseInt(this.producto.pivot.cantidad);
               this.itemEntregar=[];
               this.numEntregar=0;
+              this.obs='';
+              this.producto.observacion=this.obs;
+              this.entregado=true;
               console.log(data);
             },1000);
             
@@ -62,7 +66,7 @@ export class pickingComponent {
       this.cantEntregar1=parseInt(this.producto.pivot.cantidad);
       this.producto.bstock=true;
       this.producto.bstock2=true;
-      this.producto.observacion='';
+      this.producto.observacion=this.obs;
       
       this.http.get(this.ruta.get_ruta()+'usuarios?rol='+10+"&departamento_id="+this.producto.departamento.id)
            .toPromise()

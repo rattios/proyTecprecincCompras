@@ -121,7 +121,7 @@
         </ul>
       </li>
 
-      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1]">
+      <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown *ngxPermissionsOnly="[0,1,2]">
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="fa fa-database"></i> Inventarios</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item" *ngxPermissionsOnly="[0]">
@@ -130,7 +130,7 @@
           <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/inventario/secundario']"><i class="fa fa-list"></i> Stock secundario</a>
           </li>
-          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+          <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/inventario/stockDepartamento']"><i class="fa fa-list"></i> Stock del departamento</a>
           </li>
         </ul>

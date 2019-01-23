@@ -36,21 +36,20 @@
 
               <table class="table table-striped">
                 <thead>
+                  <th>Código</th>
                   <th>Nombre</th>
                   <th>Stock principal</th>
                   <th>Stock secundario</th>
-                  <th>Precio</th>
-                  <th>Código</th>
+                  <th>Precio</th>  
                   
                 </thead>
                 <tbody>
                    <tr *ngFor="let item of items">
-                      
+                      <td>{{item.codigo}}</td>
                       <td>{{item.nombre}}</td>
                       <td>{{item.stock}}</td>
                       <td>{{item.stock2}}</td>
                       <td>{{item.precio}}</td>
-                      <td>{{item.codigo}}</td>
                       
                    </tr>
                 </tbody>

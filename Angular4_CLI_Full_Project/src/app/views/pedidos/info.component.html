@@ -236,8 +236,9 @@
 				                <th>Cantidad</th>
 				                <th>Nombre</th>
 				                <!--th>Centro de costos</th-->
-				                <th *ngIf="informacion.estado!=0">Estatus</th>
+				                <th *ngIf="informacion.estado!=0">Status</th>
 				                <th *ngIf="informacion.estado==1">Acción</th>
+				                <th *ngIf="informacion.estado==2">Centro de costos</th>
 				              </tr>
 				            </thead>
 				            <tbody>
@@ -284,6 +285,11 @@
 					                	
 					               	</div>
 				                </td>
+				                <td *ngIf="informacion.estado==2">
+			                        <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="item.pivot.centro_costos_id" (change)="ccc($event)">
+			                          <option *ngFor="let cc of cc" [value]="cc.id">{{cc.codigo}} - {{cc.descripcion}}</option>
+			                        </select>
+			                    </td>
 				              </tr>
 				            </tbody>
 				          </table>
@@ -293,6 +299,7 @@
 				          		<div class="form-group" style="text-align: center">
 								  <textarea class="form-control" rows="5" cols="190" [(ngModel)]="informacion.observaciones"></textarea><br>
 								  <button type="button" class="btn btn-primary" [hidden]="informacion.estado==2" (click)=editar_observacion(informacion.id)>Guardar Observacion</button>
+								  <button type="button" class="btn btn-primary" *ngIf="informacion.estado==2" (click)="editar_cc(informacion.id)">Guardar cambios en "Centro de costos"</button>
 								</div>
 					        </div>
 				          </div>

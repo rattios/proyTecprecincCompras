@@ -22,22 +22,22 @@
               </div>
               <table class="table table-striped">
                 <thead>
+                  <th>Código</th>
                   <th>Nombre</th>
                   <th>Stock principal</th>
                   <th>Stock mínimo</th>
                   <th>Precio</th>
-                  <th>Código</th>
+                  
                   <th></th>
                 </thead>
                 <tbody>
                    <tr *ngFor="let item of items">
-                      
+                        <td>{{item.codigo}}</td>
                         <td>{{item.nombre}}</td>
                         <td><p [ngStyle]="{ 'background-color': 'red'}" *ngIf="item.stock2<=item.stock2_min">{{item.stock2}}</p><p *ngIf="item.stock2>item.stock2_min">{{item.stock2}}</p></td>
-                        <td>{{item.stock_min}}</td>
-                        <td>{{item.codigo}}</td>
+                        <td>{{item.stock2_min}}</td>
                         <td>{{item.precio}}</td>
-                        <td>{{item.codigo}}</td>
+                        
                         <td><button type="button" class="btn btn-success" (click)=ver(item)>Ir</button></td>
                       
                    </tr>
@@ -66,20 +66,19 @@
               </div>
               <table class="table">
                 <thead>
+                  <th>Código</th>
                   <th>Nombre</th>
                   <th>Stock principal</th>
                   <th>Precio</th>
-                  <th>Código</th>
                   <th></th>
                 </thead>
                 <tbody>
                    <tr *ngFor="let item of items">
-                      
+                        
+                        <td *ngIf="item.stock2<=item.stock2_min">{{item.codigo}}</td>
                         <td *ngIf="item.stock2<=item.stock2_min">{{item.nombre}}</td>
                         <td *ngIf="item.stock2<=item.stock2_min">{{item.stock2}}</td>
-                        <td *ngIf="item.stock2<=item.stock2_min">{{item.codigo}}</td>
                         <td *ngIf="item.stock2<=item.stock2_min">{{item.precio}}</td>
-                        <td *ngIf="item.stock2<=item.stock2_min">{{item.codigo}}</td>
                         <td *ngIf="item.stock2<=item.stock2_min"><button type="button" class="btn btn-success" (click)=ver(item)>Ir</button></td>
                       
                    </tr>

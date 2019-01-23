@@ -22,21 +22,21 @@
               </div>
               <table class="table table-striped">
                 <thead>
+                  <th>Código</th>
                   <th>Nombre</th>
                   <th>Stock principal</th>
                   <th>Stock mínimo</th>
                   <th>Precio</th>
-                  <th>Código</th>
                   <th></th>
                 </thead>
                 <tbody>
                    <tr *ngFor="let item of items">
-                      
+                      <td>{{item.codigo}}</td>
                       <td>{{item.nombre}}</td>
                       <td><p [ngStyle]="{ 'background-color': 'red'}" *ngIf="item.stock<=item.stock_min">{{item.stock}}</p><p *ngIf="item.stock>item.stock_min">{{item.stock}}</p></td>
                       <td>{{item.stock_min}}</td>
                       <td>{{item.precio}}</td>
-                      <td>{{item.codigo}}</td>
+                      
                       <td><button type="button" class="btn btn-success" (click)=ver(item)>Ir</button></td>
                    </tr>
                 </tbody>
@@ -64,19 +64,20 @@
               </div>
               <table class="table">
                 <thead>
+                  <th>Código</th>
                   <th>Nombre</th>
                   <th>Stock principal</th>
                   <th>Precio</th>
-                  <th>Código</th>
+                  
                   <th></th>
                 </thead>
                 <tbody>
                    <tr *ngFor="let item of items">
-                      
+                      <td *ngIf="item.stock<=item.stock_min">{{item.codigo}}</td>
                       <td *ngIf="item.stock<=item.stock_min">{{item.nombre}}</td>
                       <td *ngIf="item.stock<=item.stock_min">{{item.stock}}</td>
                       <td *ngIf="item.stock<=item.stock_min">{{item.precio}}</td>
-                      <td *ngIf="item.stock<=item.stock_min">{{item.codigo}}</td>
+                      
                       <td *ngIf="item.stock<=item.stock_min"><button type="button" class="btn btn-success" (click)=ver(item)>Ir</button></td>
                    </tr>
                 </tbody>

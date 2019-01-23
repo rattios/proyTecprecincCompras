@@ -132,6 +132,26 @@
         </div>
       </div>
       <div class="row">
+        <div class="card" style="width: 100%">
+          <div class="card-header">
+             <i class="fa fa-align-justify"></i>Productos sugeridos:
+          </div>
+            <table class="table table-striped">
+                <thead>
+                  <th style="text-align: center;">Producto</th>
+                  <th style="text-align: center;">Seleccionar</th>
+                </thead>
+                <tbody>
+                   <tr *ngFor="let item2 of apresupuesto">
+                      <td style="text-align: center;">{{item2.nombre}}</td>
+                      <td style="text-align: center;"><button type="button" class="btn btn-success" (click)="set(item2);largeModal2.hide();largeModal1.show()">Seleccionar y ver proveedores</button></td>
+                   </tr>
+                </tbody>
+              </table>
+            
+          </div>
+      </div>
+      <div class="row">
          <div [hidden]="true" id="exportable">
           <div class="card" >
             <!--div class="card-header">

@@ -18,7 +18,7 @@ export class pedidosComponent {
   public productos: any;
   public productosSeleccionados: any=[];
   public proveedor: any='';
-  public departamento=localStorage.getItem('tecprecinc_nombre');
+  public user=localStorage.getItem('tecprecinc_nombre');
   public template:'http://localhost/template.gif';
   public loading=true;
   public success=false;

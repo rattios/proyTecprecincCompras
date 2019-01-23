@@ -430,6 +430,36 @@ class PedidoController extends Controller
             return response()->json(['error'=>'Error al actualizar el pedido.'], 500);
         }
     }
+    public function editar_cc(Request $request, $id)
+    {   //solicitud();
+        $pedido=\App\Pedido::find($id);
+        //return response()->json(['status'=>'ok','pedido'=>$pedido], 200);
+        $preferencias = json_decode($request->input('solicitud'));
+           // return response()->json(['status'=>'ok','preferencias'=>$preferencias], 200);
+            //Eliminar las relaciones(preferencias) en la tabla pivote
+            $pedido->solicitud()->detach();
+
+            //Agregar las nuevas relaciones(preferencias) en la tabla pivote
+            for ($i=0; $i < count($preferencias) ; $i++) { 
+                  $pedido->solicitud()->attach($preferencias[$i]->id, [
+                    'cantidad' => $preferencias[$i]->pivot->cantidad,
+                    'aprobado' => $preferencias[$i]->pivot->aprobado,
+                    'entregado' => $preferencias[$i]->pivot->entregado,
+                    'f_entrega' => $preferencias[$i]->pivot->f_entrega,
+                    'tipo_entrega' => $preferencias[$i]->pivot->tipo_entrega,
+                    'devuelto' => $preferencias[$i]->pivot->devuelto,
+                    'cancelado' => $preferencias[$i]->pivot->cancelado,
+                    'pendiente' => $preferencias[$i]->pivot->pendiente,
+                    'observacion' => $preferencias[$i]->pivot->observacion,
+                    'centro_costos_id' => $preferencias[$i]->pivot->centro_costos_id
+                ]);
+            }
+        if ($pedido->save()) {
+            return response()->json(['status'=>'ok','pedido'=>$pedido], 200);
+        }else{
+            return response()->json(['error'=>'Error al actualizar el pedido.'], 500);
+        }
+    }
     public function update(Request $request, $id)
     {
         // Comprobamos si el pedido que nos están pasando existe o no.

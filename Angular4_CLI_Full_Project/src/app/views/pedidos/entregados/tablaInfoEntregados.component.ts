@@ -20,12 +20,14 @@ export class tablaInfoEntregadosComponent {
 
   }
 
+   
    ngOnInit(): void {
       console.log(this.informacion);
       if(this.informacion!=undefined) {
        this.productList = this.informacion;
        this.filteredItems = this.productList;
        this.init();
+       
       }
     }
     aceptarSolicitud(id){
