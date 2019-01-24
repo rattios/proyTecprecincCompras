@@ -7,28 +7,34 @@
               	<input  class="form-control" type="text"  id="inputName" [(ngModel)]="inputName" (ngModelChange)="FilterByName()"/>
                	<br>
           	</div>
-          	<table class="table table-striped">
-            	<thead>
-	              	<th>Número de pedido</th>
-	              	<th>Usuario</th>
-	              	<th>Departamento</th>
-                  <th>Fecha</th>
-                  <th>Observaciones</th>
-	              	<!-- <th>Estado</th> -->
-	              	<th></th>
-            	</thead>
-            	<tbody>
-               		<tr *ngFor="let item of items">
-                  		<td>{{item.id}}</td>
-                  		<td>{{item.usuario.nombre}} {{item.usuario.apellido}}</td>
-                  		<td>{{item.usuario.departamento.nombre}}</td>
-                      <td>{{item.created_at | date: 'dd/MM/yyyy'}}</td>
-                      <td>{{item.observaciones}}</td>
-                  		<!-- <td>{{item.estado}}</td> -->
-                  		<td><button type="button" class="btn btn-success" (click)=ver(item)>Ver</button></td>
-               		</tr>
-            	</tbody>
-          	</table>
+            <div style="text-align: right;">
+              <button type="button" class="btn btn-primary" (click)=saveFile()>Exportar</button>
+            </div>
+            <div id="exportable">
+              <table class="table table-striped">
+                <thead>
+                    <th>Nº de pedido</th>
+                    <th>Usuario</th>
+                    <th>Departamento</th>
+                    <th>Fecha</th>
+                    <th>Observaciones</th>
+                    <!-- <th>Estado</th> -->
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of items">
+                        <td>{{item.id}}</td>
+                        <td>{{item.usuario.nombre}} {{item.usuario.apellido}}</td>
+                        <td>{{item.usuario.departamento.nombre}}</td>
+                        <td>{{item.created_at | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{item.observaciones}}</td>
+                        <!-- <td>{{item.estado}}</td> -->
+                        <td><button type="button" class="btn btn-success" (click)=ver(item)>Ver</button></td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          	
           	<div class="btn-toolbar" role="toolbar" style="margin: 0;">
               	<div class="btn-group">
                  	<label style="margin-top:10px">Página {{currentIndex}}/{{pageNumber}} </label>

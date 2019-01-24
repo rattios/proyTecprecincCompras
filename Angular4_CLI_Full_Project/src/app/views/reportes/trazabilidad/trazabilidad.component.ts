@@ -118,6 +118,87 @@ export class trazabilidadComponent {
            });
     }
 
+    
+    verTrazas=true;
+    verPicking=false;
+    public pedidos:any;
+    public ped:any;
+    public informacion:any;
+    picking(id){
+      this.verTrazas=!this.verTrazas;
+      
+      if(this.verPicking==false) {
+        this.verPicking=true;
+        console.log(id);
+        this.http.get(this.ruta.get_ruta()+'pedidos/'+id)
+           .toPromise()
+           .then(
+           data => {
+              this.ped=data;
+              this.pedidos=this.ped.pedidos;
+              console.log(this.pedidos);
+              
+              for (var i = 0; i < this.pedidos.length; i++) {
+                for (var j = 0; j < this.pedidos[i].solicitud.length; j++) {
+                  for (var k = 0; k < this.ped.centrocostos.length; k++) {
+                    if(this.pedidos[i].solicitud[j].pivot.centro_costos_id==this.ped.centrocostos[k].id) {
+                      this.pedidos[i].solicitud[j].pivot.nombre_centro_costo=this.ped.centrocostos[k].descripcion;
+                      //alert(this.pedidos[i].solicitud[j].pivot.centro_costos_id);
+                    }
+                  }
+                }
+              }
+              this.loading=false;
+              this.informacion=this.pedidos[0];
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+             alert('Ha ocurrido un error!');
+           });
+        
+      }else{
+        this.verPicking=false;
+        this.verCompra=false;
+      }
+    }
+
+    verCompra=false;
+    public proveedores:any;
+    public prove:any;
+    public enviado:any;
+    compra(id){
+      this.verTrazas=!this.verTrazas;
+      console.log(this.verTrazas);
+      if(this.verCompra==false) {
+        this.verCompra=true;
+        this.http.get(this.ruta.get_ruta()+'compra/'+id)
+           .toPromise()
+           .then(
+           data => {
+             this.prove=data;
+              this.proveedores=this.prove.compra;
+              console.log(this.proveedores);
+              var preprov:any=[];
+              for (var i = 0; i < this.proveedores.length; i++) {
+                for (var j = 0; j < this.proveedores[i].productos.length; ++j) {
+                  this.proveedores[i].productos[j].totales=parseInt(this.proveedores[i].productos[j].cantidad)*this.proveedores[i].productos[j].precio;
+                }
+              }
+              this.enviado=this.proveedores[0];
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+           });
+      }else{
+        this.verCompra=false;
+        this.verPicking=false;
+      }
+    }
+
+
+
     ver(item){
       if(item==0) {
         this.producSelec={
@@ -135,10 +216,13 @@ export class trazabilidadComponent {
         console.log(item);
         this.verProduc=true;
       }else{
-    	  this.producSelec=item;
+        this.producSelec=item;
         this.verProduc=true;
       }
     }
+
+
+
     public success:any;
     public fail:any;
     editar(){

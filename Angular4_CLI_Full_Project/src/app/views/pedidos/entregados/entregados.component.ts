@@ -103,9 +103,14 @@ export class entregadosComponent {
            .then(
            data => {
              this.prov=data;
+             this.pedidos=[];
+             this.pedidos0=[];
+             this.pedidos1=[];
+             this.pedidos2=[];
+             this.pedidos3=[];
                this.pedidos=this.prov.pedidos;
               console.log(this.pedidos);
-              for (var i = 0; i < this.pedidos.length; ++i) {
+              for (var i = 0; i < this.pedidos.length; i++) {
                 if(this.pedidos[i].estado==0) {
                   this.pedidos0.push(this.pedidos[i]);
                 }else if(this.pedidos[i].estado==1) {

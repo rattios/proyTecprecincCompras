@@ -98,8 +98,13 @@ class compraController extends Controller
     public function show($id)
     {
         //cargar un compra
-        $compra = \App\Compra::find($id);
+        //$compra = \App\Compra::find($id);
+        $compra = \App\Compra::where('id',$id)->with('proveedor')->get();
 
+        for ($i=0; $i < count($compra); $i++) { 
+            $compra[$i]->productos=json_decode($compra[$i]->productos);
+        }
+        
         if(count($compra)==0){
             return response()->json(['error'=>'No existe el compra con id '.$id], 404);          
         }else{

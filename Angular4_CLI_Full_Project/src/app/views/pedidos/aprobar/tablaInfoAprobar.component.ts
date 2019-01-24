@@ -4,6 +4,7 @@ import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { RutaService } from '../../../services/ruta.service';
 import { aprobarComponent } from './aprobar.component';
+import { saveAs } from 'file-saver/FileSaver';
 
 @Component({
   selector: 'app-tabla-info-aprobar',
@@ -88,13 +89,21 @@ export class tablaInfoAprobarComponent {
     volver(){
       this.verInfo=false;
     }
+    public saveFile(){
+    console.log('exportar');
+    var blob = new Blob([document.getElementById('exportable').innerHTML], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        saveAs(blob, 'Solicitudes por aprobar.xls');
+         //FileSaver.saveAs(blob, CONFIG.ECOMMERCE_NOMBRE+".xls");
+    }
 
      //-------------------------------------------------------------------------------------------------------------------------
    
    filteredItems : any;
    productList : any;
    pages : number = 4;
-   pageSize : number = 10;
+   pageSize : number = 100;
    pageNumber : number = 0;
    currentIndex : number = 1;
    items: any;

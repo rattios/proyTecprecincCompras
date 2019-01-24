@@ -16,7 +16,7 @@
           <tabset>
             <tab heading="Trazas">
               
-              <div class="row">
+              <div class="row" *ngIf="verTrazas">
                 <div class="col-sm-5" style="text-align: center">
                   <label class="labels" style="font-size: 18px; font-weight: bold">Inicio: </label>
                   <input matInput [matDatepicker]="inicio2" placeholder="Choose a date" [(ngModel)]="inicioD2">
@@ -34,7 +34,7 @@
                 </div>
               </div>
               <br><br><br>
-              <div [hidden]="false">
+              <div *ngIf="verTrazas">
                 <div style="text-align: right;">
                   <button type="button" class="btn btn-primary" (click)=saveFile()>Exportar</button>
                 </div>
@@ -44,6 +44,7 @@
                       
                       <th>Cantidad</th>
                       <th>Nombre</th>
+                      <th>Monto</th>
                       <th>Dto. Emisor</th>
                       <th>Usuario emisor</th>
                       <th>Dto. Receptor</th>
@@ -51,12 +52,14 @@
                       <th>Tipo</th>
                       <th>ID de operación</th>
                       <th>Fecha</th>
+                      <th></th>
                     </thead>
                     <tbody>
                        <tr *ngFor="let item of trazas">
                           
                           <td>{{item.cantidad}}</td>
                           <td>{{item.stock.nombre}}</td>
+                          <td><div *ngIf="item.tipo!='Picking'">{{item.cantidad*item.stock.precio}}</div></td>
                           <td>{{item.departamento_emisor.nombre}}</td>
                           <td>{{item.usuario_emisor.nombre}}</td>
                           <td>{{item.departamento_receptor.nombre}}</td>
@@ -64,11 +67,198 @@
                           <td>{{item.tipo}} {{item.factura}}</td>
                           <td>{{item.operacion_id}}</td>
                           <th>{{item.created_at  | date:'dd-MM-yyyy HH:MM:ss'}}</th>
+                          <td>
+                            <div *ngIf="item.tipo!='Picking'">
+                              <button type="button" class="btn btn-warning" (click)=compra(item.operacion_id)>Ver Compra</button>
+                            </div>
+                            <div *ngIf="item.tipo=='Picking'">
+                              <button type="button" class="btn btn-success" (click)=picking(item.operacion_id)>Ver Solicitud</button>
+                            </div>
+                          </td>
                        </tr>
                     </tbody>
                   </table>
                 </div>
                 
+              </div>
+              <div *ngIf="verPicking">
+                <div style="text-align: right;">
+                  <button type="button" class="btn btn-success" (click)=picking(0)>Volver</button>
+                </div>
+                
+                <div class="row">
+                  <div class="col-lg-12">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="">
+                              <div class="row">
+                                <div class="col-lg-4">
+                                  <strong>Nº Solicitud: </strong>{{informacion.id}}
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                
+                                <div class="col-lg-4">
+                                  <strong>Departamento: </strong>{{informacion.usuario.departamento.nombre}}
+                                </div>
+                                <div class="col-lg-4">
+                                  <strong>Usuario: </strong>{{informacion.usuario.nombre}}
+                                </div>
+                                <div class="col-lg-4">
+                                  <strong>Fecha de alta: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
+                                </div>
+                              </div>
+                            </div>
+                          </div>  
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="">
+                              <div class="row">
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead>
+                                      <tr>
+                                        <th>Código</th>
+                                        <th>Cantidad</th>
+                                        <th>Nombre</th>
+                                        <!--th>Centro de costos</th-->
+                                        <th *ngIf="informacion.estado!=0">Status</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let item of informacion.solicitud">
+                                        <td>{{item.codigo}}</td>
+                                        <td>{{item.pivot.cantidad}}</td>
+                                        <td>{{item.nombre}}</td>
+                                        <!--td>{{item.pivot.nombre_centro_costo}}</td-->
+                                        <td *ngIf="informacion.estado!=0">
+                                          <span [ngClass]="['badge', 'badge-success']" *ngIf="item.pivot.aprobado">Aprobado</span>
+                                          <span [ngClass]="['badge', 'badge-success']" *ngIf="item.pivot.entregado">Entregado</span>
+                                          <span [ngClass]="['badge', ' badge-danger']" *ngIf="item.pivot.cancelado">Cancelado</span>
+                                          <span [ngClass]="['badge', ' badge-secondary']" *ngIf="item.pivot.devuelto">Devuelto</span>
+                                          <span [ngClass]="['', ' badge-warning']" *ngIf="!item.pivot.aprobado && !item.pivot.entregado && !item.pivot.cancelado && !item.pivot.devuelto">Pendiente</span>
+                                        </td>
+                                        
+                                        
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <label for="comment">Observaciones:</label>
+                                      <div class="form-group" style="text-align: center">
+                                  <textarea class="form-control" rows="5" cols="190" [(ngModel)]="informacion.observaciones"></textarea><br>
+                                </div>
+                                  </div>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>  
+                        </div>
+                    </div>  
+                </div>
+              </div>
+              <div *ngIf="verCompra">
+                <div style="text-align: right;">
+                    <button type="button" class="btn btn-warning" (click)=compra(0)>Volver</button>
+                </div>
+                <div class="row" >
+
+                  <div class="col-lg-1">
+                    
+                  </div>
+                  <div id="exportable" class="col-lg-10">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <img src="http://www.tecprecincsrl.com.ar/e/wp-content/uploads/2018/02/logo.png" style="width: 210px;">
+                      </div>
+                      <div class="col-sm-7" style="text-align: right;">
+                        Compra: <strong>Nº {{enviado.id}}</strong><br>
+                        Fecha: <strong>{{enviado.created_at | date:'dd-MM-yyyy'}}</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12" style="text-align: center">
+                        <h4>ORDEN DE COMPRA</h4>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <label>Proveedor:</label><strong> {{enviado.proveedor.razon_social}}</strong>
+                      </div>
+                      <div class="col-lg-4">
+                        <label>Nombre fantasia:</label><strong> {{enviado.proveedor.nombre_fantacia}}</strong>
+                      </div>
+                      <div class="col-lg-4">
+                        <label>Cuit:</label><strong> {{enviado.proveedor.cuit}}</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <label>Teléfono:</label><strong> {{enviado.proveedor.telefono}}</strong>
+                      </div>
+                      <div class="col-lg-4">
+                        <label>Email:</label><strong> {{enviado.proveedor.email}}</strong>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <strong>Nota: </strong>{{enviado.nota}}<br>
+                        <br>
+                        <table class="table table-bordered">
+                          <thead>
+                            <th>Cantidad</th>
+                            <th>Nombre</th>
+                            <th>Precio Unit.</th>
+                            <th>Total</th>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let it of enviado.productos">
+                                <td>{{it.cantidad}}</td>
+                                <td>{{it.nombre}}</td>
+                                <td>{{it.precio | number : '1.2-2'}}</td>
+                                <td>{{it.totales | number : '1.2-2'}}</td>
+                              </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <strong>Observaciones:</strong>
+                            {{enviado.observaciones}}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <strong>Observaciones de recepción:</strong>
+                            {{enviado.obs_recepcion}}
+                        </div>
+                      </div>
+                    </div> 
+                    <br>
+                    <div class="row">
+                      <div class="col-lg-12" style="text-align:center">
+                        ___________________________
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12" style="text-align:center">
+                        Firma
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-1">
+                    
+                  </div>
+                </div>
               </div>
             </tab>
             <tab heading="Stock">

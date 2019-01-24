@@ -391,13 +391,39 @@ class PedidoController extends Controller
     public function show($id)
     {
         //cargar un pedido
-        $pedido = \App\Pedido::with('solicitud')->find($id);
+        //$pedido = \App\Pedido::with('solicitud')->find($id);
 
-        if(count($pedido)==0){
-            return response()->json(['error'=>'No existe el pedido con id '.$id], 404);          
+        $pedidos = \App\Pedido::where('id', $id)->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->get();
+
+
+        if(count($pedidos) == 0){
+           return response()->json(['status'=>'ok', 'pedidos'=>[]], 200);          
         }else{
-            return response()->json(['status'=>'ok', 'pedido'=>$pedido], 200);
-        }
+
+            $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    for ($k=0; $k < count($categorias); $k++) { 
+                        if ($pedidos[$i]->solicitud[$j]->categoria_id == $categorias[$k]->id ) {
+                            $pedidos[$i]->solicitud[$j]->categoria = $categorias[$k];
+                        }
+                    }
+                    
+                }
+                
+            }
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                    $pedidos[$i]->solicitud[$j]->contratos=$pedidos[$i]->contratos;
+                } 
+            }
+
+            $centrocostos = \App\CentroCostos::with('contratos')->get();
+            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos, 'centrocostos'=>$centrocostos], 200);
+        } 
     }
 
     /**
