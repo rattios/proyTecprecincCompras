@@ -5,7 +5,7 @@
       <div class="card" *ngIf="!verDatos">
         
         <div class="card-header">
-          <i class="fa fa-align-justify"></i> Lista de centroCostoes
+          <i class="fa fa-align-justify"></i> Lista de centro de costos
           <div style="text-align:right">
             <button type="button" class="btn btn-success" (click)="ver(0)">Agregar un centro de costo</button>
           </div>
@@ -20,9 +20,6 @@
             <thead>
               <th>Código</th>
               <th>Descripción</th>
-              <th>Habilitado</th>
-              <th>Desde</th>
-              <th>Hasta</th>
               <th></th>
             </thead>
             <tbody>
@@ -30,9 +27,6 @@
                   
                   <td>{{item.codigo}}</td>
                   <td>{{item.descripcion}}</td>
-                  <td>{{item.habilitado}}</td>
-                  <td>{{item.desde}}</td>
-                  <td>{{item.hasta}}</td>
                   <td><button type="button" class="btn btn-secondary" (click)=ver(item)>Ver</button></td>
                </tr>
             </tbody>
@@ -87,13 +81,13 @@
                   </div>
                 </div>
                 <div class="col-sm-4">
-                  <div class="form-group">
+                  <!--div class="form-group">
                     <label for="ccnumber">Habilitado</label>
                     <input type="text" class="form-control" id="habilitado" placeholder="" [(ngModel)]="centroCosto.habilitado">
-                  </div>
+                  </div-->
                 </div>
               </div>
-              <div class="row">
+              <!--div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label>Desde</label>
@@ -106,10 +100,10 @@
                     <ng-datepicker [(ngModel)]="centroCosto.hasta" [position]="'top-left'" [options]="options" style="z-index: 999; width: 100%;"> </ng-datepicker>
                   </div>
                 </div>
-              </div>
+              </div-->
             </div>
           </div>  
-          <div class="row">
+          <!--div class="row">
             <div class="col-md-12">
               <strong>Contratos del centro de costos</strong>
               <table class="table table-bordered">
@@ -131,7 +125,7 @@
           <div style="text-align: center">
             <button type="button" class="btn btn-success" (click)=editar() *ngIf="!crear">Editar productos del centro costo</button> 
             <button type="button" class="btn btn-success" (click)=crearcentroCosto() *ngIf="crear">Crear centroCosto</button> 
-          </div>
+          </div-->
         </div>
     </div>
     
