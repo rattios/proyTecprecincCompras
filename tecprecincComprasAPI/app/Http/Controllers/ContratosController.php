@@ -18,7 +18,7 @@ class ContratosController extends Controller
     public function index()
     {
         //cargar todos los proveedores con los productos que ofrecen
-        $contratos = \App\Contratos::all();
+        $contratos = \App\Contratos::with('relacion')->get();
 
         if(count($contratos) == 0){
             return response()->json(['error'=>'No existen contratos.'], 404);          
@@ -65,7 +65,8 @@ class ContratosController extends Controller
         $centro_costos=json_decode($request->centro_costos);
         //return $centro_costos;
         for ($i=0; $i < count($centro_costos); $i++) { 
-            $contrato->departamentos()->attach($centro_costos[$i]->departamento_id,['contro_costos_id'=>$centro_costos[$i]->contro_costos_id]);
+            //$contrato->relacion()->attach($centro_costos[$i]->departamento_id,['contro_costos_id'=>$centro_costos[$i]->contro_costos_id]);
+            $contrato->relacion()->attach($centro_costos[$i]->id);
         }
         
         return response()->json(['status'=>'ok', 'contratos'=>$contrato], 200);
@@ -75,11 +76,15 @@ class ContratosController extends Controller
     public function relaciones_actualizar(Request $request,$id)
     {
         $contrato=\App\Contratos::find($id);
+        $contrato->fill($request->all());
+        $contrato->save();
         
-        $contrato->departamentos()->detach();
+        $contrato->relacion()->detach();
+        $centro_costos=json_decode($request->centro_costos);
 
-        for ($i=0; $i < 4; $i++) { 
-            $contrato->departamentos()->attach($request->departamento_id,['contro_costos_id'=>$request->contro_costos_id]);
+        for ($i=0; $i < count($centro_costos); $i++) { 
+            //$contrato->relacion()->attach($centro_costos[$i]->departamento_id,['contro_costos_id'=>$centro_costos[$i]->contro_costos_id]);
+            $contrato->relacion()->attach($centro_costos[$i]->id);
         }
         
         return response()->json(['status'=>'ok', 'contratos'=>$contrato], 200);
@@ -92,6 +97,11 @@ class ContratosController extends Controller
  
     }
 
+    public function pedido_stock($id)
+    {
+        $pedido_stock=DB::select("SELECT * FROM `pedido_stock` WHERE `centro_costos_id`=".$id);
+        return response()->json(['status'=>'ok', 'pedido_stock'=>$pedido_stock], 200);
+    }
     /**
      * Display the specified resource.
      *
@@ -101,8 +111,8 @@ class ContratosController extends Controller
     public function show($id)
     {
         //cargar un proveedor
-        $Contratos = \App\Contratos::where('id',$id)->with('departamentos')->with('centrocostos')->get();
-        
+       // $Contratos = \App\Contratos::where('id',$id)->with('departamentos')->with('centrocostos')->get();
+       $Contratos = \App\Contratos::where('id',$id)->with('relacion')->get();
         if(count($Contratos)==0){
             
 

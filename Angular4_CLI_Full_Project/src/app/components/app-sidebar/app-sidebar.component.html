@@ -197,10 +197,13 @@
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-notebook"></i> Centro de costos/Contratos</a>
         <ul class="nav-dropdown-items">
           <li class="nav-item" *ngxPermissionsOnly="[0]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/cc/contratos']"><i class="fa fa-file-word-o"></i> Contratos</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/cc/centroCostos']"><i class="fa fa-building-o"></i> Centro de costos</a>
           </li>
           <li class="nav-item" *ngxPermissionsOnly="[0]">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/cc/contratos']"><i class="fa fa-file-word-o"></i> Contratos</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/cc/reportes']"><i class="icon-list"></i> Reportes</a>
           </li>
         </ul>
       </li>

@@ -77,38 +77,23 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="name">Nombre</label>
-                    <input type="text" class="form-control" id="codigo" placeholder="" [(ngModel)]="centroCosto.nombre">
+                    <input type="text" class="form-control" id="codigo" placeholder="" [(ngModel)]="centroCosto.nombre" disabled>
                   </div>
                 </div>
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="ccnumber">Cliente</label>
-                    <input type="text" class="form-control" id="descripcion" placeholder="" [(ngModel)]="centroCosto.cliente">
+                    <input type="text" class="form-control" id="descripcion" placeholder="" [(ngModel)]="centroCosto.cliente" disabled>
                   </div>
                 </div>
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="ccnumber">Vigencia</label>
-                    <ng-datepicker [(ngModel)]="centroCosto.vigencia" [position]="'bottom-left'" [options]="options"> </ng-datepicker>
+                    <ng-datepicker [(ngModel)]="centroCosto.vigencia" [position]="'bottom-left'" [options]="options" disabled> </ng-datepicker>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <label class="label" for="select">Centro de costos</label>
-                  <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="centroCostos_id">
-                    <option *ngFor="let cc of cc" [value]="cc.id">{{cc.descripcion}}</option>
-                  </select>
-                </div>
-              </div><br><br>
               
-              <div class="row">
-                <div class="col-md-12">
-                  <div style="text-align: right;">
-                    <button type="button" class="btn btn-success" (click)=add()>Agregar</button> 
-                  </div>
-                </div>
-              </div>
 
               <div class="row">
                 <div class="col-md-12">

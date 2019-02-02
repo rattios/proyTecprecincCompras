@@ -7,6 +7,7 @@ import { NgDatepickerModule } from 'ng2-datepicker';
 
 import { contratosComponent } from './contratos/contratos.component';
 import { centroCostosComponent } from './centroCostos/centroCostos.component';
+import { reportesComponent } from './reportes/reportes.component';
 import { ccRoutingModule } from './cc-routing.module';
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ccRoutingModule } from './cc-routing.module';
   ],
   declarations: [ 
   	contratosComponent,
-	  centroCostosComponent
+	  centroCostosComponent,
+    reportesComponent
   ]
 })
 export class ccModule { }

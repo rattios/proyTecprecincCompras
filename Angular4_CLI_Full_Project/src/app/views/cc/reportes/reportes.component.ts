@@ -11,9 +11,9 @@ import * as frLocale from 'date-fns/locale/fr';
 import * as esLocale from 'date-fns/locale/es';
 
 @Component({
-  templateUrl: 'contratos.component.html'
+  templateUrl: 'reportes.component.html'
 })
-export class contratosComponent {
+export class reportesComponent {
 
   public prov: any;
   public cc: any;

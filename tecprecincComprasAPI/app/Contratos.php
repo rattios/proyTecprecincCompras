@@ -45,4 +45,12 @@ class Contratos extends Model
             ->withPivot('departamento_id');
     }
 
+    // Relación de contratos con centro de costos:
+    public function relacion(){
+        // 1 pedido contiene muchos productos solicitados del stock
+        return $this->belongsToMany('\App\CentroCostos','contratos_centro_costos','contratos_id','centro_costos_id')/*->withTimestamps()*/; 
+    }
+
+
+
 }
