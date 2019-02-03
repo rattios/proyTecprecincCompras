@@ -100,6 +100,10 @@ class ContratosController extends Controller
     public function pedido_stock($id)
     {
         $pedido_stock=DB::select("SELECT * FROM `pedido_stock` WHERE `centro_costos_id`=".$id);
+        for ($i=0; $i < count($pedido_stock); $i++) { 
+            $pedido_stock[$i]->stock=DB::select("SELECT * FROM `stock` WHERE `id`=".$pedido_stock[$i]->stock_id);
+            $pedido_stock[$i]->pedido=DB::select("SELECT * FROM `pedidos` WHERE `id`=".$pedido_stock[$i]->pedido_id);
+        }
         return response()->json(['status'=>'ok', 'pedido_stock'=>$pedido_stock], 200);
     }
     /**

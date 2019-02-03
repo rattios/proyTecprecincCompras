@@ -103,6 +103,7 @@ export class reportesComponent {
            });
     }
 
+    public pedidos_stock:any;
     ver(item){
       if(item==0) {
         this.centroCosto={
@@ -115,6 +116,7 @@ export class reportesComponent {
         this.crear=true;
         console.log(item);
       }else{
+
         this.centroCosto={
           id:item.id,
           nombre:item.nombre,
@@ -134,6 +136,34 @@ export class reportesComponent {
     }
     volver(){
       this.verDatos=false;
+    }
+
+    public vercentroscostos=true;
+    volververcc(){
+      this.vercentroscostos=true;
+    }
+    vercc(id){
+      console.log(id);
+      this.loading=true;
+      this.vercentroscostos=false;
+        this.http.get(this.ruta.get_ruta()+'pedido_stock/'+id)
+           .toPromise()
+           .then(
+           data => {
+            this.loading=false;
+            this.pedidos_stock=data;
+            this.pedidos_stock=this.pedidos_stock.pedido_stock;
+            console.log(this.pedidos_stock);
+            },
+           msg => { 
+             this.loading=false;
+             console.log(msg);
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
+
+           });
     }
     agregar(item){
       if(!this.checkProductos(item)) {
@@ -374,7 +404,7 @@ export class reportesComponent {
    filteredItems : any;
    productList : any;
    pages : number = 4;
-   pageSize : number = 10;
+   pageSize : number = 100;
    pageNumber : number = 0;
    currentIndex : number = 1;
    items: any;

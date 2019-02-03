@@ -6,9 +6,7 @@
         
         <div class="card-header">
           <i class="fa fa-align-justify"></i> Lista de Contratos
-          <div style="text-align:right">
-            <button type="button" class="btn btn-success" (click)="ver(0)">Agregar un contrato</button>
-          </div>
+          
         </div>
         <div class="card-body">
           <div class="form-group form-black label-floating is-empty">
@@ -95,7 +93,7 @@
               </div>
               
 
-              <div class="row">
+              <div class="row" *ngIf="vercentroscostos">
                 <div class="col-md-12">
                   <h4>Relaciones</h4>
                   <table class="table table-responsive table-hover table-outline mb-0">
@@ -109,9 +107,41 @@
                         <td class="">
                           <strong>{{u.codigo}}-{{u.descripcion}}</strong><br>
                           <div style="text-align: right;">
-                            <button type="button" class="btn btn-danger" (click)=del(u) >Eliminar</button> 
+                            <button type="button" class="btn btn-danger" (click)=vercc(u.id) >Ver Reporte</button> 
                           </div>
                         </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row" *ngIf="!vercentroscostos">
+                <div class="col-md-12">
+                  <div style="text-align: right;">
+                    <button type="button" class="btn btn-success" (click)=volververcc()>Volver al contrato</button> 
+                  </div>
+                  <h4>Pedidos</h4>
+                  <table class="table table-responsive table-hover table-outline mb-0">
+                    <thead class="thead-default">
+                      <tr>
+                        <th class="">Producto</th>
+                        <th class="">Observación</th>
+                        <th class="">Fecha</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let u of pedidos_stock">
+                        <td class="">
+                          <strong>{{u.stock[0].nombre}}</strong><br>
+                        </td>
+                        <td class="">
+                          <strong>{{u.observacion}}</strong><br>
+                        </td>
+                        <td class="">
+                          <strong>{{u.pedido[0].created_at}}</strong><br>
+                          
+                        </td>
+                        
                       </tr>
                     </tbody>
                   </table>
@@ -206,11 +236,6 @@
             </div>
           </div-->  
           
-          <div style="text-align: center">
-            <button type="button" class="btn btn-success" (click)=editarContrato() *ngIf="!crear">Editar Contrato</button> 
-            <!--button type="button" class="btn btn-success" (click)=crearcentroCosto() *ngIf="crear">Crear Contrato</button--> 
-            <button type="button" class="btn btn-success" (click)=crearContrato() *ngIf="crear">Crear Contrato</button> 
-          </div>
         </div>
     </div>
     
