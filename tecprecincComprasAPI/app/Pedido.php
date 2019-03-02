@@ -24,7 +24,7 @@ class Pedido extends Model
      *
      * @var array
      */
-    protected $fillable = ['estado', 'usuario_id','centro_costos_id','contrato_id','aprobar','observaciones'];
+    protected $fillable = ['estado', 'usuario_id','centro_costos_id','contrato_id','aprobar','observaciones','departamento_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -65,6 +65,11 @@ class Pedido extends Model
     {
         // 1 pedido puede tener varios presupuestos
         return $this->belongsTo('App\Contratos', 'contrato_id');
+    }
+    public function departamento()
+    {
+        // 1 pedido puede tener varios presupuestos
+        return $this->belongsTo('App\Departamento', 'departamento_id');
     }
 
 }

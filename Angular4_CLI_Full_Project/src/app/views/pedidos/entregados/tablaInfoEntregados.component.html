@@ -23,7 +23,7 @@
                  		<tr *ngFor="let item of items">
                     		<td>{{item.id}}</td>
                     		<td>{{item.usuario.nombre}} {{item.usuario.apellido}}</td>
-                    		<td>{{item.usuario.departamento.nombre}}</td>
+                    		<td>{{item.departamento.nombre}}</td>
                     		<th>{{item.updated_at | date:'dd-MM-yyyy'}}</th>
                     		<td><button type="button" class="btn btn-success" (click)=ver(item)>Ver</button></td>
                  		</tr>

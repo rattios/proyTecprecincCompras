@@ -96,7 +96,8 @@ export class pedidosComponent {
           contrato_id:this.idContrato,
           estado: 0,
           aprobar:0,
-          observaciones:this.observaciones
+          observaciones:this.observaciones,
+          departamento_id:localStorage.getItem('tecprecinc_departamento_id'),
         }
         console.log(enviar);
 

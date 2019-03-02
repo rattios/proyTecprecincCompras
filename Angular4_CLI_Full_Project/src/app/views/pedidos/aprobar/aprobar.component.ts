@@ -44,7 +44,7 @@ export class aprobarComponent {
 
    ngOnInit(): void {
 
-      this.http.get(this.ruta.get_ruta()+'aprobar?usuario_id='+localStorage.getItem('tecprecinc_usuario_id'))
+      this.http.get(this.ruta.get_ruta()+'aprobar?departamento_id='+localStorage.getItem('tecprecinc_departamento_id')+'&usuario_id='+localStorage.getItem('tecprecinc_usuario_id'))
            .toPromise()
            .then(
            data => {
