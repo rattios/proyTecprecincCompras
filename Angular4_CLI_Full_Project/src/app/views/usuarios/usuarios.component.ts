@@ -21,6 +21,7 @@ export class UsuariosComponent {
   public success=false;
   public fail=false;
   public crear=false;
+  public usuario_departamentos:any=[];
   constructor(private http: HttpClient, private ruta: RutaService, private router: Router) {
     this.http.get(this.ruta.get_ruta()+'login/check?token='+localStorage.getItem('tecprecinc_token'))
          .toPromise()
@@ -109,9 +110,50 @@ export class UsuariosComponent {
         this.proveedor=item;
         this.crear=false;
         console.log(item);
+        this.loading=true;
+        this.http.get(this.ruta.get_ruta()+'usuarios2/'+item.id)
+           .toPromise()
+           .then(
+           data => {
+              var resp:any=data;
+              console.log(resp[0].departamento2);
+              this.usuario_departamentos=resp[0].departamento2;
+              this.loading=false;
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+           });
       }
     	
       this.verDatos=true;
+    }
+    addDp(d){
+      console.log(d.target.value);
+      if(!this.checkFp(d.target.value)) {
+        for (var i = 0; i < this.departamentos.length; i++) {
+          if(d.target.value==this.departamentos[i].id) {
+            this.usuario_departamentos.push(this.departamentos[i]);
+          }
+        }
+      }
+    }
+    checkFp(item){
+        var band=false;
+        for (var i = 0; i < this.usuario_departamentos.length; i++) {
+          if(this.usuario_departamentos[i].id==item) {
+            band=true;
+          }
+        }
+        return band;
+    }
+    eliminarD(it){
+      console.log(it);
+      for (var i = 0; i < this.usuario_departamentos.length; i++) {
+        if(this.usuario_departamentos[i].id==it.id) {
+          this.usuario_departamentos.splice(i, 1);
+        }
+      }
     }
     volver(){
       this.verDatos=false;
@@ -156,6 +198,10 @@ export class UsuariosComponent {
     
     crearProveedor(){
       
+
+      if(this.proveedor.rol==0) {
+        this.proveedor.departamento_id=1;
+      }
       var send={
         nombre:this.proveedor.nombre,
         apellido:this.proveedor.apellido,
@@ -165,7 +211,8 @@ export class UsuariosComponent {
         rol: this.proveedor.rol,
         user: this.proveedor.user,
         legajo: this.proveedor.legajo,
-        password:this.proveedor.password
+        password:this.proveedor.password,
+        usuario_departamentos:JSON.stringify(this.usuario_departamentos)
       }
 
       this.http.post(this.ruta.get_ruta()+'usuarios',send)
@@ -221,6 +268,10 @@ export class UsuariosComponent {
 
 
     editar(){
+
+      if(this.proveedor.rol==0) {
+        this.proveedor.departamento_id=1;
+      }
       
       var send={
         id:this.proveedor.id,
@@ -231,7 +282,8 @@ export class UsuariosComponent {
         departamento_id: this.proveedor.departamento_id,
         rol: this.proveedor.rol,
         user: this.proveedor.user,
-        legajo: this.proveedor.legajo
+        legajo: this.proveedor.legajo,
+        usuario_departamentos:JSON.stringify(this.usuario_departamentos)
         //password:this.proveedor.password
       }
       console.log(send);

@@ -56,6 +56,11 @@ class Departamento extends Model
         return $this->hasMany('App\User', 'departamento_id');
     }
 
+    public function usuarios2(){
+        // 1 departamento puede tener muchos proveedores
+        return $this->belongsToMany('\App\User','usuarios_departamentos','departamentos_id','usuarios_id')/*->withTimestamps()*/; 
+    }
+
     // Relación de departamento con stockDepartamentos:
     public function productos()
     {

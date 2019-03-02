@@ -600,9 +600,9 @@ class PedidoController extends Controller
 
         //producto sin tipo
         if ($picking->tipo_id == 0) {
-            return response()->json(['error'=>'El producto de tener asociado un tipo para poder realizar el proceso de picking.'],409);
+          //  return response()->json(['error'=>'El producto de tener asociado un tipo para poder realizar el proceso de picking.'],409);
         }
-        //vienes de consumo
+        //bienes de consumo
         else if ($picking->tipo_id == 1) {
             
             if ($picking->almacen == 'principal') {

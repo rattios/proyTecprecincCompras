@@ -23,6 +23,13 @@ class UsuariosController extends Controller
         }
     }
 
+    public function usuarios2($id)
+    {
+        //cargar todos los usuarios con sus pedidos
+        $usuarios = \App\User::where('id',$id)->with('departamento2')->get();
+         return $usuarios;
+    }
+
     public function usuarios(Request $request)
     {
     	$rol=$request->input('rol');
@@ -138,6 +145,28 @@ class UsuariosController extends Controller
         $cc=\App\User::where('id',$id)->first();;
         $cc->fill($request->all());
 
+        //$usuario_departamentos=$request->input('usuario_departamentos');
+
+        if ($usuario_departamentos != null && $usuario_departamentos!='')
+        {
+            //Eliminar las relaciones(productos) en la tabla pivote
+            $usuario=\App\User::find($id);
+            $usuario->departamento2()->detach();
+
+            //Crear las nuevas relaciones en la tabla pivote
+            //return $request->input('productos');
+            $dep = json_decode($request->input('usuario_departamentos'));
+            
+            for ($i=0; $i < count($dep) ; $i++) { 
+
+                //$proveedor->productos()->attach($productos[$i]->producto_id, ['precio' => $productos[$i]->precio]);
+
+                $usuario->departamento2()->attach($dep[$i]->id);       
+            }
+            
+            $bandera=true;
+        }
+        
         if($cc->save())
             return response()->json(['status'=>'ok', 'CentroCostos'=>$cc], 200);
         else

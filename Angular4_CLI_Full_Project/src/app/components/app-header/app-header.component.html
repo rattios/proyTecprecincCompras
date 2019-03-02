@@ -2,6 +2,7 @@
   <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
   <a class="navbar-brand" href="#/dashboard"></a>
   <button class="navbar-toggler d-md-down-none" type="button" appSidebarToggler>&#9776;</button>
+
   <ul class="nav navbar-nav d-md-down-none">
     <!-- <li class="nav-item px-3">
       <a class="nav-link" href="#">Dashboard</a>
@@ -13,6 +14,7 @@
       <a class="nav-link" href="#">Settings</a>
     </li> -->
   </ul>
+
   <ul class="nav navbar-nav ml-auto">
     <!-- <li class="nav-item dropdown d-md-down-none" dropdown placement="bottom right">
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
@@ -136,9 +138,13 @@
 
 
 
-    <!--<li class="nav-item d-md-down-none">
-      <a class="nav-link" href="#"><i class="icon-location-pin"></i></a>
-    </li> -->
+    <li class="nav-item d-md-down-none">
+      
+    <select id="departamento_id" name="departamento_id" class="form-control" [(ngModel)]="depart" (change)="addDp($event)">
+        <option *ngFor="let d of departamentos" [value]="d.id">{{d.nombre}}</option>
+      </select>
+    </li> 
+
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
         <img src="assets/img/avatars/p.png" class="img-avatar" alt="admin@bootstrapmaster.com"/>

@@ -36,6 +36,20 @@ export class LoginComponent {
             localStorage.setItem('tecprecinc_departamento_id', this.result.user.departamento_id);
             localStorage.setItem('tecprecinc_apellido', this.result.user.apellido);
             localStorage.setItem('tecprecinc_rol', this.result.user.rol);
+            this.http.get(this.ruta.get_ruta()+'usuarios2/'+this.result.user.id)
+             .toPromise()
+             .then(
+             data => {
+                var resp:any=data;
+                console.log(resp[0].departamento2);
+                var depart=resp[0].departamento2;
+                localStorage.setItem('tecprecinc_departamentos', JSON.stringify(depart));
+                this.loading=false;
+              },
+             msg => { 
+               console.log(msg);
+               this.loading=false;
+             });
             setTimeout(()=>{    //<<<---    using ()=> syntax
                 if(this.result.user.rol==0) {
                   this.router.navigate(['dashboard'], {});

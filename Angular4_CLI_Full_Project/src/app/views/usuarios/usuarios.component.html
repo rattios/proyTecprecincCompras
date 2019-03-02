@@ -135,9 +135,24 @@
                   </select>
                   <br><br><br>
                   <strong>Departamento al que pertenece</strong>
-                  <select id="departamento_id" name="departamento_id" class="form-control" [(ngModel)]="proveedor.departamento_id" >
+                  <select id="departamento_id" name="departamento_id" class="form-control" [(ngModel)]="proveedor.departamento_id" (change)="addDp($event)">
                     <option *ngFor="let d of departamentos" [value]="d.id">{{d.nombre}}</option>
                   </select>
+                  <br>
+                  <br>
+                  <table class="table table-bordered">
+                    <thead>
+                      <th>Departamento</th>
+                      <th>Eliminar</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let it of usuario_departamentos">
+                          <td>{{it.nombre}}</td>
+                          <td><button type="button" class="btn btn-danger" (click)=eliminarD(it)>X</button></td>
+                        </tr>
+                    </tbody>
+                  </table>
+                  
                 </div>
               </div>
             </div>

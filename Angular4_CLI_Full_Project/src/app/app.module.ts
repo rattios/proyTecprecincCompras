@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule} from '@angular/forms';
 
 import { RutaService } from './services/ruta.service';
 
@@ -28,7 +29,8 @@ import {
   AppSidebarFooter,
   AppSidebarForm,
   AppSidebarHeader,
-  AppSidebarMinimizer
+  AppSidebarMinimizer,
+
 } from './components';
 
 const APP_COMPONENTS = [
@@ -73,7 +75,8 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     TabsModule.forRoot(),
     ChartsModule,
     HttpClientModule,
-    NgxPermissionsModule.forRoot()
+    NgxPermissionsModule.forRoot(),
+    FormsModule
   ],
   declarations: [
     AppComponent,

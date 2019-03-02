@@ -35,4 +35,10 @@ class Usuarios extends Model
      */
     protected $hidden = ['password', 'created_at', 'updated_at'];
 
+    public function departamento()
+    {
+        // 1 usuario puede tener varios departamentos
+        return $this->belongsToMany('\App\Departamento','usuarios_departamentos','usuarios_id','departamentos_id')/*->withTimestamps()*/; 
+    }
+
 }

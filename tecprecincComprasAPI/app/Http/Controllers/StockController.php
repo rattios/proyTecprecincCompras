@@ -476,17 +476,17 @@ class StockController extends Controller
             $bandera=true;
         }
 
-        if ($stock != null && $stock!='')
-        {
+       // if ($stock!='')
+        //{
             $producto->stock = $stock;
             $bandera=true;
-        }
+        //}
 
-        if ($stock2 != null && $stock2!='')
-        {
+        //if ($stock2 != null && $stock2!='')
+        //{
             $producto->stock2 = $stock2;
             $bandera=true;
-        }
+        //}
 
         if ($peps != null && $peps!='')
         {

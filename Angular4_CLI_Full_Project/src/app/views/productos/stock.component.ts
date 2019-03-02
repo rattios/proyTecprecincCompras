@@ -129,7 +129,7 @@ export class stockComponent {
    filteredItems : any;
    productList : any;
    pages : number = 4;
-   pageSize : number = 10;
+   pageSize : number = 1000;
    pageNumber : number = 0;
    currentIndex : number = 1;
    items: any;

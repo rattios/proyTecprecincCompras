@@ -35,7 +35,7 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $fillable = ['user', 'password', 'email',
          'nombre', 'apellido', 'telefono', 'rol', 'legajo',
-        'codigo_verificacion','departamento_id'];
+        'codigo_verificacion','departamento_id','usuario_departamentos'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -56,5 +56,10 @@ class User extends Model implements AuthenticatableContract,
     {
         // 1 pedido pertenece a un departamento
         return $this->belongsTo('App\Departamento', 'departamento_id');
+    }
+    public function departamento2()
+    {
+        // 1 usuario puede tener varios departamentos
+        return $this->belongsToMany('\App\Departamento','usuarios_departamentos','usuarios_id','departamentos_id')/*->withTimestamps()*/; 
     }
 }

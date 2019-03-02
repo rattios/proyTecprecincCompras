@@ -1,5 +1,6 @@
 import { Component, ElementRef } from '@angular/core';
 import { CommonModule, NgClass} from '@angular/common';
+import { FormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
@@ -15,11 +16,16 @@ export class AppHeader {
   public nMensajes:any=0;
   public mensaje:any;
   public mensajes:any=[];
+  public departamentos:any=[];
+  public depart:any;
 
   constructor(private router: Router,private el: ElementRef,private http: HttpClient, private ruta: RutaService) { }
 
   //wait for the component to render completely
   ngOnInit(): void {
+    this.depart=localStorage.getItem('tecprecinc_departamento_id');
+    this.departamentos=JSON.parse(localStorage.getItem('tecprecinc_departamentos'));
+    console.log(JSON.parse(localStorage.getItem('tecprecinc_departamentos')));
     var nativeElement: HTMLElement = this.el.nativeElement,
     parentElement: HTMLElement = nativeElement.parentElement;
     // move all children out of the element
@@ -55,6 +61,13 @@ export class AppHeader {
            //alert(msg.error);
          });*/
 
+  }
+
+  addDp(d){
+    console.log(d.target.value);
+    localStorage.setItem('tecprecinc_departamento_id', d.target.value);
+    location.reload();
+    
   }
 
   reload(){

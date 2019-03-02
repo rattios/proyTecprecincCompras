@@ -164,6 +164,25 @@ class UsuarioController extends Controller
         $usuario->rol = $request->input('rol');
 
         if($usuario->save()){
+
+        $usuario_departamentos = json_decode($request->input('usuario_departamentos'));
+        if ($usuario_departamentos != null && $usuario_departamentos!='')
+        {
+            //Eliminar las relaciones(productos) en la tabla pivote
+
+            $usuario->departamento2()->detach();
+
+            //Crear las nuevas relaciones en la tabla pivote
+            //return $request->input('productos');
+            $dep = json_decode($request->input('usuario_departamentos'));
+            
+            for ($i=0; $i < count($dep) ; $i++) { 
+
+                //$proveedor->productos()->attach($productos[$i]->producto_id, ['precio' => $productos[$i]->precio]);
+
+                $usuario->departamento2()->attach($dep[$i]->id);       
+            }
+        }
            return response()->json(['status'=>'ok', 'usuario'=>$usuario], 200);
         }else{
             return response()->json(['error'=>'Error al crear el usuario.'], 500);
@@ -275,6 +294,7 @@ class UsuarioController extends Controller
         $apellido=$request->input('apellido');
         $telefono=$request->input('telefono');
         $rol=$request->input('rol');
+        $departamento_id=$request->input('departamento_id');
 
         // Creamos una bandera para controlar si se ha modificado algún dato.
         $bandera = false;
@@ -314,6 +334,18 @@ class UsuarioController extends Controller
             $bandera=true;
         }
 
+        if ($departamento_id != null && $departamento_id!='')
+        {
+            $usuario->departamento_id = $departamento_id;
+            $bandera=true;
+        }
+
+        if ($nombre != null && $nombre!='')
+        {
+            $usuario->nombre = $nombre;
+            $bandera=true;
+        }
+
         if ($nombre != null && $nombre!='')
         {
             $usuario->nombre = $nombre;
@@ -341,6 +373,26 @@ class UsuarioController extends Controller
         if ($legajo != null && $legajo!='')
         {
             $usuario->legajo = $legajo;
+            $bandera=true;
+        }
+        $usuario_departamentos = json_decode($request->input('usuario_departamentos'));
+        if ($usuario_departamentos != null && $usuario_departamentos!='')
+        {
+            //Eliminar las relaciones(productos) en la tabla pivote
+
+            $usuario->departamento2()->detach();
+
+            //Crear las nuevas relaciones en la tabla pivote
+            //return $request->input('productos');
+            $dep = json_decode($request->input('usuario_departamentos'));
+            
+            for ($i=0; $i < count($dep) ; $i++) { 
+
+                //$proveedor->productos()->attach($productos[$i]->producto_id, ['precio' => $productos[$i]->precio]);
+
+                $usuario->departamento2()->attach($dep[$i]->id);       
+            }
+            
             $bandera=true;
         }
 
