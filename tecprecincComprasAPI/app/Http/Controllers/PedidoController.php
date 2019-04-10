@@ -55,13 +55,22 @@ class PedidoController extends Controller
         $usuario= \App\User::find($request->input('usuario_id'));
         $departamento=$request->input('departamento_id');
         //cargar todos los pedidos
+
+        $usr = \App\User::where('id',$request->input('usuario_id'))->with('departamento2')->get();
+        $departamento2=$usr[0]->departamento2;
+
+       // return $departamento2[0];
+
         if ($usuario->rol==1 || $usuario->rol==0) {
            // $departamento=$usuario->departamento_id;
             $pedidos = \App\Pedido::where('estado', 0)->where('aprobar', 0)->with('departamento')->with('solicitud')->with('contratos')->with('centro_costos')->with('usuario.departamento')->orderBy('id', 'desc')->get();
             $auxPedidos=[];
             for ($i=0; $i < count($pedidos); $i++) { 
-                if ($pedidos[$i]->departamento_id==$departamento) {
-                   array_push($auxPedidos,$pedidos[$i]);
+                for ($j=0; $j < count($departamento2); $j++) { 
+                
+                    if ($pedidos[$i]->departamento_id==$departamento2[$j]->id) {
+                       array_push($auxPedidos,$pedidos[$i]);
+                    }
                 }
             }
 

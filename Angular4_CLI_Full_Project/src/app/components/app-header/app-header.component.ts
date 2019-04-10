@@ -16,15 +16,39 @@ export class AppHeader {
   public nMensajes:any=0;
   public mensaje:any;
   public mensajes:any=[];
-  public departamentos:any=[];
-  public depart:any;
+  public departamentos:any=JSON.parse(localStorage.getItem('tecprecinc_departamentos'));  ;
+  public depart:any=localStorage.getItem('tecprecinc_departamento_id');;
 
-  constructor(private router: Router,private el: ElementRef,private http: HttpClient, private ruta: RutaService) { }
+  constructor(private router: Router,private el: ElementRef,private http: HttpClient, private ruta: RutaService) {
+
+
+    this.http.get(this.ruta.get_ruta()+'usuarios2/'+localStorage.getItem('tecprecinc_usuario_id'))
+       .toPromise()
+       .then(
+       data => {
+          var resp:any=data;
+          console.log(data);
+          console.log(resp[0].departamento2);
+          var depart=resp[0].departamento2;
+            
+          localStorage.setItem('tecprecinc_departamentos', JSON.stringify(depart));
+          this.departamentos=JSON.parse(localStorage.getItem('tecprecinc_departamentos'));
+          //this.loading=false;
+        },
+       msg => { 
+         console.log(msg);
+         //this.loading=false;
+       });
+
+  }
 
   //wait for the component to render completely
   ngOnInit(): void {
-    this.depart=localStorage.getItem('tecprecinc_departamento_id');
-    this.departamentos=JSON.parse(localStorage.getItem('tecprecinc_departamentos'));
+    setTimeout(()=>{    //<<<---    using ()=> syntax
+      this.depart=localStorage.getItem('tecprecinc_departamento_id');
+      this.departamentos=JSON.parse(localStorage.getItem('tecprecinc_departamentos'));            
+    },100);
+    
     console.log(JSON.parse(localStorage.getItem('tecprecinc_departamentos')));
     var nativeElement: HTMLElement = this.el.nativeElement,
     parentElement: HTMLElement = nativeElement.parentElement;
@@ -112,5 +136,6 @@ export class AppHeader {
     localStorage.setItem('tecprecinc_departamento_id', '');
     localStorage.setItem('tecprecinc_nombre', '');
     localStorage.setItem('tecprecinc_rol', '');
+    localStorage.setItem('tecprecinc_departamentos', JSON.stringify([]));
   }
 }

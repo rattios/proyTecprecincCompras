@@ -13,6 +13,8 @@ export class presupuestoComponent {
   public proveedores: any;
   public productos: any;
   public loading=true;
+  public loading1=true;
+  public loading2=true;
   public proveedor: any={
           calificacion:null,
           cuit:"",
@@ -49,6 +51,8 @@ export class presupuestoComponent {
               this.productList = this.proveedores;
               this.filteredItems = this.productList;
               this.init();
+              this.loading1=false;
+              this.checkLoading();
               //this.loading=false;
             },
            msg => { 
@@ -71,12 +75,19 @@ export class presupuestoComponent {
               this.productList2 = this.stock;
               this.filteredItems2 = this.productList2;
               this.init2();
-              this.loading=false;
+              this.loading2=false;
+              this.checkLoading();
+              //this.loading=false;
             },
            msg => { 
              console.log(msg);
              this.loading=false;
            });
+  }
+  checkLoading(){
+    if(this.loading1==false && this.loading2==false) {
+      this.loading=false;
+    }
   }
   seleccionar(item){
     this.proveedor=item;

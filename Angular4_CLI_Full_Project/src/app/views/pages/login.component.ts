@@ -57,7 +57,7 @@ export class LoginComponent {
                   this.router.navigate(['pedidos/pedido'], {});
                 }
                 this.loading=false;
-             },10);
+             },1500);
             
             console.log(localStorage.getItem('tecprecinc_departamento_id'));
          },

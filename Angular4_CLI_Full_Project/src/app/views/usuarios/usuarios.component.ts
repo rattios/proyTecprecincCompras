@@ -353,8 +353,6 @@ export class UsuariosComponent {
                  this.filteredItems.push(this.productList[i]);
               }else if (this.productList[i].nombreRol.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
-              }else if (this.productList[i].telefono.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
-                 this.filteredItems.push(this.productList[i]);
               }else if (this.productList[i].email.toUpperCase().indexOf(this.inputName.toUpperCase())>=0) {
                  this.filteredItems.push(this.productList[i]);
               }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { pedidosComponent } from './pedidos.component';
+import { creadosComponent } from './creados/creados.component';
 import { misPedidosComponent } from './mis-pedidos.component';
 import { todosPedidosComponent } from './todos-pedidos.component';
 import { presupuestoComponent } from './presupuesto/presupuesto.component';
@@ -25,6 +26,13 @@ const routes: Routes = [
         component: pedidosComponent,
         data: {
           title: 'Pedido'
+        }
+      },
+      {
+        path: 'creados',
+        component: creadosComponent,
+        data: {
+          title: 'Creados'
         }
       },
       {

@@ -57,11 +57,12 @@ export class presupuestoComponent {
               this.productList = this.proveedores;
               this.filteredItems = this.productList;
               this.init();
-              this.loading=false;
+              //this.loading=false;
             },
            msg => { 
              console.log(msg);
-             this.loading=false;
+             //this.loading=false;
+             alert('Error al cargar los proveedores');
            });
 
       this.http.get(this.ruta.get_ruta()+'stock')
@@ -84,6 +85,7 @@ export class presupuestoComponent {
            msg => { 
              console.log(msg);
              this.loading=false;
+             alert('Error al cargar los productos');
            });
   }
   seleccionar(item){

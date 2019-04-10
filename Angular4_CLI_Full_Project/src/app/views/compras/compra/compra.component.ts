@@ -16,6 +16,7 @@ export class compraComponent {
   public proveedores2: any;
   public productos: any;
   public loading=true;
+  public loading1=true;
   public loading2=true;
   public nota:any='';
   public fecha:any=new Date();
@@ -74,11 +75,14 @@ export class compraComponent {
               this.productList = this.proveedores;
               this.filteredItems = this.productList;
               this.init();
-              this.loading=false;
+              //this.loading=false;
+              this.loading1=false;
+              this.checkLoading();
             },
            msg => { 
              console.log(msg);
-             this.loading=false;
+             alert('Error al cargar los proveedores');
+             //this.loading=false;
            });
 
       this.http.get(this.ruta.get_ruta()+'stock')
@@ -96,12 +100,20 @@ export class compraComponent {
               this.productList2 = this.stock;
               this.filteredItems2 = this.productList2;
               this.init2();
-              this.loading=false;
+              this.loading2=false;
+              this.checkLoading();
             },
            msg => { 
              console.log(msg);
              this.loading=false;
+             alert('Error al cargar los productos');
            });
+  }
+
+  checkLoading(){
+    if(this.loading1==false && this.loading2==false) {
+      this.loading=false;
+    }
   }
   seleccionar(item){
     this.proveedor=item;
