@@ -64,7 +64,7 @@ export class LoginComponent {
           msg => { // Error
           	console.log(msg);
             this.loading=false;
-          	alert('Error al iniciar sesión');
+          	alert(msg.error);
           }
         );
 		//

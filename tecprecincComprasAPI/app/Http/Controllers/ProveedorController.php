@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 
 class ProveedorController extends Controller
 {
@@ -17,9 +18,12 @@ class ProveedorController extends Controller
     public function index()
     {
         //cargar todos los proveedores con los productos que ofrecen
-        $proveedores = \App\Proveedor::with('productos')->get();
+        //$proveedores = \App\Proveedor::with('productos')->get();
+        $proveedores = \App\Proveedor::get();
         $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
         //return $proveedores;
+
+        return response()->json(['status'=>'ok', 'proveedores'=>$proveedores, 'categorias'=>$categorias], 200);
 
         for ($i=0; $i < count($proveedores); $i++) { 
             for ($j=0; $j < count($proveedores[$i]->productos); $j++) { 
@@ -31,6 +35,23 @@ class ProveedorController extends Controller
         }else{
             return response()->json(['status'=>'ok', 'proveedores'=>$proveedores, 'categorias'=>$categorias], 200);
         }
+    }
+
+    public function productos($id)
+    {    
+         $retorno=[];
+         $pedido_stock=DB::select("SELECT * FROM `proveedores_productos` WHERE `proveedor_id`=".$id);
+         //return $pedido_stock[0]->producto_id;
+         for ($i=0; $i < count($pedido_stock); $i++) { 
+            $info=DB::select("SELECT * FROM `productos` WHERE `id`=".$pedido_stock[$i]->producto_id);
+            //$pedido_stock[$i]=$info->nombre;
+            //return $info;
+            if (count($info)!=0) {
+                array_push($retorno,$info[0]);
+            }
+            
+         }
+         return $retorno;
     }
 
     /**
@@ -318,6 +339,7 @@ class ProveedorController extends Controller
             for ($i=0; $i < count($productos) ; $i++) { 
 
                 //$proveedor->productos()->attach($productos[$i]->producto_id, ['precio' => $productos[$i]->precio]);
+               // return response()->json(['status'=>'ok','message'=>'Proveedor editado con éxito.', 'proveedor'=>$productos[$i]], 200);
 
                 $proveedor->productos()->attach($productos[$i]->producto_id);       
             }

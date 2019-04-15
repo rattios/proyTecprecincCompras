@@ -14,6 +14,7 @@ export class ProveedoresComponent {
   public stock: any;
   public proveedores: any;
   public productos: any;
+  public prov_produc:any;
   public proveedor: any='';
   public loading=true;
   public verDatos=false;
@@ -85,8 +86,10 @@ export class ProveedoresComponent {
              this.loading=false;
            });
     }
+    
 
     ver(item){
+      console.log(item.id);
       if(item==0) {
         this.proveedor={
           calificacion:null,
@@ -112,12 +115,33 @@ export class ProveedoresComponent {
           telefonos: []
         };
         this.crear=true;
+        this.prov_produc=[];
         console.log(item);
       }else{
         if(item.forma_pago==null) {
          item.forma_pago=[];
+         this.prov_produc=[];
         }else{
+          this.prov_produc=[];
            item.forma_pago=JSON.parse(item.forma_pago);
+           this.http.get(this.ruta.get_ruta()+'prov_productos/'+item.id)
+           .toPromise()
+           .then(
+           data => {
+             this.prov_produc=data;
+             console.log(data);
+             this.proveedor.productos=this.prov_produc;
+             for (var i = 0; i < this.proveedor.productos.length; i++) {
+               this.proveedor.productos[i].proveedor_id=item.id;
+               this.proveedor.productos[i].producto_id=this.proveedor.productos[i].id;
+             }
+              // this.proveedores=this.prov_produc.proveedores;
+              console.log(this.proveedor);
+            },
+           msg => { 
+             console.log(msg);
+             this.loading=false;
+           });
         }
 
         this.proveedor=item;
@@ -268,6 +292,11 @@ export class ProveedoresComponent {
 
 
     editar(){
+      console.log(this.proveedor);
+      for (var i = 0; i < this.proveedor.productos.length; i++) {
+         this.proveedor.productos[i].proveedor_id=this.proveedor.id;
+         //this.proveedor.productos[i].proveedor_id=this.proveedor.id;
+       }
       
       var send={
         productos:JSON.stringify(this.proveedor.productos),
@@ -357,6 +386,9 @@ export class ProveedoresComponent {
          this.refreshItems();
          console.log("this.pageNumber :  "+this.pageNumber);
    }
+
+
+
    FilterByName(){
       this.filteredItems = [];
       if(this.inputName != ""){
@@ -449,6 +481,22 @@ export class ProveedoresComponent {
          this.refreshItems2();
          console.log("this.pageNumber :  "+this.pageNumber2);
    }
+   public tipo;
+    selectTipo(){
+      console.log(this.tipo);
+      this.filteredItems2 = [];
+      for (var i = 0; i < this.productList2.length; i++) {
+        console.log(this.productList2[i]);
+        if (this.productList2[i].categoria[0].tipo_id==this.tipo) {
+           this.filteredItems2.push(this.productList2[i]);
+           if(!this.checkProductos(this.productList2[i])) {
+             this.proveedor.productos.push(this.productList2[i]);
+            }
+        }
+      }
+      this.init2();
+    }
+
    FilterByName2(){
       this.filteredItems2 = [];
       if(this.inputName2 != ""){

@@ -90,6 +90,24 @@ export class presupuestoComponent {
   }
   seleccionar(item){
     this.proveedor=item;
+    this.http.get(this.ruta.get_ruta()+'prov_productos/'+item.id)
+       .toPromise()
+       .then(
+       data => {
+         //this.prov_produc=data;
+         console.log(data);
+         this.proveedor.productos=data;
+         for (var i = 0; i < this.proveedor.productos.length; i++) {
+           this.proveedor.productos[i].proveedor_id=item.id;
+           this.proveedor.productos[i].producto_id=this.proveedor.productos[i].id;
+         }
+          // this.proveedores=this.prov_produc.proveedores;
+          console.log(this.proveedor);
+        },
+       msg => { 
+         console.log(msg);
+         this.loading=false;
+       });
   }
   setProveedores(){
     console.log(this.proveedores2);

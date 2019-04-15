@@ -109,6 +109,7 @@ Route::group(  ['middleware' =>'cors'], function(){
 
         //----Pruebas ProveedorController
         Route::get('/proveedores','ProveedorController@index');
+        Route::get('/prov_productos/{id}','ProveedorController@productos');
         Route::post('/proveedores','ProveedorController@store');
         Route::put('/proveedores/{id}','ProveedorController@update');
         Route::get('/razon_social/{id}','ProveedorController@razon_social');

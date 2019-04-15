@@ -11,8 +11,9 @@
           </div>
         </div>
         <div class="card-body">
+          
           <div class="form-group form-black label-floating is-empty">
-               <label class="labels" style="font-size: 18px; font-weight: bold">Buscar: </label>
+              <label class="labels" style="font-size: 18px; font-weight: bold">Buscar: </label>
               <input  class="form-control" type="text"  id="inputName" [(ngModel)]="inputName" (ngModelChange)="FilterByName()"/>
                <br>
           </div>
@@ -235,6 +236,22 @@
         </div>
         <div class="card-body" *ngIf="!crear">
           <div class="form-group form-black label-floating is-empty">
+            <div class="form-group form-black label-floating is-empty">
+              <label class="labels" style="font-size: 18px; font-weight: bold">Buscar por tipo: </label>
+             <select id="formaPago" name="formaPago" class="form-control" [(ngModel)]="tipo" (change)="selectTipo()">
+                <option [value]="1">Consumo</option>
+                <option [value]="2">Uso</option>
+                <option [value]="3">Servicios</option>
+              </select>
+            </div>
+            <!--div>
+                <label for="ccnumber">Selecionar todos</label>
+                <label class="switch switch-3d switch-success">
+                  <input type="checkbox" class="switch-input" [(ngModel)]="proveedor.habilitado" >
+                  <span class="switch-label"></span>
+                  <span class="switch-handle"></span>
+                </label>
+            </div--> 
                <label class="labels" style="font-size: 18px; font-weight: bold">Buscar: </label>
               <input  class="form-control" type="text"  id="inputName" [(ngModel)]="inputName2" (ngModelChange)="FilterByName2()"/>
                <br>

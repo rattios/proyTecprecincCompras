@@ -32,7 +32,8 @@ export class tablaInfoAprobarComponent {
     aceptarSolicitud(id){
       console.log(id);
       var aceptar={
-        aprobar:1
+        aprobar:1,
+        estado:1
       }
       this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
            .toPromise()
