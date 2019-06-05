@@ -33,10 +33,11 @@ export class creadosComponent {
   public pedidos1: any=[];
   public pedidos2: any=[];
   public pedidos3: any=[];
+  public pedidos5: any=[];
   constructor(private permissionsService: NgxPermissionsService, private http: HttpClient, private ruta: RutaService) {
     this.rolActual=localStorage.getItem('tecprecinc_rol');
 
-    this.http.get(this.ruta.get_ruta()+'aprobar?departamento_id='+localStorage.getItem('tecprecinc_departamento_id')+'&usuario_id='+localStorage.getItem('tecprecinc_usuario_id'))
+    this.http.get(this.ruta.get_ruta()+'pedidos5')
            .toPromise()
            .then(
            data => {
@@ -53,6 +54,8 @@ export class creadosComponent {
                   this.pedidos2.push(this.pedidos[i]);
                 }else if(this.pedidos[i].estado==3) {
                   this.pedidos3.push(this.pedidos[i]);
+                }else if(this.pedidos[i].estado==5) {
+                  this.pedidos5.push(this.pedidos[i]);
                 }
               }
               for (var i = 0; i < this.pedidos.length; i++) {
@@ -76,33 +79,7 @@ export class creadosComponent {
 
    ngOnInit(): void {
       this.loading=true;
-      let headers = new HttpHeaders();
-      headers = headers.append("Authorization", "Bearer " + localStorage.getItem('tecprecinc_token'));
-      //headers = headers.append("Content-Type", "application/json");
-    
-      this.http.get(this.ruta.get_ruta()+'stock/permitido?token='+localStorage.getItem('tecprecinc_token'), {
-            headers: headers
-        }).toPromise()
-           .then(
-           data => {
-             this.prov=data;
-           	  this.stock=this.prov.productos;
-              console.log(this.stock);
-              this.centroCostos=this.prov.centrocostos;
-              console.log(this.centroCostos);
-              this.productList = this.stock;
-              this.filteredItems = this.productList;
-              this.init();
-              this.loading=false;
-              setTimeout(() => {
-                  this.cc2(43);
-              }, 1000);
-              
-            },
-           msg => { 
-             console.log(msg);
-              this.loading=false;
-           });
+      
     }
 
     reset(){

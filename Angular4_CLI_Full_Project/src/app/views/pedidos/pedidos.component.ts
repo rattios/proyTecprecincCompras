@@ -126,6 +126,46 @@ export class pedidosComponent {
         }, 1000);
        } 
     }
+    guardar(){
+      if(this.productosSeleccionados.length>0) {
+        var enviar = {
+          usuario_id: localStorage.getItem('tecprecinc_usuario_id'),
+          solicitud: JSON.stringify(this.productosSeleccionados),
+          solicitud2: this.productosSeleccionados,
+          centro_costos_id:this.idCentroCostos,
+          contrato_id:this.idContrato,
+          estado: 5,
+          aprobar:0,
+          observaciones:this.observaciones,
+          departamento_id:localStorage.getItem('tecprecinc_departamento_id'),
+        }
+        console.log(enviar);
+
+        setTimeout(() => {
+          this.http.post(this.ruta.get_ruta()+'pedidos',enviar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+              
+              this.vaciar();
+              this.success=true;
+              setTimeout(() => {  
+                this.success=false;
+              }, 4000);
+
+            },
+           msg => { 
+             console.log(msg);
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
+             
+           });
+        }, 1000);
+       } 
+    }
     vaciar(){
       this.productosSeleccionados=[];
       this.observaciones='';

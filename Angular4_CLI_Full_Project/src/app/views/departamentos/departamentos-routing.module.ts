@@ -11,6 +11,7 @@ import { rrhhComponent } from './rrhh.component';
 import { ventasComponent } from './ventas.component';
 import { catrielComponent } from './catriel.component';
 import { PHComponent } from './PH.component';
+import { DGComponent } from './DG.component';
 import { RDLSComponent } from './RDLS.component';
 
 const routes: Routes = [
@@ -61,21 +62,28 @@ const routes: Routes = [
         path: 'catriel',
         component: catrielComponent,
         data: {
-          title: 'Stock de ventas'
+          title: 'Stock de catriel'
         }
       },
       {
         path: 'ph',
         component: PHComponent,
         data: {
-          title: 'Stock de ventas'
+          title: 'Stock de PH'
+        }
+      },
+      {
+        path: 'dg',
+        component: DGComponent,
+        data: {
+          title: 'Stock de Depósito General'
         }
       },
       {
         path: 'rdls',
         component: RDLSComponent,
         data: {
-          title: 'Stock de ventas'
+          title: 'Stock de rdls'
         }
       }
    

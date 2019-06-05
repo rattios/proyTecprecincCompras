@@ -243,6 +243,42 @@ class PedidoController extends Controller
         } 
     }
 
+    public function index5()
+    {
+        //cargar todos los pedidos
+        $pedidos = \App\Pedido::where('estado', 5)->with('solicitud')->with('departamento')->with('contratos')->with('centro_costos')->with('usuario.departamento')->orderBy('id', 'desc')->get();
+
+
+        if(count($pedidos) == 0){
+            return response()->json(['status'=>'ok', 'pedidos'=>[]], 200);          
+        }else{
+
+            $categorias = \App\Categoria::with('tipo')->with('rubro')->get();
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    for ($k=0; $k < count($categorias); $k++) { 
+                        if ($pedidos[$i]->solicitud[$j]->categoria_id == $categorias[$k]->id ) {
+                            $pedidos[$i]->solicitud[$j]->categoria = $categorias[$k];
+                        }
+                    }
+                    
+                }
+                
+            }
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                for ($j=0; $j < count($pedidos[$i]->solicitud); $j++) { 
+                    $pedidos[$i]->solicitud[$j]->centro_costos=$pedidos[$i]->centro_costos;
+                    $pedidos[$i]->solicitud[$j]->contratos=$pedidos[$i]->contratos;
+                } 
+            }
+
+            $centrocostos = \App\CentroCostos::with('contratos')->get();
+            return response()->json(['status'=>'ok', 'pedidos'=>$pedidos, 'centrocostos'=>$centrocostos], 200);
+        } 
+    }
+
 
     public function index_departamentos($id)
     {
@@ -460,6 +496,26 @@ class PedidoController extends Controller
         // Comprobamos si el pedido que nos están pasando existe o no.
         $pedido=\App\Pedido::find($id);
         $pedido->observaciones = $request->input('observaciones');
+        $pedido->estado = $request->input('estado');
+
+        $pedido->solicitud()->detach();
+            $preferencias = json_decode($request->input('solicitud'));
+
+            //Agregar las nuevas relaciones(preferencias) en la tabla pivote
+            for ($i=0; $i < count($preferencias) ; $i++) { 
+                  $pedido->solicitud()->attach($preferencias[$i]->id, [
+                    'cantidad' => $preferencias[$i]->pivot->cantidad,
+                    'aprobado' => $preferencias[$i]->pivot->aprobado,
+                    'entregado' => $preferencias[$i]->pivot->entregado,
+                    'f_entrega' => $preferencias[$i]->pivot->f_entrega,
+                    'tipo_entrega' => $preferencias[$i]->pivot->tipo_entrega,
+                    'devuelto' => $preferencias[$i]->pivot->devuelto,
+                    'cancelado' => $preferencias[$i]->pivot->cancelado,
+                    'pendiente' => $preferencias[$i]->pivot->pendiente,
+                    'observacion' => $preferencias[$i]->pivot->observacion,
+                    'centro_costos_id' => $preferencias[$i]->pivot->centro_costos_id
+                ]);
+            }
 
         if ($pedido->save()) {
             return response()->json(['status'=>'ok','pedido'=>$pedido], 200);

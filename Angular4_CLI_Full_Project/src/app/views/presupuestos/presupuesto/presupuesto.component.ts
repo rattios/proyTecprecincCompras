@@ -223,6 +223,7 @@ export class presupuestoComponent {
     };
     enviarPresupuesto(){
       this.loading=true;
+      if(this.proveedor.id!=0) {
       if(this.itemsPresupuesto.length>0) {
         this.aEnviar.razon_social=this.proveedor.razon_social,
         this.aEnviar.nombre_fantasia=this.proveedor.nombre_fantasia,
@@ -251,6 +252,7 @@ export class presupuestoComponent {
              console.log(msg);
              this.loading=false;
            });
+      }
       }
       console.log(this.aEnviar);
     }

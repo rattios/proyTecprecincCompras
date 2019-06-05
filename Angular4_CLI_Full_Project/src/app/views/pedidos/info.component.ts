@@ -63,6 +63,16 @@ export class infoComponent {
            });
     }
 
+    quitar(id){
+       console.log(id);
+       for (var i = 0; i < this.informacion.solicitud.length; i++) {
+        if(this.informacion.solicitud[i].id==id) {
+          console.log(this.informacion.solicitud[i]);
+          this.informacion.solicitud.splice(i, 1);
+        }
+       }
+    }
+
     ccc(centro_costo_id) {
       console.log(centro_costo_id.target.value);
       console.log(this.informacion);
@@ -128,8 +138,10 @@ export class infoComponent {
       console.log(this.informacion.observaciones);
       var enviar={
         observaciones:this.informacion.observaciones,
-        centro_costos_id:this.informacion.centro_costos_id
+        centro_costos_id:this.informacion.centro_costos_id,
+        solicitud:JSON.stringify(this.informacion.solicitud)
       }
+      console.log(enviar);
       this.http.put(this.ruta.get_ruta()+'editar_observacion/'+id,enviar)
            .toPromise()
            .then(

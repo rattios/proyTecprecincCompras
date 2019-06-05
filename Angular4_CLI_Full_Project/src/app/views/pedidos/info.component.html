@@ -239,12 +239,14 @@
 				                <th *ngIf="informacion.estado!=0">Status</th>
 				                <th *ngIf="informacion.estado==1">Acción</th>
 				                <th *ngIf="informacion.estado==2">Centro de costos</th>
+				                <th *ngIf="informacion.estado==0">Quitar</th>
 				              </tr>
 				            </thead>
 				            <tbody>
 				              <tr *ngFor="let item of informacion.solicitud">
 				              	<td>{{item.codigo}}</td>
-				                <td>{{item.pivot.cantidad}}</td>
+				                <td *ngIf="informacion.estado!=0">{{item.pivot.cantidad}}</td>
+				                <td *ngIf="informacion.estado==0"> <input [(ngModel)]="item.pivot.cantidad"> </td>
 				                <td>{{item.nombre}}</td>
 				                <!--td>{{item.pivot.nombre_centro_costo}}</td-->
 				                <td *ngIf="informacion.estado!=0">
@@ -290,6 +292,9 @@
 			                          <option *ngFor="let cc of cc" [value]="cc.id">{{cc.codigo}} - {{cc.descripcion}}</option>
 			                        </select>
 			                    </td>
+			                    <td *ngIf="informacion.estado==0">
+			                        <button type="button" class="btn btn-danger"  (click)=quitar(item.id)>X</button>
+			                    </td>
 				              </tr>
 				            </tbody>
 				          </table>
@@ -298,7 +303,7 @@
 				          		<label for="comment">Observaciones:</label>
 				          		<div class="form-group" style="text-align: center">
 								  <textarea class="form-control" rows="5" cols="190" [(ngModel)]="informacion.observaciones"></textarea><br>
-								  <button type="button" class="btn btn-primary" [hidden]="informacion.estado==2" (click)=editar_observacion(informacion.id)>Guardar Observacion</button>
+								  <button type="button" class="btn btn-primary" [hidden]="informacion.estado==2" (click)=editar_observacion(informacion.id)>Guardar</button>
 								  <button type="button" class="btn btn-primary" *ngIf="informacion.estado==2" (click)="editar_cc(informacion.id)">Guardar cambios en "Centro de costos"</button>
 								</div>
 					        </div>

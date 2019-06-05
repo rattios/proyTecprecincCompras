@@ -1,0 +1,25 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <img src="../assets/img/template.gif" style="position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;z-index: 99;width: 135px;margin-top: 15%;" *ngIf="loading">
+      <div class="card" *ngIf="!loading">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Departamento          
+        </div>
+        <div class="card-body">
+          <tabset>
+            <tab heading="Inventario">
+              <app-info-departamento [informacion]="9"></app-info-departamento>
+            </tab>
+            <tab heading="Usuarios">
+              <app-info-usuarios [informacion]="9"></app-info-usuarios>
+            </tab>
+            <tab heading="Información">
+              <app-info-departamentos [informacion]="9"></app-info-departamentos>
+            </tab>
+          </tabset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

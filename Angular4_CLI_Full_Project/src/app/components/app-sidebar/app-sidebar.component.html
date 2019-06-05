@@ -47,12 +47,15 @@
           <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/pedido']"><i class="icon-note"></i> Crear</a>
           </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/creados']"><i class="icon-arrow-down-circle"></i> Creados</a>
+          </li>
           <li class="nav-item" *ngxPermissionsOnly="[0,1]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/aprobar']"><i class="fa fa-check"></i> Por aprobar</a>
           </li>
-          <li class="nav-item" *ngxPermissionsOnly="[0]">
+          <!--li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/entrantes']"><i class="icon-arrow-down-circle"></i> Entrantes</a>
-          </li>
+          </li-->
           <li class="nav-item" *ngxPermissionsOnly="[0]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/pedidos/encurso']"><i class="icon-clock"></i> En curso</a>
           </li>
@@ -177,6 +180,9 @@
           </li>
           <li class="nav-item" *ngxPermissionsOnly="[0,1]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/mantenimiento']"><i class="fa fa-building"></i> Mto. CIPH</a>
+          </li>
+          <li class="nav-item" *ngxPermissionsOnly="[0,1]">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/dg']"><i class="fa fa-building"></i> Depósito General</a>
           </li>
         </ul>
       </li>

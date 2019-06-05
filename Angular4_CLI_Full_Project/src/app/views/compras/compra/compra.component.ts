@@ -38,6 +38,9 @@ export class compraComponent {
           formaPago: "",
           telefonos: []
         };
+  public apresupuesto: any=[{
+        razon_social:"vacio"
+      }];;
         
   constructor(private http: HttpClient, private ruta: RutaService, private router: Router) {
     this.http.get(this.ruta.get_ruta()+'login/check?token='+localStorage.getItem('tecprecinc_token'))
@@ -60,10 +63,19 @@ export class compraComponent {
            alert('Usuario no autorizado.');
          });
   }
-  public apresupuesto: any=[];
+  
   ngOnInit(): void {
     this.loading=true;
     this.apresupuesto.push(JSON.parse(localStorage.getItem("apresupuesto")));
+    if(this.apresupuesto.length==0) {
+      console.log(this.apresupuesto.length);
+      this.apresupuesto=[{
+        razon_social:"vacio"
+      }];
+    }else{
+      console.log('lleno');
+      console.log(this.apresupuesto);
+    }
       this.http.get(this.ruta.get_ruta()+'proveedores')
            .toPromise()
            .then(
@@ -261,37 +273,41 @@ export class compraComponent {
     };
     enviarPresupuesto(){
       this.loading=true;
-      if(this.itemsPresupuesto.length>0) {
-        this.aEnviar.razon_social=this.proveedor.razon_social,
-        this.aEnviar.nombre_fantasia=this.proveedor.nombre_fantasia,
-        this.aEnviar.cuit=this.proveedor.cuit,
-        this.aEnviar.telefono=this.proveedor.telefono,
-        this.aEnviar.email=this.proveedor.email,
-        this.aEnviar.proveedor_id=this.proveedor.id;
-        this.aEnviar.nota=this.nota;
-        this.aEnviar.productos=JSON.stringify(this.itemsPresupuesto);
-        this.aEnviar.observaciones=this.observaciones;
-        this.obs_recepcion='';
-        console.log(this.aEnviar);
-        this.http.post(this.ruta.get_ruta()+'compra',this.aEnviar)
-           .toPromise()
-           .then(
-           data => {
-             console.log(data);
-             this.enviado=data;
-             this.enviado=this.enviado.compra;
-             this.enviado.productos=JSON.parse(this.enviado.productos);
-             this.itemsPresupuesto=[];
-             this.observaciones='';
-             this.nota='';
-             this.loading=false;
-             this.saveFile();
+      if(this.proveedor.id!=0) {
+        // code...
+      
+        if(this.itemsPresupuesto.length>0) {
+          this.aEnviar.razon_social=this.proveedor.razon_social,
+          this.aEnviar.nombre_fantasia=this.proveedor.nombre_fantasia,
+          this.aEnviar.cuit=this.proveedor.cuit,
+          this.aEnviar.telefono=this.proveedor.telefono,
+          this.aEnviar.email=this.proveedor.email,
+          this.aEnviar.proveedor_id=this.proveedor.id;
+          this.aEnviar.nota=this.nota;
+          this.aEnviar.productos=JSON.stringify(this.itemsPresupuesto);
+          this.aEnviar.observaciones=this.observaciones;
+          this.obs_recepcion='';
+          console.log(this.aEnviar);
+          this.http.post(this.ruta.get_ruta()+'compra',this.aEnviar)
+             .toPromise()
+             .then(
+             data => {
+               console.log(data);
+               this.enviado=data;
+               this.enviado=this.enviado.compra;
+               this.enviado.productos=JSON.parse(this.enviado.productos);
+               this.itemsPresupuesto=[];
+               this.observaciones='';
+               this.nota='';
+               this.loading=false;
+               this.saveFile();
 
-            },
-           msg => { 
-             console.log(msg);
-             this.loading=false;
-           });
+              },
+             msg => { 
+               console.log(msg);
+               this.loading=false;
+             });
+        }
       }
       console.log(this.aEnviar);
     }

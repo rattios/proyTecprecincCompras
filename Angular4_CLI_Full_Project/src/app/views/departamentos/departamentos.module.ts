@@ -10,6 +10,7 @@ import { administracionComponent } from './administracion.component';
 import { calidadComponent } from './calidad.component';
 import { mantenimientoComponent } from './mantenimiento.component';
 import { rrhhComponent } from './rrhh.component';
+import { DGComponent } from './DG.component';
 import { ventasComponent } from './ventas.component';
 import { catrielComponent } from './catriel.component';
 import { PHComponent } from './PH.component';
@@ -40,6 +41,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     ventasComponent,
     catrielComponent,
     PHComponent,
+    DGComponent,
     RDLSComponent,
     info_departamentoComponent,
     info_usuariosComponent,
