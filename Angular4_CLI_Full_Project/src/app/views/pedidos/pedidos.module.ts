@@ -26,6 +26,7 @@ import { pedidosRoutingModule } from './pedidos-routing.module';
 import { transferenciaComponent } from './transferencia.component';
 import { transInfoComponent } from './transInfo.component';
 import { presupuestoComponent } from './presupuesto/presupuesto.component';
+import { pedidosStockComponent } from './pedidosStock/pedidos.component';
 
 import { entrantesComponent } from './entrantes/entrantes.component';
 import { tablaInfoEntrantesComponent } from './entrantes/tablaInfoEntrantes.component';
@@ -78,6 +79,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     transferenciaComponent,
     transInfoComponent,
     presupuestoComponent,
+    pedidosStockComponent,
     aprobarComponent,
     tablaInfoAprobarComponent,
     entrantesComponent,

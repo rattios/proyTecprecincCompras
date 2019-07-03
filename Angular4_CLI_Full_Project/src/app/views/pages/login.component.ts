@@ -65,6 +65,21 @@ export class LoginComponent {
           	console.log(msg);
             this.loading=false;
           	alert(msg.error);
+            var user={
+              usuario:this.usuario.user,
+              clave:this.usuario.password
+            }
+            this.http.post(this.ruta.get_ruta()+'intento', user)
+              .toPromise()
+              .then(
+                data => { // Success
+                console.log(data);
+            
+             },
+              msg => { // Error
+              console.log(msg);
+              }
+            );
           }
         );
 		//

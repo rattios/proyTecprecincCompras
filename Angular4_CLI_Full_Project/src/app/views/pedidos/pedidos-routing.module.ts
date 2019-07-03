@@ -6,7 +6,7 @@ import { creadosComponent } from './creados/creados.component';
 import { misPedidosComponent } from './mis-pedidos.component';
 import { todosPedidosComponent } from './todos-pedidos.component';
 import { presupuestoComponent } from './presupuesto/presupuesto.component';
-
+import { pedidosStockComponent } from './pedidosStock/pedidos.component';
 import { aprobarComponent } from './aprobar/aprobar.component';
 import { entrantesComponent } from './entrantes/entrantes.component';
 import { encursoComponent } from './encurso/encurso.component';
@@ -33,6 +33,13 @@ const routes: Routes = [
         component: creadosComponent,
         data: {
           title: 'Creados'
+        }
+      },
+      {
+        path: 'pedidosStock',
+        component: pedidosStockComponent,
+        data: {
+          title: 'Pedidos Stock'
         }
       },
       {

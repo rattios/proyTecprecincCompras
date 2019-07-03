@@ -1,0 +1,136 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="col-lg-12">
+        <img src="../assets/img/template.gif" style="position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;z-index: 99;width: 135px;margin-top: 15%;" *ngIf="loading">
+        <div style="width: 100%">
+          <alert type="success" *ngIf="success" style="position: fixed;width: calc(100% - 262px);z-index: 99;top: 65px;text-align: center;">
+            <strong>Actualizado con éxito</strong> 
+          </alert>
+          <alert type="danger" *ngIf="fail" style="position: fixed;width: calc(100% - 262px);z-index: 99;top: 65px;text-align: center;">
+            <strong>Ha ocurrido un Error!</strong> 
+          </alert>
+        </div>
+      <div class="row">
+        <div class="col-lg-7">
+          <div class="card" *ngIf="!loading">
+            <div class="card-header">
+              <i class="fa fa-align-justify"></i>  <label class="labels" style="font-size: 18px; font-weight: bold">Busca y agrega los productos a solicitar </label>
+            </div>
+            <div class="card-body">
+              <div class="form-group form-black label-floating is-empty">
+                   <label class="labels" style="font-size: 16px; font-weight: bold">Buscar: </label>
+                  <input  class="form-control" type="text"  id="inputName" [(ngModel)]="inputName" (ngModelChange)="FilterByName()"/>
+                   <br>
+              </div>
+              <table class="table table-striped">
+                <thead>
+                  <th>Código</th>
+                  <th [hidden]="rolActual!=0">stock</th>
+                  <th>nombre</th>
+                  
+                  
+                  <th></th>
+                </thead>
+                <tbody>
+                   <tr *ngFor="let item of items">
+                      <td>{{item.codigo}}</td>
+                      <td [hidden]="rolActual!=0">{{item.stock}}</td>
+
+                      <td>{{item.nombre}}</td>
+                      
+                      <td><button type="button" class="btn btn-success" (click)=setProductos(item)>Agregar</button></td>
+                   </tr>
+                </tbody>
+              </table>
+                <div class="btn-toolbar" role="toolbar" style="margin: 0;">
+                  <div class="btn-group">
+                     <label style="margin-top:10px">Página {{currentIndex}}/{{pageNumber}} </label>
+                  </div>
+                  <div class="btn-group pull-right">
+                     <ul class="pagination" >
+                        <li [ngClass]="{'disabled': (currentIndex == 1 || pageNumber == 0)}" ><a  (click)="prevPage()">Atrás</a></li>
+                           <li *ngFor="let page of pagesIndex"  [ngClass]="{'active': (currentIndex == page)}">
+                              <a (click)="setPage(page)" >{{page}} </a>
+                           </li>
+                        <li [ngClass]="{'disabled': (currentIndex == pageNumber || pageNumber == 0)}" ><a   (click)="nextPage()">Siguiente</a></li>
+                     </ul>
+                  </div>
+                </div>
+            </div>   
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card">
+            <div class="card-header">
+              <i class="fa fa-align-justify"></i>  <label class="labels" style="font-size: 18px; font-weight: bold">Información de la solicitud para el STOCK</label>
+            </div>
+            <div class="card-body">
+              <div class="form-group form-black label-floating is-empty">
+                   <label class="labels" style="font-size: 14px; font-weight: bold">Usuario solicitante:</label> {{user}}
+              </div>
+              <div class="form-group form-black label-floating is-empty">
+                   <label class="labels" style="font-size: 14px; font-weight: bold">Productos seleccionados</label>
+              </div>
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th style="width: 90px">Cantidad</th>
+                    <th>Nombre</th>
+                    <th>Código</th>
+                    <!--th>Centro de costos</th-->
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of productosSeleccionados"> 
+                      <td style="width: 90px"><input type="number" min="1" class="form-control" id="cantidad" [(ngModel)]="item.cantidad"></td>
+                      <td>{{item.nombre}}</td>
+                      <td>{{item.codigo}}</td>
+                      <!--td>
+                        <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="item.centro_costos_id" (change)="cc($event)">
+                          <option *ngFor="let cc of centroCostos" [value]="cc.id">{{cc.descripcion}}</option>
+                        </select>
+                      </td-->
+                      <td><button type="button" class="btn btn-danger" (click)=delProductos(item)>X</button></td>
+                   </tr>
+                </tbody>
+              </table> 
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="comment">Observaciones:</label>
+                    <textarea class="form-control" rows="5" cols="150" [(ngModel)]="observaciones"></textarea>
+                  </div>
+                </div>
+              </div> 
+              <div class="form-group row">
+                <div class="row">
+                  <div class="col-md-12">
+                    <label class="label" for="select">Centro de costos</label>
+                    <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="idCentroCostos" (change)="cc($event)" [disabled]="idCentroCostos==44">
+                      <option *ngFor="let cc of centroCostos" [value]="cc.id">{{cc.descripcion}}</option>
+                    </select>
+                  </div>
+                </div>
+                <br>
+                <!--div class="row">
+                  <br>
+                  <div class="col-md-12">
+                    <label class="labels">Contratos:</label>
+                    <select name="contratos" class="form-control" [(ngModel)]="idContrato">
+                        <option *ngFor="let c of contratos" [value]="c.id">{{c.nombre}} {{c.cliente}}</option>
+                    </select>
+                  </div>
+                </div-->
+              </div> 
+            </div>
+            <div class="card-footer">
+              <button type="submit" class="btn btn-sm btn-primary" (click)=enviar()><i class="fa fa-dot-circle-o"></i> Enviar pedido</button>
+              <button type="submit" class="btn btn-sm btn-warning" (click)=guardar()><i class="fa fa-dot-circle-o"></i> Guardar pedido</button>
+              <button type="reset" class="btn btn-sm btn-danger" (click)=vaciar()><i class="fa fa-ban"></i> Vaciar</button>
+            </div>
+          </div>
+    </div>
+  </div>
+</div>

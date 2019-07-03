@@ -80,7 +80,7 @@
 	      					</div>
 	      					<div class="row">
 		      					<div class="col-sm-4">
-		      						<strong>Solicitante: </strong>{{informacion.usuario.nombre}}
+		      						<strong>Solicitante: </strong>{{informacion.usuario.nombre}} {{informacion.usuario.apellido}}
 			      				</div>
 			      				<div class="col-sm-4">
 			      					<strong>Departamento: </strong>{{informacion.usuario.departamento.nombre}}
@@ -212,10 +212,10 @@
       				<div class="row">
       					
       					<div class="col-lg-4">
-	      					<strong>Departamento: </strong>{{informacion.usuario.departamento.nombre}}
+	      					<strong>Departamento: </strong>{{informacion.usuario.departamento.nombre}} <p style="font-weight: bold" [hidden]="informacion.centro_costos_id!=44"> PEDIDO PARA STOCK</p>
 	      				</div>
 	      				<div class="col-lg-4">
-	      					<strong>Usuario: </strong>{{informacion.usuario.nombre}}
+	      					<strong>Nombre: </strong>{{informacion.usuario.nombre}} {{informacion.usuario.apellido}}
 	      				</div>
 	      				<div class="col-lg-4">
 	      					<strong>Fecha de alta: </strong>{{informacion.created_at | date :  "dd-MM-yyyy"}}
@@ -273,7 +273,10 @@
 					                	</div>
 					                	<div *ngIf="!item.pivot.aprobado && !item.pivot.entregado && !item.pivot.cancelado && !item.pivot.devuelto">
 						                	<div >
-						                		<button type="button" class="btn btn-outline-success btn-sm" (click)="selectPicking(item);largeModal2.show()" [hidden]="item.stock2==0 && item.stock==0">Picking</button> 
+						                		<div [hidden]="item.stock2==0 && item.stock==0">
+						                			<button type="button" class="btn btn-outline-success btn-sm" (click)="selectPicking(item);largeModal2.show()"  [disabled]="informacion.centro_costos_id==44">Picking</button> 
+						                		</div>
+						                		
 							                	<button type="button" class="btn btn-outline-primary btn-sm" (click)="apresupuesto(item)" [routerLink]="['/presupuestos/presupuesto']">Pedir Presupuesto</button>
 							                	<button type="button" class="btn btn-outline-info btn-sm"  [routerLink]="['/compras/compra']">Pedir a proveedor</button>
 							                	<!--button type="button" class="btn btn-outline-danger btn-sm" (click)=cancelar(item)>Cancelar</button-->
@@ -399,7 +402,7 @@
 		      						Zona: 
 			      				</div>
 			      				<div class="col-sm-5">
-			      					Autorizante:
+			      					Autorizante: {{autorizante}}
 			      				</div>
 			      				<!--div class="col-sm-2">
 			      					Teléfono:

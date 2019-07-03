@@ -1,18 +1,17 @@
 import { Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import { Router } from '@angular/router';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { RutaService } from '../../../services/ruta.service';
 
 @Component({
-  templateUrl: 'creados.component.html'
+  templateUrl: 'pedidos.component.html'
 })
-export class creadosComponent {
+export class pedidosStockComponent {
   public prov: any;
   public centroCostos: any;
-  public idCentroCostos: any=43;
+  public idCentroCostos: any=44;
   public contratos:any=[];
   public idContrato:any=1;
   public stock: any;
@@ -26,92 +25,38 @@ export class creadosComponent {
   public fail=false;
   public observaciones='';
   public rolActual:any=2;
-  public informacion: any;
-
-  public pedidos: any;
-  public pedidos0: any=[];
-  public pedidos1: any=[];
-  public pedidos2: any=[];
-  public pedidos3: any=[];
-  public pedidos5: any=[];
   constructor(private permissionsService: NgxPermissionsService, private http: HttpClient, private ruta: RutaService) {
     this.rolActual=localStorage.getItem('tecprecinc_rol');
-
-    this.http.get(this.ruta.get_ruta()+'pedidos5/'+localStorage.getItem('tecprecinc_usuario_id'))
-           .toPromise()
-           .then(
-           data => {
-             this.prov=data;
-             console.log(this.prov.centrocostos);
-              this.pedidos=this.prov.pedidos;
-              console.log(this.pedidos);
-              for (var i = 0; i < this.pedidos.length; i++) {
-                if(this.pedidos[i].estado==0) {
-                  this.pedidos0.push(this.pedidos[i]);
-                }else if(this.pedidos[i].estado==1) {
-                  this.pedidos1.push(this.pedidos[i]);
-                }else if(this.pedidos[i].estado==2) {
-                  this.pedidos2.push(this.pedidos[i]);
-                }else if(this.pedidos[i].estado==3) {
-                  this.pedidos3.push(this.pedidos[i]);
-                }else if(this.pedidos[i].estado==5) {
-                  this.pedidos5.push(this.pedidos[i]);
-                }
-              }
-              for (var i = 0; i < this.pedidos.length; i++) {
-                for (var j = 0; j < this.pedidos[i].solicitud.length; j++) {
-                  for (var k = 0; k < this.prov.centrocostos.length; k++) {
-                    if(this.pedidos[i].solicitud[j].pivot.centro_costos_id==this.prov.centrocostos[k].id) {
-                      this.pedidos[i].solicitud[j].pivot.nombre_centro_costo=this.prov.centrocostos[k].descripcion;
-                      //alert(this.pedidos[i].solicitud[j].pivot.centro_costos_id);
-                    }
-                  }
-                }
-              }
-              this.loading=false;
-            },
-           msg => { 
-             console.log(msg);
-             this.loading=false;
-             alert('Ha ocurrido un error!');
-           });
   }
 
    ngOnInit(): void {
       this.loading=true;
-      
-    }
-
-    reset(){
-      this.loading=true;
-      this.pedidos0=[];
-      this.pedidos1=[];
-      this.pedidos2=[];
-      this.pedidos3=[];
-      this.http.get(this.ruta.get_ruta()+'aprobar?usuario_id='+localStorage.getItem('tecprecinc_usuario_id'))
-           .toPromise()
+      let headers = new HttpHeaders();
+      headers = headers.append("Authorization", "Bearer " + localStorage.getItem('tecprecinc_token'));
+      //headers = headers.append("Content-Type", "application/json");
+    
+      this.http.get(this.ruta.get_ruta()+'stock/permitido?token='+localStorage.getItem('tecprecinc_token'), {
+            headers: headers
+        }).toPromise()
            .then(
            data => {
              this.prov=data;
-               this.pedidos=this.prov.pedidos;
-              console.log(this.pedidos);
-              for (var i = 0; i < this.pedidos.length; ++i) {
-                if(this.pedidos[i].estado==0) {
-                  this.pedidos0.push(this.pedidos[i]);
-                }else if(this.pedidos[i].estado==1) {
-                  this.pedidos1.push(this.pedidos[i]);
-                }else if(this.pedidos[i].estado==2) {
-                  this.pedidos2.push(this.pedidos[i]);
-                }else if(this.pedidos[i].estado==3) {
-                  this.pedidos3.push(this.pedidos[i]);
-                }
-              }
+           	  this.stock=this.prov.productos;
+              console.log(this.stock);
+              this.centroCostos=this.prov.centrocostos;
+              console.log(this.centroCostos);
+              this.productList = this.stock;
+              this.filteredItems = this.productList;
+              this.init();
               this.loading=false;
+              setTimeout(() => {
+                  this.cc2(43);
+              }, 1000);
+              
             },
            msg => { 
              console.log(msg);
-             this.loading=false;
-             alert('Ha ocurrido un error!');
+              this.loading=false;
            });
     }
 
@@ -150,6 +95,46 @@ export class creadosComponent {
           centro_costos_id:this.idCentroCostos,
           contrato_id:this.idContrato,
           estado: 0,
+          aprobar:0,
+          observaciones:this.observaciones,
+          departamento_id:localStorage.getItem('tecprecinc_departamento_id'),
+        }
+        console.log(enviar);
+
+        setTimeout(() => {
+          this.http.post(this.ruta.get_ruta()+'pedidos',enviar)
+           .toPromise()
+           .then(
+           data => {
+             console.log(data);
+              
+              this.vaciar();
+              this.success=true;
+              setTimeout(() => {  
+                this.success=false;
+              }, 4000);
+
+            },
+           msg => { 
+             console.log(msg);
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
+             
+           });
+        }, 1000);
+       } 
+    }
+    guardar(){
+      if(this.productosSeleccionados.length>0) {
+        var enviar = {
+          usuario_id: localStorage.getItem('tecprecinc_usuario_id'),
+          solicitud: JSON.stringify(this.productosSeleccionados),
+          solicitud2: this.productosSeleccionados,
+          centro_costos_id:this.idCentroCostos,
+          contrato_id:this.idContrato,
+          estado: 5,
           aprobar:0,
           observaciones:this.observaciones,
           departamento_id:localStorage.getItem('tecprecinc_departamento_id'),

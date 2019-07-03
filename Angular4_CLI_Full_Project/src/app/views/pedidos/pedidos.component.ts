@@ -87,7 +87,8 @@ export class pedidosComponent {
       }
     }
     enviar(){
-      if(this.productosSeleccionados.length>0) {
+      console.log(localStorage.getItem('tecprecinc_departamento_id'));
+      if(this.productosSeleccionados.length==0) {
         var enviar = {
           usuario_id: localStorage.getItem('tecprecinc_usuario_id'),
           solicitud: JSON.stringify(this.productosSeleccionados),

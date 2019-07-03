@@ -17,6 +17,7 @@ export class infoComponent {
   public proveedor: any='';
   public showTransferencia=false;
   public aTransferir:any;
+  public autorizante= localStorage.getItem('tecprecinc_nombre')+' '+localStorage.getItem('tecprecinc_apellido');
 
   public largeModal2:any;
 

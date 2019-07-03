@@ -90,6 +90,7 @@ export class presupuestoComponent {
   }
   seleccionar(item){
     this.proveedor=item;
+    this.loading=true;
     this.http.get(this.ruta.get_ruta()+'prov_productos/'+item.id)
        .toPromise()
        .then(
@@ -103,6 +104,7 @@ export class presupuestoComponent {
          }
           // this.proveedores=this.prov_produc.proveedores;
           console.log(this.proveedor);
+          this.loading=false;
         },
        msg => { 
          console.log(msg);

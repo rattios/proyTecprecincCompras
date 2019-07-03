@@ -243,10 +243,10 @@ class PedidoController extends Controller
         } 
     }
 
-    public function index5()
+    public function index5($id)
     {
         //cargar todos los pedidos
-        $pedidos = \App\Pedido::where('estado', 5)->with('solicitud')->with('departamento')->with('contratos')->with('centro_costos')->with('usuario.departamento')->orderBy('id', 'desc')->get();
+        $pedidos = \App\Pedido::where('estado', 5)->where('usuario_id', $id)->with('solicitud')->with('departamento')->with('contratos')->with('centro_costos')->with('usuario.departamento')->orderBy('id', 'desc')->get();
 
 
         if(count($pedidos) == 0){
