@@ -49,6 +49,11 @@ class Stock extends Model
 		// 1 producto del stock pertenece a un proveedor
 		return $this->belongsTo('App\Proveedor', 'proveedor_id');
 	}
+    public function usuario()
+    {
+        // 1 producto del stock pertenece a un proveedor
+        return $this->belongsTo('App\User', 'usuario_id');
+    }
 
     // Relación de stock con pedido (Productos solicitados):
     public function solicitud(){

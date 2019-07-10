@@ -166,6 +166,16 @@ class PedidoController extends Controller
                     $pedidos[$i]->solicitud[$j]->contratos=$pedidos[$i]->contratos;
                 } 
             }
+
+            for ($i=0; $i < count($pedidos) ; $i++) { 
+                //return $pedidos[$i]->usuario->departamento_id;
+                 $autorizandte = \App\User::where('departamento_id', $pedidos[$i]->usuario->departamento_id)->where('rol', 1)->first();
+                 if ($autorizandte==null) {
+                     $autorizandte=(object) array('nombre' => '','apellido' => '');
+                 }
+                $pedidos[$i]->autorizante=$autorizandte;
+            }
+
             $centrocostos = \App\CentroCostos::with('contratos')->get();
             return response()->json(['status'=>'ok', 'pedidos'=>$pedidos, 'centrocostos'=>$centrocostos], 200);
         } 

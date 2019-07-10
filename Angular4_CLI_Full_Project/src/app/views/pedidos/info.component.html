@@ -212,7 +212,7 @@
       				<div class="row">
       					
       					<div class="col-lg-4">
-	      					<strong>Departamento: </strong>{{informacion.usuario.departamento.nombre}} <p style="font-weight: bold" [hidden]="informacion.centro_costos_id!=44"> PEDIDO PARA STOCK</p>
+	      					<strong>Departamento: </strong>{{informacion.usuario.departamento.nombre}} <p style="font-weight: bold" [hidden]="informacion.centro_costos_id!=45"> PEDIDO PARA STOCK</p>
 	      				</div>
 	      				<div class="col-lg-4">
 	      					<strong>Nombre: </strong>{{informacion.usuario.nombre}} {{informacion.usuario.apellido}}
@@ -274,7 +274,7 @@
 					                	<div *ngIf="!item.pivot.aprobado && !item.pivot.entregado && !item.pivot.cancelado && !item.pivot.devuelto">
 						                	<div >
 						                		<div [hidden]="item.stock2==0 && item.stock==0">
-						                			<button type="button" class="btn btn-outline-success btn-sm" (click)="selectPicking(item);largeModal2.show()"  [disabled]="informacion.centro_costos_id==44">Picking</button> 
+						                			<button type="button" class="btn btn-outline-success btn-sm" (click)="selectPicking(item);largeModal2.show()"  [disabled]="informacion.centro_costos_id==45">Picking</button> 
 						                		</div>
 						                		
 							                	<button type="button" class="btn btn-outline-primary btn-sm" (click)="apresupuesto(item)" [routerLink]="['/presupuestos/presupuesto']">Pedir Presupuesto</button>
@@ -402,7 +402,7 @@
 		      						Zona: 
 			      				</div>
 			      				<div class="col-sm-5">
-			      					Autorizante: {{autorizante}}
+			      					Autorizante: {{informacion.autorizante.nombre}} {{informacion.autorizante.apellido}}
 			      				</div>
 			      				<!--div class="col-sm-2">
 			      					Teléfono:
@@ -439,7 +439,17 @@
 	      			</div>
 	      		</div>	
 	      	</div>
-	      	
+	      	<div class="row col-lg-12">
+      					<div class="col-sm-6">
+      						<strong>OBSERVACIÓN DE LA RECEPCIÓN: </strong>
+      						<p>{{informacion.observaciones}}</p>
+      						<br><br><br>
+	      				</div>
+	      				<div class="col-sm-2">
+	      				</div>
+	      				<div class="col-sm-4">
+	      				</div>
+      				</div>
 	      	<div class="row col-lg-12" style=" margin-left: 0.05%;">
 	      		<div class="col-sm-1">
 	      		</div>

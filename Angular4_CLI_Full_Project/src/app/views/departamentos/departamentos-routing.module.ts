@@ -10,6 +10,8 @@ import { mantenimientoComponent } from './mantenimiento.component';
 import { rrhhComponent } from './rrhh.component';
 import { ventasComponent } from './ventas.component';
 import { catrielComponent } from './catriel.component';
+import { CIPHComponent } from './CIPH.component';
+import { gerenciaComponent } from './gerencia.component';
 import { PHComponent } from './PH.component';
 import { DGComponent } from './DG.component';
 import { RDLSComponent } from './RDLS.component';
@@ -76,7 +78,21 @@ const routes: Routes = [
         path: 'dg',
         component: DGComponent,
         data: {
-          title: 'Stock de Depósito General'
+          title: 'S.S.T'
+        }
+      },
+      {
+        path: 'ciph',
+        component: CIPHComponent,
+        data: {
+          title: 'CIPH'
+        }
+      },
+      {
+        path: 'gerencia',
+        component: gerenciaComponent,
+        data: {
+          title: 'gerencia'
         }
       },
       {

@@ -11,7 +11,7 @@ import { RutaService } from '../../../services/ruta.service';
 export class pedidosStockComponent {
   public prov: any;
   public centroCostos: any;
-  public idCentroCostos: any=44;
+  public idCentroCostos: any=45;
   public contratos:any=[];
   public idContrato:any=1;
   public stock: any;

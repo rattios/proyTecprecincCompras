@@ -122,6 +122,7 @@ class DashboardController extends Controller
         
     }
 
+
     public function fechaIgual($aComparar, $arreglo)
     {
         for ($i=0; $i < count($arreglo); $i++) { 
@@ -140,6 +141,159 @@ class DashboardController extends Controller
         $transferencias=DB::select("SELECT `id`,`created_at` FROM `transferencias` WHERE `estado`=2");
         $ultimosTransferencias=DB::select("SELECT `id`,`created_at` FROM `transferencias` WHERE `estado`=2 ORDER BY `id` DESC LIMIT 10");
         $ultimosPedidos = DB::select("SELECT * FROM `pedidos` ORDER BY `pedidos`.`id` DESC LIMIT 15");
+        $proveedores = DB::select("SELECT `id`,`razon_social` FROM `proveedores` WHERE 1");
+        $productos = DB::select("SELECT `nombre` FROM `productos` WHERE 1");
+        $stocks = DB::select("SELECT `nombre`,`stock` FROM `stock` WHERE 1");
+        $stockdepartamentos = DB::select("SELECT `stock`,`departamento_id`  FROM `stockdepartamentos` WHERE 1");
+        $centro_costos = DB::select("SELECT `descripcion` FROM `centro_costos` WHERE 1");
+        $contratos = DB::select("SELECT `nombre` FROM `contratos` WHERE 1");
+        $eje=[];
+        $ejeX=[];
+        $ejeY=[];
+        $ejeXt=[];
+        $ejeYt=[];
+        for ($i=0; $i < count($ultimosPedidos); $i++) { 
+            $ultimosPedidos[$i]->usuario=[];
+            $ultimosPedidos[$i]->departamento=[];
+            $ultimosPedidos[$i]->cantidad=0;
+            $ultimosPedidos[$i]->centro_costos='';
+            
+            for ($j=0; $j < count($usuarios); $j++) { 
+                if ($ultimosPedidos[$i]->usuario_id==$usuarios[$j]->id) {
+                    $ultimosPedidos[$i]->usuario=$usuarios[$j];
+                    for ($k=0; $k < count($departamentos); $k++) { 
+                        if ($usuarios[$j]->departamento_id==$departamentos[$k]->id) {
+                            $ultimosPedidos[$i]->departamento=$departamentos[$k];
+                        }
+                    }
+                }
+            }
+            $ps = DB::select("SELECT `cantidad` FROM `pedido_stock` WHERE `pedido_id`=".$ultimosPedidos[$i]->id);
+            for ($cs=0; $cs < count($ps); $cs++) { 
+                $ultimosPedidos[$i]->cantidad=$ultimosPedidos[$i]->cantidad+$ps[$cs]->cantidad;
+            }
+            $cc = DB::select("SELECT `descripcion` FROM `centro_costos` WHERE `id`=".$ultimosPedidos[$i]->centro_costos_id);
+            $ultimosPedidos[$i]->centro_costos=$cc[0];
+            
+            $f=substr($ultimosPedidos[$i]->created_at, 5,5);
+            if ($this->fechaIgual($f,$ejeX)) {
+                array_push($ejeX,$f);
+            }
+            
+        }
+        for ($i=0; $i < count($ultimosTransferencias); $i++) { 
+            $f=substr($ultimosTransferencias[$i]->created_at, 5,5);
+            if ($this->fechaIgual($f,$ejeXt)) {
+                array_push($ejeXt,$f);
+            }
+        }
+        
+        $pedidoDepartamentos=[];
+        for ($k=0; $k < count($departamentos); $k++) { 
+            $departamentos[$k]->countPedidos=0;
+            for ($i=0; $i < count($usuarios); $i++) {
+                for ($j=0; $j < count($pedidos); $j++) { 
+                    if ($usuarios[$i]->id==$pedidos[$j]->usuario_id && $departamentos[$k]->id==$usuarios[$i]->departamento_id) {
+                        $departamentos[$k]->countPedidos=$departamentos[$k]->countPedidos+1;
+                    }
+                } 
+            }           
+        }
+        for ($i=0; $i < count($departamentos); $i++) { 
+            $departamentos[$i]->countProductos=0;
+            for ($j=0; $j < count($stockdepartamentos); $j++) { 
+                if ($departamentos[$i]->id==$stockdepartamentos[$j]->departamento_id) {
+                    $departamentos[$i]->countProductos=$departamentos[$i]->countProductos+$stockdepartamentos[$j]->stock;
+                }
+            }
+        }
+
+        $countStocks=0;
+        for ($i=0; $i < count($stocks); $i++) { 
+          $countStocks=$countStocks+ $stocks[$i]->stock;
+        }
+
+        $estado0=0;
+        $estado1=0;
+        $estado2=0;
+        $estado4=0;
+        for ($i=0; $i < count($pedidos); $i++) { 
+            if ($pedidos[$i]->estado==0 && $pedidos[$i]->aprobar==1) {
+                $estado0++;
+            }else if ($pedidos[$i]->estado==1) {
+                $estado1++;
+            }else if ($pedidos[$i]->estado==2) {
+                $estado2++;
+            }else if ($pedidos[$i]->estado==4) {
+                $estado4++;
+            }
+        }
+
+        $ejeX=array_reverse($ejeX);
+        $cantidadP=0;
+        for ($i=0; $i < count($ejeX); $i++) { 
+            for ($j=0; $j < count($ultimosPedidos); $j++) { 
+                if (substr($ultimosPedidos[$j]->created_at, 5,5)==$ejeX[$i]) {
+                    $cantidadP=$cantidadP+1;
+                }
+            }
+             array_push($ejeY,$cantidadP);
+            //array_push($eje,array('ejeX' => $ejeX[$i],'ejeY' => $cantidad));
+            $cantidadP=0;
+        }
+
+        $ejeXt=array_reverse($ejeXt);
+        $cantidadP=0;
+        for ($i=0; $i < count($ejeXt); $i++) { 
+            for ($j=0; $j < count($ultimosTransferencias); $j++) { 
+                if (substr($ultimosTransferencias[$j]->created_at, 5,5)==$ejeXt[$i]) {
+                    $cantidadP=$cantidadP+1;
+                }
+            }
+             array_push($ejeYt,$cantidadP);
+            //array_push($eje,array('ejeX' => $ejeX[$i],'ejeY' => $cantidad));
+            $cantidadP=0;
+        }
+        
+        for ($i=0; $i < count($ejeX); $i++) { 
+            $ejeX[$i]=$this->mes(explode("-", $ejeX[$i]));
+        }
+        for ($i=0; $i < count($ejeXt); $i++) { 
+            $ejeXt[$i]=$this->mes(explode("-", $ejeXt[$i]));
+        }
+
+        return response()->json(['status'=>'ok',
+            'usuarios'=>count($usuarios),
+            'departamentos'=>$departamentos,
+            'countDepartamentos'=>count($departamentos),
+            'proveedores'=>count($proveedores),
+            'productos'=>count($productos),
+            'stocks'=>$countStocks,
+            'stockdepartamentos'=>count($stockdepartamentos),
+            'centro_costos'=>count($centro_costos),
+            'contratos'=>count($contratos),
+            'countpedidos'=>count($pedidos),
+            'ultimosPedidos'=>$ultimosPedidos,
+            'estado0'=>$estado0,
+            'estado1'=>$estado1,
+            'estado2'=>$estado2,
+            'estado4'=>$estado4,
+            'transferencias'=>count($transferencias),
+            'ejeX'=>$ejeX,
+            'ejeY'=>$ejeY,
+            'ejeXt'=>$ejeXt,
+            'ejeYt'=>$ejeYt,
+                ], 200);
+
+    }
+    public function dashboard_empleados($id)
+    {
+        $usuarios = DB::select("SELECT `id`,`departamento_id`, `nombre`,`rol` FROM `usuarios` WHERE id=".$id);
+        $departamentos = DB::select("SELECT `id`,`nombre` FROM `departamentos` WHERE 1");
+        $pedidos = DB::select("SELECT `estado`, `usuario_id`, `created_at`, `aprobar` FROM `pedidos` WHERE usuario_id=".$id);
+        $transferencias=DB::select("SELECT `id`,`created_at` FROM `transferencias` WHERE `estado`=2");
+        $ultimosTransferencias=DB::select("SELECT `id`,`created_at` FROM `transferencias` WHERE `estado`=2 ORDER BY `id` DESC LIMIT 10");
+        $ultimosPedidos = DB::select("SELECT * FROM `pedidos` WHERE usuario_id=".$id." ORDER BY `pedidos`.`id` DESC LIMIT 15");
         $proveedores = DB::select("SELECT `id`,`razon_social` FROM `proveedores` WHERE 1");
         $productos = DB::select("SELECT `nombre` FROM `productos` WHERE 1");
         $stocks = DB::select("SELECT `nombre`,`stock` FROM `stock` WHERE 1");

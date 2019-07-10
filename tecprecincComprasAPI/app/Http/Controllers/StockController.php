@@ -247,6 +247,31 @@ class StockController extends Controller
         //$productos = \App\Categoria::where('tipo_id',2)->with('stock')->get();
         $productos = \App\Stock::where('tipo_id',2)->get();
 
+        for ($i=0; $i < count($productos); $i++) { 
+
+            $stockdepartamentos = \App\StockDepartamento::where('stock_id',$productos[$i]->id)->with('producto')->with('usuario')->first();
+            if ($stockdepartamentos!=null) {
+
+                $sd=(object) array(
+                'id'=> $stockdepartamentos->producto->id,
+                'nombre'=> $stockdepartamentos->producto->nombre,
+                'codigo'=> $stockdepartamentos->producto->codigo,
+                'precio'=> $stockdepartamentos->producto->precio,
+                'stock'=> $stockdepartamentos->producto->stock,
+                'stock2'=> $stockdepartamentos->producto->stock2,
+                'usuario'=> $stockdepartamentos->usuario);
+
+                $productos[$i]=$sd;
+            }else{
+                
+                $usr=(object) array('nombre' => '','apellido' => '');
+                $productos[$i]->usuario=$usr;
+                 
+            }
+            
+        }
+         
+
         if(count($productos) == 0){
             return response()->json(['error'=>'No existen productos en el stock Uso.'], 404);          
         }else{

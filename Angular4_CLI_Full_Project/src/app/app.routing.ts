@@ -24,6 +24,10 @@ export const routes: Routes = [
         path: 'dashboard',
         loadChildren: './views/dashboard/dashboard.module#DashboardModule'
         
+      },{
+        path: 'dashboard_empleados',
+        loadChildren: './views/dashboard_empleados/dashboard_empleados.module#Dashboard_empleadosModule'
+        
       },
       {
         path: 'components',

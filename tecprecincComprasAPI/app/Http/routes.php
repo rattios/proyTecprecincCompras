@@ -34,6 +34,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         //----Pruebas DashboardController
         //Route::get('/dashboard','DashboardController@index');
         Route::get('/dashboard','DashboardController@dashboard');
+        Route::get('/dashboard/{id}','DashboardController@dashboard_empleados');
 
         //----Pruebas DepartamentoController
         Route::get('/departamentos','DepartamentoController@index');

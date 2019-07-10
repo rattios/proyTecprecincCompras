@@ -108,7 +108,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <label class="label" for="select">Centro de costos</label>
-                    <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="idCentroCostos" (change)="cc($event)" [disabled]="idCentroCostos==44">
+                    <select id="centroCostos" name="centroCostos" class="form-control" [(ngModel)]="idCentroCostos" (change)="cc($event)" [disabled]="idCentroCostos==45">
                       <option *ngFor="let cc of centroCostos" [value]="cc.id">{{cc.descripcion}}</option>
                     </select>
                   </div>

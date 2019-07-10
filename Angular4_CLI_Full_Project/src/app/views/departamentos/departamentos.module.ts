@@ -14,6 +14,8 @@ import { DGComponent } from './DG.component';
 import { ventasComponent } from './ventas.component';
 import { catrielComponent } from './catriel.component';
 import { PHComponent } from './PH.component';
+import { CIPHComponent } from './CIPH.component';
+import { gerenciaComponent } from './gerencia.component';
 import { RDLSComponent } from './RDLS.component';
 import { info_departamentoComponent } from './info_departamento.component';
 import { info_departamentosComponent } from './info_departamentos.component';
@@ -41,6 +43,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     ventasComponent,
     catrielComponent,
     PHComponent,
+    CIPHComponent,
+    gerenciaComponent,
     DGComponent,
     RDLSComponent,
     info_departamentoComponent,

@@ -104,6 +104,9 @@ export class presupuestoComponent {
          }
           // this.proveedores=this.prov_produc.proveedores;
           console.log(this.proveedor);
+           this.productList3 = this.proveedor.productos;
+           this.filteredItems3 = this.productList3;
+           this.init3();
           this.loading=false;
         },
        msg => { 
@@ -170,7 +173,7 @@ export class presupuestoComponent {
                item.cantidad=1;
                item.factura='';
                item.entregado=0;
-               this.itemsPresupuesto.push(item);
+               //this.itemsPresupuesto.push(item);
               }
               if(this.proveedores.length==0) {
                 this.del();
@@ -513,5 +516,102 @@ export class presupuestoComponent {
          this.currentIndex2 = index;
          this.refreshItems2();
     }
+
+
+    //-------------------------------------------------------------------------------------------------------------------------
+   
+   filteredItems3 : any;
+   productList3 : any;
+   pages3 : number = 4;
+   pageSize3 : number = 5;
+   pageNumber3 : number = 0;
+   currentIndex3 : number = 1;
+   items3: any;
+   pagesIndex3 : Array<number>;
+   pageStart3 : number = 1;
+   inputName3 : string = '';
+
+   init3(){
+         this.currentIndex3 = 1;
+         this.pageStart3 = 1;
+         this.pages3 = 4;
+
+         this.pageNumber3 = parseInt(""+ (this.filteredItems3.length / this.pageSize3));
+         if(this.filteredItems3.length % this.pageSize3 != 0){
+            this.pageNumber3 ++;
+         }
+    
+         if(this.pageNumber3  < this.pages3){
+               this.pages3 =  this.pageNumber3;
+         }
+       
+         this.refreshItems3();
+         console.log("this.pageNumber :  "+this.pageNumber3);
+   }
+   FilterByName3(){
+     console.log(this.inputName3);
+      this.filteredItems3 = [];
+      if(this.inputName3 != ""){
+            for (var i = 0; i < this.productList3.length; ++i) {
+
+              if (this.productList3[i].stock==this.inputName3) {
+                 this.filteredItems3.push(this.productList3[i]);
+              }else if (this.productList3[i].nombre.toUpperCase().indexOf(this.inputName3.toUpperCase())>=0) {
+                 this.filteredItems3.push(this.productList3[i]);
+              }else if (this.productList3[i].precio==this.inputName3) {
+                 this.filteredItems3.push(this.productList3[i]);
+              }else if (this.productList3[i].codigo==this.inputName3) {
+                 this.filteredItems3.push(this.productList3[i]);
+              }
+              
+            }
+
+            // this.productList.forEach(element => {
+            //     if(element.nombre.toUpperCase().indexOf(this.inputName.toUpperCase())>=0){
+            //       this.filteredItems.push(element);
+            //    }
+            // });
+      }else{
+         this.filteredItems3 = this.productList3;
+      }
+      //console.log(this.filteredItems2);
+      this.init3();
+   }
+   fillArray3(): any{
+      var obj3 = new Array();
+      for(var index3 = this.pageStart3; index3< this.pageStart3 + this.pages3; index3 ++) {
+                  obj3.push(index3);
+      }
+      return obj3;
+   }
+ refreshItems3(){
+               this.items3 = this.filteredItems3.slice((this.currentIndex3 - 1)*this.pageSize3, (this.currentIndex3) * this.pageSize3);
+               this.pagesIndex3 =  this.fillArray();
+               console.log(this.items3);
+   }
+   prevPage3(){
+      if(this.currentIndex3>1){
+         this.currentIndex3 --;
+      } 
+      if(this.currentIndex3 < this.pageStart3){
+         this.pageStart3 = this.currentIndex3;
+      }
+      this.refreshItems3();
+   }
+   nextPage3(){
+      if(this.currentIndex3 < this.pageNumber3){
+            this.currentIndex3 ++;
+      }
+      if(this.currentIndex3 >= (this.pageStart3 + this.pages3)){
+         this.pageStart3 = this.currentIndex3 - this.pages3 + 1;
+      }
+ 
+      this.refreshItems3();
+   }
+    setPage3(index : number){
+         this.currentIndex3 = index;
+         this.refreshItems3();
+    }
     
 }
+

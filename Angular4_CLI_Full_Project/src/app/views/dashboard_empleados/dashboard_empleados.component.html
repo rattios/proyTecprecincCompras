@@ -1,0 +1,119 @@
+<div class="animated fadeIn" >
+  <img src="../assets/img/template.gif" style="position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;z-index: 99;width: 135px;margin-left: 50%;" *ngIf="loading">
+  <div *ngIf="!loading">
+    
+    <div class="row">
+      <div class="col-6 col-lg-3">
+        <div class="card" style="border-radius: 20px">
+          <div class="card-body p-0 clearfix">
+            <i class="icon-arrow-down-circle bg-primary p-4 font-2xl mr-3 float-left"></i>
+            <div class="h5 text-primary mb-0 pt-3">{{datos.estado0}}</div>
+            <div class="text-muted text-uppercase font-weight-bold font-xs">Entrantes</div>
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+      <div class="col-6 col-lg-3">
+        <div class="card" style="border-radius: 20px">
+          <div class="card-body p-0 clearfix">
+            <i class="icon-clock bg-info p-4 font-2xl mr-3 float-left"></i>
+            <div class="h5 text-info mb-0 pt-3">{{datos.estado1}}</div>
+            <div class="text-muted text-uppercase font-weight-bold font-xs">En curso</div>
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+      <div class="col-6 col-lg-3">
+        <div class="card" style="border-radius: 20px">
+          <div class="card-body p-0 clearfix">
+            <i class="icon-check bg-warning p-4 font-2xl mr-3 float-left"></i>
+            <div class="h5 text-warning mb-0 pt-3">{{datos.estado2}}</div>
+            <div class="text-muted text-uppercase font-weight-bold font-xs">Entregadas</div>
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+      <div class="col-6 col-lg-3">
+        <div class="card" style="border-radius: 20px">
+          <div class="card-body p-0 clearfix">
+            <i class="icon-close bg-danger p-4 font-2xl mr-3 float-left"></i>
+            <div class="h5 text-danger mb-0 pt-3">{{datos.estado4}}</div>
+            <div class="text-muted text-uppercase font-weight-bold font-xs">Canceladas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+
+      <div class="col-12 col-lg-12">
+        <div class="card" style="border-radius: 20px" >
+          <div class="h5 mb-0" style="text-align: center; margin-top: 5%;" >Solicitudes</div>
+          <div class="card-body">
+            <div class="chart-wrapper">
+              <canvas baseChart class="chart"
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColours"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card"  style="border-radius: 20px">
+          <div class="card-body">
+            
+            
+            <br>
+            <h4>Últimas 15 solicitudes</h4>
+            <table class="table table-responsive table-hover table-outline mb-0">
+              <thead class="thead-default">
+                <tr>
+                  <th class="text-center">ID</th>
+                  <th>USUARIO</th>
+                  <th>DEPARTAMENTO</th>
+                  <th class="text-center">CANTIDAD</th>
+                  <th class="text-center">ESTADO</th>
+                  <th>CENTRO DE COSTO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let u of ultimosPedidos">
+                  <td class="text-center">
+                    {{u.id}}
+                  </td>
+                  <td>
+                    {{u.usuario.nombre}}
+                  </td>
+                  <td>
+                    {{u.departamento.nombre}}
+                  </td>
+                  <td class="text-center">
+                    {{u.cantidad}}
+                  </td>
+                  <td class="text-center">
+                    {{u.estado2}}
+                  </td>
+                  <td>
+                    {{u.centro_costos.descripcion}}
+                  </td>
+                  
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div><!--/.col-->
+    </div>
+
+  </div>
+</div>

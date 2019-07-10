@@ -19,12 +19,12 @@ class IntentoController extends Controller
     public function index(Request $request)
     {
 
-        $Intento = \App\Trazas::all();
+        $Intento = \App\Intento::all();
         //return $Trazas;
         if(!$Intento){
             return response()->json(['error'=>'No existen Intento.'], 404);          
         }else{
-            return response()->json(['status'=>'ok','Intento'=>$Trazas], 200);
+            return response()->json(['status'=>'ok','Intento'=>$Intento], 200);
         }
     }
 

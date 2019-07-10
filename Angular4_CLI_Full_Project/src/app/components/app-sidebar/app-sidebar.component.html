@@ -11,6 +11,9 @@
       <li class="nav-item" *ngxPermissionsOnly="[0]">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']"><i class="icon-speedometer"></i> Dashboard <!-- <span class="badge badge-info">NEW</span> --></a>
       </li>
+      <li class="nav-item" *ngxPermissionsOnly="[0,1,2]">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard_empleados']"><i class="icon-speedometer"></i> Principal <!-- <span class="badge badge-info">NEW</span> --></a>
+      </li>
       <!-- <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
         <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i> Components</a>
         <ul class="nav-dropdown-items">
@@ -155,7 +158,7 @@
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/compras']"><i class="fa fa-building"></i> Compras</a>
           </li>
           <li class="nav-item" *ngxPermissionsOnly="[0,1]">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/calidad']"><i class="fa fa-building"></i> Gerencia</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/gerencia']"><i class="fa fa-building"></i> Gerencia</a>
           </li>
           <li class="nav-item" *ngxPermissionsOnly="[0,1]">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/administracion']"><i class="fa fa-building"></i> Administración</a>
@@ -182,10 +185,10 @@
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/mantenimiento']"><i class="fa fa-building"></i> MTO. Vehicular</a>
           </li>
           <li class="nav-item" *ngxPermissionsOnly="[0,1]">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/mantenimiento']"><i class="fa fa-building"></i> Mto. CIPH</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/ciph']"><i class="fa fa-building"></i> Mto. CIPH</a>
           </li>
           <li class="nav-item" *ngxPermissionsOnly="[0,1]">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/dg']"><i class="fa fa-building"></i> Depósito General</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/departamentos/dg']"><i class="fa fa-building"></i> S.S.T</a>
           </li>
         </ul>
       </li>

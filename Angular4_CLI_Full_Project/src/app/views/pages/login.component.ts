@@ -54,7 +54,8 @@ export class LoginComponent {
                 if(this.result.user.rol==0) {
                   this.router.navigate(['dashboard'], {});
                 }else{
-                  this.router.navigate(['pedidos/pedido'], {});
+                 // this.router.navigate(['pedidos/pedido'], {});
+                  this.router.navigate(['dashboard_empleados'], {});
                 }
                 this.loading=false;
              },1500);
