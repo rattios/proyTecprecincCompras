@@ -22,6 +22,7 @@ export class infoComponent {
   public largeModal2:any;
 
   @Input() informacion:any;
+  @Input() remito:any;
 
   constructor(private http: HttpClient, private ruta: RutaService,private sharedService: SharedService) {
 
@@ -35,7 +36,7 @@ export class infoComponent {
       for (var i = 0; i < this.informacion.solicitud.length; i++) {
         this.informacion.solicitud[i].usuario=this.informacion.usuario;
         this.informacion.solicitud[i].totales=this.informacion.solicitud[i].pivot.cantidad*this.informacion.solicitud[i].precio;
-        
+        this.remito.solicitud=[];
       }
       if(this.informacion!=undefined) {
        
@@ -187,6 +188,41 @@ export class infoComponent {
            msg => { 
              console.log(msg);
              alert('¡Falló al guardar los cambios!');
+             this.fail=true;
+              setTimeout(() => {  
+                this.fail=false;
+              }, 4000);
+             
+           });
+    }
+
+    public Aitem:any=[];
+    verremito(item){
+      
+      var enviar={
+        operacion_id:item.pivot.pedido_id
+      }
+      this.http.post(this.ruta.get_ruta()+'traza/'+item.id,enviar)
+           .toPromise()
+           .then(
+           data => {
+             
+             this.remito=data;
+             this.remito=this.remito.Trazas[0];
+             this.remito.solicitud=[];
+             this.Aitem=[];
+             console.log(item);
+             this.Aitem.push(item);
+             //this.remito.solicitud.push(item);
+             //this.informacion.solicitud=[];
+             //this.//.solicitud.push(item);
+             //console.log(this.informacion);
+
+             this.print2();
+            },
+           msg => { 
+             console.log(msg);
+             alert('¡No existe remito asociado!');
              this.fail=true;
               setTimeout(() => {  
                 this.fail=false;

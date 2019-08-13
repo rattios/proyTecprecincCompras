@@ -78,6 +78,18 @@ class TrazasController extends Controller
         }
     }
 
+    public function show2($id,Request $request)
+    {
+        
+        $Trazas = \App\Trazas::where('stock_id',$id)->where('operacion_id',$request->input('operacion_id'))->with('stock')->with('departamento_emisor')->with('departamento_receptor')->with('usuario_emisor')->with('usuario_receptor')->get();
+        //return $Trazas;
+        if(!$Trazas){
+            return response()->json(['error'=>'No existen Trazas.'], 404);          
+        }else{
+            return response()->json(['status'=>'ok','Trazas'=>$Trazas], 200);
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

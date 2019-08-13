@@ -195,6 +195,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::put('/trazas/{id}','TrazasController@update');
         Route::delete('/trazas/{id}','TrazasController@destroy');
         Route::get('/trazas/{id}','TrazasController@show');
+        Route::post('/traza/{id}','TrazasController@show2');
 
         Route::get('/presupuesto','PresupuestoController@index');
         Route::post('/presupuesto','PresupuestoController@store'); 
