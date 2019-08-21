@@ -671,13 +671,12 @@ class PedidoController extends Controller
             // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
             return response()->json(['error'=>'Faltan datos necesarios para el proceso de picking.'],422);
         }
-
         $picking = json_decode($request->input('picking'));
         //$picking = $request->input('picking');
-
         //producto sin tipo
+
         if ($picking->tipo_id == 0) {
-          //  return response()->json(['error'=>'El producto de tener asociado un tipo para poder realizar el proceso de picking.'],409);
+            return response()->json(['error'=>'El producto debe tener asociado un tipo para poder realizar el proceso de picking.'],409);
         }
         //bienes de consumo
         else if ($picking->tipo_id == 1) {
@@ -685,21 +684,17 @@ class PedidoController extends Controller
             if ($picking->almacen == 'principal') {
                 //Descontar del stock principal
                 $descontar = $picking->stock - $picking->pivot->cantidad;
-
                 DB::table('stock')
                     ->where('id', $picking->id)
                     ->update(['stock' => $descontar]);
-
                 $picking->stock = $descontar;
             }
             else if($picking->almacen == 'secundario'){
                 //Descontar del stock secundario
                 $descontar = $picking->stock2 - $picking->pivot->cantidad;
-
                 DB::table('stock')
                     ->where('id', $picking->id)
                     ->update(['stock2' => $descontar]);
-
                 $picking->stock2 = $descontar;
             }
             
@@ -709,46 +704,35 @@ class PedidoController extends Controller
                 ->update(['entregado' => 1,'cantidad_entregada' => 1, 'observacion' =>$picking->observacion]);
             
             $picking->pivot->entregado = 1;
-
             return response()->json(['message'=>'Se ha descontado la cantidad solicitada del stock.', 'picking'=>$picking], 200);
-
         //vienes de uso
         }else if($picking->tipo_id == 2){
-
             if ($picking->almacen == 'principal') {
                 //Descontar del stock principal
                 $descontar = $picking->stock - $picking->pivot->cantidad;
-
                 DB::table('stock')
                     ->where('id', $picking->id)
                     ->update(['stock' => $descontar]);
                 
-
                 $picking->stock = $descontar;
             }else{
                 //Descontar del stock secundario
                 $descontar = $picking->stock2 - $picking->pivot->cantidad;
-
                 DB::table('stock')
                     ->where('id', $picking->id)
                     ->update(['stock2' => $descontar]);
-
                 $picking->stock2 = $descontar;
             }
-
             DB::table('pedido_stock')
                 ->where('pedido_id', $picking->pivot->pedido_id)
                 ->where('stock_id', $picking->pivot->stock_id)
                 ->update(['entregado' => 1,'cantidad_entregada' => 1, 'observacion' =>$picking->observacion]);
-
             $picking->pivot->entregado = 1;
-
             //verificar si no existe el producto en el departamento para crearlo
             $productoEnDep = \App\StockDepartamento::where('stock_id', $picking->pivot->stock_id)
                 ->where('departamento_id', $picking->departamento->id)
                 ->where('usuario_id', $picking->usuario->id)
                 ->get();
-
             //Si no existe lo creo:
             if(count($productoEnDep)==0){
                 $NewProdEnDep = new \App\StockDepartamento;
@@ -764,7 +748,6 @@ class PedidoController extends Controller
                 }                          
             }else{
                 $productoEnDep[0]->stock = $productoEnDep[0]->stock + $picking->pivot->cantidad;
-
                 if($productoEnDep[0]->save()){
                    return response()->json(['message'=>'Se ha descontado la cantidad solicitada del stock.', 'picking'=>$picking], 200);
                 }else{
@@ -772,11 +755,12 @@ class PedidoController extends Controller
                 }
             } 
         }
+
         //servicios
         else if ($picking->tipo_id == 3) {
             return response()->json(['error'=>'El proceso de picking no esta implementado para servicios.'],409);
         }
-        
+        //return response()->json(['picking'=>$picking], 200);
     }
 
     /*buscar los departamentos que contien un stock_id(producto) y su stock(existencias) es mayor a cero*/

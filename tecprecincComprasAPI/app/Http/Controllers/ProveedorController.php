@@ -43,7 +43,7 @@ class ProveedorController extends Controller
          $pedido_stock=DB::select("SELECT * FROM `proveedores_productos` WHERE `proveedor_id`=".$id);
          //return $pedido_stock[0]->producto_id;
          for ($i=0; $i < count($pedido_stock); $i++) { 
-            $info=DB::select("SELECT * FROM `productos` WHERE `id`=".$pedido_stock[$i]->producto_id);
+            $info=DB::select("SELECT * FROM `stock` WHERE `id`=".$pedido_stock[$i]->producto_id);
             //$pedido_stock[$i]=$info->nombre;
             //return $info;
             if (count($info)!=0) {

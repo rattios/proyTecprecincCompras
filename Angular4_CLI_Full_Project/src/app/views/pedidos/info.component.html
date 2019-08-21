@@ -279,7 +279,7 @@
 						                			<button type="button" class="btn btn-outline-success btn-sm" (click)="selectPicking(item);largeModal2.show()"  [disabled]="informacion.centro_costos_id==45">Picking</button> 
 						                		</div>
 						                		
-						                		<button type="button" class="btn btn-outline-primary btn-sm" (click)="verremito(item);print2()" *ngIf="item.pivot.entregado">Ver remito</button>
+						                		<button type="button" class="btn btn-outline-primary btn-sm" (click)="verremito(item);" *ngIf="item.pivot.entregado">Ver remito</button>
 
 							            
 							                	<button type="button" class="btn btn-outline-info btn-sm"  [routerLink]="['/compras/compra']">Pedir a proveedor</button>
@@ -325,11 +325,11 @@
 <div style="text-align:right">
 	<button type="button" class="btn btn-outline-secondary btn-sm" (click)=print()><i class="fa fa-print">Imprimir Solicitud</i></button>
 </div>
-<div style="text-align:right" *ngIf="informacion.estado!=0">
+<!--div style="text-align:right" *ngIf="informacion.estado!=0">
 	<button type="button" class="btn btn-outline-secondary btn-sm" (click)=print2()><i class="fa fa-print">Imprimir Remito</i></button>
-</div>
+</div-->
 
-<div id="prin2" >
+<div id="prin2" *ngIf="print2if">
 	<div class="row">
 		<div class="col-lg-12">
 	      	<div class="row">
@@ -368,9 +368,7 @@
 	      						<div class="col-sm-5" style="border:2px solid;">
 	      							Numero de requirmiento: {{informacion.id}}
 	      						</div>
-	      						<!--div class="col-sm-2" style="border:2px solid;">
-	      							5555
-	      						</div-->
+	      						
 	      						<div class="col-sm-5" style="border:2px solid;">
 	      							<strong>Fecha de alta: </strong>{{remito.created_at | date :  "dd-MM-yyyy"}}
 	      						</div>	
@@ -390,27 +388,15 @@
 		      				</div>
 	      				</div>
 	      				<div class="row"  style="border:2px solid;">
-	      					<!--div class="row col-lg-12" >
-		      					<div class="col-sm-7">
-		      						Domicilio: 
-			      				</div>
-			      				<div class="col-sm-3">
-			      					
-			      				</div>
-			      				<div class="col-sm-2">
-			      					
-			      				</div>
-		      				</div-->
+	      					
 		      				<div class="row col-lg-12" >
 		      					<div class="col-sm-7">
-		      						Zona: 
+		      						Zona: {{informacion.departamento.nombre}}
 			      				</div>
 			      				<div class="col-sm-5">
 			      					Autorizante: {{informacion.autorizante.nombre}} {{informacion.autorizante.apellido}}
 			      				</div>
-			      				<!--div class="col-sm-2">
-			      					Teléfono:
-			      				</div-->
+			      				
 		      				</div>
 	      				</div>
 	      			</div>
@@ -424,17 +410,19 @@
 					            <thead>
 					              <tr>
 					              	<th>Código</th>
+					              	<th>Nombre</th>
 					                <th>Cantidad</th>
-					                <th>Nombre</th>
-					                <!--th>Centro de costos</th-->
+					                
+					                
 					              </tr>
 					            </thead>
 					            <tbody>
 					              <tr *ngFor="let item of Aitem">
 					              	<td *ngIf="item.pivot.entregado==1">{{item.codigo}}</td>
+					              	<td *ngIf="item.pivot.entregado==1">{{item.nombre}}</td>
 					                <td *ngIf="item.pivot.entregado==1">{{item.pivot.cantidad}}</td>
-					                <td *ngIf="item.pivot.entregado==1">{{item.nombre}}</td>
-					                <!--td>{{item.pivot.nombre_centro_costo}}</td-->
+					                
+					                
 					              </tr>
 					            </tbody>
 					          </table>
@@ -482,7 +470,7 @@
   						<p style="font-weight: bold; margin: 5px; text-align: left; margin-bottom: 25px;font-size: 12px;">Aclaración:
   						</p>
   						<br>
-  						<br><br><br> 
+  						<br><br><br> <br>
   					</div>
   					
   				</div>

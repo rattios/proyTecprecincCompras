@@ -58,10 +58,14 @@ export class pickingComponent {
   }
 
 
+   public infoUsuario:any;
+   public infoDepartamento:any;
    ngOnInit(): void {
        this.loading=false;
       console.log(this.producto);
       this.cantidadSolicitada=parseInt(this.producto.pivot.cantidad);
+      this.infoUsuario=this.informacion.usuario;
+      this.infoDepartamento=this.informacion.departamento;
       this.cantidadSolicitada2=parseInt(this.producto.pivot.cantidad);
       this.cantEntregar1=parseInt(this.producto.pivot.cantidad);
       this.producto.bstock=true;
@@ -294,19 +298,28 @@ export class pickingComponent {
         stock2:item.stock2,
         stock2_min:item.stock2_min,
         stock_min:item.stock_min,
-        tipo_id:item.tipo_id
+        tipo_id:item.tipo_id,
+        usuario:this.infoUsuario,
+        departamento:this.infoDepartamento,
+        observaciones:this.producto.observacion
       }];
       var enviar = {
         usuario_id: item.usuario_id,
+        departamento_id:this.infoDepartamento.id,
         solicitud: JSON.stringify(solicitud),
         solicitud2: solicitud,
         centro_costos_id:43,
         contrato_id:1,
         estado: 1,
         aprobar:1,
+        usuario:this.infoUsuario,
+        departamento:this.infoDepartamento,
         observaciones:this.producto.observacion
       }
+      item.usuario=this.infoUsuario;
+      item.departamento=this.infoDepartamento;
       console.log(enviar);
+      console.log(item);
       var send = {
           picking: JSON.stringify(item)
         }
@@ -561,7 +574,6 @@ export class pickingComponent {
                      alert('Error! No se ha generado una nueva solicitud por la cantidad del producto que no se entregó.');
                    });
                 }, 1000);
-
               },
              msg => { 
                console.log(msg);

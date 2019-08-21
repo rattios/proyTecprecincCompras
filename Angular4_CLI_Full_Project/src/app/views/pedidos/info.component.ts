@@ -197,6 +197,7 @@ export class infoComponent {
     }
 
     public Aitem:any=[];
+    public print2if=false;
     verremito(item){
       
       var enviar={
@@ -217,8 +218,17 @@ export class infoComponent {
              //this.informacion.solicitud=[];
              //this.//.solicitud.push(item);
              //console.log(this.informacion);
-
-             this.print2();
+             this.print2if=true;
+             setTimeout(() => {  
+               
+                this.print2();
+                setTimeout(() => {  
+                this.print2if=false;
+                //alert('asd');
+                }, 2000);
+              }, 2000);
+             
+             
             },
            msg => { 
              console.log(msg);
@@ -291,8 +301,10 @@ export class infoComponent {
       </html>`
     );
     popupWin.document.close();
+    this.print2if=false;
   }
   print2(){
+    //alert('ejecuto');
     let printContents, popupWin;
     printContents = document.getElementById('prin2').innerHTML;
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
