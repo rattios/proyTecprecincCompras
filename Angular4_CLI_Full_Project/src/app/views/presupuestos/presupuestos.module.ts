@@ -8,7 +8,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { MatDatepickerModule, MatNativeDateModule, DateAdapter } from '@angular/material';
 import { DateFormat } from './date-format';
-import { NgDatepickerModule } from 'ng2-datepicker';
+//import { NgDatepickerModule } from 'ng2-datepicker';
 
 
 import { presupuestosRoutingModule } from './presupuestos-routing.module';
@@ -31,7 +31,7 @@ import { minutasComponent } from './minutas/minutas.component';
     ModalModule.forRoot(),
     MatDatepickerModule,
     MatNativeDateModule,
-    NgDatepickerModule
+    //NgDatepickerModule
   ],
   declarations: [ 
 

@@ -6,7 +6,7 @@ import { RutaService } from '../../../services/ruta.service';
 
 import 'rxjs/add/operator/toPromise';
 
-import { DatepickerOptions } from 'ng2-datepicker';
+//import { DatepickerOptions } from 'ng2-datepicker';
 import * as frLocale from 'date-fns/locale/fr';
 import * as esLocale from 'date-fns/locale/es';
  
@@ -27,7 +27,7 @@ export class centroCostosComponent {
   public fail=false;
   public crear=false;
 
-  public options: DatepickerOptions = {
+  public options: any = {
     displayFormat: 'DD/MM/YYYY',
     barTitleFormat: 'MMMM YYYY',
     dayNamesFormat: 'dd',

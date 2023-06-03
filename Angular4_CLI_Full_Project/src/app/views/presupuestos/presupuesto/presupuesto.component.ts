@@ -4,7 +4,7 @@ import { HttpClient, HttpParams  } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { saveAs } from 'file-saver/FileSaver';
 import { RutaService } from '../../../services/ruta.service';
-import { DatepickerOptions } from 'ng2-datepicker';
+//import { DatepickerOptions } from 'ng2-datepicker';
 
 @Component({
   templateUrl: 'presupuesto.component.html'

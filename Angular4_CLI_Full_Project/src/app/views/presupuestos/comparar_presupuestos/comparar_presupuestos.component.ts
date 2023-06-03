@@ -6,7 +6,7 @@ import { saveAs } from 'file-saver/FileSaver';
 import { RutaService } from '../../../services/ruta.service';
 import {MatDatepicker} from '@angular/material/datepicker';
 import {DateAdapter} from '@angular/material';
-import { DatepickerOptions } from 'ng2-datepicker';
+////import { DatepickerOptions } from 'ng2-datepicker';
 import * as moment from 'moment';
 
 
