@@ -12,7 +12,7 @@ import { DateFormat } from './date-format';
 import { SharedService } from './shared.service';
 
 import { pedidosComponent } from './pedidos.component';
-
+import { pedidosServicioComponent } from './pedidosServicio.component';
 import { creadosComponent } from './creados/creados.component';
 import { tablaInfoCreadosComponent } from './creados/tablaInfoCreados.component';
 
@@ -68,6 +68,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
   ],
   declarations: [ 
       pedidosComponent,
+      pedidosServicioComponent,
       creadosComponent,
       tablaInfoCreadosComponent,
       misPedidosComponent,

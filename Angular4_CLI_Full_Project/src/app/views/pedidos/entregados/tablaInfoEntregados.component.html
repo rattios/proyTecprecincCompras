@@ -16,6 +16,7 @@
   	              	<th>N de pedido</th>
   	              	<th>Usuario</th>
   	              	<th>Departamento</th>
+					<th>Tipo</th>
   	              	<th>Fecha</th>
   	              	<th></th>
               	</thead>
@@ -24,6 +25,7 @@
                     		<td>{{item.id}}</td>
                     		<td>{{item.usuario.nombre}} {{item.usuario.apellido}}</td>
                     		<td>{{item.departamento.nombre}}</td>
+							<td>{{item.tipo}}</td>
                     		<th>{{item.updated_at | date:'dd-MM-yyyy'}}</th>
                     		<td><button type="button" class="btn btn-success" (click)=ver(item)>Ver</button></td>
                  		</tr>

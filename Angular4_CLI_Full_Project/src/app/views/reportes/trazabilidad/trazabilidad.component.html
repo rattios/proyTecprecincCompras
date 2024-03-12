@@ -42,31 +42,47 @@
                   <table class="table table-striped" >
                     <thead>
                       
+                      <th>Fecha</th>
+                      <th>Factura Nº</th>
+                      <th>Remito Nº</th>
+                      <th>O.C Nº</th>
+                      <th>Insumo</th>
                       <th>Cantidad</th>
+                      <th>Proveedor</th>
+                      <th>Dpto Emisor</th>
+                      <th>Responsable</th>
+                      <th>Dpto Receptor</th>
+                      <th></th>
+                      <!--th>Cantidad</th>
                       <th>Nombre</th>
                       <th>Monto</th>
                       <th>Dto. Emisor</th>
                       <th>Usuario emisor</th>
                       <th>Dto. Receptor</th>
                       <th>Usuario receptor</th>
-                      <th>Tipo</th>
-                      <th>ID de operación</th>
+                      <th>Factura Nº</th>
+                      <th>O.C</th>
                       <th>Fecha</th>
-                      <th></th>
+                      <th></th-->
                     </thead>
                     <tbody>
                        <tr *ngFor="let item of trazas">
-                          
-                          <td>{{item.cantidad}}</td>
-                          <td>{{item.stock.nombre}}</td>
-                          <td><div *ngIf="item.tipo!='Picking'">{{item.cantidad*item.stock.precio}}</div></td>
-                          <td>{{item.departamento_emisor.nombre}}</td>
-                          <td>{{item.usuario_emisor.nombre}}</td>
-                          <td>{{item.departamento_receptor.nombre}}</td>
-                          <td>{{item.usuario_receptor.nombre}}</td>
-                          <td>{{item.tipo}} {{item.factura}}</td>
-                          <td>{{item.operacion_id}}</td>
                           <th>{{item.created_at  | date:'dd-MM-yyyy HH:MM:ss'}}</th>
+                          <td>{{item.factura}}</td>
+                          <td>{{item.remito}}</td>
+                          <td>{{item.operacion_id}}</td>
+                          <td>{{item.stock.nombre}}</td>
+                          <td>{{item.cantidad}}</td>
+                          <td>{{item.compra.proveedor.razon_social}}</td>
+                          <!--td><div *ngIf="item.tipo!='Picking'">{{item.cantidad*item.stock.precio}}</div></td-->
+                          <td>{{item.departamento_emisor.nombre}}</td>
+                          <!--td>{{item.usuario_emisor.nombre}} {{item.usuario_emisor.apellido}}</td-->
+                          <td>{{item.usuario_receptor.nombre}} {{item.usuario_receptor.apellido}}</td>
+                          <td>{{item.departamento_receptor.nombre}}</td>
+                          
+                          <!--td>{{item.tipo}} {{item.factura}}</td-->
+                          
+                          
                           <td>
                             <div *ngIf="item.tipo!='Picking'">
                               <button type="button" class="btn btn-warning" (click)=compra(item.operacion_id)>Ver Compra</button>

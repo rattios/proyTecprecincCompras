@@ -6,9 +6,9 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import { RutaService } from '../../services/ruta.service';
 
 @Component({
-  templateUrl: 'pedidos.component.html'
+  templateUrl: 'pedidosServicio.component.html'
 })
-export class pedidosComponent {
+export class pedidosServicioComponent {
   public prov: any;
   public centroCostos: any;
   public idCentroCostos: any=43;
@@ -35,7 +35,7 @@ export class pedidosComponent {
       headers = headers.append("Authorization", "Bearer " + localStorage.getItem('tecprecinc_token'));
       //headers = headers.append("Content-Type", "application/json");
     
-      this.http.get(this.ruta.get_ruta()+'stock/permitido?token='+localStorage.getItem('tecprecinc_token'), {
+      this.http.get(this.ruta.get_ruta()+'stock/servicio?token='+localStorage.getItem('tecprecinc_token'), {
             headers: headers
         }).toPromise()
            .then(
@@ -99,7 +99,7 @@ export class pedidosComponent {
           contrato_id:this.idContrato,
           estado: 0,
           aprobar:0,
-          tipo:'bienes',
+          tipo:'servicio',
           observaciones:this.observaciones,
           departamento_id:localStorage.getItem('tecprecinc_departamento_id'),
         }

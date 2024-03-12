@@ -12,7 +12,7 @@ import { entrantesComponent } from './entrantes/entrantes.component';
 import { encursoComponent } from './encurso/encurso.component';
 import { entregadosComponent } from './entregados/entregados.component';
 import { canceladosComponent } from './cancelados/cancelados.component';
-
+import { pedidosServicioComponent } from './pedidosServicio.component';
 
 const routes: Routes = [
   {
@@ -24,6 +24,13 @@ const routes: Routes = [
       {
         path: 'pedido',
         component: pedidosComponent,
+        data: {
+          title: 'Pedido'
+        }
+      },
+      {
+        path: 'pedidoServicio',
+        component: pedidosServicioComponent,
         data: {
           title: 'Pedido'
         }

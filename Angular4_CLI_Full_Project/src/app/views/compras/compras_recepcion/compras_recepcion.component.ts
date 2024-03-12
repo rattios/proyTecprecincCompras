@@ -294,12 +294,16 @@ export class compras_recepcionComponent {
     console.log(cantidad);
     console.log(pedido);
     var fac='';
+    var remito='';
+    var proveedor='';
     var prec=0;
     for (var i = 0; i < pedido.productos.length; i++) {
       if(pedido.productos[i].id==id) {
         pedido.productos[i].entregado=1;
         fac=pedido.productos[i].factura;
+        remito=pedido.productos[i].remito;
         prec=pedido.productos[i].precio;
+        proveedor=pedido.productos[i].proveedor;
       }
     }
     console.log(id+'-'+cantidad+'-'+pedido_id); 
@@ -308,9 +312,11 @@ export class compras_recepcionComponent {
     var send={
       cantidad:cantidad,
       factura:fac,
+      remito:remito,
       usuario:localStorage.getItem('tecprecinc_usuario_id'),
       pedido_id:pedido_id,
-      precio:prec
+      precio:prec,
+      proveedor:proveedor
     }
     this.http.post(this.ruta.get_ruta()+'add_inventario/'+id,send)
      .toPromise()
