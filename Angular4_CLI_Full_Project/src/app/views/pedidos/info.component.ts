@@ -18,7 +18,7 @@ export class infoComponent {
   public showTransferencia=false;
   public aTransferir:any;
   public autorizante= localStorage.getItem('tecprecinc_nombre')+' '+localStorage.getItem('tecprecinc_apellido');
-
+  public fechaaprobacion=new Date();
   public largeModal2:any;
 
   @Input() informacion:any;
@@ -33,10 +33,11 @@ export class infoComponent {
 
    ngOnInit(): void {
       console.log(this.informacion);
+      //this.remito.solicitud=[];
       for (var i = 0; i < this.informacion.solicitud.length; i++) {
         this.informacion.solicitud[i].usuario=this.informacion.usuario;
         this.informacion.solicitud[i].totales=this.informacion.solicitud[i].pivot.cantidad*this.informacion.solicitud[i].precio;
-        this.remito.solicitud=[];
+        
       }
       if(this.informacion!=undefined) {
        

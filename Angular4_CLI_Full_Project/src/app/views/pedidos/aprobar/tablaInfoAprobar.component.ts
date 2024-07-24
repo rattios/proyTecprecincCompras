@@ -14,6 +14,8 @@ export class tablaInfoAprobarComponent {
 
   public verInfo=false;
   public loading=false;
+  public autorizante= localStorage.getItem('tecprecinc_nombre')+' '+localStorage.getItem('tecprecinc_apellido');
+  public fechaaprobacion=new Date();
   
   @Input() informacion:any;
 
@@ -33,7 +35,9 @@ export class tablaInfoAprobarComponent {
       console.log(id);
       var aceptar={
         aprobar:1,
-        estado:1
+        estado:1,
+        aprobadopor:this.autorizante,
+        fechaaprobacion:this.fechaaprobacion
       }
       this.http.put(this.ruta.get_ruta()+'pedidos/'+this.informacion.id,aceptar)
            .toPromise()

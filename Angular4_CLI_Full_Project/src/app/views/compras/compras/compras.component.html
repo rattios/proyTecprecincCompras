@@ -75,88 +75,91 @@
                 
               </div>
               <div id="exportable" class="col-lg-10">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <img src="http://www.tecprecincsrl.com.ar/e/wp-content/uploads/2018/02/logo.png" style="width: 210px;">
+                <div class="row" style="width: 100%;">
+                  <div class="row"  style="width: 100%;">
+                    <div class="col-12" style="border:2px solid; display: flex; justify-content: left; align-items: center;width: 100%;">
+                      <img src="https://www.tecprecincsrl.com.ar/e/logoi.jpg" style="height: 60px;">
+      
+                      <h4 style="padding-left: 80px;">Orden de compra</h4>
+      
+                    </div>
                   </div>
-                  <div class="col-sm-7" style="text-align: right;">
-                    Compra: <strong>Nº {{enviado.id}}</strong><br>
-                    Fecha: <strong>{{enviado.created_at | date:'dd-MM-yyyy'}}</strong>
+                  <div class="row" style="border:2px solid;margin-top: 5px; width: 100%;">
+      
+                        <div class="col-12">
+                          <p><strong>Fecha: </strong>{{enviado.created_at | date:'dd-MM-yyyy'}}</p>
+                          <p style="margin-top: -20px;"><strong>O.C. Nº: </strong>{{enviado.id}}</p>
+                          <p style="margin-top: -20px;"><strong>Proveedor: </strong>{{enviado.proveedor.razon_social}} / <strong>Cuit:</strong>{{enviado.proveedor.cuit}}</p>
+                          <p style="margin-top: -20px;"><strong>Según Presupuesto Nº: </strong></p>
+                          <p style="margin-top: -20px;"><strong>Responsable Departamento de Compras: </strong>gustavo.gutierrez@tecprecincsrl.com.ar</p>
+                          <p style="margin-top: -20px;"><strong>Whatsapp: </strong>2994653079 / <strong>Tel. Fax:</strong> 0299 4964997 int. 14</p>
+                        </div>
+                     
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12" style="text-align: center">
-                    <h4>ORDEN DE COMPRA</h4>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-4">
-                    <label>Proveedor:</label><strong> {{enviado.proveedor.razon_social}}</strong>
-                  </div>
-                  <div class="col-lg-4">
-                    <label>Nombre fantasia:</label><strong> {{enviado.proveedor.nombre_fantacia}}</strong>
-                  </div>
-                  <div class="col-lg-4">
-                    <label>Cuit:</label><strong> {{enviado.proveedor.cuit}}</strong>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-4">
-                    <label>Teléfono:</label><strong> {{enviado.proveedor.telefono}}</strong>
-                  </div>
-                  <div class="col-lg-4">
-                    <label>Email:</label><strong> {{enviado.proveedor.email}}</strong>
-                  </div>
-                </div>
-                <br>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <strong>Nota: </strong>{{enviado.nota}}<br>
+      
+                  <div style="width: 100%;" *ngIf="!loading">
+                    <div class="row" style="margin-top: 5px; width: 100%;">
+                      <div class="col-12" style="width: 100%;padding: 0;">
+                        
+                        <table class="table table-bordered table-sm" style="border:2px solid #000000 !important;font-size: 12px">
+                          <thead>
+                            <th style="text-align: center;border: 2px solid black;">Items</th>
+                            <th style="text-align: center;border: 2px solid black;">Tipo de Insumos</th>
+                            <th style="text-align: center;border: 2px solid black;">Cantidad</th>
+                            <th style="text-align: center;border: 2px solid black;">$ c/u</th>
+                            <th style="text-align: center;border: 2px solid black;">$ total</th>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let it of enviado.productos; let i=index">
+                                <td style="text-align: center;border: 2px solid black;">{{i+1}}</td>
+                                <td style="border: 2px solid black;">{{it.nombre}}</td>
+                                <td style="border: 2px solid black;">{{it.cantidad}}</td>
+                                <td style="border: 2px solid black;">{{it.precio | number : '1.2-2'}}</td>
+                                <td style="border: 2px solid black;">{{it.totales | number : '1.2-2'}}</td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Sub Total</td>
+                                <td style="border: 2px solid black;"></td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Total</td>
+                                <td style="border: 2px solid black;"></td>
+                              </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+      
                     <br>
-                    <table class="table table-bordered">
-                      <thead>
-                        <th>Cantidad</th>
-                        <th>Nombre</th>
-                        <th>Precio Unit.</th>
-                        <th>Total</th>
-                      </thead>
-                      <tbody>
-                          <tr *ngFor="let it of enviado.productos">
-                            <td>{{it.cantidad}}</td>
-                            <td>{{it.nombre}}</td>
-                            <td>{{it.precio | number : '1.2-2'}}</td>
-                            <td>{{it.totales | number : '1.2-2'}}</td>
-                          </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <br>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="form-group">
-                      <strong>Observaciones:</strong>
-                        {{enviado.observaciones}}
+      
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <strong>Observaciones:</strong>
+                            {{enviado.observaciones}}
+                            <br><br><br>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="form-group">
-                      <strong>Observaciones de recepción:</strong>
-                        {{enviado.obs_recepcion}}
+      
+                    <br>
+      
+                    <div class="row">
+                      <div style="width: 100%; display: flex; justify-content: center;align-items: center;">
+                        <div style=" display: flex; flex-direction: column; justify-content: center;align-items: center;width: 200px;border-top: 1px solid black;">
+                          <p style="margin-bottom: 0;">Gustavo A. Gutierrez</p>
+                          <p style="margin-bottom: 0;">Departamento de Compras</p>
+                          <p style="margin-bottom: 0;">Tecprecinc s.r.l</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div> 
-                <br>
-                <div class="row">
-                  <div class="col-lg-12" style="text-align:center">
-                    ___________________________
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12" style="text-align:center">
-                    Firma
+      
                   </div>
                 </div>
               </div>
@@ -233,88 +236,91 @@
                 
               </div>
               <div id="exportable" class="col-lg-10">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <img src="http://www.tecprecincsrl.com.ar/e/wp-content/uploads/2018/02/logo.png" style="width: 210px;">
+                <div class="row" style="width: 100%;">
+                  <div class="row"  style="width: 100%;">
+                    <div class="col-12" style="border:2px solid; display: flex; justify-content: left; align-items: center;width: 100%;">
+                      <img src="https://www.tecprecincsrl.com.ar/e/logoi.jpg" style="height: 60px;">
+      
+                      <h4 style="padding-left: 80px;">Orden de compra</h4>
+      
+                    </div>
                   </div>
-                  <div class="col-sm-7" style="text-align: right;">
-                    Compra: <strong>Nº {{enviado.id}}</strong><br>
-                    Fecha: <strong>{{enviado.created_at | date:'dd-MM-yyyy'}}</strong>
+                  <div class="row" style="border:2px solid;margin-top: 5px; width: 100%;">
+      
+                        <div class="col-12">
+                          <p><strong>Fecha: </strong>{{enviado.created_at | date:'dd-MM-yyyy'}}</p>
+                          <p style="margin-top: -20px;"><strong>O.C. Nº: </strong>{{enviado.id}}</p>
+                          <p style="margin-top: -20px;"><strong>Proveedor: </strong>{{enviado.proveedor.razon_social}} / <strong>Cuit:</strong>{{enviado.proveedor.cuit}}</p>
+                          <p style="margin-top: -20px;"><strong>Según Presupuesto Nº: </strong></p>
+                          <p style="margin-top: -20px;"><strong>Responsable Departamento de Compras: </strong>gustavo.gutierrez@tecprecincsrl.com.ar</p>
+                          <p style="margin-top: -20px;"><strong>Whatsapp: </strong>2994653079 / <strong>Tel. Fax:</strong> 0299 4964997 int. 14</p>
+                        </div>
+                     
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12" style="text-align: center">
-                    <h4>ORDEN DE COMPRA</h4>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-4">
-                    <label>Proveedor:</label><strong> {{enviado.proveedor.razon_social}}</strong>
-                  </div>
-                  <div class="col-lg-4">
-                    <label>Nombre fantasia:</label><strong> {{enviado.proveedor.nombre_fantacia}}</strong>
-                  </div>
-                  <div class="col-lg-4">
-                    <label>Cuit:</label><strong> {{enviado.proveedor.cuit}}</strong>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-4">
-                    <label>Teléfono:</label><strong> {{enviado.proveedor.telefono}}</strong>
-                  </div>
-                  <div class="col-lg-4">
-                    <label>Email:</label><strong> {{enviado.proveedor.email}}</strong>
-                  </div>
-                </div>
-                <br>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <strong>Nota: </strong>{{enviado.nota}}<br>
+      
+                  <div style="width: 100%;" *ngIf="!loading">
+                    <div class="row" style="margin-top: 5px; width: 100%;">
+                      <div class="col-12" style="width: 100%;padding: 0;">
+                        
+                        <table class="table table-bordered table-sm" style="border:2px solid #000000 !important;font-size: 12px">
+                          <thead>
+                            <th style="text-align: center;border: 2px solid black;">Items</th>
+                            <th style="text-align: center;border: 2px solid black;">Tipo de Insumos</th>
+                            <th style="text-align: center;border: 2px solid black;">Cantidad</th>
+                            <th style="text-align: center;border: 2px solid black;">$ c/u</th>
+                            <th style="text-align: center;border: 2px solid black;">$ total</th>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let it of enviado.productos; let i=index">
+                                <td style="text-align: center;border: 2px solid black;">{{i+1}}</td>
+                                <td style="border: 2px solid black;">{{it.nombre}}</td>
+                                <td style="border: 2px solid black;">{{it.cantidad}}</td>
+                                <td style="border: 2px solid black;">{{it.precio | number : '1.2-2'}}</td>
+                                <td style="border: 2px solid black;">{{it.totales | number : '1.2-2'}}</td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Sub Total</td>
+                                <td style="border: 2px solid black;"></td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Total</td>
+                                <td style="border: 2px solid black;"></td>
+                              </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+      
                     <br>
-                    <table class="table table-bordered">
-                      <thead>
-                        <th>Cantidad</th>
-                        <th>Nombre</th>
-                        <th>Precio Unit.</th>
-                        <th>Total</th>
-                      </thead>
-                      <tbody>
-                          <tr *ngFor="let it of enviado.productos">
-                            <td>{{it.cantidad}}</td>
-                            <td>{{it.nombre}}</td>
-                            <td>{{it.precio | number : '1.2-2'}}</td>
-                            <td>{{it.totales  | number : '1.2-2'}}</td>
-                          </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <br>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="form-group">
-                      <strong>Observaciones:</strong>
-                        {{enviado.observaciones}}
+      
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <strong>Observaciones:</strong>
+                            {{enviado.observaciones}}
+                            <br><br><br>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="form-group">
-                      <strong>Observaciones de recepción:</strong>
-                        {{enviado.obs_recepcion}}
+      
+                    <br>
+      
+                    <div class="row">
+                      <div style="width: 100%; display: flex; justify-content: center;align-items: center;">
+                        <div style=" display: flex; flex-direction: column; justify-content: center;align-items: center;width: 200px;border-top: 1px solid black;">
+                          <p style="margin-bottom: 0;">Gustavo A. Gutierrez</p>
+                          <p style="margin-bottom: 0;">Departamento de Compras</p>
+                          <p style="margin-bottom: 0;">Tecprecinc s.r.l</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div> 
-                <br>
-                <div class="row">
-                  <div class="col-lg-12" style="text-align:center">
-                    ___________________________
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12" style="text-align:center">
-                    Firma
+      
                   </div>
                 </div>
               </div>
@@ -391,88 +397,91 @@
                 
               </div>
               <div id="exportable" class="col-lg-10">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <img src="http://www.tecprecincsrl.com.ar/e/wp-content/uploads/2018/02/logo.png" style="width: 210px;">
+                <div class="row" style="width: 100%;">
+                  <div class="row"  style="width: 100%;">
+                    <div class="col-12" style="border:2px solid; display: flex; justify-content: left; align-items: center;width: 100%;">
+                      <img src="https://www.tecprecincsrl.com.ar/e/logoi.jpg" style="height: 60px;">
+      
+                      <h4 style="padding-left: 80px;">Orden de compra</h4>
+      
+                    </div>
                   </div>
-                  <div class="col-sm-7" style="text-align: right;">
-                    Compra: <strong>Nº {{enviado.id}}</strong><br>
-                    Fecha: <strong>{{enviado.created_at | date:'dd-MM-yyyy'}}</strong>
+                  <div class="row" style="border:2px solid;margin-top: 5px; width: 100%;">
+      
+                        <div class="col-12">
+                          <p><strong>Fecha: </strong>{{enviado.created_at | date:'dd-MM-yyyy'}}</p>
+                          <p style="margin-top: -20px;"><strong>O.C. Nº: </strong>{{enviado.id}}</p>
+                          <p style="margin-top: -20px;"><strong>Proveedor: </strong>{{enviado.proveedor.razon_social}} / <strong>Cuit:</strong>{{enviado.proveedor.cuit}}</p>
+                          <p style="margin-top: -20px;"><strong>Según Presupuesto Nº: </strong></p>
+                          <p style="margin-top: -20px;"><strong>Responsable Departamento de Compras: </strong>gustavo.gutierrez@tecprecincsrl.com.ar</p>
+                          <p style="margin-top: -20px;"><strong>Whatsapp: </strong>2994653079 / <strong>Tel. Fax:</strong> 0299 4964997 int. 14</p>
+                        </div>
+                     
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12" style="text-align: center">
-                    <h4>ORDEN DE COMPRA</h4>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-4">
-                    <label>Proveedor:</label><strong> {{enviado.proveedor.razon_social}}</strong>
-                  </div>
-                  <div class="col-lg-4">
-                    <label>Nombre fantasia:</label><strong> {{enviado.proveedor.nombre_fantacia}}</strong>
-                  </div>
-                  <div class="col-lg-4">
-                    <label>Cuit:</label><strong> {{enviado.proveedor.cuit}}</strong>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-4">
-                    <label>Teléfono:</label><strong> {{enviado.proveedor.telefono}}</strong>
-                  </div>
-                  <div class="col-lg-4">
-                    <label>Email:</label><strong> {{enviado.proveedor.email}}</strong>
-                  </div>
-                </div>
-                <br>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <strong>Nota: </strong>{{enviado.nota}}<br>
+      
+                  <div style="width: 100%;" *ngIf="!loading">
+                    <div class="row" style="margin-top: 5px; width: 100%;">
+                      <div class="col-12" style="width: 100%;padding: 0;">
+                        
+                        <table class="table table-bordered table-sm" style="border:2px solid #000000 !important;font-size: 12px">
+                          <thead>
+                            <th style="text-align: center;border: 2px solid black;">Items</th>
+                            <th style="text-align: center;border: 2px solid black;">Tipo de Insumos</th>
+                            <th style="text-align: center;border: 2px solid black;">Cantidad</th>
+                            <th style="text-align: center;border: 2px solid black;">$ c/u</th>
+                            <th style="text-align: center;border: 2px solid black;">$ total</th>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let it of enviado.productos; let i=index">
+                                <td style="text-align: center;border: 2px solid black;">{{i+1}}</td>
+                                <td style="border: 2px solid black;">{{it.nombre}}</td>
+                                <td style="border: 2px solid black;">{{it.cantidad}}</td>
+                                <td style="border: 2px solid black;">{{it.precio | number : '1.2-2'}}</td>
+                                <td style="border: 2px solid black;">{{it.totales | number : '1.2-2'}}</td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Sub Total</td>
+                                <td style="border: 2px solid black;"></td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Total</td>
+                                <td style="border: 2px solid black;"></td>
+                              </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+      
                     <br>
-                    <table class="table table-bordered">
-                      <thead>
-                        <th>Cantidad</th>
-                        <th>Nombre</th>
-                        <th>Precio Unit.</th>
-                        <th>Total</th>
-                      </thead>
-                      <tbody>
-                          <tr *ngFor="let it of enviado.productos">
-                            <td>{{it.cantidad}}</td>
-                            <td>{{it.nombre}}</td>
-                            <td>{{it.precio | number : '1.2-2'}}</td>
-                            <td>{{it.totales  | number : '1.2-2'}}</td>
-                          </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <br>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="form-group">
-                      <strong>Observaciones:</strong>
-                        {{enviado.observaciones}}
+      
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <strong>Observaciones:</strong>
+                            {{enviado.observaciones}}
+                            <br><br><br>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="form-group">
-                      <strong>Observaciones de recepción:</strong>
-                        {{enviado.obs_recepcion}}
+      
+                    <br>
+      
+                    <div class="row">
+                      <div style="width: 100%; display: flex; justify-content: center;align-items: center;">
+                        <div style=" display: flex; flex-direction: column; justify-content: center;align-items: center;width: 200px;border-top: 1px solid black;">
+                          <p style="margin-bottom: 0;">Gustavo A. Gutierrez</p>
+                          <p style="margin-bottom: 0;">Departamento de Compras</p>
+                          <p style="margin-bottom: 0;">Tecprecinc s.r.l</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div> 
-                <br>
-                <div class="row">
-                  <div class="col-lg-12" style="text-align:center">
-                    ___________________________
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12" style="text-align:center">
-                    Firma
+      
                   </div>
                 </div>
               </div>

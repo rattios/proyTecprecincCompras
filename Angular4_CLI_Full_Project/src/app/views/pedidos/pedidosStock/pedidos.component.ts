@@ -96,6 +96,7 @@ export class pedidosStockComponent {
           contrato_id:this.idContrato,
           estado: 0,
           aprobar:0,
+          tipo:'stock',
           observaciones:this.observaciones,
           departamento_id:localStorage.getItem('tecprecinc_departamento_id'),
         }
